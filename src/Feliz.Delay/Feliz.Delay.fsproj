@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Cody Johnson, Zaid Ajaj</Authors>
+    <Description>Adds easy to use delayed rendering</Description>
+    <PackageTags>fsharp;fable;react;html;feliz</PackageTags>
+    <PackageReleaseNotes>Update Feiz to v2.0.0</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
+    <Compile Include="Delay.fs" />
+    <Compile Include="Templates.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Core" Version="8.0.403" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
+  </ItemGroup>
+
+</Project>

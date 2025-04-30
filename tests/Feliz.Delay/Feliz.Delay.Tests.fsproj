@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Feliz.Vitest.React\Feliz.Vitest.React.fsproj" />
+    <ProjectReference Include="..\..\src\Feliz.Delay\Feliz.Delay.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="CodeSplitting.fs" />
+    <Compile Include="Main.test.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Core" Version="8.0.403" />
+    <PackageReference Include="Fable.Browser.Dom" Version="2.18.1" />
+    <PackageReference Include="Fable.Promise" Version="3.2.0" />
+  </ItemGroup>
+
+</Project>

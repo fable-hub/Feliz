@@ -1,46 +1,30 @@
 {
-    "private": true,
-    "scripts": {
-        "publish-docs": "npm run build && node publish.js",
-        "start": "dotnet tool restore && dotnet fable watch docs --noCache --exclude Feliz.CompilerPlugins --run webpack-dev-server",
-        "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production",
-        "test": "dotnet tool restore && dotnet fable tests --exclude Feliz.CompilerPlugins --run webpack --config webpack.tests.js && dotnet run --project ./HeadlessTestsRunner/HeadlessTestsRunner.fsproj"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Zaid-Ajaj/Feliz.git"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.11.4",
-        "@babel/preset-react": "^7.10.4",
-        "@testing-library/react": "^10.4.9",
-        "@testing-library/user-event": "^11.4.2",
-        "css-loader": "^5.2.4",
-        "fable-compiler": "^2.11.0",
-        "fable-loader": "^2.1.9",
-        "gh-pages": "^2.2.0",
-        "mocha": "^6.2.3",
-        "remotedev": "^0.2.7",
-        "sass": "^1.32.4",
-        "sass-loader": "^10.1.1",
-        "source-map-loader": "^2.0.1",
-        "style-loader": "^2.0.0",
-        "webpack": "^4.44.1",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0"
-    },
-    "dependencies": {
-        "@inocan/rough-viz": "^1.2.0",
-        "pigeon-maps": "^0.19.5",
-        "prop-types": "^15.7.2",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-highlight": "^0.11.1",
-        "react-markdown": "^4.3.1",
-        "react-popover": "^0.5.10",
-        "react-select-search": "^3.0.5",
-        "recharts": "^2.0.9",
-        "use-resize-observer": "^6.1.0",
-        "use-sync-external-store": "^1.2.0"
-    }
+  "private": true,
+  "scripts": {
+    "publish-docs": "npm run build && node publish.js",
+    "start": "dotnet tool restore && dotnet fable watch docs --noCache --exclude Feliz.CompilerPlugins --run webpack-dev-server",
+    "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production",
+    "test": "bun -F ./tests/* test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zaid-Ajaj/Feliz.git"
+  },
+  "workspaces": ["src/*", "tests/*", "docs/"],
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/bun": "latest",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.1.2"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
 }

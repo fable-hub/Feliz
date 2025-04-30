@@ -1,14 +1,15 @@
 <Project>
-    <PropertyGroup>
-        <PackageProjectUrl>https://zaid-ajaj.github.io/Feliz/</PackageProjectUrl>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageIcon>fable_logo.png</PackageIcon>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)\fable_logo.png" Pack="true" PackagePath="\" />
-        <None Include="$(MSBuildThisFileDirectory)\README.md" Pack="true" PackagePath="\"/>
-        <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1" PrivateAssets="all" />
-    </ItemGroup>
+  <PropertyGroup>
+    <PackageProjectUrl>https://fable-hub.github.io/Feliz/</PackageProjectUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>fable_logo.png</PackageIcon>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\fable_logo.png" Pack="true" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>

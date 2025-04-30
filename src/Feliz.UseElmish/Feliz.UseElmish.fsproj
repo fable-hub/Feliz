@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>useElmish hooks to build Elmish components as React components</Description>
+        <PackageIconUrl></PackageIconUrl>
+        <PackageTags>fsharp;fable;react;html;feliz</PackageTags>
+        <Authors>Zaid Ajaj</Authors>
+        <Version>2.5.0</Version>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageReleaseNotes>Making dispatch function stable</PackageReleaseNotes>
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <PropertyGroup>
+        <NpmDependencies>
+            <NpmPackage Name="use-sync-external-store" Version="&gt;= 1.0.0 &lt; 2.0.0" ResolutionStrategy="Max" />
+        </NpmDependencies>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="UseElmish.fs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Fable.Elmish" Version="4.0.0" />
+        <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    </ItemGroup>
+</Project>

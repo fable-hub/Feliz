@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>React-Markdown bindings based on the Feliz API</Description>
+        <PackageIconUrl></PackageIconUrl>
+        <PackageTags>fsharp;fable;react;html</PackageTags>
+        <Authors>Zaid Ajaj</Authors>
+        <Version>2.4.0</Version>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <PropertyGroup>
+        <NpmDependencies>
+            <NpmPackage Name="react-markdown" Version="&gt;= 8.0.4 &lt; 9.0.0" />
+        </NpmDependencies>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="Markdown.fs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Update="FSharp.Core" Version="4.7.2" />
+        <PackageReference Include="Feliz" Version="2.4.0" />
+    </ItemGroup>
+</Project>
