@@ -70,6 +70,4 @@ let main args =
             Tests.runAll (Some filter)
     | _ -> 
         printfn "Unknown command."
-    1
-        
-        
+    0
