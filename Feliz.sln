@@ -49,6 +49,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.Delay.Tests", "tests\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.UseElmish.Tests", "tests\Feliz.UseElmish\Feliz.UseElmish.Tests.fsproj", "{F260CA19-974D-4015-8B29-6AFB56AC8AAF}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Build", "build\Build.fsproj", "{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{F260CA19-974D-4015-8B29-6AFB56AC8AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F260CA19-974D-4015-8B29-6AFB56AC8AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F260CA19-974D-4015-8B29-6AFB56AC8AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

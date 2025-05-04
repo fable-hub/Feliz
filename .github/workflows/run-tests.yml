@@ -17,21 +17,16 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'  # or whatever version you need
+          dotnet-version: '8.0.x' 
 
-    #   - name: Setup Node.js and NPM
-    #     uses: actions/setup-node@v4
-    #     with:
-    #       node-version: '20'  # or another version if needed
-    #       cache: 'npm'
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node.js and NPM
+        uses: actions/setup-node@v4
         with:
-          bun-version: 1.2.5
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
 
       - name: run tests
-        run: npm test
+        run: dotnet run --project ./build/Build.fsproj test

@@ -3,8 +3,7 @@
     "scripts": {
         "publish-docs": "npm run build && node publish.js",
         "start": "dotnet tool restore && dotnet fable watch docs --noCache --exclude Feliz.CompilerPlugins --run webpack-dev-server",
-        "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production",
-        "test": "bun -F ./tests/* test"
+        "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production"
     },
     "repository": {
         "type": "git",
@@ -13,7 +12,6 @@
     "workspaces": ["src/*", "tests/*", "docs/"],
     "devDependencies": {
         "typescript": "^5.8.3",
-        "@types/bun": "latest",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.3.0",
         "@testing-library/user-event": "^14.6.1",
