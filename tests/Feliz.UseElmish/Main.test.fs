@@ -120,7 +120,7 @@ describe "UseElmish" <| fun () ->
     }
 
     testPromise "useElmish works with React.strictMode" <| fun () -> promise {
-        let render = RTL.render(React.strictMode[ UseElmish.wrapper() ])
+        let render = RTL.render(React.strictMode [ UseElmish.wrapper() ])
 
         Expect.toHaveTextContent (render.getByTestId("count")) "0" //"Should be initial state"
 
