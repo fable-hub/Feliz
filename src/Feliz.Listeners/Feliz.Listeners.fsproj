@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageReleaseNotes>Initial migration from Feliz.UseListener</PackageReleaseNotes>
+        <Authors>Cody Johnson; Zaid Ajaj</Authors>
+        <Version>1.1.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
+        <Compile Include="PromiseRejectionEvent.fs" />
+        <Compile Include="Listener.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Feliz\Feliz.fsproj" />
+    </ItemGroup>
+
+</Project>

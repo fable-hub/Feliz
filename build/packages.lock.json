@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dependencies": {
+    "net8.0": {
+      "BlackFox.CommandLine": {
+        "type": "Direct",
+        "requested": "[1.0.0, )",
+        "resolved": "1.0.0",
+        "contentHash": "dSW7uLetl021HQXKcZd1xrXPjhsXgaJ5U4tFe64DLja1KZ2Ce6QeugHvZDvLfcPkEc1ZPRF7fWv5/T+X3ThWTA==",
+        "dependencies": {
+          "FSharp.Core": "4.2.3"
+        }
+      },
+      "FSharp.Core": {
+        "type": "Direct",
+        "requested": "[8.0.401, )",
+        "resolved": "8.0.401",
+        "contentHash": "pvmquLrs82m8WqWB49Gj+hsmnWURkUbc++pJ0P2NdrEv1ZVVrhDNjSiFNP4wW4HiTowwaRhjiBc5IKNV35Vf/A=="
+      },
+      "SimpleExec": {
+        "type": "Direct",
+        "requested": "[12.0.0, )",
+        "resolved": "12.0.0",
+        "contentHash": "ptxlWtxC8vM6Y6e3h9ZTxBBkOWnWrm/Sa1HT+2i1xcXY3Hx2hmKDZP5RShPf8Xr9D+ivlrXNy57ktzyH8kyt+Q=="
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageVersion Include="BlackFox.CommandLine" Version="1.0.0" />
+        <PackageVersion Include="Fable.AST" Version="4.5.0" />
+        <PackageVersion Include="Fable.Browser.Dom" Version="2.18.1" />
+        <PackageVersion Include="Fable.Browser.MediaQueryList" Version="1.1.0" />
+        <PackageVersion Include="Fable.Core" Version="4.5.0" />
+        <PackageVersion Include="Fable.Elmish" Version="4.0.0" />
+        <PackageVersion Include="Fable.Promise" Version="3.2.0" />
+        <PackageVersion Include="Fable.React.Types" Version="18.4.0" />
+        <PackageVersion Include="Fable.ReactDom.Types" Version="18.2.0" />
+        <PackageVersion Include="FSharp.Core" Version="8.0.401" />
+        <PackageVersion Include="SimpleExec" Version="12.0.0" />
+    </ItemGroup>
+</Project>

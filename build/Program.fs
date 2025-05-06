@@ -1,89 +1,73 @@
-﻿module Program
+open SimpleExec
+open BlackFox.CommandLine
 
-open System
-open System.Collections.Generic
-open System.IO
-open System.Text
-open System.Xml
-open System.Xml.Linq
-open Fake.IO
-open Fake.Core
 
-let path xs = Path.Combine(Array.ofList xs)
+module Tests =
 
-let solutionRoot = Files.findParent __SOURCE_DIRECTORY__ "Feliz.sln";
+    open System
+    open System.IO
+    open System.Text.Json
 
-let project name = path [ solutionRoot; $"Feliz.{name}" ]
+    [<Literal>]
+    let TestRoot = "./tests"
 
-let feliz = path [ solutionRoot; "Feliz" ]
-let compilerPlugins = project "CompilerPlugins" 
-let delay = project "Delay"
-let kawaii = project "Kawaii"
-let markdown = project "Markdown"
-let pigeonMaps = project "PigeonMaps"
-let popover = project "Popover"
-let recharts = project "Recharts" 
-let roughViz = project "RoughViz"
-let selectSearch = project "SelectSearch"
-let svelte = project "Svelte"
-let svelteComponent = project "SvelteComponent"
-let template = project "Template"
-let useDeferred = project "UseDeferred"
-let useElmish = project "UseElmish"
-let useMediaQuery = project "UseMediaQuery"
-let listeners = project "Listeners"
+    let hasMatchingFsproj dir (filterOpt: string option) =
+        let fsprojFiles = Directory.GetFiles(dir, "*.fsproj")
+        match filterOpt with
+        | Some substr ->
+            fsprojFiles
+            |> Array.exists (fun path ->
+                let projName = Path.GetFileNameWithoutExtension(path)
+                projName.Equals(substr, StringComparison.OrdinalIgnoreCase)
+            )
+        | None -> fsprojFiles.Length > 0
 
-let publish projectDir =
-    path [ projectDir; "bin" ] |> Shell.deleteDir
-    path [ projectDir; "obj" ] |> Shell.deleteDir
+    let hasTestScriptInPackageJson dir =
+        let packageJsonPath = Path.Combine(dir, "package.json")
+        if File.Exists(packageJsonPath) then
+            try
+                let json = File.ReadAllText(packageJsonPath)
+                let doc = JsonDocument.Parse(json)
+                match doc.RootElement.TryGetProperty("scripts") with
+                | true, scripts when scripts.TryGetProperty("test") |> fst -> true
+                | _ -> false
+            with _ -> false
+        else false
 
-    if Shell.Exec(Tools.dotnet, "pack --configuration Release", projectDir) <> 0 then
-        failwithf "Packing '%s' failed" projectDir
-    else
-        let nugetKey =
-            match Environment.environVarOrNone "NUGET_KEY" with
-            | Some nugetKey -> nugetKey
-            | None -> 
-                printfn "The Nuget API key was not found in a NUGET_KEY environmental variable"
-                printf "Enter NUGET_KEY: "
-                Console.ReadLine()
+    let findValidTestFolders root filteropt =
+        Directory.GetDirectories(root)
+        |> Array.filter (fun dir -> hasMatchingFsproj dir filteropt && hasTestScriptInPackageJson dir)
 
-        let nugetPath =
-            Directory.GetFiles(path [ projectDir; "bin"; "Release" ])
-            |> Seq.head
-            |> Path.GetFullPath
+    let run (workingDir: string) =
+        let args =
+            CmdLine.Empty
+            |> CmdLine.append "test"
+            |> CmdLine.toString
 
-        if Shell.Exec(Tools.dotnet, sprintf "nuget push %s -s https://api.nuget.org/v3/index.json -k %s" nugetPath nugetKey, projectDir) <> 0
-        then failwith "Publish failed"
+        Command.Run(
+            "npm",
+            args,
+            workingDir
+        )
+
+    let runAll (filteropt: string option) =
+        let testFolders = findValidTestFolders TestRoot filteropt
+        for folder in testFolders do
+            let folderName = Path.GetFileName(folder)
+            printfn "Running tests in %s" folderName
+            run folder
+            printfn "Finished running tests in %s" folderName
 
 [<EntryPoint>]
-let main (args: string[]) = 
-    try
-        // run tasks
-        match args with 
-        | [| "publish-feliz" |] -> publish feliz
-        | [| "publish-recharts" |] -> publish recharts
-        | [| "publish-compiler-plugins" |] -> publish compilerPlugins
-        | [| "publish-select-search" |] -> publish selectSearch
-        | [| "publish-pigeon-maps" |] -> publish pigeonMaps
-        | [| "publish-template" |] -> publish template
-        | [| "publish-svelte" |] -> publish svelte
-        | [| "publish-svelte-component" |] -> publish svelteComponent
-        | [| "publish-popover" |] -> publish popover
-        | [| "publish-delay" |] -> publish delay
-        | [| "publish-kawaii" |] -> publish kawaii
-        | [| "publish-markdown" |] -> publish markdown
-        | [| "publish-rough-viz" |] -> publish roughViz
-        | [| "publish-use-deferred" |] -> publish useDeferred
-        | [| "publish-use-elmish" |] -> publish useElmish
-        | [| "publish-use-media-query" |] -> publish useMediaQuery
-        | [| "publish-listeners" |] -> publish listeners
-        | _ -> printfn "Unknown args: %A" args
-        // exit succesfully
-        0
-    with 
-    | ex -> 
-        // something bad happened
-        printfn "Error occured"
-        printfn "%A" ex
-        1
+let main args =
+    let argv = args |> Array.map (fun x -> x.ToLower()) |> Array.toList
+
+    match argv with
+    | "test" :: a ->
+        match a with
+        | [] -> Tests.runAll None
+        | filter :: _ ->
+            Tests.runAll (Some filter)
+    | _ -> 
+        printfn "Unknown command."
+    0

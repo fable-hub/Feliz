@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>react-select-search bindings based on the Feliz API</Description>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageTags>fsharp;fable;react;html</PackageTags>
+    <Authors>Zaid Ajaj</Authors>
+    <Version>3.1.0</Version>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageReleaseNotes>Update to Feliz 2.3.0</PackageReleaseNotes>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="SelectSearch.css" />
+    <Compile Include="SelectSearch.fs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <NpmDependencies>
+      <NpmPackage Name="react-select-search" Version="&gt;= 3.0.5 &lt; 4.0.0" ResolutionStrategy="max" />
+      <NpmPackage Name="prop-types" Version="&gt;= 15.7.2 &lt; 16.0.0" ResolutionStrategy="max" />
+    </NpmDependencies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="*.fsproj; *.fs; *.js; *.css" Exclude="**\*.fs.js" PackagePath="fable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
+  </ItemGroup>
+</Project>

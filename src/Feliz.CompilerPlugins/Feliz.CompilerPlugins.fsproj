@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Provides compile-time transformation for React components</Description>
+    <PackageTags>fsharp;fable;react;html</PackageTags>
+    <Authors>Zaid Ajaj</Authors>
+    <Version>2.2.0</Version>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageReleaseNotes>Remove redundant declaration of imported React component</PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AstUtils.fs" />
+    <Compile Include="ReactComponent.fs" />
+    <Compile Include="Hook.fs" />
+    <Compile Include="PrimitiveElement.fs" />
+    <Compile Include="PrimitiveElementWithChildren.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fable.AST" />
+  </ItemGroup>
+</Project>

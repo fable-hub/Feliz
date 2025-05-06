@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Feliz.Vitest.React\Feliz.Vitest.React.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeSplitting.fs" />
+    <Compile Include="PropHelpers.test.fs" />
+    <Compile Include="Components.fs" />
+    <Compile Include="Components.test.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fable.Browser.Dom" />
+    <PackageReference Include="Fable.Promise" />
+  </ItemGroup>
+</Project>
+

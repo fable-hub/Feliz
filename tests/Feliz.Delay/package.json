@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "feliz-delay-tests",
+  "version": "0.0.0",
+  "scripts": {
+    "transpile": "dotnet fable -o ./fableoutput --exclude Feliz.CompilerPlugins --noCache",
+    "test": "npm run transpile && vitest --run",
+    "test:watch": "npm run transpile -- --watch --run vitest"
+  }
+}
