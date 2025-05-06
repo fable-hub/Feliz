@@ -6,7 +6,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageReleaseNotes>Update Feliz.SvelteComponent</PackageReleaseNotes>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    
   </PropertyGroup>
   <PropertyGroup>
     <NpmDependencies>
@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Feliz.SvelteComponent\Feliz.SvelteComponent.fsproj" />
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
   </ItemGroup>
 
 </Project>

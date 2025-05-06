@@ -7,7 +7,7 @@
     <Description>useMediaQuery hooks to build responsive websites </Description>
     <PackageTags>fsharp;fable;react;html;feliz</PackageTags>
     <PackageReleaseNotes>Depend on Feliz v1.68</PackageReleaseNotes>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fable.Browser.MediaQueryList" Version="1.1.0" />
+    <PackageReference Include="Fable.Browser.MediaQueryList" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
-    <PackageReference Include="Feliz" Version="1.68.0" />
+    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
   </ItemGroup>
+
 </Project>

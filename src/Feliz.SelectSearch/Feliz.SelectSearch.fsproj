@@ -8,7 +8,7 @@
     <Version>3.1.0</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageReleaseNotes>Update to Feliz 2.3.0</PackageReleaseNotes>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +25,6 @@
     <Content Include="*.fsproj; *.fs; *.js; *.css" Exclude="**\*.fs.js" PackagePath="fable\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
-    <PackageReference Include="Feliz" Version="2.3.0" />
+    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
   </ItemGroup>
 </Project>

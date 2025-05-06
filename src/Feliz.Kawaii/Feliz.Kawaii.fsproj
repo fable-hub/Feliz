@@ -8,7 +8,6 @@
     <Version>2.0.0</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageReleaseNotes>Update Feiz to v2</PackageReleaseNotes>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +21,7 @@
   <ItemGroup>
     <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
-    <PackageReference Include="Feliz" Version="2.0.0" />
+    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
   </ItemGroup>
 </Project>

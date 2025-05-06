@@ -9,6 +9,10 @@
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
     <ItemGroup>
+        <!-- Depends on the same version of FSharp.Core for all the projects -->
+        <PackageReference Include="FSharp.Core" PrivateAssets="all" />
+    </ItemGroup>
+    <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\fable_logo.png" Pack="true" PackagePath="\" />
         <None Include="$(MSBuildThisFileDirectory)\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>

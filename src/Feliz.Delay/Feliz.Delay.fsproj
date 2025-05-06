@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="8.0.401" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Feliz\Feliz.fsproj" />
   </ItemGroup>
 

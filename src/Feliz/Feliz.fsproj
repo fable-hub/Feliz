@@ -47,8 +47,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="8.0.401" />
-    <PackageReference Include="Fable.React.Types" Version="18.4.0" />
-    <PackageReference Include="Fable.ReactDom.Types" Version="18.2.0" />
+    <PackageReference Include="Fable.React.Types" />
+    <PackageReference Include="Fable.ReactDom.Types" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,6 @@
         <Version>4.3.0</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
         <PackageReleaseNotes>Add yAxis tickFormatter</PackageReleaseNotes>
-        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
     <PropertyGroup>
         <NpmDependencies>
@@ -56,7 +55,6 @@
         <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Update="FSharp.Core" Version="4.7.2" />
-        <PackageReference Include="Feliz" Version="2.3.0" />
+      <ProjectReference Include="..\Feliz\Feliz.fsproj" />
     </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Feliz.Svelte
+namespace Feliz.Svelte
 
 open Fable
 open Fable.AST
@@ -45,7 +45,8 @@ type SvelteComponentAttribute(from:string) =
             expr
 
     override this.Transform(compiler, file, decl) =
-        if decl.Info.IsValue || decl.Info.IsGetter || decl.Info.IsSetter then
+        let info = compiler.GetMember(decl.MemberRef)
+        if info.IsValue || info.IsGetter || info.IsSetter then
             // Invalid attribute usage
             let errorMessage = sprintf "Expecting a function declation for %s when using [<SvelteComponent>]" decl.Name
             compiler.LogWarning(errorMessage, ?range=decl.Body.Range)
@@ -69,4 +70,5 @@ type SvelteComponentAttribute(from:string) =
                 Args = []
                 Body = body
                 // declaration becomes a value instead
-                Info = AstUtils.MemberInfo(decl.Info, isValue=true) }
+                //Info = AstUtils.MemberInfo(decl.Info, isValue=true)
+            }

@@ -10,8 +10,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="SimpleExec" Version="12.0.0" />
-        <PackageReference Include="BlackFox.CommandLine" Version="1.0.0" />
+        <PackageReference Include="SimpleExec" />
+        <PackageReference Include="BlackFox.CommandLine" />
     </ItemGroup>
 
 </Project>

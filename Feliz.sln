@@ -49,7 +49,19 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.Delay.Tests", "tests\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.UseElmish.Tests", "tests\Feliz.UseElmish\Feliz.UseElmish.Tests.fsproj", "{F260CA19-974D-4015-8B29-6AFB56AC8AAF}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Build", "build\Build.fsproj", "{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Build", "build\Build.fsproj", "{0ABFBDDF-A150-4DEF-AF62-561973AB4E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B9042E9-9658-4903-A935-EDCF50C421F6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		package-lock.json = package-lock.json
+		package.json = package.json
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,5 +183,8 @@ Global
 		{0873D6FA-A9F7-4A00-BDC7-6AB5C5050A3D} = {5BED55CF-2757-46F0-98E9-063F63DD2BCD}
 		{0BC7063D-5EEA-44AD-8000-BB0BAB195ED5} = {5BED55CF-2757-46F0-98E9-063F63DD2BCD}
 		{F260CA19-974D-4015-8B29-6AFB56AC8AAF} = {5BED55CF-2757-46F0-98E9-063F63DD2BCD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08484504-7B02-4898-B0AD-51F03D2767E6}
 	EndGlobalSection
 EndGlobal

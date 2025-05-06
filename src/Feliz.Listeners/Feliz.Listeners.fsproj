@@ -6,7 +6,6 @@
         <PackageReleaseNotes>Initial migration from Feliz.UseListener</PackageReleaseNotes>
         <Authors>Cody Johnson; Zaid Ajaj</Authors>
         <Version>1.1.0</Version>
-        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Feliz" Version="2.4.0" />
+      <ProjectReference Include="..\Feliz\Feliz.fsproj" />
     </ItemGroup>
+
 </Project>

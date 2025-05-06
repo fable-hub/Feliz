@@ -15,9 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="8.0.401" />
-    <PackageReference Include="Fable.Browser.Dom" Version="2.18.1" />
-    <PackageReference Include="Fable.Promise" Version="3.2.0" />
+    <PackageReference Include="Fable.Browser.Dom" />
+    <PackageReference Include="Fable.Promise" />
   </ItemGroup>
 
 </Project>
