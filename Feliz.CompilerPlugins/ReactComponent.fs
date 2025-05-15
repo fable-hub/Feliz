@@ -3,10 +3,13 @@
 open Fable
 open Fable.AST
 open Fable.AST.Fable
+open System.Diagnostics.CodeAnalysis
 
 // Tell Fable to scan for plugins in this assembly
 [<assembly:ScanForPlugins>]
 do()
+
+type MemoStrategy = EqualsShallow | EqualsButFunctions | EqualsCustom of string
 
 module internal ReactComponentHelpers =
     let (|ReactMemo|_|) = function
@@ -24,7 +27,29 @@ module internal ReactComponentHelpers =
             AstUtils.makeImport "default as React" "react"
             yield! body
         ]
-
+        
+    let [<Literal; StringSyntax("javascript")>] private ``JS<equalsButFunctions>`` = """function equalsButFunctions(x, y) {
+    if (x === y) {
+        return true;
+    }
+    else if ((typeof x === 'object' && !x[Symbol.iterator]) && !(y == null)) {
+        const keys = Object.keys(x);
+        const length = keys.length | 0;
+        let i = 0;
+        let result = true;
+        while ((i < length) && result) {
+            const key = keys[i];
+            i = ((i + 1) | 0);
+            const xValue = x[key];
+            result = ((typeof xValue === 'function') ? true : equals(xValue, y[key]));
+        }
+        return result;
+    }
+    else {
+        return equals(x, y);
+    }
+}"""
+    
     let applyImportOrMemo import from memo (decl: MemberDecl) =
         match import, from, memo with
         | Some _, Some _, _ ->
@@ -33,13 +58,24 @@ module internal ReactComponentHelpers =
             let tags = "remove-declaration" :: decl.Tags
             { decl with Body = AstUtils.emptyReactElement reactElType; Tags = tags }
 
-        | _, _, Some true ->
-            let memoFn = AstUtils.makeImport "memo" "react"
-            let body =
-                decl.Body
-                |> injectReactImport 
-                |> fun body -> [Delegate(decl.Args, body, None, Tags.empty)]
-                |> AstUtils.makeCall memoFn
+        | _, _, Some memo ->
+            let memoFn = Sequential [
+                AstUtils.makeImport "default as React" "react"
+                match memo with
+                | EqualsShallow | EqualsCustom _ -> ()
+                | EqualsButFunctions -> AstUtils.makeImport "equals" "@fable-org/fable-library-js/Util.js"
+                AstUtils.makeImport "memo" "react"
+            ]
+
+            let body = AstUtils.makeCall memoFn [
+                AstUtils.emitJs (sprintf "function %s(props) {{ return ($0)(props); }}" decl.Name) [
+                    Delegate(decl.Args, decl.Body, Some decl.Name, Tags.empty)
+                ]
+                match memo with
+                | EqualsShallow -> ()
+                | EqualsCustom js -> AstUtils.emitJs js []
+                | EqualsButFunctions -> AstUtils.emitJs ``JS<equalsButFunctions>`` []
+            ]
             // Change declaration kind from function to value
             let info =
                 AstUtils.memberName decl.MemberRef
@@ -53,7 +89,7 @@ module internal ReactComponentHelpers =
 open ReactComponentHelpers
 
 /// <summary>Transforms a function into a React function component. Make sure the function is defined at the module level</summary>
-type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string, ?memo: bool) =
+type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string, ?memo: MemoStrategy) =
     inherit MemberDeclarationPluginAttribute()
     override _.FableMinimumVersion = "4.0"
     new() = ReactComponentAttribute(exportDefault=false)
@@ -111,9 +147,9 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                     | None -> reactEl
                     | Some(ident, value) -> Let(ident, value, reactEl)                
                 
-                match [|memo, callee|] with
+                match [| memo, callee |] with
                 // If the call is memo and the function has an identifier, we can set the displayName
-                | [|(Some true), (IdentExpr i)|] -> 
+                | [| Some _, IdentExpr i |] -> 
                     Sequential [
                         (AstUtils.makeSet (IdentExpr(i)) "displayName" (AstUtils.makeStrConst i.Name))
                         expr
@@ -216,7 +252,23 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                 { decl with Args = [propsArg]; Body = body }
                 |> applyImportOrMemo import from memo
 
-type ReactMemoComponentAttribute(?exportDefault: bool) =
-    inherit ReactComponentAttribute(?exportDefault=exportDefault, ?import=None, ?from=None, memo=true)
-    new() = ReactMemoComponentAttribute(exportDefault=false)
+type ReactMemoComponentAttribute private(memo: MemoStrategy, ?exportDefault: bool) =
+    inherit ReactComponentAttribute(memo=memo, ?exportDefault=exportDefault, ?import=None, ?from=None)
+    new() = ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=false)
+    new(exportDefault: bool) = ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=exportDefault)
+    new([<StringSyntax("javascript")>]equalsJs:string, exportDefault: bool) = ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom equalsJs, exportDefault=exportDefault)
+    new([<StringSyntax("javascript")>]equalsJs:string) = ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom equalsJs)
+
+
+type ReactMemoEqualsButFunctionsComponentAttribute private(memo: MemoStrategy, ?exportDefault: bool) =
+    inherit ReactComponentAttribute(memo=memo, ?exportDefault=exportDefault, ?import=None, ?from=None)
+    new() = ReactMemoEqualsButFunctionsComponentAttribute(memo=MemoStrategy.EqualsButFunctions, exportDefault=false)
+    new(exportDefault: bool) = ReactMemoEqualsButFunctionsComponentAttribute(memo=MemoStrategy.EqualsButFunctions, exportDefault=exportDefault)
+
+[<RequireQualifiedAccess>]
+module ReactComponent =
+    type Memo = ReactMemoComponentAttribute
+    [<RequireQualifiedAccess>]
+    module Memo =
+        type EqualsButFunctions = ReactMemoEqualsButFunctionsComponentAttribute
 

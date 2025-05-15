@@ -8,6 +8,7 @@
     <PackageReleaseNotes>Remove redundant declaration of imported React component</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="StringSyntax.fs" />
     <Compile Include="AstUtils.fs" />
     <Compile Include="ReactComponent.fs" />
     <Compile Include="Hook.fs" />
