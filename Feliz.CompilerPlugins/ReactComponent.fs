@@ -148,7 +148,7 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
             if decl.Args.Length = 1 && AstUtils.isRecord compiler decl.Args[0].Type then
                 // check whether the record type is defined in this file
                 // trigger warning if that is case
-                let definedInThisFile =
+                let definedInThisFileAndIsUpperCase =
                     file.Declarations
                     |> List.tryPick (fun declaration ->
                         match declaration with
@@ -157,7 +157,9 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                             match decl.Args[0].Type with
                             | Type.DeclaredType (entity, _genericArgs) ->
                                 let declaredEntity = compiler.GetEntity(entity)
-                                if classEntity.IsFSharpRecord && declaredEntity.FullName = classEntity.FullName
+                                if classEntity.IsFSharpRecord &&
+                                   declaredEntity.FullName = classEntity.FullName &&
+                                   System.Char.IsUpper(declaredEntity.CompiledName[0])
                                 then Some declaredEntity.FullName
                                 else None
 
@@ -169,12 +171,12 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                             None
                     )
 
-                match definedInThisFile with
+                match definedInThisFileAndIsUpperCase with
                 | Some recordTypeName ->
                     let errorMsg = String.concat "" [
                         sprintf "Function component '%s' is using a record type '%s' as an input parameter. " decl.Name recordTypeName
                         "This happens to break React tooling like react-refresh and hot module reloading. "
-                        "To fix this issue, consider using an anonymous record instead or multiple simpler values as input parameters (can be tupled). "
+                        "To fix this issue, consider using instead: lowercased record type name, an anonymous record instead or multiple simpler values as input parameters (can be tupled). "
                         "Future versions of [<ReactComponent>] might not emit this warning anymore, in which case you can assume that the issue is fixed. "
                         "To learn more about the issue, see https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/258"
                     ]
