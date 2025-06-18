@@ -11,32 +11,22 @@ The React API provided by Feliz should feel very familiar to those who already k
 
 Here follows a full React example with a stateful component using a state variable hook.
 
-```fsharp:stateful-counter
-module App
+import ComponentRender from '@site/src/components/ComponentRender';
+import Counter from '../feliz-docs/fableoutput/Examples/React/Counter'
+import RawCounter from '!!raw-loader!../feliz-docs/Examples/React/Counter.fs'
 
-open Feliz
+<ComponentRender code={RawCounter}> 
+  <Counter />
+</ComponentRender>
 
-[<ReactComponent>]
-let Counter() =
-    let (count, setCount) = React.useState(0)
-    Html.div [
-        Html.h1 count
-        Html.button [
-            prop.text "Increment"
-            prop.onClick (fun _ -> setCount(count + 1))
-        ]
-    ]
 
-open Browser.Dom
-
-ReactDOM.render(Counter(), document.getElementById "root")
-```
 This example is a direct mapping from the Javascript and React equivalent:
-```js
-import ReactDOM from 'react-dom'
+
+
+```jsx
 import React, { useState } from 'react';
 
-function Counter() {
+export default function Counter() {
   // Declare a new state variable, which we'll call "count"
   const [count, setCount] = useState(0);
 
@@ -50,5 +40,14 @@ function Counter() {
   );
 }
 
-ReactDOM.render(<Counter />, document.getElementById("root"))
 ```
+
+For those interested this is what the Javascript code looks like when transpiled by Fable:
+
+import CodeBlock from '@theme/CodeBlock';
+import RawJsxCode from '!!raw-loader!../feliz-docs/fableoutput/Examples/React/Counter.jsx';
+
+<CodeBlock language="jsx">
+{RawJsxCode}
+</CodeBlock>
+

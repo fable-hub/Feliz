@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Components.fs" />
+    <Compile Include="Examples/React/Counter.fs" />
   </ItemGroup>
 
   <ItemGroup>
