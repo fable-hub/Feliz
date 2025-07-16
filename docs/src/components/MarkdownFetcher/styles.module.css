@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: var(--ifm-color-primary-contrast-background);
+  color: var(--ifm-color-primary-contrast-foreground);
+  padding: .5rem 1rem;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.iconContainer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  color: var(--ifm-color-primary-contrast-foreground);
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+}
+
+.icon:hover {
+  opacity: 0.8;
+}
+
+.title {
+  min-width: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: bold;
+}

@@ -1,0 +1,13 @@
+@import 'highlight.js/styles/github-dark.css';
+
+.hljs-theme :global(pre) {
+  background: inherit;
+  padding: 1rem;
+  overflow: auto;
+  border-radius: 6px;
+}
+
+.hljs-theme :global(code.hljs) {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}

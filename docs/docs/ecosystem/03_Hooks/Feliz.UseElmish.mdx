@@ -1,5 +1,5 @@
 ---
-title: React Elmish Components
+title: Feliz.UseElmish
 sidebar_position: 9
 ---
 
@@ -26,8 +26,8 @@ dotnet femto install Feliz.UseElmish
 
 Here is an example to demonstrate how to build such component:
 
-import ElmishCounter from '../feliz-docs/fableoutput/Examples/React/ElmishCounter'
-import RawElmishCounter from '!!raw-loader!../feliz-docs/Examples/React/ElmishCounter.fs'
+import ElmishCounter from '../../feliz-docs/fableoutput/Examples/React/ElmishCounter'
+import RawElmishCounter from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounter.fs'
 
 <ComponentRender code={RawElmishCounter}> 
   <ElmishCounter />
@@ -110,8 +110,8 @@ ReactDOM.render(App(), document.getElementById "feliz-app")
 
 Next, let's combine this hook with other React hooks such as `React.useState` and `React.useEffect`:
 
-import ElmishCounterSubscription from '../feliz-docs/fableoutput/Examples/React/ElmishCounterSubscription'
-import RawElmishCounterSubscription from '!!raw-loader!../feliz-docs/Examples/React/ElmishCounterSubscription.fs'
+import ElmishCounterSubscription from '../../feliz-docs/fableoutput/Examples/React/ElmishCounterSubscription'
+import RawElmishCounterSubscription from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounterSubscription.fs'
 
 <ComponentRender code={RawElmishCounterSubscription}> 
   <ElmishCounterSubscription />
