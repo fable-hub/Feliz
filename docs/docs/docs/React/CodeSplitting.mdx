@@ -1,0 +1,66 @@
+---
+sidebar_position: 13
+---
+
+# Code Splitting
+
+There are two components involved when implementing code splitting: `React.lazy'` and `React.suspense`.
+
+## React.lazy'
+
+This function allows you to dynamically import a component from another file asynchronously.
+
+The benefit of this is it allows your bundler (such as webpack) to keep those files separate. The
+benefit of this is that you get faster initial renders in your application.
+
+## React.suspense
+
+This component allows you to provide children that if they are loading an element will be rendered
+as a placeholder while they load.
+
+This works for anything in the child tree, so you could for example put `suspense` at the top of your
+application if you were so inclined.
+
+In summary, place `suspense` where you want to see the loading indicator and `lazy'` where you want
+to do the code splitting.
+
+**You must define the dynamic import at the module level, or it will fail!**
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import CodeSplitting from '../../feliz-docs/fableoutput/Examples/React/CodeSplitting'
+import RawCodeSplitting from '!!raw-loader!../../feliz-docs/Examples/React/CodeSplitting.fs'
+import RawCounter from '!!raw-loader!../../feliz-docs/Examples/React/Counter.fs'
+
+<ComponentRender code={[
+  {
+    content: RawCodeSplitting,
+    fileName: 'CodeSplitting.fs',
+  },
+  {
+    content: RawCounter,
+    fileName: 'Counter.fs',
+  }
+]} triggerRender> 
+  <CodeSplitting />
+</ComponentRender>
+
+This doesn't appear to be doing anything, this is because the file loads so quickly. To get
+a better unstanding of what's happening we can map the `JS.Promise` to add a delay:
+
+<ComponentRender code={[
+  {
+    content: RawCodeSplitting,
+    fileName: 'CodeSplitting.fs',
+  },
+  {
+    content: RawCounter,
+    fileName: 'Counter.fs',
+  }
+]} triggerRender> 
+  <CodeSplitting delay={4000} />
+</ComponentRender>
+
+
+See the [React docs] for more information about code splitting.
+
+[React docs]: https://reactjs.org/docs/code-splitting.html

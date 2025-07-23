@@ -321,6 +321,41 @@ type Components =
             prop.text "This component uses StrictMode with an effect"
         ]
 
+    [<ReactComponent>]
+    static member EffectfulTimer() =
+        let (paused, setPaused) = React.useState(false)
+        // using useStateWithUpdater instead of useState
+        // to avoid stale closures in React.useEffect
+        let (value, setValue) = React.useStateWithUpdater(0)
+
+        let subscribeToTimer() =
+            // start the timer
+            let subscriptionId = Fable.Core.JS.setInterval (fun _ -> if not paused then setValue (fun prev -> prev + 1)) 1000
+            // return IDisposable with cleanup code that stops the timer
+            { new System.IDisposable with member this.Dispose() = Fable.Core.JS.clearInterval(subscriptionId) }
+
+        React.useEffect(subscribeToTimer, [| box paused |])
+
+        Html.div [
+            Html.h1 [
+                prop.testId "timer-value"
+                prop.text value
+            ]
+
+            Html.button [
+                prop.testId "pause-button"
+                prop.style [
+                    if paused then
+                        style.backgroundColor "yellow"
+                    else
+                        style.backgroundColor "green"
+                ]
+
+                prop.onClick (fun _ -> setPaused(not paused))
+                prop.text (if paused then "Resume" else "Pause")
+            ]
+        ]
+
     // [<ReactComponent>]
     // static member ComponentUseCancelationToken() =
     //     let tokenRef = React.useRef(None)

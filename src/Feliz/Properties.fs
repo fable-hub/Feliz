@@ -105,6 +105,14 @@ module PropHelpers =
                 |> fun res -> (unbox<string> cmdType) + " " + res)
         |> String.concat System.Environment.NewLine
 
+    let dateTimeValueFunc (value: System.DateTime option) (includeTime: bool) =
+        match value with
+        | None -> ""
+        | Some date ->
+            if includeTime
+            then (date.ToString("yyyy-MM-ddThh:mm"))
+            else (date.ToString("yyyy-MM-dd"))
+
 /// Represents the native Html properties.
 [<Erase>]
 type prop =
@@ -1911,19 +1919,12 @@ type prop =
     static member inline value (value: seq<string>) = Interop.mkAttr "value" (ResizeArray value)
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime, includeTime: bool) =
-        if includeTime
-        then Interop.mkAttr "value" (value.ToString("yyyy-MM-ddThh:mm"))
-        else Interop.mkAttr "value" (value.ToString("yyyy-MM-dd"))
+        Interop.mkAttr "value" (PropHelpers.dateTimeValueFunc (Some value) includeTime)
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime) = prop.value(value, includeTime=false)
     /// The value of the element, interpreted as a date, or empty if there is no value.
     static member inline value (value: System.DateTime option, includeTime: bool) =
-        match value with
-        | None -> Interop.mkAttr "value" ""
-        | Some date ->
-            if includeTime
-            then Interop.mkAttr "value" (date.ToString("yyyy-MM-ddThh:mm"))
-            else Interop.mkAttr "value" (date.ToString("yyyy-MM-dd"))
+        Interop.mkAttr "value" (PropHelpers.dateTimeValueFunc value includeTime)
 
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.

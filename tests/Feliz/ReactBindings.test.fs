@@ -215,6 +215,24 @@ describe "useEffect" <| fun _ ->
         Expect.toHaveBeenCalledTimes dispose 1
     }
 
+    testPromise "IDisposable return calls Dispose() function" <| fun _ -> promise {
+            RTL.render (Components.EffectfulTimer())
+            |> ignore
+
+            let value = RTL.screen.getByTestId("timer-value")
+            let button = RTL.screen.getByTestId("pause-button")
+
+            do! Promise.sleep 2200
+            let initial = int value.textContent
+            Expect.toBeGreaterThan initial 0
+
+            do! RTL.userEvent.click(button) // Pause
+
+            do! Promise.sleep 2000
+            let afterPause = int value.textContent
+            Expect.toBe afterPause initial
+        }
+
 describe "useLayoutEffect" <| fun _ ->
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
 

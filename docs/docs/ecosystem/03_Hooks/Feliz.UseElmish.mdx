@@ -1,0 +1,124 @@
+---
+title: Feliz.UseElmish
+sidebar_position: 9
+---
+
+# Feliz.UseElmish [![Nuget](https://img.shields.io/nuget/v/Feliz.UseElmish.svg?maxAge=0&colorB=brightgreen)](https://www.nuget.org/packages/Feliz.UseElmish)
+
+import ComponentRender from '@site/src/components/ComponentRender';
+
+Besides being able to use Feliz in existing Elmish applications, you can also use Elmish as _part_ of your Feliz application. This is a different approach to building standalone React components that use Elmish internally to manage the state of the component but from the perspective of the consumer, it is just another React component.
+
+This approach simplifies the original Elmish model where the application state is explicitly passed down in parts to children and events are passed up to the parent components.
+
+The implementation of this approach is made possible using a React hook called `React.useElmish`. The following examples demonstrate how to use it:
+
+### Install into your project
+
+```bash
+npm install use-sync-external-store
+dotnet add package Feliz.UseElmish
+
+or
+
+dotnet femto install Feliz.UseElmish
+```
+
+Here is an example to demonstrate how to build such component:
+
+import ElmishCounter from '../../feliz-docs/fableoutput/Examples/React/ElmishCounter'
+import RawElmishCounter from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounter.fs'
+
+<ComponentRender code={RawElmishCounter}> 
+  <ElmishCounter />
+</ComponentRender>
+
+The difference here from a full-fledged Elmish applications is that there isn't an "Elmish entry point" to run the component and manage its life-cycle. Instead, the `React.useElmish` hooks manages the Elmish life-cycle internally within the React component so that it can run standalone inside other React components:
+
+```fsharp
+[<ReactComponent>]
+let Counters() =
+    Html.div [
+        Counter()
+        Counter()
+        Counter()
+    ]
+```
+
+When you need to trigger events from such an Elmish component, use React patterns where you pass a callback via the props instead of passing the `dispatch` function from the parent component.
+
+### Understading the dependencies array
+
+It is also important to understand the _dependencies array_ of the `React.useElmish` function
+
+```fsharp
+//                                             dependencies array
+//                                                    |
+//                                                    |
+//                                                    ↓
+let state, dispatch = React.useElmish(init, update, [| |])
+```
+
+This array is responsible for the _re-initialization_ of the component. For example, if your mini Elmish component loads user profile based on an input user ID like this:
+
+```fsharp
+[<ReactComponent>]
+let UserProfile(userId: int) =
+    // will initialize once even if the component is re-rendered using a different userId
+    let state, dispatch = React.useElmish(init userId, update, [| |])
+    renderUserProfile state disptch
+```
+
+Then you must add the `userId` to the dependencies array so that the hook knows to call `init` again and re-initialize the component:
+
+```fsharp
+[<ReactComponent>]
+let UserProfile(userId: int) =
+    //                                               inititialization dependency
+    //                                                              |
+    //                                                              |
+    //                                                              |
+    // now every time this component is rendered using              |
+    // a different userId, it will reinitialize the component       ↓
+    let state, dispatch = React.useElmish(init userId, update, [| box userId |])
+    renderUserProfile state disptch
+
+// Here, we are using a router so that every time the URL changes
+// say from /user/20 to /user/21 then the UserProfile will be reload that user
+open Feliz.Router
+
+[<ReactComponent>]
+let App() =
+    let currentUrl, updateCurrentUrl = React.useState(Router.currentUrl())
+    React.router [
+        router.onUrlChanged updateCurrentUrl
+        router.children [
+            match currentUrl with
+            | [ "user"; Route.Int userId ] -> UserProfile(userId)
+            | _ -> Html.h1 "Not found"
+        ]
+    ]
+
+open Browser.Dom
+
+ReactDOM.render(App(), document.getElementById "feliz-app")
+```
+
+> The dependencies array follows the same rules of `React.useEffect`
+
+### Combining with other hooks
+
+Next, let's combine this hook with other React hooks such as `React.useState` and `React.useEffect`:
+
+import ElmishCounterSubscription from '../../feliz-docs/fableoutput/Examples/React/ElmishCounterSubscription'
+import RawElmishCounterSubscription from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounterSubscription.fs'
+
+<ComponentRender code={RawElmishCounterSubscription}> 
+  <ElmishCounterSubscription />
+</ComponentRender>
+
+### Disposing of resources
+
+Documentation/Samples WIP
+
+> TL;DR: Have your `State/Model` type implement `IDisposable` and `React.useElmish` will take care of calling the dispose function when the component unmounts.

@@ -1,0 +1,52 @@
+---
+sidebar_position: 8
+---
+
+# Working with dates
+
+The browsers' `Html.input` elements implement native date selectors when the `type` property is either
+
+- `dateTimeLocal` selecting time of the day, day, month and year
+- `date` selecting day, month and year
+- `month` selecting month and year
+
+Using Feliz, you can diectly interact with the dates using `DateTime` instances.
+
+The simplest version using `type=date`:
+
+```fsharp
+[<ReactComponent>]
+let SimpleDateInput() =
+    let (selectedDate, updateDate) = React.useState(DateTime.Now)
+    Html.input [
+        prop.type'.date
+        prop.value selectedDate
+        prop.onChange (fun newValue -> updateDate newValue)
+    ]
+```
+
+Using a full date _and_ time selector with `type=dateTimeLocal`:
+
+```fsharp
+[<ReactComponent>]
+let SimpleDateAndTimeInput() =
+    let (selectedDate, updateDate) = React.useState(DateTime.Now)
+    Html.input [
+        prop.type'.dateTimeLocal
+        prop.value(selectedDate, includeTime=true)
+        prop.onChange (fun newValue -> updateDate newValue)
+    ]
+```
+
+Notice here how we say `includeTime=true` when `type=dateTimeLocal` because the browsers expect the date to be formatted with time included which what `includeTime` controls.
+
+### Switching between a date or datetime input element:
+
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import DateTime from '../../feliz-docs/fableoutput/Examples/React/DateTime'
+import RawDateTime from '!!raw-loader!../../feliz-docs/Examples/React/DateTime.fs'
+
+<ComponentRender code={RawDateTime}> 
+  <DateTime />
+</ComponentRender>

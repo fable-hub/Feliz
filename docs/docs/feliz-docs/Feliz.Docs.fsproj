@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Examples/React/Counter.fs" />
+    <Compile Include="Examples/React/ElmishCounter.fs" />
+    <Compile Include="Examples/React/ElmishCounterSubscription.fs" />
+    <Compile Include="Examples/React/Greeting.fs" />
+    <Compile Include="Examples/React/Greetings.fs" />
+    <Compile Include="Examples/React/MultipleStateVariables.fs" />
+    <Compile Include="Examples/React/UseReducer.fs" />
+    <Compile Include="Examples/React/EffectfulCounter.fs" />
+    <Compile Include="Examples/React/EffectfulOnce.fs" />
+    <Compile Include="Examples/React/EffectfulWithDependency.fs" />
+    <Compile Include="Examples/React/EffectfulTimer.fs" />
+    <Compile Include="Examples/React/UseCancellationTokenHook.fs" />
+    <Compile Include="Examples/React/Portal.fs" />
+    <Compile Include="Examples/React/HoverAnimations.fs" />
+    <Compile Include="Examples/React/DateTime.fs" />
+    <Compile Include="Examples/React/FocusInput.fs" />
+    <Compile Include="Examples/React/ForwardRef.fs" />
+    <Compile Include="Examples/React/ImperativeHandle.fs" />
+    <Compile Include="Examples/React/CodeSplitting.fs" />
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\..\..\src\Feliz\Feliz.fsproj" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="9.0.300" />
+    <PackageReference Include="Feliz" Version="2.9.0" />
+    <PackageReference Include="Fable.Core" Version="4.5.0" />
+    <PackageReference Include="Feliz.UseElmish" Version="2.5.0" />
+    <PackageReference Include="Fable.Promise" Version="3.2.0" />
+  </ItemGroup>
+
+</Project>

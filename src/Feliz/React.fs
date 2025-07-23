@@ -117,10 +117,10 @@ useEffect(() => {
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     static member inline useEffect(setup: unit -> #IDisposable, ?dependencies: obj []) =
         React.useEffect(
-            (unbox<unit -> unit> (System.Func<_,_>(fun () ->
+            (fun () ->
                 let disp = setup()
                 fun () -> disp.Dispose()
-            ))), 
+            ), 
             ?dependencies = dependencies
         )
 

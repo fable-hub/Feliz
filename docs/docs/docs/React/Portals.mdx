@@ -1,0 +1,23 @@
+---
+sidebar_position: 6
+---
+
+# Portals
+
+Portals provide a way to render components outside the DOM hierarchy of the parent component. Portals are often used to create dialog components in React applications.
+
+You can create a portal component by calling the function `ReactDOM.createPortal : ReactElement -> HTMLElement -> ReactElement`.
+
+A common use case is to render a component as direct child to `document.body` or some other DOM element that is not a direct parent of the component. This is useful for modals, tooltips, and other UI elements that need to escape the normal flow of the document.
+
+
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import Portal from '../../feliz-docs/fableoutput/Examples/React/Portal'
+import RawPortal from '!!raw-loader!../../feliz-docs/Examples/React/Portal.fs'
+
+Here we create a reusable reusable component `Portal` to render a child component into the `document.body`.
+
+<ComponentRender code={RawPortal} triggerRender> 
+  <Portal />
+</ComponentRender>

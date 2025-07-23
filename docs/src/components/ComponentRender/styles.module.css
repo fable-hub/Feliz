@@ -1,0 +1,40 @@
+.previewWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.previewBlock {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  position: relative;
+}
+
+.rerenderButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  background: var(--prism-background-color);
+  color: var(--prism-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.4rem;
+  line-height: 0;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.rerenderButton:hover {
+  opacity: 1 !important;
+}
+
+.previewBlock:hover .rerenderButton {
+  opacity: 0.4;
+}

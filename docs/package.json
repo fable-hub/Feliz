@@ -1,5 +1,51 @@
 {
-  "name": "feliz-docs",
+  "name": "docs",
   "version": "0.0.0",
-  "private":"true"
+  "private": true,
+  "scripts": {
+    "fable": "dotnet fable ./docs/feliz-docs/Feliz.Docs.fsproj -o ./docs/feliz-docs/fableoutput --exclude Feliz.CompilerPlugins -e .jsx",
+    "docusaurus": "docusaurus",
+    "start": "npm run fable -- --watch --run docusaurus start",
+    "build": "npm run fable -- --run docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "npm run fable -- --run docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "raw-loader": "^4.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.2"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.8.1",
+    "@docusaurus/tsconfig": "3.8.1",
+    "@docusaurus/types": "3.8.1",
+    "typescript": "~5.6.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
 }
