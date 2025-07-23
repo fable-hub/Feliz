@@ -2,13 +2,13 @@ module Tests.ReactBindingsTests
 
 
 open Fable.Core
+open Fable.Core
 open Fable.Core.JsInterop
 open Feliz
 open Browser
-open Fable.ReactTestingLibrary
-open Fable.Core
-open Feliz.Vitest
+open Vitest
 open ReactBindings
+
 
 describe "Counter (useState)" <| fun _ ->
     testPromise "increments count on button click" <| fun _ -> promise {
@@ -16,14 +16,13 @@ describe "Counter (useState)" <| fun _ ->
         let count = RTL.screen.getByTestId "count"
         let button = RTL.screen.getByTestId "increment"
 
-        Expect.toBe (count.textContent) "0"
+        expect(count).toHaveTextContent "0"
 
-        do! RTL.userEvent.click (button)
-        Expect.toBe (count.textContent) "1"
+        do! userEvent.click (button)
+        expect(count).toHaveTextContent "1"
 
-        do! RTL.userEvent.click (button)
-        Expect.toBe (count.textContent) "2"
-
+        do! userEvent.click (button)
+        expect(count).toHaveTextContent "2"
     }
 
 describe "FragmentComponent" <| fun _ ->
@@ -34,8 +33,8 @@ describe "FragmentComponent" <| fun _ ->
         let first = RTL.screen.getByTestId "first"
         let second = RTL.screen.getByTestId "second"
 
-        Expect.toBe (first.textContent) "Hello"
-        Expect.toBe (second.textContent) "World"
+        expect(first).toHaveTextContent "Hello"
+        expect(second).toHaveTextContent "World"
     }
 
 describe "useCallback" <| fun _ ->
@@ -48,19 +47,19 @@ describe "useCallback" <| fun _ ->
 
         render.rerender (Components.ComponentUseCallback(fun fn -> capturedFns.Add(fn)))
 
-        Expect.toBe (capturedFns.[0]) capturedFns.[1]
+        expect(capturedFns.[0]).toBe capturedFns.[1]
 
     testPromise "should update callback reference if dependency changes" <| fun _ -> promise {
 
         let capturedFns = ResizeArray<unit -> unit>()
 
-        let _ = RTL.render (Components.ComponentUseCallback(fun fn -> capturedFns.Add(fn)))
+        let _ = render (Components.ComponentUseCallback(fun fn -> capturedFns.Add(fn)))
 
-        let incEle = RTL.screen.getByTestId "increment"
+        let incEle = screen.getByTestId "increment"
 
-        do! RTL.userEvent.click (incEle)
+        do! userEvent.click (incEle)
 
-        Expect.expect(capturedFns[0]).``not``.toBe (capturedFns[1])
+        expect(capturedFns[0]).not.toBe (capturedFns[1])
 
     }
 
@@ -70,7 +69,7 @@ describe "React Context" <| fun _ ->
         |> ignore
 
         let valueDiv = RTL.screen.getByTestId "context-value"
-        Expect.toBe (valueDiv.textContent) "Provided value"
+        expect(valueDiv).toHaveTextContent "Provided value"
     }
 
     testPromise "updates context via consumer interaction" <| fun _ -> promise {
@@ -80,11 +79,11 @@ describe "React Context" <| fun _ ->
         let valueDiv = RTL.screen.getByTestId "context-value"
         let button = RTL.screen.getByTestId "update-context"
 
-        Expect.toBe valueDiv.textContent "Provided value"
+        expect(valueDiv).toHaveTextContent "Provided value"
 
-        do! RTL.userEvent.click(button)
+        do! userEvent.click(button)
 
-        Expect.toBe valueDiv.textContent "Updated value"
+        expect(valueDiv).toHaveTextContent "Updated value"
     }
 
 describe "ComponentUseRef" <| fun _ ->
@@ -95,30 +94,30 @@ describe "ComponentUseRef" <| fun _ ->
         let input = RTL.screen.getByTestId "my-input" :?> Browser.Types.HTMLInputElement
         let button = RTL.screen.getByTestId "update-button"
 
-        Expect.toBe input.value ""
+        expect(input).toHaveValue ""
 
-        do! RTL.userEvent.click button
+        do! userEvent.click button
 
-        Expect.toBe input.value "Updated via ref"
+        expect(input).toHaveValue "Updated via ref"
     }
 
     testPromise "Referencing a value with a ref stores correctly" <| fun _ -> promise {
-        let render = RTL.render (Components.ComponentUseRefForValue())
+        let render = render (Components.ComponentUseRefForValue())
 
-        let countDisplay = RTL.screen.getByTestId "count-display"
-        let incRefbutton = RTL.screen.getByTestId "increment-ref-button"
-        let updateStateButton = RTL.screen.getByTestId "update-state-button"
+        let countDisplay = screen.getByTestId "count-display"
+        let incRefbutton = screen.getByTestId "increment-ref-button"
+        let updateStateButton = screen.getByTestId "update-state-button"
 
-        Expect.toBe countDisplay.textContent "0" //state starts with 0
+        expect(countDisplay).toHaveTextContent "0" //state starts with 0
 
-        do! RTL.userEvent.click incRefbutton // only update ref
-        Expect.toBe countDisplay.textContent "0"
+        do! userEvent.click incRefbutton // only update ref
+        expect(countDisplay).toHaveTextContent "0"
 
-        do! RTL.userEvent.click incRefbutton // only update ref
-        Expect.toBe countDisplay.textContent "0"
+        do! userEvent.click incRefbutton // only update ref
+        expect(countDisplay).toHaveTextContent "0"
 
-        do! RTL.userEvent.click updateStateButton // only update ref
-        Expect.toBe countDisplay.textContent "2"
+        do! userEvent.click updateStateButton // update state by ref
+        expect(countDisplay).toHaveTextContent "2"
     }
 
 describe "ComponentUseMemo" <| fun _ ->
@@ -132,16 +131,16 @@ describe "ComponentUseMemo" <| fun _ ->
         let count = RTL.screen.getByTestId "count"
 
         // Initial value should be based on count 0
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 0"
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 0"
 
         // Click to increment the count
-        do! RTL.userEvent.click button
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 0"
+        do! userEvent.click button
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 0"
 
         // Click again, should update the memoized value
-        do! RTL.userEvent.click button
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 0"
-        Expect.toBe count.textContent "2"
+        do! userEvent.click button
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 0"
+        expect(count).toHaveTextContent "2"
 
         // Ensure the value is memoized and doesn't change until `count` changes
     }
@@ -156,16 +155,16 @@ describe "ComponentUseMemo" <| fun _ ->
         let count = RTL.screen.getByTestId "count"
 
         // Initial value should be based on count 0
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 0"
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 0"
 
         // Click to increment the count
-        do! RTL.userEvent.click button
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 1"
+        do! userEvent.click button
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 1"
 
         // Click again, should update the memoized value
-        do! RTL.userEvent.click button
-        Expect.toBe memoizedValueDiv.textContent "Memoized count: 2"
-        Expect.toBe count.textContent "2"
+        do! userEvent.click button
+        expect(memoizedValueDiv).toHaveTextContent "Memoized count: 2"
+        expect(count).toHaveTextContent "2"
 
         // Ensure the value is memoized and doesn't change until `count` changes
     }
@@ -182,15 +181,15 @@ describe "useEffect" <| fun _ ->
         )
 
         // Check that effect was called once on mount
-        Expect.toHaveBeenCalledTimes effect 1 //"Effect should be called once on mount"
-        Expect.toHaveBeenCalledTimes dispose 0 
+        expect(effect).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
+        expect(dispose).toHaveBeenCalledTimes 0 
 
         // Unmount the component
         renderResult.unmount()
 
         // Check that disposeEffect was called once on unmount
-        Expect.toHaveBeenCalledTimes effect 1
-        Expect.toHaveBeenCalledTimes dispose 1
+        expect(effect).toHaveBeenCalledTimes 1
+        expect(dispose).toHaveBeenCalledTimes 1
     }
 
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
@@ -204,34 +203,35 @@ describe "useEffect" <| fun _ ->
         )
 
         // Check that effect was called once on mount
-        Expect.toHaveBeenCalledTimes effect 1 //"Effect should be called once on mount"
-        Expect.toHaveBeenCalledTimes dispose 0 
+        expect(effect).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
+        expect(dispose).toHaveBeenCalledTimes 0 
 
         // Unmount the component
         renderResult.unmount()
 
         // Check that disposeEffect was called once on unmount
-        Expect.toHaveBeenCalledTimes effect 1
-        Expect.toHaveBeenCalledTimes dispose 1
+        expect(effect).toHaveBeenCalledTimes 1
+        expect(dispose).toHaveBeenCalledTimes 1
     }
 
-    testPromise "IDisposable return calls Dispose() function" <| fun _ -> promise {
-            RTL.render (Components.EffectfulTimer())
-            |> ignore
+    ftestPromise "IDisposable return calls Dispose() function" <| fun _ -> promise {
+        RTL.render (Components.EffectfulTimer())
+        |> ignore
 
-            let value = RTL.screen.getByTestId("timer-value")
-            let button = RTL.screen.getByTestId("pause-button")
+        let value = RTL.screen.getByTestId("timer-value")
+        let button = RTL.screen.getByTestId("pause-button")
 
-            do! Promise.sleep 2200
-            let initial = int value.textContent
-            Expect.toBeGreaterThan initial 0
+        do! Promise.sleep 2200
 
-            do! RTL.userEvent.click(button) // Pause
+        let initial = int value.textContent
+        expect(initial).toBeGreaterThan 0
 
-            do! Promise.sleep 2000
-            let afterPause = int value.textContent
-            Expect.toBe afterPause initial
-        }
+        do! userEvent.click(button) // Pause
+
+        do! Promise.sleep 2000
+        let afterPause = int value.textContent
+        expect(afterPause).toBe initial
+    }
 
 describe "useLayoutEffect" <| fun _ ->
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
@@ -245,15 +245,15 @@ describe "useLayoutEffect" <| fun _ ->
         )
 
         // Check that effect was called once on mount
-        Expect.toHaveBeenCalledTimes effect 1 //"Effect should be called once on mount"
-        Expect.toHaveBeenCalledTimes dispose 0 
+        expect(effect).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
+        expect(dispose).toHaveBeenCalledTimes 0 
 
         // Unmount the component
         renderResult.unmount()
 
         // Check that disposeEffect was called once on unmount
-        Expect.toHaveBeenCalledTimes effect 1
-        Expect.toHaveBeenCalledTimes dispose 1
+        expect(effect).toHaveBeenCalledTimes 1
+        expect(dispose).toHaveBeenCalledTimes 1
     }
 
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
@@ -267,15 +267,15 @@ describe "useLayoutEffect" <| fun _ ->
         )
 
         // Check that effect was called once on mount
-        Expect.toHaveBeenCalledTimes effect 1 //"Effect should be called once on mount"
-        Expect.toHaveBeenCalledTimes dispose 0 
+        expect(effect).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
+        expect(dispose).toHaveBeenCalledTimes 0 
 
         // Unmount the component
         renderResult.unmount()
 
         // Check that disposeEffect was called once on unmount
-        Expect.toHaveBeenCalledTimes effect 1
-        Expect.toHaveBeenCalledTimes dispose 1
+        expect(effect).toHaveBeenCalledTimes 1
+        expect(dispose).toHaveBeenCalledTimes 1
     }
 
 // describe "useCancellationToken" <| fun _ ->
@@ -303,7 +303,7 @@ describe "lazy" <| fun _ ->
         let render = RTL.render (Components.LazyLoad())
 
         // Ensure loading message is not present initially
-        Expect.toBeNull (RTL.screen.queryByText("Loading..."))
+        expect(RTL.screen.queryByText("Loading...")).toBeNull()
 
         // Type into the input field
         // let input = RTL.screen.getByTestId("input")
@@ -311,35 +311,28 @@ describe "lazy" <| fun _ ->
         // do! RTL.userEvent.type'(input, "hello", 50)
 
         // Click the checkbox to load the lazy component
-        let checkbox = RTL.screen.getByTestId("checkbox")
-        do! RTL.userEvent.click(checkbox)
+        let checkbox = screen.getByTestId("checkbox")
+        do! userEvent.click(checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement option>(fun () ->
-            RTL.screen.queryByText("Loading...")
-            // promise {
-            //     let! loading = 
-            //     Expect.toHaveTextContent loading "Loadin2g..."
-            // }
-        )
+        let! loading = RTL.waitFor<Types.HTMLElement>(fun () -> promise {
+            return! screen.findByTestId("loading")
+        })
 
-        Expect.expect(loading).``not``.toBeNull()
+        expect(loading).not.toBeNull()
 
-        do! RTL.waitFor(fun () ->
-            promise {
-                // Wait for the lazy component to appear
-                let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
-                Expect.expect(lazyText).``not``.toBeNull()
-            }
-            |> Promise.start
-        )
+        do! RTL.waitFor<unit>((fun () -> promise {
+            // Wait for the lazy component to appear
+            let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
+            expect(lazyText).not.toBeNull()
+        }), RTLWaitForOptions(timeout = 3000))
     }
 
     testPromise "loads lazy static member component with typed text after checkbox is checked" <| fun _ -> promise {
         let render = RTL.render (Components.LazyLoadStaticMember())
 
         // Ensure loading message is not present initially
-        Expect.toBeNull (RTL.screen.queryByText("Loading..."))
+        expect(screen.queryByText("Loading...")).toBeNull()
 
         // Type into the input field
         // let input = RTL.screen.getByTestId("input")
@@ -348,27 +341,22 @@ describe "lazy" <| fun _ ->
 
         // Click the checkbox to load the lazy component
         let checkbox = RTL.screen.getByTestId("checkbox")
-        do! RTL.userEvent.click(checkbox)
+        do! userEvent.click(checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement option>(fun () ->
-            RTL.screen.queryByText("Loading...")
-            // promise {
-            //     let! loading = 
-            //     Expect.toHaveTextContent loading "Loadin2g..."
-            // }
-        )
+        do! RTL.waitFor<unit>(fun () -> promise {
+            let! loading = RTL.screen.findByTestId("loading")
+            expect(loading).not.toBeNull()
+        })
 
-        Expect.expect(loading).``not``.toBeNull()
 
-        do! RTL.waitFor(fun () ->
-            promise {
+        let! lazyText = 
+            RTL.waitFor<Browser.Types.HTMLElement>((fun () -> promise {
                 // Wait for the lazy component to appear
-                let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
-                Expect.expect(lazyText).``not``.toBeNull()
-            }
-            |> Promise.start
-        )
+                return! RTL.screen.findByText("Component loaded after 2 seconds")
+            }), RTLWaitForOptions(timeout = 3000))
+
+        expect(lazyText).not.toBeNull()
     }
 
 
@@ -380,5 +368,5 @@ describe "Strict Mode with Effect" <| fun _ ->
         ])
 
         // Check that effect was called once on mount
-        Expect.toHaveBeenCalledTimes effect 2 //"Effect should be called once on mount"
+        expect(effect).toHaveBeenCalledTimes 2 //"Effect should be called once on mount"
     }

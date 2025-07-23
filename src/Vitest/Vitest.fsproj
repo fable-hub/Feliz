@@ -6,17 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Vitest.fs" />
-    <Compile Include="React.fs" />
+    <Compile Include="Library.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Fable.Core" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Fable.ReactTestingLibrary\Fable.ReactTestingLibrary.fsproj" />
-    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
+    <PackageReference Include="Fable.Promise" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Feliz.Vitest.React\Feliz.Vitest.React.fsproj" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="package.json" />
     <Compile Include="CodeSplitting.fs" />
     <Compile Include="PropHelpers.test.fs" />
     <Compile Include="Legacy.fs" />
@@ -16,9 +14,10 @@
     <Compile Include="ReactBindings.fs" />
     <Compile Include="ReactBindings.test.fs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <PackageReference Include="Fable.Browser.Dom" />
-    <PackageReference Include="Fable.Promise" />
+    <ProjectReference Include="..\..\src\Feliz\Feliz.fsproj" />
+    <ProjectReference Include="..\Globals\Test.Globals.fsproj" />
   </ItemGroup>
 </Project>
 

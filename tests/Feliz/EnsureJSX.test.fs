@@ -5,9 +5,8 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Feliz
 open Browser
-open Fable.ReactTestingLibrary
 open Fable.Core
-open Feliz.Vitest
+open Vitest
 open EnsureJSX
 
 describe "EnsureJSX Tests" <| fun _ ->
@@ -19,6 +18,6 @@ describe "EnsureJSX Tests" <| fun _ ->
 
         let div = RTL.screen.getByTestId "simpleDiv"
 
-        Expect.toBeInTheDocument div
+        expect(div).toBeInTheDocument()
 
     

@@ -6,18 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Feliz.Vitest.React\Feliz.Vitest.React.fsproj" />
     <ProjectReference Include="..\..\src\Feliz.Delay\Feliz.Delay.fsproj" />
+    <ProjectReference Include="..\Globals\Test.Globals.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="CodeSplitting.fs" />
     <Compile Include="Main.test.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Fable.Browser.Dom" />
-    <PackageReference Include="Fable.Promise" />
   </ItemGroup>
 
 </Project>

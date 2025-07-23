@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Feliz.UseElmish\Feliz.UseElmish.fsproj" />
-    <ProjectReference Include="..\Globals\Test.Globals.fsproj" />
+    <Content Include="package.json" />
+    <Compile Include="Program.test.fs" />
   </ItemGroup>
 
+  <ItemGroup />
+
   <ItemGroup>
-    <Compile Include="Main.test.fs" />
+    <ProjectReference Include="..\Globals\Test.Globals.fsproj" />
   </ItemGroup>
 
 </Project>

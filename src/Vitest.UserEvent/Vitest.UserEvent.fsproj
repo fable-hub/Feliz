@@ -6,18 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Types.fs" />
-    <Compile Include="Interop.fs" />
-    <Compile Include="Bindings.fs" />
-    <Compile Include="Events.fs" />
-    <Compile Include="RTL.fs" />
+    <Compile Include="Library.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Feliz\Feliz.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Fable.Core" />
     <PackageReference Include="Fable.Browser.Dom" />
     <PackageReference Include="Fable.Promise" />
   </ItemGroup>

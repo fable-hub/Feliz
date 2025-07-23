@@ -2,29 +2,6 @@
   "version": 2,
   "dependencies": {
     "net8.0": {
-      "Fable.Browser.Dom": {
-        "type": "Direct",
-        "requested": "[2.18.1, )",
-        "resolved": "2.18.1",
-        "contentHash": "UNrFT/fhsS4voVZgLSO1DwgOu9XAqKhPIfvZlPwcgRmjG85/zfL+RFaG3pJcMGgGd+uqoLKx0SYMWjZCVl+DMg==",
-        "dependencies": {
-          "FSharp.Core": "4.7.2",
-          "Fable.Browser.Blob": "1.4.0",
-          "Fable.Browser.Event": "1.7.0",
-          "Fable.Browser.WebStorage": "1.3.0",
-          "Fable.Core": "3.2.8"
-        }
-      },
-      "Fable.Promise": {
-        "type": "Direct",
-        "requested": "[3.2.0, )",
-        "resolved": "3.2.0",
-        "contentHash": "4A+Iiembrny2h3AE2BIbchfuLmWHNhpkOTvbTtFXHtGzHVMqEVFRXrAfdy83wX2wK5Og3fqRo1y8t/Bqkd7j6g==",
-        "dependencies": {
-          "FSharp.Core": "4.7.2",
-          "Fable.Core": "3.7.1"
-        }
-      },
       "FSharp.Core": {
         "type": "Direct",
         "requested": "[8.0.401, )",
@@ -69,14 +46,6 @@
           "Fable.Core": "3.2.8"
         }
       },
-      "fable.reacttestinglibrary": {
-        "type": "Project",
-        "dependencies": {
-          "Fable.Browser.Dom": "[2.18.1, )",
-          "Fable.Promise": "[3.2.0, )",
-          "Feliz": "[2.9.0, )"
-        }
-      },
       "feliz": {
         "type": "Project",
         "dependencies": {
@@ -98,12 +67,43 @@
           "Fable.Elmish": "[4.0.0, )"
         }
       },
-      "feliz.vitest.react": {
+      "test.globals": {
+        "type": "Project",
+        "dependencies": {
+          "Vitest": "[1.0.0, )",
+          "Vitest.JestDom": "[1.0.0, )",
+          "Vitest.ReactTestingLibrary": "[1.0.0, )",
+          "Vitest.UserEvent": "[1.0.0, )"
+        }
+      },
+      "vitest": {
         "type": "Project",
         "dependencies": {
           "Fable.Core": "[4.5.0, )",
-          "Fable.ReactTestingLibrary": "[1.0.0, )",
+          "Fable.Promise": "[3.2.0, )"
+        }
+      },
+      "vitest.jestdom": {
+        "type": "Project",
+        "dependencies": {
+          "Fable.Browser.Dom": "[2.20.0, )",
+          "Vitest": "[1.0.0, )"
+        }
+      },
+      "vitest.reacttestinglibrary": {
+        "type": "Project",
+        "dependencies": {
+          "Fable.Core": "[4.5.0, )",
+          "Fable.Promise": "[3.2.0, )",
           "Feliz": "[2.9.0, )"
+        }
+      },
+      "vitest.userevent": {
+        "type": "Project",
+        "dependencies": {
+          "Fable.Browser.Dom": "[2.20.0, )",
+          "Fable.Core": "[4.5.0, )",
+          "Fable.Promise": "[3.2.0, )"
         }
       },
       "Fable.AST": {
@@ -111,6 +111,19 @@
         "requested": "[4.5.0, )",
         "resolved": "4.5.0",
         "contentHash": "EAQhSI5oRfCDPj87QVk0OndyLBABp7lNqzvUkLWoAQN1jHhCLHBQuHmzA76PBVPQ65NhBoHXu8ojf8tL6PHjwA=="
+      },
+      "Fable.Browser.Dom": {
+        "type": "CentralTransitive",
+        "requested": "[2.20.0, )",
+        "resolved": "2.20.0",
+        "contentHash": "8MnTBQ3NtWABhT8KXJZ7dracK4La3LrX265eqRJiiXayU6acNvzjBltYsyMmarqUhRf723e3hyHTKNOLQITosQ==",
+        "dependencies": {
+          "FSharp.Core": "4.7.2",
+          "Fable.Browser.Blob": "1.4.0",
+          "Fable.Browser.Event": "1.7.0",
+          "Fable.Browser.WebStorage": "1.3.0",
+          "Fable.Core": "3.2.8"
+        }
       },
       "Fable.Core": {
         "type": "CentralTransitive",
@@ -123,6 +136,16 @@
         "requested": "[4.0.0, )",
         "resolved": "4.0.0",
         "contentHash": "F7yJFmXWmg0EYfAstxNWdei1SJB+Q83pCxxGlfmLJ7uxIiYd6CbRjaHDBxC0SmHeT1E4kbjHCTFys2HHg90oow==",
+        "dependencies": {
+          "FSharp.Core": "4.7.2",
+          "Fable.Core": "3.7.1"
+        }
+      },
+      "Fable.Promise": {
+        "type": "CentralTransitive",
+        "requested": "[3.2.0, )",
+        "resolved": "3.2.0",
+        "contentHash": "4A+Iiembrny2h3AE2BIbchfuLmWHNhpkOTvbTtFXHtGzHVMqEVFRXrAfdy83wX2wK5Og3fqRo1y8t/Bqkd7j6g==",
         "dependencies": {
           "FSharp.Core": "4.7.2",
           "Fable.Core": "3.7.1"

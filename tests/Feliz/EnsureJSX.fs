@@ -2,6 +2,7 @@ module Tests.EnsureJSX
 
 open Fable.Core
 open Feliz
+
 [<Erase; Mangle(false)>]
 type Components =
 

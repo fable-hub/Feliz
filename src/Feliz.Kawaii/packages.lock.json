@@ -83,7 +83,7 @@
       },
       "Fable.Browser.Dom": {
         "type": "CentralTransitive",
-        "requested": "[2.18.1, )",
+        "requested": "[2.20.0, )",
         "resolved": "2.4.4",
         "contentHash": "wFGefU1Idqkwa6kKdvz5oyHL5yP+i+cvTHPeJGlF22fnqOozFurFIuPqGToqpgl9DfyWr7MyNvTiLFOkfXNqnA==",
         "dependencies": {

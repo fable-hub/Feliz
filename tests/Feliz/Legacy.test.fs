@@ -4,49 +4,37 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Feliz
 open Browser
-open Fable.ReactTestingLibrary
 open Fable.Core
-open Feliz.Vitest
+open Vitest
 open Components
-
-[<Erase>]
-type RTL =
-    [<ImportMember("@testing-library/react")>]
-    static member render (ele: ReactElement) : Bindings.Render<Types.HTMLElement,Types.HTMLElement> = jsNative
-
-    [<ImportMember("@testing-library/react")>]
-    static member screen: Bindings.QueriesForElement = jsNative
-
-    [<Import("userEvent", "@testing-library/user-event")>]
-    static member userEvent: Bindings.UserEventImport = jsNative
 
 describe "Legacy Tests" <| fun _ ->
 
-    test "Html elements can be rendered" <| fun _ ->
-        RTL.render(Html.div [
+    Vitest.test("Html elements can be rendered", fun () ->
+        let _ = RTL.render(Html.div [
             Html.h1 [
                 prop.testId "header"
                 prop.text "Hello world!"
             ]
         ])
-        |> ignore
 
-        let container = RTL.screen.getByTestId(!^"header")
-        Expect.toHaveTextContent container "Hello world!"
+        let container = RTL.screen.getByTestId("header")
+        Vitest.expect(container).toHaveTextContent "Hello world!"
+    )
 
-    test "Verify correct clean up" <| fun _ ->
-        RTL.render(Html.div [
+    Vitest.test("Verify correct clean up", fun () ->
+        let _ = RTL.render(Html.div [
             Html.h1 [
                 prop.testId "header"
                 prop.text "Hello world"
             ]
         ])
-        |> ignore
 
-        let header = RTL.screen.getByTestId !^"header"
-        Expect.toHaveTextContent header "Hello world"  
+        let header = RTL.screen.getByTestId "header"
+        Vitest.expect(header).toHaveTextContent "Hello world"
+    )
 
-    test "Parsing standard dates works" <| fun _ ->
+    Vitest.test("Parsing standard dates works", fun () ->
         let validDates = [
             "2020-01"
             "2020-01-01"
@@ -74,80 +62,81 @@ describe "Legacy Tests" <| fun _ ->
             |> List.map Feliz.DateParsing.parse
             |> List.forall (fun parsedDate -> parsedDate.IsNone)
 
-        Expect.toBeTruthy allValid //"Parsing worked in all cases where the date was valid"
-        Expect.toBeTruthy allInvalid //"Parsing did not work in all cases where the date was invalid"
+        Vitest.expect(allValid).toBeTruthy()  //"Parsing worked in all cases where the date was valid"
+        Vitest.expect(allInvalid).toBeTruthy() //"Parsing did not work in all cases where the date was invalid"
+    )
 
-    testPromise "React function component works: counter example" <| fun _ -> promise {
+    Vitest.test("React function component works: counter example", fun () -> promise {
         RTL.render(Counter {| initialCount = 10 |}) |> ignore
-        let count = RTL.screen.getByTestId !^"count"
-        let increment = RTL.screen.getByTestId !^"increment"
-        Expect.toHaveTextContent count "10" // "Initial count is rendered"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "11" //"After one click, the count becomes 11"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "12" //"After another click, the count becomes 12"
-    }
+        let count = RTL.screen.getByTestId "count"
+        let increment = RTL.screen.getByTestId "increment"
+        Vitest.expect(count).toHaveTextContent "10" // "Initial count is rendered"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(count).toHaveTextContent "11" // "After one click, the count becomes 11"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(count).toHaveTextContent "12" // "After another click, the count becomes 12"
+    })
 
-    testPromise "React function component works: counter example with debug value" <| fun _ -> promise {
+    Vitest.test("React function component works: counter example with debug value", fun () -> promise {
         let render = RTL.render(CounterWithDebugValue())
-        let count = RTL.screen.getByTestId !^"count"
-        let increment = RTL.screen.getByTestId !^"increment"
-        Expect.toHaveTextContent count "0"  //"Initial count is rendered"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "1" //"After one click, the count becomes 11"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "2" //"After another click, the count becomes 12"
-    }
+        let count = RTL.screen.getByTestId "count"
+        let increment = RTL.screen.getByTestId "increment"
+        Vitest.expect(count).toHaveTextContent "0"  //"Initial count is rendered"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(count).toHaveTextContent "1" 
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(count).toHaveTextContent "2"  //"After another click, the count becomes 2"
+    })
 
-    test "React portal works" <| fun _ ->
+    Vitest.test("React portal works", fun () ->
         let portalContainer = document.createElement("div")
         let portalId = System.Guid.NewGuid().ToString()
         portalContainer.setAttribute("id", portalId)
         document.body.appendChild(portalContainer) |> ignore
-        Expect.toEqual 0 portalContainer.children.length //"Portal container starts empty"
-        let count = Counter {| initialCount = 10 |}
-        let render = RTL.render(Portal {| child = count; id = portalId |})
-        let count = render.getByTestId !^"count"
-        Expect.toHaveTextContent count "10" //"Initial count is rendered"
-        Expect.toEqual 1 portalContainer.children.length //"Portal container contains component"
+        Vitest.expect(portalContainer.children).toHaveLength 0 //"Portal container starts empty"
+        let render = RTL.render(Portal {| child = Counter {| initialCount = 10 |}; id = portalId |})
+        let count = render.getByTestId "count"
+        Vitest.expect(count).toHaveTextContent "10" //"Initial count is rendered"
+        Vitest.expect(portalContainer.children).toHaveLength 1 //"Portal container contains component"
+    )
 
-    testPromise "React.useEffectOnce(unit -> unit) executes" <| fun _ -> promise {
-        let mockFn = vi.fn(fun () -> ())
+    Vitest.test("React.useEffectOnce(unit -> unit) executes", fun () -> promise {
+        let mockFn = Vitest.vi.fn(fun () -> ())
         let render = RTL.render(EffectOnceComponent {| effectTriggered = mockFn |})
-        let count = render.getByTestId !^"count"
-        let increment = render.getByTestId !^"increment"
-        Expect.toHaveBeenCalledTimes mockFn 1 //"Effect has been been executed once when the component has been rendered"
-        Expect.toHaveTextContent count "0" //"Count has initial value of zero"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveBeenCalledTimes mockFn 1 //"Effect has been been executed once when the component has been rendered"
-        Expect.toHaveTextContent count "1" //"Component has been updated/re-rendered"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveBeenCalledTimes mockFn 1 //"Effect has been been executed once when the component has been rendered"
-        Expect.toHaveTextContent count "2" //"Component has been updated/re-rendered"
-    }
+        let count = render.getByTestId "count"
+        let increment = render.getByTestId "increment"
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 1 //"Count has initial value of zero"
+        Vitest.expect(count).toHaveTextContent "0" //"Effect has been executed once when the component has been rendered"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 1 //"Effect has been been executed once when the component has been rendered"
+        Vitest.expect(count).toHaveTextContent "1" //"Component has been updated/re-rendered"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 1 //"Effect has been been executed once when the component has been rendered"
+        Vitest.expect(count).toHaveTextContent "2" //"Component has been updated/re-rendered"
+    })
 
-    testPromise "React.useEffect(unit -> unit) executes on each (re)render" <| fun _ -> promise {
-        let mockFn = vi.fn(fun () -> ())
+    Vitest.test("React.useEffect(unit -> unit) executes on each (re)render", fun () -> promise {
+        let mockFn = Vitest.vi.fn(fun () -> ())
         let render = RTL.render(UseEffectEveryRender {| effectTriggered = mockFn |})
-        let count = render.getByTestId !^"count"
-        let increment = render.getByTestId !^"increment"
-        Expect.toHaveBeenCalledTimes mockFn 1 //"Effect has been been executed when the component has been rendered"
-        Expect.toHaveTextContent count "0" //"Count has initial value of zero"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "1" //"Component has been updated/re-rendered"
-        Expect.toHaveBeenCalledTimes mockFn 2 //"Effect has been been executed when the component has been rendered"
-        do! RTL.userEvent.click(increment)
-        Expect.toHaveTextContent count "2" //"Component has been updated/re-rendered again"
-        Expect.toHaveBeenCalledTimes mockFn 3 //"Effect has been been executed when the component has been rendered"
-    }
+        let count = render.getByTestId "count"
+        let increment = render.getByTestId "increment"
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 1 
+        Vitest.expect(count).toHaveTextContent "0" //"Count has initial value of zero"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 2 //"Effect has been been executed when the component has been rendered"
+        Vitest.expect(count).toHaveTextContent "1" //"Component has been updated/re-rendered"
+        do! UserEvent.userEvent.click(increment)
+        Vitest.expect(mockFn).toHaveBeenCalledTimes 3 //"Effect has been been executed when the component has been rendered"
+        expect(count).toHaveTextContent "2" //"Component has been updated/re-rendered again"
+    })
 
-    testPromise "Focusing input element works with React refs" <| fun _ -> promise {
-        let render = RTL.render(FocusInputExample())
-        let focusedInput = render.getByTestId !^"focused-input"
-        let focusInputButton = render.getByTestId !^"focus-input"
-        Expect.toBeFalsy (focusedInput = unbox document.activeElement) //"Input is not focused yet before clicking button"
-        do! RTL.userEvent.click(focusInputButton)
-        Expect.toBeTruthy (focusedInput = unbox document.activeElement) //"Input is now active"
+    testPromise "Focusing input element works with React refs" <| fun () -> promise {
+        let render = render(FocusInputExample())
+        let focusedInput = render.getByTestId "focused-input"
+        let focusInputButton = render.getByTestId "focus-input"
+        expect(focusedInput).not.toHaveFocus()
+        do! userEvent.click(focusInputButton)
+        expect(focusedInput).toHaveFocus() //"Input is now active"
     }
 
     test "Styles are rendered correctly" <| fun _ ->
@@ -162,14 +151,14 @@ describe "Legacy Tests" <| fun _ ->
             prop.testId "styled-div"
         ])
 
-        let container = RTL.screen.getByTestId !^"styled-div"
-        Expect.toHaveStyle container "color: rgb(255, 0, 0)" //"Text color is red"
-        Expect.toHaveStyle container "margin: 20px" //"Margin is used correctly"
-        Expect.toHaveStyle container "font-size: 22px" //"Font size is used correctly"
-        Expect.toHaveStyle container "font-style: italic" //"Font style is used correctly"
+        let container = RTL.screen.getByTestId "styled-div"
+        expect(container).toHaveStyle "color: rgb(255, 0, 0)" //"Text color is red"
+        expect(container).toHaveStyle "margin: 20px" //"Margin is used correctly"
+        expect(container).toHaveStyle "font-size: 22px" //"Font size is used correctly"
+        expect(container).toHaveStyle "font-style: italic" //"Font style is used correctly"
 
     test "Individual translate(int) functions render correctly" <| fun _ ->
-        let render = RTL.render(Html.div [
+        let render = render(Html.div [
             Html.div [
                 prop.testId "test-translateX"
                 prop.style [ style.transform.translateX 1 ]
@@ -191,16 +180,15 @@ describe "Legacy Tests" <| fun _ ->
                 prop.style [ style.transform.translate3D(111, 222, 333) ]
             ]
         ])
-
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateX") "transform: translateX(1px)" // "translateX should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateY") "transform: translateY(2px)" // "translateY should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateZ") "transform: translateZ(3px)" // "translateZ should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translate") "transform: translate(11px,22px)" // "translate should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translate3D") "transform: translate3d(111px,222px,333px)" // "translate3D should render"
+        expect(RTL.screen.getByTestId "test-translateX").toHaveStyle "transform: translateX(1px)" // "translateX should render"
+        expect(RTL.screen.getByTestId "test-translateY").toHaveStyle "transform: translateY(2px)" // "translateY should render"
+        expect(RTL.screen.getByTestId "test-translateZ").toHaveStyle "transform: translateZ(3px)" // "translateZ should render"
+        expect(RTL.screen.getByTestId "test-translate").toHaveStyle "transform: translate(11px,22px)" // "translate should render"
+        expect(RTL.screen.getByTestId "test-translate3D").toHaveStyle "transform: translate3d(111px,222px,333px)" // "translate3D should render"
 
 
     test "Individual translate(ICssUnit) functions render correctly" <| fun _ ->
-        let render = RTL.render(Html.div [
+        let render = render(Html.div [
             Html.div [
                 prop.testId "test-translateX"
                 prop.style [ style.transform.translateX (length.em 1) ]
@@ -223,15 +211,14 @@ describe "Legacy Tests" <| fun _ ->
             ]
         ])
 
-        // let getTransform (id:string) = getStyle<string> "transform" (render.getByTestId id)
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateX") "transform: translateX(1em)" // "translateX should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateY") "transform: translateY(2em)" // "translateY should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translateZ") "transform: translateZ(3em)" // "translateZ should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translate") "transform: translate(11em,22em)" // "translate should render"
-        Expect.toHaveStyle (RTL.screen.getByTestId !^"test-translate3D") "transform: translate3d(111em,222em,333em)" // "translate3D should render"
+        expect(screen.getByTestId "test-translateX").toHaveStyle("transform: translateX(1em)") // "translateX should render"
+        expect(screen.getByTestId "test-translateY").toHaveStyle("transform: translateY(2em)") // "translateY should render"
+        expect(screen.getByTestId "test-translateZ").toHaveStyle("transform: translateZ(3em)") // "translateZ should render"
+        expect(screen.getByTestId "test-translate").toHaveStyle("transform: translate(11em,22em)") // "translate should render"
+        expect(screen.getByTestId "test-translate3D").toHaveStyle("transform: translate3d(111em,222em,333em)") // "translate3D should render"
 
     test "Combined translate functions render correctly for style.transform" <| fun _ ->
-        let render = RTL.render(Html.div [
+        let render = render(Html.div [
             prop.testId "test-combined-translate"
             prop.style [
                 style.transform [
@@ -243,8 +230,8 @@ describe "Legacy Tests" <| fun _ ->
                 ]
             ]
         ])
-        let ele = RTL.screen.getByTestId !^"test-combined-translate"
-        Expect.toHaveStyle ele "transform: translateX(1px) translateY(2.2px) translateZ(3.3em) translate(11px,22px) translate3d(111px,222px,333px)" // "Combined transform should render"
+        let ele = RTL.screen.getByTestId "test-combined-translate"
+        expect(ele).toHaveStyle("transform: translateX(1px) translateY(2.2px) translateZ(3.3em) translate(11px,22px) translate3d(111px,222px,333px)") // "Combined transform should render"
 
     // test "Combined translate(int) functions render correctly for prop.transform" <| fun _ ->
     //     let render = RTL.render(
@@ -512,6 +499,4 @@ describe "Legacy Tests" <| fun _ ->
     //         RTL.waitFor <| fun () ->
     //             Expect.toHaveTextContent (render.getByTestId("disposed-count")) "2" // "Should have been disposed"
     // }
-
-
 
