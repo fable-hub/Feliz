@@ -214,7 +214,7 @@ describe "useEffect" <| fun _ ->
         expect(dispose).toHaveBeenCalledTimes 1
     }
 
-    ftestPromise "IDisposable return calls Dispose() function" <| fun _ -> promise {
+    testPromise "IDisposable return calls Dispose() function" <| fun _ -> promise {
         RTL.render (Components.EffectfulTimer())
         |> ignore
 
