@@ -3,7 +3,9 @@
     "scripts": {
         "publish-docs": "npm run build && node publish.js",
         "start": "dotnet tool restore && dotnet fable watch docs --noCache --exclude Feliz.CompilerPlugins --run webpack-dev-server",
-        "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production"
+        "build": "dotnet tool restore && dotnet fable docs --noCache --exclude Feliz.CompilerPlugins --run webpack --mode production",
+        "start:play": "cd playground && npm run dev",
+        "test": "npm run test -ws"
     },
     "repository": {
         "type": "git",

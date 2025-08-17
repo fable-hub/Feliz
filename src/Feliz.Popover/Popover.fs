@@ -49,7 +49,7 @@ type Popover =
         let defaults = createObj [ "body" ==> Html.none ]
         ReactLegacy.createElement(
             (importDefault "react-popover" |> unbox<ReactElement>), 
-            Interop.objectAssign defaults (createObj !!properties)
+            props = Interop.objectAssign defaults (createObj !!properties)
         )
 
 module popover =

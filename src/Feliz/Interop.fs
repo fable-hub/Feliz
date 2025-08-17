@@ -15,24 +15,10 @@ open Fable.React
 [<Emit "undefined">]
 let undefined: obj = jsNative
 
-let inline mkAttr (key: string) (value: obj) : IReactProperty = key, value
-
-let inline createElement (tag: string) (props: IReactProperty list) : ReactElement =
-    JSX.create tag props |> unbox
-
-let inline createElementWithChildren (name: string) (child: #seq<ReactElement>) : ReactElement = 
-    JSX.create name ["children", child] |> unbox
-
-let inline createElementWithChild (name: string) (child: 'a) : ReactElement =
-    JSX.create name ["children", box child] |> unbox
-
-
-let inline mkStyle (key: string) (value: obj) : IStyleAttribute = unbox (key, value)
-
-let inline svgAttribute (key: string) (value: obj) : ISvgAttribute = key, value
-
-let inline createSvgElement name (properties: ISvgAttribute list) : ReactElement =
-    JSX.create name properties |> unbox
+let inline svgAttribute (key: string) (value: obj) : ISvgAttribute = unbox (key, value)
 
 [<Emit "typeof $0 === 'number'">]
 let isTypeofNumber (x: obj) : bool = jsNative
+
+[<Emit("typeof $0[Symbol.iterator] === 'function'")>]
+let isIterable (x: obj): bool = jsNative

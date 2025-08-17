@@ -1,4 +1,5 @@
-module Feliz.ReactApi
+
+namespace Feliz
 
 open Browser.Types
 open Fable.React
@@ -36,9 +37,16 @@ open System
 //     abstract useRefInternal<'t> : initial: 't -> Fable.React.IRefValue<'t>
 //     abstract useState<'t,'u> : initial:'t -> ('u * ('u -> unit))
 
-[<Erase>]
-type IReactRoot =
-    /// Renders the provided React element into the DOM in the supplied container.
-    abstract render: ReactElement -> unit
-    /// Removes a mounted React component from the DOM and cleans up its event handlers and state.
-    abstract unmount : unit -> unit
+[<AutoOpen>]
+module ReactTypes =
+
+    type ReactNode = U6<ReactElement, seq<ReactElement>, string, float, int, bool>
+
+    [<Erase>]
+    type IReactRoot =
+        /// Renders the provided React element into the DOM in the supplied container.
+        abstract render: ReactElement -> unit
+        /// Removes a mounted React component from the DOM and cleans up its event handlers and state.
+        abstract unmount : unit -> unit
+
+    type ReactContext<'a> = interface end

@@ -20,15 +20,6 @@ module TestLazyComponent =
             }
         )
 
-type TestLazyComponentStaticMember =
-    static member LazyLoadComponent = 
-        React.lazy'(fun () ->
-            promise {
-                do! Promise.sleep 2000
-                return! Fable.Core.JsInterop.importDynamic "./CodeSplitting.jsx"
-            }
-        )
-
 [<Erase; Mangle(false)>]
 type Components =
 
@@ -94,8 +85,7 @@ type Components =
     static member ComponentContextProvider() =
         let value, setValue = React.useState "Provided value"
 
-        React.contextProvider(
-            TestContext.MyContext, 
+        TestContext.MyContext.Provider(
             {| state = value; setState = setValue|}, 
             [
                 Components.ComponentContextConsumer()
@@ -280,34 +270,6 @@ type Components =
                     children = [
                         Html.h1 "Preview"
                         React.lazyRender(TestLazyComponent.LazyLoadComponent, {|text = text|})
-                    ]
-                )
-        ]
-
-    [<ReactComponent>]
-    static member LazyLoadStaticMember() =
-        let showPreview, setShowPreview = React.useState(false)
-        let text, setText = React.useState("Component loaded after 2 seconds")
-        Html.div [
-            Html.input [
-                prop.testId "input"
-                prop.value text
-                prop.onChange (fun (e: string) -> setText(e))
-            ]
-            Html.label [
-                Html.input [
-                    prop.testId "checkbox"
-                    prop.type' "checkbox"
-                    prop.onChange (fun (e: bool) -> setShowPreview(e))
-                ]
-                Html.text "Load Component"
-            ]
-            if showPreview then
-                React.Suspense(
-                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
-                    children = [
-                        Html.h1 "Preview"
-                        React.lazyRender(TestLazyComponentStaticMember.LazyLoadComponent, {|text = text|})
                     ]
                 )
         ]

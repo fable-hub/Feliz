@@ -13,20 +13,61 @@ module internal ReactInternal =
 
 [<Erase>]
 type ReactLegacy =
-    [<ImportMember("react")>]
-    static member inline createElement(``type``: string, ?props: obj, [<ParamArray>] ?children: ReactElement list): ReactElement = jsNative
 
-    [<ImportMember("react")>]
-    static member inline createElement(``type``: ReactElement, ?props: obj, [<ParamArray>] ?children: ReactElement list): ReactElement = jsNative
+    [<Import("createElement","react")>]
+    static member internal internalCreateElement(``type``: ReactNode, props: obj, [<ParamArray>] children: seq<ReactElement>): ReactElement = jsNative
 
-    [<ImportMember("react")>]
-    static member inline createElement(``type``: string, ?props: obj, ?children: ReactElement): ReactElement = jsNative
+    [<Import("createElement","react")>]
+    static member internal internalCreateElement(``type``: ReactNode, props: obj, children: ReactElement): ReactElement = jsNative
 
-    [<ImportMember("react")>]
-    static member inline createElement(``type``: ReactElement, ?props: obj, ?children: ReactElement): ReactElement = jsNative
+    [<Import("createElement","react")>]
+    static member internal internalCreateElement(``type``: ReactNode, props: obj): ReactElement = jsNative
 
-    [<ImportMember("react")>]
-    static member inline createElement(``type``: string, ?props: obj, ?children: string): ReactElement = jsNative
+    [<Import("createElement","react")>]
+    static member internal internalCreateElement(``type``: ReactNode): ReactElement = jsNative
+
+    static member inline createElement(``type``: string, props: obj, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props, children = children)
+
+    static member inline createElement(``type``: string, props: obj, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props, children = children)
+
+    static member inline createElement(``type``: string, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, null, children = children)
+
+    static member inline createElement(``type``: string, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, null, children = children)
+
+    static member inline createElement(``type``: string, props: obj): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props)
+
+    static member inline createElement(``type``: ReactElement, props: obj, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props, children = children)
+    static member inline createElement(``type``: ReactElement, props: obj, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props, children = children)
+
+    static member inline createElement(``type``: ReactElement, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, null, children = children)
+    static member inline createElement(``type``: ReactElement, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, null, children = children)
+
+    static member inline createElement(``type``: ReactElement, props: obj): ReactElement = 
+        ReactLegacy.internalCreateElement(!^``type``, props)
+
+    static member inline createElement(``type``: ReactNode, props: obj, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(``type``, props, children = children)
+    static member inline createElement(``type``: ReactNode, props: obj, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(``type``, props, children = children)
+
+    static member inline createElement(``type``: ReactNode, children: seq<ReactElement>): ReactElement = 
+        ReactLegacy.internalCreateElement(``type``, null, children = children)
+
+    static member inline createElement(``type``: ReactNode, children: ReactElement): ReactElement = 
+        ReactLegacy.internalCreateElement(``type``, null, children = children)
+
+    static member inline createElement(``type``: ReactNode, props: obj): ReactElement = 
+        ReactLegacy.internalCreateElement(``type``, props)
+
 
     [<ImportMember("react")>]
     static member inline forwardRef(render: 'props * IRefValue<'t> -> ReactElement): ('props * IRefValue<'t> -> ReactElement) = jsNative
@@ -36,32 +77,27 @@ type ReactLegacy =
 type React =
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline Fragment (xs: #seq<ReactElement>) =
-        JSX.create "" ["children" ==> xs]
-        |> unbox<ReactElement>
+    static member inline Fragment (xs: seq<ReactElement>) =
+        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline Fragment (xs: ReactElement) =
-        JSX.create "" ["children" ==> xs]
-        |> unbox<ReactElement>
+        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline KeyedFragment(key: int, xs: #seq<ReactElement>) = // Fable.React.Helpers.fragment [ !!("key", key) ] xs
-        JSX.create "Fragment" ["children" ==> xs; "key" ==> key]
-        |> unbox<ReactElement>
+    static member inline KeyedFragment(key: int, xs: seq<ReactElement>) = // Fable.React.Helpers.fragment [ !!("key", key) ] xs
+        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key|}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline KeyedFragment(key: string, xs: #seq<ReactElement>) =
-        JSX.create "Fragment" ["children" ==> xs; "key" ==> key]
-        |> unbox<ReactElement>
+    static member inline KeyedFragment(key: string, xs: seq<ReactElement>) =
+        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key|}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline KeyedFragment(key: System.Guid, xs: #seq<ReactElement>) =
-        JSX.create "Fragment" ["children" ==> xs; "key" ==> string key]
-        |> unbox<ReactElement>
+    static member inline KeyedFragment(key: System.Guid, xs: seq<ReactElement>) =
+        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key.ToString()|}, xs)
 
     /// Placeholder empty React element to be used when importing external React components with the `[<ReactComponent>]` attribute.
-    static member inline Imported() = Html.none 
+    static member inline Imported() : ReactElement = Fable.Core.JS.undefined
 
     /// The `useState` hook that creates a state variable for React function components from an initialization function.
     [<ImportMember("react")>]
@@ -396,53 +432,53 @@ useLayoutEffect(() => {
     /// <param name='defaultValue'>A default value that is only used when a component does not have a matching Provider above it in the tree.</param>
     /// TODO!
     [<ImportMember("react")>]
-    static member inline createContext<'a>(?defaultValue: 'a) : Fable.React.IContext<'a> = jsNative
+    static member inline createContext<'a>(?defaultValue: 'a) : ReactContext<'a> = jsNative
 
-    /// <summary>
-    /// A Provider component that allows consuming components to subscribe to context changes.
-    /// </summary>
-    /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
-    /// <param name='contextValue'>The context value to be provided to descendant components.</param>
-    /// <param name='child'>A child element.</param>
-    static member inline contextProvider
-        (contextObject: Fable.React.IContext<'a>, contextValue: 'a, child: ReactElement)
-        : ReactElement =
-        JSX.create (contextObject?Provider) [ "value" ==> contextValue; "children" ==> child ] |> unbox<ReactElement>
+    // /// <summary>
+    // /// A Provider component that allows consuming components to subscribe to context changes.
+    // /// </summary>
+    // /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
+    // /// <param name='contextValue'>The context value to be provided to descendant components.</param>
+    // /// <param name='child'>A child element.</param>
+    // static member inline contextProvider
+    //     (contextObject: Fable.React.IContext<'a>, contextValue: 'a, children: ReactElement)
+    //     : ReactElement =
+    //     ReactLegacy.createElement (unbox contextObject, {|value = contextValue|}, children)
 
-    /// <summary>
-    /// A Provider component that allows consuming components to subscribe to context changes.
-    /// </summary>
-    /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
-    /// <param name='contextValue'>The context value to be provided to descendant components.</param>
-    /// <param name='children'>A sequence of child elements.</param>
-    static member inline contextProvider
-        (contextObject: Fable.React.IContext<'a>, contextValue: 'a, children: #seq<ReactElement>)
-        : ReactElement =
-        JSX.create (contextObject?Provider) [ "value" ==> contextValue; "children" ==> children ] |> unbox<ReactElement>
+    // /// <summary>
+    // /// A Provider component that allows consuming components to subscribe to context changes.
+    // /// </summary>
+    // /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
+    // /// <param name='contextValue'>The context value to be provided to descendant components.</param>
+    // /// <param name='children'>A sequence of child elements.</param>
+    // static member inline contextProvider
+    //     (contextObject: Fable.React.IContext<'a>, contextValue: 'a, children: #seq<ReactElement>)
+    //     : ReactElement =
+    //     ReactLegacy.createElement (unbox contextObject, {|value = contextValue|}, children)
 
-    /// <summary>
-    /// A Consumer component that subscribes to context changes.
-    /// 
-    /// Recommended to use `useContext` instead of this.
-    /// </summary>
-    /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
-    /// <param name='render'>A render function that returns an element.</param>
-    static member inline contextConsumer
-        (contextObject: Fable.React.IContext<'a>, render: 'a -> ReactElement)
-        : ReactElement =
-        JSX.create (contextObject?Consumer) [ "children" ==> !!render ]
-        |> unbox<ReactElement>
+    // /// <summary>
+    // /// A Consumer component that subscribes to context changes.
+    // /// 
+    // /// Recommended to use `useContext` instead of this.
+    // /// </summary>
+    // /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
+    // /// <param name='render'>A render function that returns an element.</param>
+    // static member inline contextConsumer
+    //     (contextObject: Fable.React.IContext<'a>, render: 'a -> ReactElement)
+    //     : ReactElement =
+    //     ReactLegacy.createElement (contextObject?Consumer) [ "children" ==> !!render ]
+    //     |> unbox<ReactElement>
 
-    /// <summary>
-    /// A Consumer component that subscribes to context changes.
-    /// </summary>
-    /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
-    /// <param name='render'>A render function that returns a sequence of elements.</param>
-    static member inline contextConsumer
-        (contextObject: Fable.React.IContext<'a>, render: 'a -> #seq<ReactElement>)
-        : ReactElement =
-        JSX.create (contextObject?Consumer) [ "children" ==> (render >> React.Fragment) ]
-        |> unbox<ReactElement>
+    // /// <summary>
+    // /// A Consumer component that subscribes to context changes.
+    // /// </summary>
+    // /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
+    // /// <param name='render'>A render function that returns a sequence of elements.</param>
+    // static member inline contextConsumer
+    //     (contextObject: Fable.React.IContext<'a>, render: 'a -> #seq<ReactElement>)
+    //     : ReactElement =
+    //     ReactLegacy.createElement (contextObject?Consumer) [ "children" ==> (render >> React.Fragment) ]
+    //     |> unbox<ReactElement>
 
     /// <summary>
     /// The `useContext` hook. Accepts a context object (the value returned from React.createContext) and returns the current context value for that context.
@@ -450,7 +486,7 @@ useLayoutEffect(() => {
     /// </summary>
     /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
     [<ImportMember("react")>]
-    static member inline useContext(someContext: Fable.React.IContext<'a>) : 'a = jsNative
+    static member inline useContext(someContext: ReactContext<'a>) : 'a = jsNative
 
     // /// <summary>
     // /// Forwards a given ref, allowing you to pass it further down to a child.
@@ -484,9 +520,8 @@ useLayoutEffect(() => {
     /// </summary>
     /// <param name='children'>The elements that will be rendered with additional
     /// checks and warnings.</param>
-    [<JSX.ComponentAttribute>]
-    static member inline StrictMode (children: ReactElement list) : ReactElement = 
-        unbox (JSX.create (import "StrictMode" "react") ["children", children])
+    static member StrictMode (children: seq<ReactElement>) : ReactElement = 
+        ReactLegacy.createElement(unbox<ReactNode> (import "StrictMode" "react"), children = children)
 
     /// <summary>
     /// Lets you define a component that is loaded dynamically. Which helps with code splitting.
@@ -561,9 +596,7 @@ useLayoutEffect(() => {
     /// 
     /// </remarks>
     static member inline lazyRender(lazyComponent: LazyComponent<unit>): ReactElement =
-        ReactLegacy.createElement(
-            unbox<ReactElement> lazyComponent
-        )
+        ReactLegacy.createElement(unbox<ReactNode> lazyComponent, props = null)
 
     /// <summary>
     /// Lets you specify a loading indicator whenever a child element is not yet ready
@@ -573,14 +606,12 @@ useLayoutEffect(() => {
     /// </summary>
     /// <param name='children'>The elements that will be rendered within the suspense block.</param>
     /// <param name='fallback'>The element that will be rendered while the children are loading.</param>
-    [<ImportMember("react")>]
-    [<JSX.Component>]
-    static member inline Suspense(children: ReactElement list, ?fallback: ReactElement) =
-        JSX.create "Suspense" [ 
-            "fallback" ==> "fallback";
-            "children" ==> children 
-        ]
-        |> unbox<ReactElement>
+    static member inline Suspense(children: seq<ReactElement>, ?fallback: ReactElement) = 
+        ReactLegacy.createElement(
+            unbox<ReactNode> (import "Suspense" "react"), 
+            props = {| fallback = fallback |}, 
+            children = children
+        )
 
     /// <summary>
     /// Allows you to override the behavior of a given ref.
@@ -652,6 +683,16 @@ useLayoutEffect(() => {
 // Without this, for me the compiler was unable to resolve e.g. `useState` overload between `'t` and `unit -> 't`
 [<AutoOpen>]
 module ReactExtensions =
+
+    type ReactContext<'a> with
+        member inline this.Provider(value: 'a, children: ReactElement) : ReactElement =
+            ReactLegacy.createElement (unbox<ReactNode> this, {| value = value |}, children)
+        member inline this.Provider(value: 'a, children: seq<ReactElement>) : ReactElement =
+            ReactLegacy.createElement (unbox<ReactNode> this, {| value = value |}, children)
+        member inline this.Consumer(children: ReactElement) : ReactElement =
+            ReactLegacy.createElement (unbox<ReactNode> this?Consumer, children)
+        member inline this.Consumer(children: seq<ReactElement>) : ReactElement =
+            ReactLegacy.createElement (unbox<ReactNode> this?Consumer, children)
 
     type React with
         /// The `useState` hook that creates a state variable for React function components from an initialization function.

@@ -3,7 +3,7 @@ namespace Feliz
 open Fable.Core
 
 /// Describes an element property
-type IReactProperty = Fable.Core.JSX.Prop
+type IReactProperty = interface end
 
 /// This is used to improve typesafety when using lazy components, with the suggested Feliz helpers.
 type LazyComponent<'props> = interface end
@@ -12,7 +12,7 @@ type LazyComponent<'props> = interface end
 type IStyleAttribute = interface end
 
 /// Describes an SVG attribute
-type ISvgAttribute = Fable.Core.JSX.Prop
+type ISvgAttribute = interface end
 
 type ReactElement = Fable.React.ReactElement
 

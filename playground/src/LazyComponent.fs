@@ -1,18 +1,15 @@
-module LazyComponent
+module CodeSplitting
 
 open Fable.Core
+open Fable.Core.JsInterop
 open Feliz
 
-[<ReactComponentAttribute(true)>]
-let Main(text: string) =
-    React.useEffectOnce(fun () ->
-        // Simulate a delay to mimic lazy loading
-        Browser.Dom.console.log("Lazy component loading...")
-    )
-    Html.div [
-        prop.id "lazyComponent"
-        prop.testId "lazyComponent"
-        prop.children [
-            Html.h1 text
+[<Erase; Mangle(false)>]
+type CodeSplitting =
+
+    [<ReactComponent(true)>]
+    static member MyCodeSplitComponent (?text: string) =
+        Html.div [
+            prop.testId "async-load"
+            prop.text (Option.defaultValue "Loaded" text)
         ]
-    ]

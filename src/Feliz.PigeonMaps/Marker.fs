@@ -7,43 +7,43 @@ open Fable.Core.JsInterop
 [<Erase>]
 type marker =
     static member inline anchor(latitude: float, longitude: float) =
-        Interop.mkAttr "anchor" [| latitude; longitude |]
+        PropHelper.mkAttr "anchor" [| latitude; longitude |]
     static member inline offsetLeft (offset: int) =
-        Interop.mkAttr "offsetLeft" offset
+        PropHelper.mkAttr "offsetLeft" offset
     static member inline offsetTop (offset: int) =
-        Interop.mkAttr "offsetTop" offset
+        PropHelper.mkAttr "offsetTop" offset
     static member inline onClick (handler: MarkerClickEventArgs -> unit) =
-        Interop.mkAttr "onClick" handler
+        PropHelper.mkAttr "onClick" handler
     static member inline onMouseOver (handler: MarkerClickEventArgs -> unit) =
-        Interop.mkAttr "onMouseOver" handler
+        PropHelper.mkAttr "onMouseOver" handler
     static member inline onMouseOut (handler: MarkerClickEventArgs -> unit) =
-        Interop.mkAttr "onMouseOut" handler
+        PropHelper.mkAttr "onMouseOut" handler
     static member inline onContextMenu (handler: MarkerClickEventArgs -> unit) =
-        Interop.mkAttr "onContextMenu" handler
+        PropHelper.mkAttr "onContextMenu" handler
     static member inline render (handler: IMarkerRenderProperties -> Fable.React.ReactElement) =
-        Interop.mkAttr "render" handler
+        PropHelper.mkAttr "render" handler
     static member inline render (handler: IMarkerRenderProperties -> Fable.React.ReactElement list) =
-        Interop.mkAttr "render" (handler >> React.Fragment)
+        PropHelper.mkAttr "render" (handler >> React.Fragment)
 
 [<Erase>]
 type marker<'t> =
     static member inline anchor(latitude: float, longitude: float) =
-        Interop.mkAttr "anchor" [| latitude; longitude |]
+        PropHelper.mkAttr "anchor" [| latitude; longitude |]
     static member inline payload (value: 't) =
-        Interop.mkAttr "payload" value
+        PropHelper.mkAttr "payload" value
     static member inline onClick (handler: MarkerClickEventArgs<'t> -> unit) =
-        Interop.mkAttr "onClick" handler
+        PropHelper.mkAttr "onClick" handler
     static member inline onMouseOver (handler: MarkerClickEventArgs<'t> -> unit) =
-        Interop.mkAttr "onMouseOver" handler
+        PropHelper.mkAttr "onMouseOver" handler
     static member inline onMouseOut (handler: MarkerClickEventArgs<'t> -> unit) =
-        Interop.mkAttr "onMouseOut" handler
+        PropHelper.mkAttr "onMouseOut" handler
     static member inline onContextMenu (handler: MarkerClickEventArgs<'t> -> unit) =
-        Interop.mkAttr "onContextMenu" handler
+        PropHelper.mkAttr "onContextMenu" handler
     static member inline render (handler: IMarkerRenderProperties -> Fable.React.ReactElement) =
-        Interop.mkAttr "render" handler
+        PropHelper.mkAttr "render" handler
     static member inline render (handler: IMarkerRenderProperties -> Fable.React.ReactElement list) =
-        Interop.mkAttr "render" (handler >> React.Fragment)
+        PropHelper.mkAttr "render" (handler >> React.Fragment)
     static member inline offsetLeft (offset: int) =
-        Interop.mkAttr "offsetLeft" offset
+        PropHelper.mkAttr "offsetLeft" offset
     static member inline offsetTop (offset: int) =
-        Interop.mkAttr "offsetTop" offset
+        PropHelper.mkAttr "offsetTop" offset

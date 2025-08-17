@@ -22,7 +22,7 @@ type PigeonMaps =
         ]
         ReactLegacy.createElement(
             (import "Map" "pigeon-maps" |> unbox<ReactElement>),
-            Interop.objectAssign defaults (createObj !!properties)
+            props = Interop.objectAssign defaults (createObj !!properties)
         )
     static member inline marker (properties: IReactProperty list) =
         Interop.createMarker (createObj !!properties)

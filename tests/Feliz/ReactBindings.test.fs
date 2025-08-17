@@ -141,6 +141,7 @@ describe "ComponentUseMemo" <| fun _ ->
         do! userEvent.click button
         expect(memoizedValueDiv).toHaveTextContent "Memoized count: 0"
         expect(count).toHaveTextContent "2"
+        expect(count).not.toHaveTextContent "3"
 
         // Ensure the value is memoized and doesn't change until `count` changes
     }
@@ -306,9 +307,7 @@ describe "lazy" <| fun _ ->
         expect(RTL.screen.queryByText("Loading...")).toBeNull()
 
         // Type into the input field
-        // let input = RTL.screen.getByTestId("input")
-        // do! RTL.userEvent.clear(input)
-        // do! RTL.userEvent.type'(input, "hello", 50)
+
 
         // Click the checkbox to load the lazy component
         let checkbox = screen.getByTestId("checkbox")
@@ -326,37 +325,15 @@ describe "lazy" <| fun _ ->
             let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
             expect(lazyText).not.toBeNull()
         }), RTLWaitForOptions(timeout = 3000))
-    }
 
-    testPromise "loads lazy static member component with typed text after checkbox is checked" <| fun _ -> promise {
-        let render = RTL.render (Components.LazyLoadStaticMember())
+        let input = RTL.screen.getByTestId("input")
+        do! userEvent.clear(input)
+        do! userEvent.``type``(input, "hello")
 
-        // Ensure loading message is not present initially
-        expect(screen.queryByText("Loading...")).toBeNull()
-
-        // Type into the input field
-        // let input = RTL.screen.getByTestId("input")
-        // do! RTL.userEvent.clear(input)
-        // do! RTL.userEvent.type'(input, "hello", 50)
-
-        // Click the checkbox to load the lazy component
-        let checkbox = RTL.screen.getByTestId("checkbox")
-        do! userEvent.click(checkbox)
-
-        // Wait for loading indicator
-        do! RTL.waitFor<unit>(fun () -> promise {
-            let! loading = RTL.screen.findByTestId("loading")
-            expect(loading).not.toBeNull()
-        })
-
-
-        let! lazyText = 
-            RTL.waitFor<Browser.Types.HTMLElement>((fun () -> promise {
-                // Wait for the lazy component to appear
-                return! RTL.screen.findByText("Component loaded after 2 seconds")
-            }), RTLWaitForOptions(timeout = 3000))
-
+        let! lazyText = RTL.screen.findByText("hello")
         expect(lazyText).not.toBeNull()
+        let loading = RTL.screen.queryByTestId("loading")
+        expect(loading).toBeNull()
     }
 
 

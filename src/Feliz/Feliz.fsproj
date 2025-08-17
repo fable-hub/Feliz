@@ -30,12 +30,11 @@
     <Compile Include="TransformOrigin.fs" />
     <Compile Include="GridTypes.fs" />
     <Compile Include="Styles.fs" />
-    <Compile Include="Svg.fs" />
-    <Compile Include="Html.fs" />
-    <Compile Include="ReactInterop.fs" />
-    <Compile Include="Internal.fs" />
     <Compile Include="React.fs" />
     <Compile Include="ReactDOM.fs" />
+    <Compile Include="Svg.fs" />
+    <Compile Include="Html.fs" />
+    <Compile Include="Internal.fs" />
   </ItemGroup>
 
   <ItemGroup>
