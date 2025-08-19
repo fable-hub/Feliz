@@ -490,6 +490,9 @@ type Html =
 
     static member inline meta xs = Interop.createElement "meta" xs
 
+    static member inline menu xs = Interop.createElement "menu" xs
+    static member inline menu (children: #seq<ReactElement>) = Interop.reactElementWithChildren "menu" children
+
     static member inline metadata xs = Interop.createElement "metadata" xs
     static member inline metadata (children: #seq<ReactElement>) = Interop.reactElementWithChildren "metadata" children
 
