@@ -8,7 +8,7 @@ module Helper =
     let inline mkProperty<'t> (key: string, value: obj) : 't = (key, box value) |> unbox<'t>
 
 type FloatingFocusManagerProps = 
-    inherit IReactProperty
+    interface end
 
 [<Erase>]
 type floatingFocusManager =
