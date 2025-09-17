@@ -1,0 +1,788 @@
+---
+title: From F# to JavaScript
+description: Make your Fable code JavaScript friendly
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+export const TranspiledStart = `
+import { Record, Union } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Types.js";
+import { class_type, record_type, int32_type, union_type, TypeInfo } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Reflection.js";
+import { int32 } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Int32.js";
+import { IComparable, IEquatable } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Util.js";
+import { createElement, ReactElement, useState } from "react";
+import React from "react";
+import { value as value_11, defaultArg, Option } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Option.js";
+import { singleton, length, ofArray, FSharpList } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/List.js";
+import { HtmlHelper_createElement } from "./src/Feliz/Html.tsx";
+import { join } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/String.js";
+import { empty, singleton as singleton_1, append, delay, toList } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Seq.js";
+import { defaultOf } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Util.js";
+
+export type CounterVariant_$union = 
+    | CounterVariant<0>
+    | CounterVariant<1>
+    | CounterVariant<2>
+
+export type CounterVariant_$cases = {
+    0: ["Increment", []],
+    1: ["Decrement", []],
+    2: ["Both", []]
+}
+
+export function CounterVariant_Increment() {
+    return new CounterVariant<0>(0, []);
+}
+
+export function CounterVariant_Decrement() {
+    return new CounterVariant<1>(1, []);
+}
+
+export function CounterVariant_Both() {
+    return new CounterVariant<2>(2, []);
+}
+
+export class CounterVariant<Tag extends keyof CounterVariant_$cases> extends Union<Tag, CounterVariant_$cases[Tag][0]> {
+    constructor(readonly tag: Tag, readonly fields: CounterVariant_$cases[Tag][1]) {
+        super();
+    }
+    cases() {
+        return ["Increment", "Decrement", "Both"];
+    }
+}
+
+export function CounterVariant_$reflection(): TypeInfo {
+    return union_type("Components.CounterVariant", [], CounterVariant, () => [[], [], []]);
+}
+
+export class CounterConfig extends Record implements IEquatable<CounterConfig>, IComparable<CounterConfig> {
+    readonly stepSize: int32;
+    readonly counterVariant: CounterVariant_$union;
+    constructor(stepSize: int32, counterVariant: CounterVariant_$union) {
+        super();
+        this.stepSize = (stepSize | 0);
+        this.counterVariant = counterVariant;
+    }
+}
+
+export function CounterConfig_$reflection(): TypeInfo {
+    return record_type("Components.CounterConfig", [], CounterConfig, () => [["stepSize", int32_type], ["counterVariant", CounterVariant_$reflection()]]);
+}
+
+export function CounterConfig_get_Default(): CounterConfig {
+    return new CounterConfig(1, CounterVariant_Both());
+}
+
+export class Components {
+    constructor() {
+    }
+}
+
+export function Components_$reflection(): TypeInfo {
+    return class_type("Components.Components", undefined, Components);
+}
+
+export function Components_Counter_Z32E336E9(props: { init?: int32, text?: string, classNames?: FSharpList<string>, config?: CounterConfig }): ReactElement {
+    let names: FSharpList<string>, names_1: FSharpList<string>;
+    const config: Option<CounterConfig> = props.config;
+    const classNames: Option<FSharpList<string>> = props.classNames;
+    const text: Option<string> = props.text;
+    const init: Option<int32> = props.init;
+    const config_1: CounterConfig = defaultArg<CounterConfig>(config, CounterConfig_get_Default());
+    const init_1: int32 = defaultArg<int32>(init, 0) | 0;
+    const patternInput: [int32, ((arg0: int32) => void)] = useState<int32>(init_1);
+    const setCounter: ((arg0: int32) => void) = patternInput[1];
+    const counter: int32 = patternInput[0] | 0;
+    const IncrementBtn = (): ReactElement => HtmlHelper_createElement("button", ofArray([["children", "Increment"] as [string, any], ["onClick", (_arg: MouseEvent): void => {
+        setCounter(counter + 1);
+    }] as [string, any]]));
+    const DecrementBtn = (): ReactElement => HtmlHelper_createElement("button", ofArray([["children", "Decrement"] as [string, any], ["onClick", (_arg_1: MouseEvent): void => {
+        setCounter(counter - 1);
+    }] as [string, any]]));
+    return HtmlHelper_createElement("div", ofArray([["className", join(" ", (classNames != null) ? (((names = value_11(classNames), length(names) > 0)) ? ((names_1 = value_11(classNames), names_1)) : singleton("counter")) : singleton("counter"))] as [string, any], ["children", toList<ReactElement>(delay<ReactElement>((): Iterable<ReactElement> => {
+        let children_1: ReactElement;
+        return append<ReactElement>(singleton_1<ReactElement>((children_1 = "Main component!", createElement("h1", defaultOf(), children_1))), delay<ReactElement>((): Iterable<ReactElement> => {
+            let children_3: ReactElement;
+            return append<ReactElement>((text != null) ? singleton_1<ReactElement>((children_3 = value_11(text), createElement("p", defaultOf(), children_3))) : empty<ReactElement>(), delay<ReactElement>((): Iterable<ReactElement> => {
+                let children_10: Iterable<ReactElement>, children_5: ReactElement, children_7: Iterable<ReactElement>;
+                return singleton_1<ReactElement>((children_10 = [(children_5 = (\`Counter: \${counter}\`), createElement("p", defaultOf(), children_5)), (children_7 = toList<ReactElement>(delay<ReactElement>((): Iterable<ReactElement> => {
+                    const matchValue: CounterVariant_$union = config_1.counterVariant;
+                    return ((matchValue.tag as int32) === /* Decrement */ 1) ? singleton_1<ReactElement>(DecrementBtn()) : (((matchValue.tag as int32) === /* Both */ 2) ? append<ReactElement>(singleton_1<ReactElement>(IncrementBtn()), delay<ReactElement>((): Iterable<ReactElement> => singleton_1<ReactElement>(DecrementBtn()))) : singleton_1<ReactElement>(IncrementBtn()));
+                })), createElement("div", defaultOf(), ...children_7))], createElement("div", defaultOf(), ...children_10)));
+            }));
+        }));
+    }))] as [string, any]]));
+}`
+
+export const TranspiledDU = `export type CounterVariant_$union = 
+      | CounterVariant<0>
+      | CounterVariant<1>
+      | CounterVariant<2>
+
+  export type CounterVariant_$cases = {
+      0: ["Increment", []],
+      1: ["Decrement", []],
+      2: ["Both", []]
+  }
+
+  export function CounterVariant_Increment() {
+      return new CounterVariant<0>(0, []);
+  }
+
+  export function CounterVariant_Decrement() {
+      return new CounterVariant<1>(1, []);
+  }
+
+  export function CounterVariant_Both() {
+      return new CounterVariant<2>(2, []);
+  }
+
+  export class CounterVariant<Tag extends keyof CounterVariant_$cases> extends Union<Tag, CounterVariant_$cases[Tag][0]> {
+      constructor(readonly tag: Tag, readonly fields: CounterVariant_$cases[Tag][1]) {
+          super();
+      }
+      cases() {
+          return ["Increment", "Decrement", "Both"];
+      }
+  }
+
+  export function CounterVariant_$reflection(): TypeInfo {
+      return union_type("Components.CounterVariant", [], CounterVariant, () => [[], [], []]);
+  }`
+
+You have just written some web app using Fable and now your company decides some of the code should be shared with a JavaScript team. Or maybe you are writing a library in Fable that you want to be consumed from JavaScript. In this guide we will see some of the things you can do to make your F# code more JavaScript friendly.
+
+:::tip[Better Typed than Sorry!]
+You can also find a blog post about this topic on the official Fable blog: [Better Typed than Sorry!](https://fable.io/blog/2023/2023-04-20-Better_Typed_than_Sorry.html)!
+
+Go check it out it has some additional tips and tricks!
+:::
+
+
+Let's start with a very artificial example. Imagine we have the following F# code:
+
+```fsharp
+module Components 
+
+open Fable.Core
+open Fable.Core.JsInterop
+open Feliz
+
+[<RequireQualifiedAccess>]
+type CounterVariant =
+    | Increment
+    | Decrement
+    | Both
+
+type CounterConfig = {
+    stepSize: int
+    counterVariant: CounterVariant
+} with
+    static member Default = {
+        stepSize = 1
+        counterVariant = CounterVariant.Both
+    }
+
+type Components =
+
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: string list, ?config: CounterConfig) =
+        let config = defaultArg config CounterConfig.Default
+        let init = defaultArg init 0
+        let counter, setCounter = React.useState(init)
+
+        let IncrementBtn() =
+            Html.button [
+                prop.text "Increment"
+                prop.onClick (fun _ -> setCounter(counter + config.stepSize))
+            ]
+
+        let DecrementBtn() =
+            Html.button [
+                prop.text "Decrement"
+                prop.onClick (fun _ -> setCounter(counter - config.stepSize))
+            ]
+
+        Html.div [
+            prop.className (
+                match classNames with
+                | Some names when names.Length > 0 ->
+                    names
+                | _ -> [ "counter" ]
+            )
+            prop.children [
+                Html.h1 "Main component!"
+                if text.IsSome then
+                    Html.p text.Value
+                Html.div [
+                    Html.p $"Counter: {counter}"
+                    Html.div [
+                        match config.counterVariant with
+                        | CounterVariant.Increment -> IncrementBtn()
+                        | CounterVariant.Decrement -> DecrementBtn()
+                        | CounterVariant.Both ->
+                            IncrementBtn()
+                            DecrementBtn()
+                    ]
+                ]
+
+            ]
+        ]
+```
+
+This code defines a simple counter component with some configuration options. Let's see how we can make it more JavaScript friendly. Let us examine the transpiled code.
+
+:::info[TypeScript]
+Enable typing for you JavaScript consumers by generating TypeScript from Fable. You can do this by changing the fable transpile command!
+
+```bash
+dotnet fable --lang ts
+```
+
+This follow along will assume you are generating TypeScript.
+:::
+
+The transpiled code in its current state looks rather obscure and is not very ergonomic to use from JavaScript. Check it out if you are interested, but I will highlight the relevant parts below.
+
+<details>
+<summary>Transpiled code</summary>
+
+<CodeBlock language="tsx">
+  {TranspiledStart}
+</CodeBlock>
+
+</details>
+
+Know it is important to remember that the most important part of our Counter component is how it is defined. What happens inside is for a library consumer mostly irrelevant. So we will focus on the signature of the component and how it can be improved.
+
+```tsx
+
+
+export function Components_Counter_Z32E336E9(props: { init?: int32, text?: string, classNames?: FSharpList<string>, config?: CounterConfig }): ReactElement {
+  ...
+}
+```
+
+What can we see?
+
+- The function name is not descriptive and with the generated hash might even change between builds.
+- Feliz `[<ReactComponent>]` already transforms our tupled arguments into a single object argument with added type information.
+- `classNames` is of type `FSharpList<string>`, which is not very ergonomic to use from JavaScript. A simple `string[]` would be easier to understand.
+- The `config` argument is of type `CounterConfig`, which is a record type. A more JavaScript friendly approach would be to use an object with optional fields.
+- Hidden in the code example above, but `CounterConfig` contains a field of type `CounterVariant`, which is a discriminated union. 
+
+  <details>
+  <summary>Transpiled CounterConfig + CounterVariant</summary>
+
+  ```tsx
+  export class CounterConfig extends Record implements IEquatable<CounterConfig>, IComparable<CounterConfig> {
+      readonly stepSize: int32;
+      readonly counterVariant: CounterVariant_$union;
+      constructor(stepSize: int32, counterVariant: CounterVariant_$union) {
+          super();
+          this.stepSize = (stepSize | 0);
+          this.counterVariant = counterVariant;
+      }
+  }
+
+  export function CounterConfig_$reflection(): TypeInfo {
+      return record_type("Components.CounterConfig", [], CounterConfig, () => [["stepSize", int32_type], ["counterVariant", CounterVariant_$reflection()]]);
+  }
+
+  export function CounterConfig_get_Default(): CounterConfig {
+      return new CounterConfig(1, CounterVariant_Both());
+  }
+  ```
+
+  <CodeBlock language="tsx">
+  {TranspiledDU}
+  </CodeBlock>
+
+  </details>
+
+Let's improve the code step by step.
+
+## Step 1: Rename the function
+
+Why is the function name so weird in the first place? The hash is added to avoid name clashes when you overload functions. 
+
+I added another `Component.Counter`, which splits the config into separate parameters. 
+
+```fsharp
+//.. 
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: string list, ?stepSize: int, ?counterVariant: CounterVariant) =
+        //..
+```
+
+Now after transpilation and without a hash, both function names would be identical. And JS has no compile time type checking to differentiate between the two. So Fable adds a hash to make the names unique. This is a feature called "name mangling".
+
+:::danger
+This also means that if you remove "name mangling", you cannot have another function with the same name or you will get a runtime errors.
+:::
+
+You can remove name mangling by adding the following to your static class:
+
+<Tabs>
+
+<TabItem value="fsharp" label="F#">
+
+```fsharp
+[<Mangle(false)>]
+type Components =
+  // ...
+```
+
+</TabItem>
+
+<TabItem value="tsx" label="tsx">
+
+```tsx
+export function Counter(props: { init?: int32, text?: string, classNames?: FSharpList<string>, config?: CounterConfig }): ReactElement {
+    // ...
+}
+```
+</TabItem>
+</Tabs>
+
+## Step 2: Change FSharpList to string[]
+
+This is a rather easy change. Changing the type from `string list` to `string[]` will do the trick most of the time.
+
+If you encounter a case where this does not work, you can also use `ResizeArray<string>`, which is basically a wrapper around `string[]`.
+
+<Tabs>
+
+<TabItem value="array" label="string []">
+
+```fsharp
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: string [], ?config: CounterConfig) =
+```
+
+</TabItem>
+
+<TabItem value="resizearray" label="ResizeArray<string>">
+
+```fsharp
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: ResizeArray<string>, ?config: CounterConfig) =
+```
+
+</TabItem>
+
+<TabItem value="tsx" label="tsx">
+
+```tsx
+export function Counter(props: { init?: int32, text?: string, classNames?: string[], config?: CounterConfig }): ReactElement {
+  // ..
+}
+```
+</TabItem>
+</Tabs>
+
+## Step 3: Change record to object with optional fields
+
+We could do a anonymous record type or a POJO class. As we have only optional fields I will go with a POJO class. Which will also require some adjustments downstream.
+
+<Tabs>
+<TabItem value="fsharp" label="F#">
+
+```fsharp
+[<Fable.Core.JS.PojoAttribute>]
+type CounterConfig(?stepSize: int, ?counterVariant: CounterVariant) = 
+    member val stepSize = stepSize with get, set
+    member val counterVariant = counterVariant with get, set
+
+/// internal helper
+module private CounterConfig =
+    let Default = CounterConfig(1, CounterVariant.Both)
+```
+
+</TabItem>
+
+<TabItem value="tsx" label="tsx">
+
+```tsx
+export interface CounterConfig {
+    stepSize?: int32,
+    counterVariant?: CounterVariant_$union
+}
+
+const CounterConfigModule_Default: CounterConfig = {
+    stepSize: 1,
+    counterVariant: CounterVariant_Both(),
+};
+```
+</TabItem>
+
+</Tabs>
+
+<details>
+<summary>Full F# code at this point</summary>
+
+```fsharp
+module Components 
+
+open Fable.Core
+open Fable.Core.JsInterop
+open Feliz
+
+[<RequireQualifiedAccess>]
+type CounterVariant =
+    | Increment
+    | Decrement
+    | Both
+
+[<Fable.Core.JS.PojoAttribute>]
+type CounterConfig(?stepSize: int, ?counterVariant: CounterVariant) = 
+    member val stepSize = stepSize with get, set
+    member val counterVariant = counterVariant with get, set
+
+/// internal helper
+module private CounterConfig =
+    let Default = CounterConfig(1, CounterVariant.Both)
+
+[<Mangle(false)>]
+type Components =
+
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: ResizeArray<string>, ?config: CounterConfig) =
+        let config = defaultArg config CounterConfig.Default
+        let init = defaultArg init 0
+        let counter, setCounter = React.useState(init)
+
+        let IncrementBtn() =
+            Html.button [
+                prop.text "Increment"
+                prop.onClick (fun _ -> setCounter(counter + config.stepSize.Value) )
+            ]
+
+        let DecrementBtn() =
+            Html.button [
+                prop.text "Decrement"
+                prop.onClick (fun _ -> setCounter(counter - config.stepSize.Value))
+            ]
+
+        Html.div [
+            prop.className (
+                match classNames with
+                | Some names when names.Count > 0 ->
+                    names
+                | _ -> ResizeArray [| "counter" |]
+            )
+            prop.children [
+                Html.h1 "Main component!"
+                if text.IsSome then
+                    Html.p text.Value
+                Html.div [
+                    Html.p $"Counter: {counter} - {config.stepSize.Value}"
+                    Html.div [
+                        match config.counterVariant with
+                        | Some CounterVariant.Increment -> IncrementBtn()
+                        | Some CounterVariant.Decrement -> DecrementBtn()
+                        | Some CounterVariant.Both 
+                        | None ->
+                            IncrementBtn()
+                            DecrementBtn()
+                    ]
+                ]
+
+            ]
+        ]
+```
+
+</details>
+
+## 4: Change discriminated union to string enum
+
+Discriminated unions are not very ergonomic to use from JavaScript. A simple string enum is much easier to use.
+
+<Tabs>
+
+<TabItem value="fsharp" label="F#">
+
+```fsharp
+[<RequireQualifiedAccess>]
+[<StringEnum>]
+type CounterVariant =
+    | Increment
+    | Decrement
+    | Both
+```
+
+</TabItem>
+
+<TabItem value="tsx" label="tsx">
+
+```tsx
+export type CounterVariant = 
+    | "increment"
+    | "decrement"
+    | "both"
+```
+</TabItem>
+</Tabs>
+
+This change had huge impact on the transpiled code!
+
+<details>
+<summary>Transpiled CounterVariant</summary>
+
+<CodeBlock language="tsx">
+  {TranspiledDU}
+</CodeBlock>
+
+</details>
+
+## 5: Remove traces of static `Components` class
+
+If we look at the transpiled code now, we can see our improvements.
+
+```tsx
+// .. imports
+
+export type CounterVariant = 
+    | "increment"
+    | "decrement"
+    | "both"
+
+export interface CounterConfig {
+    stepSize?: int32,
+    counterVariant?: CounterVariant
+}
+
+const CounterConfigModule_Default: CounterConfig = {
+    stepSize: 1,
+    counterVariant: "both",
+};
+
+export class Components {
+    constructor() {
+    }
+}
+
+export function Components_$reflection(): TypeInfo {
+    return class_type("Components.Components", undefined, Components);
+}
+
+export function Counter(props: { init?: int32, text?: string, classNames?: string[], config?: CounterConfig }): ReactElement {
+    // ..
+}
+```
+
+While the `Counter` component should be easy to use from JavaScript we can optimize our output a bit further, by removing the leftover transpilation of the static `Components` class.
+
+```tsx
+export class Components {
+    constructor() {
+    }
+}
+
+export function Components_$reflection(): TypeInfo {
+    return class_type("Components.Components", undefined, Components);
+}
+```
+
+This can be done by adding the `[<Erase>]` attribute to the static class. this will tell Fable to not generate any code for the class itself.
+
+```fsharp
+[<Mangle(false); Erase>]
+type Components =
+    // ...
+```
+
+:::info
+The `Components_$reflection` function is used by Fable for runtime type information. If you are not using any features that require this.
+
+You can also disable generation of runtime type information completely by adding the following flag to your fable transpile command.
+
+```bash
+dotnet fable --noReflection
+```
+
+This will not avoid the generation of the static class, but will remove the `$reflection` functions.
+:::
+
+And that's it! We have transformed our F# code to be much more JavaScript friendly! 🎉
+You can find the final code and the full transpiled output, as well as the the output from our start below!
+
+<Tabs>
+<TabItem value="final" label="F#">
+
+```fsharp
+module Components 
+
+open Fable.Core
+open Fable.Core.JsInterop
+open Feliz
+
+[<RequireQualifiedAccess>]
+[<StringEnum>]
+type CounterVariant =
+    | Increment
+    | Decrement
+    | Both
+
+[<Fable.Core.JS.PojoAttribute>]
+type CounterConfig(?stepSize: int, ?counterVariant: CounterVariant) = 
+    member val stepSize = stepSize with get, set
+    member val counterVariant = counterVariant with get, set
+
+/// internal helper
+module private CounterConfig =
+    let Default = CounterConfig(1, CounterVariant.Both)
+
+[<Mangle(false); Erase>]
+type Components =
+
+    [<ReactComponent>]
+    static member Counter(?init: int, ?text: string, ?classNames: ResizeArray<string>, ?config: CounterConfig) =
+        let config = defaultArg config CounterConfig.Default
+        let init = defaultArg init 0
+        let counter, setCounter = React.useState(init)
+
+        let IncrementBtn() =
+            Html.button [
+                prop.text "Increment"
+                prop.onClick (fun _ -> setCounter(counter + config.stepSize.Value) )
+            ]
+
+        let DecrementBtn() =
+            Html.button [
+                prop.text "Decrement"
+                prop.onClick (fun _ -> setCounter(counter - config.stepSize.Value))
+            ]
+
+        Html.div [
+            prop.className (
+                match classNames with
+                | Some names when names.Count > 0 ->
+                    names
+                | _ -> ResizeArray [| "counter" |]
+            )
+            prop.children [
+                Html.h1 "Main component!"
+                if text.IsSome then
+                    Html.p text.Value
+                Html.div [
+                    Html.p $"Counter: {counter} - {config.stepSize.Value}"
+                    Html.div [
+                        match config.counterVariant with
+                        | Some CounterVariant.Increment -> IncrementBtn()
+                        | Some CounterVariant.Decrement -> DecrementBtn()
+                        | Some CounterVariant.Both 
+                        | None ->
+                            IncrementBtn()
+                            DecrementBtn()
+                    ]
+                ]
+
+            ]
+        ]
+```
+</TabItem>
+
+<TabItem value="finalt" label="Transpiled">
+
+```tsx
+
+import { int32 } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Int32.js";
+import { createElement, ReactElement, useState } from "react";
+import React from "react";
+import { value as value_11, defaultArg, Option } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Option.js";
+import { HtmlHelper_createElement } from "./src/Feliz/Html.tsx";
+import { ofArray } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/List.js";
+import { join } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/String.js";
+import { empty, singleton, append, delay, toList } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Seq.js";
+import { defaultOf } from "./fable_modules/fable-library-ts.5.0.0-alpha.14/Util.js";
+
+export type CounterVariant = 
+    | "increment"
+    | "decrement"
+    | "both"
+
+export interface CounterConfig {
+    stepSize?: int32,
+    counterVariant?: CounterVariant
+}
+
+const CounterConfigModule_Default: CounterConfig = {
+    stepSize: 1,
+    counterVariant: "both",
+};
+
+export function Counter(props: { init?: int32, text?: string, classNames?: string[], config?: CounterConfig }): ReactElement {
+    let names: string[], names_1: string[];
+    const config: Option<CounterConfig> = props.config;
+    const classNames: Option<string[]> = props.classNames;
+    const text: Option<string> = props.text;
+    const init: Option<int32> = props.init;
+    const config_1: CounterConfig = defaultArg<CounterConfig>(config, CounterConfigModule_Default);
+    const init_1: int32 = defaultArg<int32>(init, 0) | 0;
+    const patternInput: [int32, ((arg0: int32) => void)] = useState<int32>(init_1);
+    const setCounter: ((arg0: int32) => void) = patternInput[1];
+    const counter: int32 = patternInput[0] | 0;
+    const IncrementBtn = (): ReactElement => HtmlHelper_createElement("button", ofArray([["children", "Increment"] as [string, any], ["onClick", (_arg: MouseEvent): void => {
+        setCounter(counter + value_11(config_1.stepSize));
+    }] as [string, any]]));
+    const DecrementBtn = (): ReactElement => HtmlHelper_createElement("button", ofArray([["children", "Decrement"] as [string, any], ["onClick", (_arg_1: MouseEvent): void => {
+        setCounter(counter - value_11(config_1.stepSize));
+    }] as [string, any]]));
+    return HtmlHelper_createElement("div", ofArray([["className", join(" ", (classNames != null) ? (((names = value_11(classNames), names.length > 0)) ? ((names_1 = value_11(classNames), names_1)) : ["counter"]) : ["counter"])] as [string, any], ["children", toList<ReactElement>(delay<ReactElement>((): Iterable<ReactElement> => {
+        let children_1: ReactElement;
+        return append<ReactElement>(singleton<ReactElement>((children_1 = "Main component!", createElement("h1", defaultOf(), children_1))), delay<ReactElement>((): Iterable<ReactElement> => {
+            let children_3: ReactElement;
+            return append<ReactElement>((text != null) ? singleton<ReactElement>((children_3 = value_11(text), createElement("p", defaultOf(), children_3))) : empty<ReactElement>(), delay<ReactElement>((): Iterable<ReactElement> => {
+                let children_10: Iterable<ReactElement>, children_5: ReactElement, children_7: Iterable<ReactElement>;
+                return singleton<ReactElement>((children_10 = [(children_5 = (`Counter: ${counter} - ${value_11(config_1.stepSize)}`), createElement("p", defaultOf(), children_5)), (children_7 = toList<ReactElement>(delay<ReactElement>((): Iterable<ReactElement> => {
+                    const matchValue: Option<CounterVariant> = config_1.counterVariant;
+                    let matchResult: int32;
+                    if (matchValue == null) {
+                        matchResult = 2;
+                    }
+                    else {
+                        switch (value_11(matchValue)) {
+                            case "decrement": {
+                                matchResult = 1;
+                                break;
+                            }
+                            case "both": {
+                                matchResult = 2;
+                                break;
+                            }
+                            default:
+                                matchResult = 0;
+                        }
+                    }
+                    switch (matchResult) {
+                        case 0:
+                            return singleton<ReactElement>(IncrementBtn());
+                        case 1:
+                            return singleton<ReactElement>(DecrementBtn());
+                        default:
+                            return append<ReactElement>(singleton<ReactElement>(IncrementBtn()), delay<ReactElement>((): Iterable<ReactElement> => singleton<ReactElement>(DecrementBtn())));
+                    }
+                })), createElement("div", defaultOf(), ...children_7))], createElement("div", defaultOf(), ...children_10)));
+            }));
+        }));
+    }))] as [string, any]]));
+}
+
+```
+
+</TabItem>
+
+<TabItem value="startt" label="Start Transpiled">
+
+<CodeBlock language="tsx">
+  {TranspiledStart}
+</CodeBlock>
+
+</TabItem>
+
+</Tabs>
+

@@ -1,6 +1,6 @@
 ---
 title: Output JSX
-sidebar_position: 3
+sidebar_position: 2
 toc_max_heading_level: 4
 ---
 
@@ -10,6 +10,16 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 export const FableVersion = "5.0.0-alpha.14"
+
+:::danger[Change file extension]
+If you want to use JSX output you need to change the file extension of your transpiled files to `*.jsx`. This is required for the JSX output to be correctly interpreted by bundlers like webpack or tools like eslint. You can do this by updating your Fable transpile command:
+
+```bash
+dotnet fable Example.fsproj -e .jsx
+```
+
+This does not impact your ability to use the established Feliz API, which will still work as expected in `*.jsx` files.
+:::
 
 Currently, the default way for Feliz to create React Elements is through `React.createElement`. This allows us to fully leverage f# list expression syntax and makes it easy to create elements dynamically. However, using modern JSX output makes the transpiled code more readable and easier to debug, and might lead to performance increases.
 

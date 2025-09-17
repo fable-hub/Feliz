@@ -218,7 +218,8 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                     let type_ =
                         let fieldNames, genericArgs = decl.Args |> List.map (fun arg -> arg.DisplayName, arg.Type) |> List.unzip
                         Fable.Type.AnonymousRecordType(Array.ofList fieldNames, genericArgs, false)
-                    let name = sprintf "%sInputProps" (AstUtils.camelCase decl.Name)
+                    // let name = sprintf "%sInputProps" (AstUtils.camelCase decl.Name)
+                    let name = "props"
                     AstUtils.makeIdent type_ name 
                 let propBindings =
                     ([], decl.Args) ||> List.fold (fun bindings arg ->

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="LazyComponent.fs" />
     <Compile Include="Components.fs" />
     <Compile Include="App.fs" />
     <Compile Include="Main.fs" />
