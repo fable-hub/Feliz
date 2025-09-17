@@ -58,7 +58,7 @@
       "feliz.compilerplugins": {
         "type": "Project",
         "dependencies": {
-          "Fable.AST": "[4.5.0, )"
+          "Fable.AST": "[5.0.0-beta.2, )"
         }
       },
       "vitest": {
@@ -93,9 +93,9 @@
       },
       "Fable.AST": {
         "type": "CentralTransitive",
-        "requested": "[4.5.0, )",
-        "resolved": "4.5.0",
-        "contentHash": "EAQhSI5oRfCDPj87QVk0OndyLBABp7lNqzvUkLWoAQN1jHhCLHBQuHmzA76PBVPQ65NhBoHXu8ojf8tL6PHjwA=="
+        "requested": "[5.0.0-beta.2, )",
+        "resolved": "5.0.0-beta.2",
+        "contentHash": "MpmUPehD2py+zreWR1yxEAtktRZiBFpoR0H9brveZjshc504ARbDmts3W9aEDatNTwBapSa9qJ0jXXo4+sNglw=="
       },
       "Fable.Browser.Dom": {
         "type": "CentralTransitive",

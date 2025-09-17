@@ -57,6 +57,8 @@
     <Compile Include="Examples/Guides/Async.fs" />
     <Compile Include="Examples/Guides/POJO.fs" />
     <Compile Include="Examples/Guides/FelizStyleBindings.fs" />
+    <Compile Include="Examples/Guides/JSXModule.fs" />
+    <Compile Include="Examples/Guides/JSXModuleAlias.fs" />
   </ItemGroup>
 
   <!--<ItemGroup>

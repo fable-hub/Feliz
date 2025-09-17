@@ -1,0 +1,170 @@
+---
+title: Output JSX
+sidebar_position: 3
+toc_max_heading_level: 4
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactReference from '@site/src/components/ReactRefAdmonition';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export const FableVersion = "5.0.0-alpha.14"
+
+Currently, the default way for Feliz to create React Elements is through `React.createElement`. This allows us to fully leverage f# list expression syntax and makes it easy to create elements dynamically. However, using modern JSX output makes the transpiled code more readable and easier to debug, and might lead to performance increases.
+
+<ReactReference href="https://react.dev/reference/react/createElement" name="createElement" />
+
+Thanks to the awesome work of the Fable team (big shoutout to [@MangelMaxime](https://github.com/MangelMaxime)), the support for JSX output was greatly increased. And there are two ways to use it in Feliz. One is the `Feliz.JSX` module, which provides a similar API to the existing `Feliz` module, but outputs JSX. The other is through template strings, which allow you to write JSX directly in your F# code.
+
+In my opinion this feature is still experimental, and it might be best to mix and match between the existing Feliz API and the new JSX output, depending on your needs. But it's definitely worth exploring!
+
+## Using the JSX module
+
+Below you can find an example for using the `Feliz.JSX` module. It fully duplicates the syntax from the default `Html.*` type. 
+
+If you want to give it a try you can `open Feliz.JSX` in your file. This will shadow the existing `Html.*` so you can easily switch between the two.
+
+Check out the Example below and make sure to check out the transpiled outputs!
+
+import JSXModule from '../../feliz-docs/fableoutput/Examples/Guides/JSXModule'
+import RawJSXModule from '!!raw-loader!../../feliz-docs/Examples/Guides/JSXModule.fs'
+import RawJSXModuleJSX from '!!raw-loader!../../feliz-docs/fableoutput/Examples/Guides/JSXModule.jsx'
+
+export const FileOutput = `
+import { createElement, useState } from "react";
+import React from "react";
+import { HtmlHelper_createElement } from "../../src/Feliz/Html.jsx";
+import { defaultOf } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Util.js";
+import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/List.js";
+import { map, singleton, delay, toList } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Seq.js";
+import { printf, toText } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/String.js";
+import { rangeDouble } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Range.js";
+
+export function TestComponent() {
+    let children_11, children_8;
+    const patternInput = useState(0);
+    const setCounter = patternInput[1];
+    const counter = patternInput[0] | 0;
+    return HtmlHelper_createElement("div", ofArray([["id", "my-div"], ["className", "container"], ["children", [createElement("h1", defaultOf(), "Hello from JSX!"), createElement("p", defaultOf(), "This is a paragraph inside a div."), (children_11 = ofArray([createElement("h1", defaultOf(), "Counter - Reactivity Test"), HtmlHelper_createElement("button", ofArray([["children", "Increment"], ["onClick", (_arg) => {
+        setCounter(counter + 1);
+    }]])), (children_8 = toList(delay(() => ((counter === 0) ? singleton(createElement("li", defaultOf(), "No items")) : map((i) => HtmlHelper_createElement("li", ofArray([["key", i], ["children", toText(printf("Item %d"))(i)]])), rangeDouble(1, 1, counter))))), createElement("ul", defaultOf(), ...children_8))]), createElement("div", defaultOf(), ...children_11))]]]));
+}
+
+export default TestComponent;
+`
+
+<ComponentRender code={[
+  { language: 'fsharp', content: RawJSXModule, fileName: 'JSX.fs' },
+  { language: 'jsx', content: RawJSXModuleJSX, fileName: 'JSXOutout.jsx' },
+  { language: 'js', content: FileOutput, fileName: 'DefaultOutput.js' }
+]} defaultOpen> 
+  <JSXModule />
+</ComponentRender>
+
+
+### Alias the Feliz.JSX module
+
+If you want to mix both JSX output and previous output in one file you can alias the module:
+
+```fsharp
+type Jsx = Feliz.JSX.Html
+
+Jsx.div [
+    Jsx.h1 "Hello from JSX!"
+    Jsx.p "This is a paragraph inside a div."
+]
+```
+
+import JSXAlias from '../../feliz-docs/fableoutput/Examples/Guides/JSXModuleAlias'
+import RawJSXAlias from '!!raw-loader!../../feliz-docs/Examples/Guides/JSXModuleAlias.fs'
+import RawJSXAliasJSX from '!!raw-loader!../../feliz-docs/fableoutput/Examples/Guides/JSXModuleAlias.jsx'
+
+<ComponentRender code={[
+  { language: 'fsharp', content: RawJSXAlias, fileName: 'JSXAlias.fs' },
+  { language: 'jsx', content: RawJSXAliasJSX, fileName: 'JSXAlias.jsx' },
+]} defaultOpen> 
+  <JSXAlias />
+</ComponentRender>
+
+### FAQ
+
+These FAQs are errors or issues that you might encounter when using the JSX module. (Tested for Fable version {FableVersion}).
+
+#### `match ... with` in children 🐛
+
+Using `match ... with` directly inside `prop.children` is currently not correctly handled by the fable compiler and will lead to runtime errors. A workaround is to use `if` syntax instead or to bind the result of the match to a variable first.
+
+:::info
+Tracked in this [GitHub issue](
+https://github.com/fable-compiler/Fable/issues/4224).
+:::
+
+<Tabs>
+
+<TabItem value="error" label="Error: match ... with">
+
+```fsharp
+[<ReactComponent(true)>]
+let TestComponent() =
+    let counter, setCounter = React.useState(0)
+    Html.ul [
+        match counter with
+        | 0 ->  Html.li "No items!" 
+        | items -> 
+            for i in 1..items do
+                Html.li [
+                    prop.key i 
+                    prop.text (sprintf "Item %d" i) 
+                ]
+    ]
+```
+
+</TabItem>
+
+<TabItem value="if" label="Workaround: if ... else">
+
+```fsharp
+Html.ul [
+    if counter = 0 then
+        Html.li "No items"
+    else
+        for i in 1..counter do
+            Html.li [
+                prop.key i 
+                prop.text (sprintf "Item %d" i) 
+            ]
+]
+
+```
+
+</TabItem>
+
+<TabItem value="let" label="Workaround: let">
+
+```fsharp
+
+let ChildList = 
+    match counter with
+    | 0 ->
+        Html.li "No items"
+    | items ->
+        React.Fragment [
+            for i in 1..items do
+                Html.li [
+                    prop.key i 
+                    prop.text (sprintf "Item %d" i) 
+                ]
+        ]
+
+Html.ul [
+    ChildList
+]
+```
+
+</TabItem>
+
+</Tabs>
+
+
+## Using template strings

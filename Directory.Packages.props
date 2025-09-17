@@ -4,7 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="BlackFox.CommandLine" Version="1.0.0" />
-        <PackageVersion Include="Fable.AST" Version="4.5.0" />
+        <PackageVersion Include="Fable.AST" Version="5.0.0-beta.2" />
         <PackageVersion Include="Fable.Browser.Dom" Version="2.20.0" />
         <PackageVersion Include="Fable.Browser.MediaQueryList" Version="1.1.0" />
         <PackageVersion Include="Fable.Core" Version="4.5.0" />
