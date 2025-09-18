@@ -173,8 +173,8 @@ describe "ComponentUseMemo" <| fun _ ->
 describe "useEffect" <| fun _ ->
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
 
-        let effect: unit -> unit = vi.fn(fun () -> console.log("Effect called"))
-        let dispose: unit -> unit = vi.fn(fun () -> console.log("Dispose called"))
+        let effect: unit -> unit = vi.fn(fun () -> ())
+        let dispose: unit -> unit = vi.fn(fun () -> ())
 
         // Render the component
         let renderResult = RTL.render (
@@ -195,8 +195,8 @@ describe "useEffect" <| fun _ ->
 
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
 
-        let effect: unit -> unit = vi.fn(fun () -> console.log("Effect called"))
-        let dispose: unit -> unit = vi.fn(fun () -> console.log("Dispose called"))
+        let effect: unit -> unit = vi.fn(fun () -> ())
+        let dispose: unit -> unit = vi.fn(fun () -> ())
 
         // Render the component
         let renderResult = RTL.render (
@@ -222,14 +222,19 @@ describe "useEffect" <| fun _ ->
         let value = RTL.screen.getByTestId("timer-value")
         let button = RTL.screen.getByTestId("pause-button")
 
-        do! Promise.sleep 2200
+        do! RTL.act(fun () -> promise {
+            do! Promise.sleep 2200
+        })
 
         let initial = int value.textContent
         expect(initial).toBeGreaterThan 0
 
         do! userEvent.click(button) // Pause
 
-        do! Promise.sleep 2000
+        do! RTL.act(fun () -> promise {
+            do! Promise.sleep 2000
+        })
+        
         let afterPause = int value.textContent
         expect(afterPause).toBe initial
     }
@@ -237,8 +242,8 @@ describe "useEffect" <| fun _ ->
 describe "useLayoutEffect" <| fun _ ->
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
 
-        let effect: unit -> unit = vi.fn(fun () -> console.log("Effect called"))
-        let dispose: unit -> unit = vi.fn(fun () -> console.log("Dispose called"))
+        let effect: unit -> unit = vi.fn(fun () -> ())
+        let dispose: unit -> unit = vi.fn(fun () -> ())
 
         // Render the component
         let renderResult = RTL.render (
@@ -259,8 +264,8 @@ describe "useLayoutEffect" <| fun _ ->
 
     testPromise "calls effect on mount and disposeEffect on unmount" <| fun _ -> promise {
 
-        let effect: unit -> unit = vi.fn(fun () -> console.log("Effect called"))
-        let dispose: unit -> unit = vi.fn(fun () -> console.log("Dispose called"))
+        let effect: unit -> unit = vi.fn(fun () -> ())
+        let dispose: unit -> unit = vi.fn(fun () -> ())
 
         // Render the component
         let renderResult = RTL.render (
@@ -339,7 +344,7 @@ describe "lazy" <| fun _ ->
 
 describe "Strict Mode with Effect" <| fun _ ->
     testPromise "calls effect once on mount in StrictMode" <| fun _ -> promise {
-        let effect: unit -> unit = vi.fn(fun () -> console.log("Effect called"))
+        let effect: unit -> unit = vi.fn(fun () -> ())
         let render = RTL.render (React.StrictMode [
             Components.ComponentStrictWithEffect(effect)
         ])

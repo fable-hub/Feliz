@@ -11,6 +11,8 @@
     <Compile Include="Legacy.test.fs" />
     <Compile Include="EnsureJSX.fs" />
     <Compile Include="EnsureJSX.test.fs" />
+    <Compile Include="Basic.fs" />
+    <Compile Include="Basic.test.fs" />
     <Compile Include="ReactBindings.fs" />
     <Compile Include="ReactBindings.test.fs" />
   </ItemGroup>

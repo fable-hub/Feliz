@@ -1,8 +1,8 @@
-module Tests.EnsureJSX
+module Tests.Basic
 
 open Fable.Core
 open Feliz
-open Feliz.JSX
+
 
 [<Erase; Mangle(false)>]
 type Components =
