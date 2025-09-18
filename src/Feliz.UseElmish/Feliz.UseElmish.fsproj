@@ -6,7 +6,6 @@
         <Authors>Zaid Ajaj</Authors>
         <Version>2.5.0</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <PackageReleaseNotes>Making dispatch function stable</PackageReleaseNotes>
         
     </PropertyGroup>
     <PropertyGroup>

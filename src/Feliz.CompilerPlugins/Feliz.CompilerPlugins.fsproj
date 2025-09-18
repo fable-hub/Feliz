@@ -2,10 +2,9 @@
   <PropertyGroup>
     <Description>Provides compile-time transformation for React components</Description>
     <PackageTags>fsharp;fable;react;html</PackageTags>
-    <Authors>Zaid Ajaj</Authors>
-    <Version>2.2.0</Version>
+    <Authors>Zaid Ajaj; FreymaurerK</Authors>
+    <Version>3.0.0-rc.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageReleaseNotes>Remove redundant declaration of imported React component</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AstUtils.fs" />

@@ -6,7 +6,6 @@
     <Authors>Cody Johnson, Zaid Ajaj</Authors>
     <Description>Adds easy to use delayed rendering</Description>
     <PackageTags>fsharp;fable;react;html;feliz</PackageTags>
-    <PackageReleaseNotes>Update Feiz to v2.0.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Types
 
-module internal ReactInternal =
+module ReactInternal =
 
     [<Import("createElement","react")>]
     let createElementWithChildren(``type``: ReactNode, props: obj, [<ParamArray>] children: seq<ReactElement>): ReactElement = jsNative

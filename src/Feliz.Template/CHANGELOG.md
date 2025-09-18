@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## 1.0.0 - 2025-09-18
+## 4.5.0 - 2023-03-21
 
 ### Added
 
-- Create core bindings for `@testing-library/user-event`
+- Last release before start of Changelog
+

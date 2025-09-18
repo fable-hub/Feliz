@@ -4,9 +4,8 @@
     <Description>A fresh retake of the React API in Fable, optimized for happiness</Description>
     <PackageTags>fsharp;fable;react;html</PackageTags>
     <Authors>Zaid Ajaj; FreymaurerK</Authors>
-    <Version>2.9.0</Version>
+    <Version>3.0.0-rc.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageReleaseNotes>Add scrollbarColor, aria-roledescription and order style properties</PackageReleaseNotes>
   </PropertyGroup>
   
   <ItemGroup>

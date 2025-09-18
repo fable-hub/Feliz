@@ -7,6 +7,7 @@
         <PackageIcon>fable_logo.png</PackageIcon>
         <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/CHANGELOG.md"))</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
         <!-- Depends on the same version of FSharp.Core for all the projects -->

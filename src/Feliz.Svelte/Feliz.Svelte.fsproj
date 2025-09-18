@@ -5,8 +5,7 @@
     <Version>0.7.0</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReleaseNotes>Update Feliz.SvelteComponent</PackageReleaseNotes>
-    
+
   </PropertyGroup>
   <PropertyGroup>
     <NpmDependencies>

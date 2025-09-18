@@ -6,7 +6,6 @@
         <Authors>Zaid Ajaj</Authors>
         <Version>4.3.0</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <PackageReleaseNotes>Add yAxis tickFormatter</PackageReleaseNotes>
     </PropertyGroup>
     <PropertyGroup>
         <NpmDependencies>
