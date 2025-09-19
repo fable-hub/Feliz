@@ -1,4 +1,4 @@
-module Examples.ReactComponentImport
+module Examples.Feliz.ReactComponentImport
 
 open Feliz
 

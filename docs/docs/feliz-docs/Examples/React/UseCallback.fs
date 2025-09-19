@@ -4,7 +4,7 @@ open Feliz
 
 
 [<ReactMemoComponent>] // memoizes component to prevent rerender whenever parent rerenders
-let ChildComponent (onClick: unit -> unit) = 
+let ChildComponent(onClick: unit -> unit) = 
     let renderCount = React.useRef(0)
     React.useEffect(fun () ->
         renderCount.current <- renderCount.current + 1

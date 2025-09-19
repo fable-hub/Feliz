@@ -6,6 +6,7 @@ sidebar_position: 4
 import ComponentRender from '@site/src/components/ComponentRender';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
 
 Feliz offers a simple way to define React components using the `[<ReactComponent>]` attribute. This attribute can be applied to a function that returns a React element.
 
@@ -152,37 +153,89 @@ export const Component = memo((componentInputProps) => {
 
 ## `[<ReactLazyComponent>]`
 
-:::danger
+React `lazy` components can be created using the `[<ReactLazyComponent>]` attribute. It works similarly to `[<ReactComponent>]`, but is intended for components that are loaded dynamically using `React.lazy`. 
 
-This is still work in progress and might change in future releases.
+There are two ways to define a lazy component with `[<ReactLazyComponent>]`:
 
-:::
-
-React `lazy` components can be created using the `[<ReactLazyComponent>]` attribute. It works similarly to `[<ReactComponent>]`, but is intended for components that are loaded dynamically using `React.lazy`.
-
-<Tabs>
-
-<TabItem value="F#" label="F#">
+:::info
+Remember that only default exports can be lazy loaded!
 
 ```fsharp
-[<ReactLazyComponent>]
-let ComponentLazy () = 
-  Fable.Core.JsInterop.importDynamic "./RenderingLists" // path to file
-  |> unbox<ReactElement>
+[<ReactComponent(true)>] // like this!
 ```
+:::
+
+### From existing component
+
+This approach allows to wrap an existing component in a lazy-loaded component.
+
+If you have optional parameters, you will need to add the arguments you want to use to the wrapper. Otherwise the F# compiler will assume a None for all. (See examples below!)
+
+import RawLazy from '!!raw-loader!../../feliz-docs/Examples/Feliz/ReactLazyComponent.fs'
+import RawLazyTranspiled from '!!raw-loader!../../feliz-docs/fableoutput/Examples/Feliz/ReactLazyComponent.jsx'
+import RawLists from '!!raw-loader!../../feliz-docs/Examples/Feliz/RenderingLists.fs'
+
+<Tabs>
+<TabItem value="F#" label="F#">
+
+<CodeBlock language='fsharp'>
+{RawLazy}
+</CodeBlock>
 
 </TabItem>
 
 <TabItem value="JSX" label="JSX">
 
-```jsx
-export const ComponentLazy = lazy(() => {
-    return import("./RenderingLists");
-});
-
-```
+<CodeBlock language='fsharp'>
+{RawLazyTranspiled}
+</CodeBlock>
 
 </TabItem>
 
+<TabItem value="F#-lists" label="F# List Component">
+
+<CodeBlock language='fsharp'>
+{RawLists}
+</CodeBlock>
+
+</TabItem>
+
+</Tabs>
+
+### From path
+
+Alternatively you can specify a path to a module that contains a default export of a React component.
+
+:::warning
+This approach will not have type safety for the component props! It is similiar to writing a JavaScript binding!
+:::
+
+import RawLazyPath from '!!raw-loader!../../feliz-docs/Examples/Feliz/ReactLazyComponentPath.fs'
+import RawLazyPathTranspiled from '!!raw-loader!../../feliz-docs/fableoutput/Examples/Feliz/ReactLazyComponentPath.jsx'
+
+<Tabs>
+<TabItem value="F#" label="F#">
+
+<CodeBlock language='fsharp'>
+{RawLazyPath}
+</CodeBlock>
+
+</TabItem>
+
+<TabItem value="JSX" label="JSX">
+
+<CodeBlock language='fsharp'>
+{RawLazyPathTranspiled}
+</CodeBlock>
+
+</TabItem>
+
+<TabItem value="F#-lists" label="F# List Component">
+
+<CodeBlock language='fsharp'>
+{RawLists}
+</CodeBlock>
+
+</TabItem>
 
 </Tabs>

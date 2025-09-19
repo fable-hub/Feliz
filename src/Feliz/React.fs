@@ -102,6 +102,13 @@ type React =
     /// Placeholder empty React element to be used when importing external React components with the `[<ReactComponent>]` attribute.
     static member inline Imported() : ReactElement = Fable.Core.JS.undefined
 
+    /// Dynamically import a React component from a given path.
+    /// 
+    /// Designed to be used with `[<ReactLazyComponent>]` attribute.
+    static member inline DynamicImported (path: string) : ReactElement = 
+        Fable.Core.JsInterop.importDynamic path
+        |> unbox
+
     /// The `useState` hook that creates a state variable for React function components from an initialization function.
     [<ImportMember("react")>]
     static member inline useState<'t>(initializer: unit -> 't): ('t * ('t -> unit)) = jsNative

@@ -341,6 +341,150 @@ describe "lazy" <| fun _ ->
         expect(loading).toBeNull()
     }
 
+    testPromise "loads lazy component with attribute from let binding" <| fun _ -> promise {
+        let render = RTL.render (Components.LazyLoadLazyComponentAttributeLet())
+
+        // Ensure loading message is not present initially
+        expect(RTL.screen.queryByText("Loading...")).toBeNull()
+
+        // Type into the input field
+
+
+        // Click the checkbox to load the lazy component
+        let checkbox = screen.getByTestId("checkbox")
+        do! userEvent.click(checkbox)
+
+        // Wait for loading indicator
+        let! loading = RTL.waitFor<Types.HTMLElement>(fun () -> promise {
+            return! screen.findByTestId("loading")
+        })
+
+        expect(loading).not.toBeNull()
+
+        do! RTL.waitFor<unit>((fun () -> promise {
+            // Wait for the lazy component to appear
+            let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
+            expect(lazyText).not.toBeNull()
+        }), RTLWaitForOptions(timeout = 3000))
+
+        let input = RTL.screen.getByTestId("input")
+        do! userEvent.clear(input)
+        do! userEvent.``type``(input, "hello")
+
+        let! lazyText = RTL.screen.findByText("hello")
+        expect(lazyText).not.toBeNull()
+        let loading = RTL.screen.queryByTestId("loading")
+        expect(loading).toBeNull()
+    }
+
+    testPromise "loads lazy component with attribute from static member" <| fun _ -> promise {
+        let render = RTL.render (Components.LazyLoadLazyComponentAttributeClass())
+
+        // Ensure loading message is not present initially
+        expect(RTL.screen.queryByText("Loading...")).toBeNull()
+
+        // Type into the input field
+
+
+        // Click the checkbox to load the lazy component
+        let checkbox = screen.getByTestId("checkbox")
+        do! userEvent.click(checkbox)
+
+        // Wait for loading indicator
+        let! loading = RTL.waitFor<Types.HTMLElement>(fun () -> promise {
+            return! screen.findByTestId("loading")
+        })
+
+        expect(loading).not.toBeNull()
+
+        do! RTL.waitFor<unit>((fun () -> promise {
+            // Wait for the lazy component to appear
+            let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
+            expect(lazyText).not.toBeNull()
+        }), RTLWaitForOptions(timeout = 3000))
+
+        let input = RTL.screen.getByTestId("input")
+        do! userEvent.clear(input)
+        do! userEvent.``type``(input, "hello")
+
+        let! lazyText = RTL.screen.findByText("hello")
+        expect(lazyText).not.toBeNull()
+        let loading = RTL.screen.queryByTestId("loading")
+        expect(loading).toBeNull()
+    }
+
+    testPromise "loads lazy component with attribute from let binding from path" <| fun _ -> promise {
+        let render = RTL.render (Components.LazyLoadLazyComponentAttributeLetFromPath())
+
+        // Ensure loading message is not present initially
+        expect(RTL.screen.queryByText("Loading...")).toBeNull()
+
+        // Type into the input field
+
+
+        // Click the checkbox to load the lazy component
+        let checkbox = screen.getByTestId("checkbox")
+        do! userEvent.click(checkbox)
+
+        // Wait for loading indicator
+        let! loading = RTL.waitFor<Types.HTMLElement>(fun () -> promise {
+            return! screen.findByTestId("loading")
+        })
+
+        expect(loading).not.toBeNull()
+
+        do! RTL.waitFor<unit>((fun () -> promise {
+            // Wait for the lazy component to appear
+            let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
+            expect(lazyText).not.toBeNull()
+        }), RTLWaitForOptions(timeout = 3000))
+
+        let input = RTL.screen.getByTestId("input")
+        do! userEvent.clear(input)
+        do! userEvent.``type``(input, "hello")
+
+        let! lazyText = RTL.screen.findByText("hello")
+        expect(lazyText).not.toBeNull()
+        let loading = RTL.screen.queryByTestId("loading")
+        expect(loading).toBeNull()
+    }
+
+    testPromise "loads lazy component with attribute from static member from path" <| fun _ -> promise {
+        let render = RTL.render (Components.LazyLoadLazyComponentAttributeClassFromPath())
+
+        // Ensure loading message is not present initially
+        expect(RTL.screen.queryByText("Loading...")).toBeNull()
+
+        // Type into the input field
+
+
+        // Click the checkbox to load the lazy component
+        let checkbox = screen.getByTestId("checkbox")
+        do! userEvent.click(checkbox)
+
+        // Wait for loading indicator
+        let! loading = RTL.waitFor<Types.HTMLElement>(fun () -> promise {
+            return! screen.findByTestId("loading")
+        })
+
+        expect(loading).not.toBeNull()
+
+        do! RTL.waitFor<unit>((fun () -> promise {
+            // Wait for the lazy component to appear
+            let! lazyText = RTL.screen.findByText("Component loaded after 2 seconds")
+            expect(lazyText).not.toBeNull()
+        }), RTLWaitForOptions(timeout = 3000))
+
+        let input = RTL.screen.getByTestId("input")
+        do! userEvent.clear(input)
+        do! userEvent.``type``(input, "hello")
+
+        let! lazyText = RTL.screen.findByText("hello")
+        expect(lazyText).not.toBeNull()
+        let loading = RTL.screen.queryByTestId("loading")
+        expect(loading).toBeNull()
+    }
+
 
 describe "Strict Mode with Effect" <| fun _ ->
     testPromise "calls effect once on mount in StrictMode" <| fun _ -> promise {

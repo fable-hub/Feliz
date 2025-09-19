@@ -9,12 +9,15 @@ open Fable.AST.Fable
 do()
 
 module internal ReactComponentHelpers =
-    let (|ReactMemo|_|) = function
+    let (|ReactLazyMemo|_|) = function
         | Import({ Selector = "memo"; Path = "react" },_,_) as e -> Some e
+        | Import({ Selector = "lazy"; Path = "react" },_,_) as e -> Some e
         | Get(Import({ Path = "react" },_,_),kind,_,_) as e ->
             match kind with
             | ExprGet(Value(StringConstant "memo",_)) -> Some e
             | FieldGet i when i.Name = "memo" -> Some e
+            | ExprGet(Value(StringConstant "lazy",_)) -> Some e
+            | FieldGet i when i.Name = "lazy" -> Some e
             | _ -> None
         | _ -> None
 
@@ -25,7 +28,72 @@ module internal ReactComponentHelpers =
             yield! body
         ]
 
-    let applyImportOrMemoOrLazy import from memo (lazy': bool option) (decl: MemberDecl) =
+    let (|IsCreateElement|_|) = function
+        | Import({ Selector = "createElement"; Path = "react" },_,_) as e -> Some e
+        | _ -> None
+
+    let mkImportPath (fsharpSourcePath: string) (compilerInfo: PluginHelper) =
+        let extensionIndex = fsharpSourcePath.LastIndexOf "."
+        fsharpSourcePath.Remove(extensionIndex) + compilerInfo.Options.FileExtension
+
+    let getPathInfo (args: List<Expr>) compilerInfo =
+        [
+            for arg in args do
+                match arg with
+                | Import ({ Path = path }, _, _) ->
+                    let path = mkImportPath path compilerInfo 
+                    Value (StringConstant path, None)
+                | _ -> ()
+
+        ]
+
+    let rec transformToDynImport compilerInfo body  =
+        match body with
+        | Call (IsCreateElement _, info, t, r) ->
+            let relativeImport = 
+                IdentExpr {
+                    Name = "import"
+                    Type = Any
+                    IsMutable = false
+                    IsThisArgument = false
+                    IsCompilerGenerated = true
+                    Range = None 
+                }
+            let pathInfo = getPathInfo info.Args compilerInfo
+            let info =
+                {
+                    info with
+                        Args = pathInfo
+                }
+            let t =
+                DeclaredType(
+                    {
+                        FullName = "Fable.Core.JS.Promise`1"
+                        Path = CoreAssemblyName "Fable.Core"
+                    }, 
+                    [
+                        AnonymousRecordType([|"default"|], [Type.Any], false)
+                    ]
+                )
+            Call (relativeImport, info, t, r)
+        | Sequential body ->
+            let next =
+                body
+                |> List.map (transformToDynImport compilerInfo)
+            Sequential next
+        // | Delegate(args, body, name, tags) ->
+        | Let (_, _, body) -> // This case is relevant when props are used to hint at optional parameters
+            // Example:
+            // ```fsharp
+            // [<ReactLazyComponent>]
+            // let LazyCounter(init) = Counter.Counter.Counter(init)
+            // ```
+            transformToDynImport compilerInfo body
+        | TypeCast(body, _) ->
+            transformToDynImport compilerInfo body
+        | _ -> body
+
+    let applyImportOrMemoOrLazy import from memo (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
         match import, from, memo, lazy' with
         | Some _, Some _, _, _ ->
             let reactElType = decl.Body.Type
@@ -53,7 +121,13 @@ module internal ReactComponentHelpers =
             let body =
                 decl.Body
                 |> injectReactImport 
-                |> fun body -> [Delegate(decl.Args, body, None, Tags.empty)]
+                |> fun body -> 
+                    
+                    let dynImport = 
+                        // Transform createElement call to dynamic import to file of the component
+                        transformToDynImport compiler body 
+                    let args = [Delegate([], dynImport, None, Tags.empty)]
+                    args
                 |> AstUtils.makeCall lazyFn
             // Change declaration kind from function to value
             let info =
@@ -140,7 +214,9 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
             expr
 
     override this.Transform(compiler, file, decl) =
+
         let info = compiler.GetMember(decl.MemberRef)
+
         if memo.IsSome && lazy'.IsSome && memo.Value && lazy'.Value then
             let errorMessage = sprintf "Cannot use both memo and lazy options in [<ReactComponent>] for %s" decl.Name
             compiler.LogWarning(errorMessage, ?range=decl.Body.Range)
@@ -206,11 +282,11 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                     ()
 
                 decl
-                |> applyImportOrMemoOrLazy import from memo lazy'
+                |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else if decl.Args.Length = 1 && decl.Args[0].Type = Type.Unit then
                 // remove arguments from functions requiring unit as input
                 { decl with Args = [ ] }
-                |> applyImportOrMemoOrLazy import from memo lazy'
+                |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else
                 // rewrite all other arguments into getters of a single props object
                 // TODO: transform any callback into into useCallback(callback) to stabilize reference
@@ -233,19 +309,18 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
                     match decl.Body with
                     // If the body is surrounded by a memo call we put the bindings within the call
                     // because Fable will later move the surrounding function into memo
-                    | Call(ReactMemo reactMemo, ({ Args = arg::restArgs } as callInfo), t, r) ->
+                    | Call(ReactLazyMemo reactMemo, ({ Args = arg::restArgs } as callInfo), t, r) ->
                         let arg = propBindings |> List.fold (fun body (k,v) -> Let(k, v, body)) arg
                         Call(reactMemo, { callInfo with Args = arg::restArgs }, t, r)
                     | _ ->
                         propBindings |> List.fold (fun body (k,v) -> Let(k, v, body)) decl.Body
 
                 { decl with Args = [propsArg]; Body = body }
-                |> applyImportOrMemoOrLazy import from memo lazy'
+                |> applyImportOrMemoOrLazy import from memo lazy' compiler
 
 type ReactMemoComponentAttribute(?exportDefault: bool) =
     inherit ReactComponentAttribute(?exportDefault=exportDefault, ?import=None, ?from=None, memo=true, lazy'=false)
     new() = ReactMemoComponentAttribute(exportDefault=false)
 
-type ReactLazyComponentAttribute(?exportDefault: bool) =
-    inherit ReactComponentAttribute(?exportDefault=exportDefault, ?import=None, ?from=None, memo=false, lazy'=true)
-    new() = ReactLazyComponentAttribute(exportDefault=false)
+type ReactLazyComponentAttribute() =
+    inherit ReactComponentAttribute(false, ?import=None, ?from=None, memo=false, lazy'=true)

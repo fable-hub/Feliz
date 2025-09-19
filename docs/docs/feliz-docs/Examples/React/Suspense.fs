@@ -3,7 +3,9 @@ module Example.Suspense
 open Feliz
 open Fable.Core
 
-// Simulate a lazy component
+/// Lazy load with delay to simulate large component
+/// 
+/// Note: Prefer using `[<ReactLazyComponent>]` instead of this approach!
 let LazyHello: LazyComponent<unit> =
     React.lazy'(fun () ->
         promise {

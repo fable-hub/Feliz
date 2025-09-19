@@ -119,7 +119,12 @@ let memberName = function
     | Fable.GeneratedMemberRef m -> m.Info.Name
 
 let makeCall callee args =
-    Fable.Call(callee, makeCallInfo args, Fable.Any, None)
+    Fable.Call(
+        callee, 
+        makeCallInfo args, 
+        Fable.Any, // This must be adjusted to change the return type of the function
+        None)
+
 
 let makeSet target fieldName value =
     Fable.Set(target, Fable.SetKind.FieldSet(fieldName), Fable.Type.String, value, None)
