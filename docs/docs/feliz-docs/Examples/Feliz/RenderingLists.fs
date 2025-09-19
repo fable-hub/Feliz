@@ -1,13 +1,13 @@
-module Example.RenderingLists
+module Examples.Feliz.RenderingLists
 
 open Feliz
 
 type RenderingLists =
 
     [<ReactComponent(true)>]
-    static member Example() =
+    static member Example(?list: int list) =
 
-        let items = [ 0 .. 5 ] //any list/seq/array
+        let items = defaultArg list [ 0 .. 5 ] //any list/seq/array
 
         Html.div [
             Html.h2 "List rendering using for loop"

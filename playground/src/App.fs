@@ -7,6 +7,6 @@ open Fable.Core
 let App() =
     Html.div [
         prop.children [
-            Components.Components.Counter()
+            Components.Main()
         ]
     ]

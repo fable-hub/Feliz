@@ -20,6 +20,21 @@ module TestLazyComponent =
             }
         )
 
+    [<ReactLazyComponent>]
+    let LazyLoadComponentAttributeFromPath(text: string) = React.DynamicImported "./CodeSplitting.jsx"
+
+    [<ReactLazyComponent>]
+    let LazyLoadComponentAttribute(text: string) = CodeSplitting.CodeSplitting.MyCodeSplitComponent(text)
+
+[<Erase; Mangle(false)>]
+type TestLazyComponentClass =
+
+    [<ReactLazyComponent>]
+    static member LazyLoadComponent(?text: string) = CodeSplitting.CodeSplitting.MyCodeSplitComponent(?text = text)
+
+    [<ReactLazyComponent>]
+    static member LazyLoadComponentFromPath(?text: string) = React.DynamicImported "./CodeSplitting.jsx"
+
 [<Erase; Mangle(false)>]
 type Components =
 
@@ -270,6 +285,118 @@ type Components =
                     children = [
                         Html.h1 "Preview"
                         React.lazyRender(TestLazyComponent.LazyLoadComponent, {|text = text|})
+                    ]
+                )
+        ]
+
+    [<ReactComponent>]
+    static member LazyLoadLazyComponentAttributeLet() =
+        let showPreview, setShowPreview = React.useState(false)
+        let text, setText = React.useState("Component loaded after 2 seconds")
+        Html.div [
+            Html.input [
+                prop.testId "input"
+                prop.value text
+                prop.onChange (fun (e: string) -> setText(e))
+            ]
+            Html.label [
+                Html.input [
+                    prop.testId "checkbox"
+                    prop.type' "checkbox"
+                    prop.onChange (fun (e: bool) -> setShowPreview(e))
+                ]
+                Html.text "Load Component"
+            ]
+            if showPreview then
+                React.Suspense(
+                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
+                    children = [
+                        Html.h1 "Preview"
+                        TestLazyComponent.LazyLoadComponentAttribute(text)
+                    ]
+                )
+        ]
+
+    [<ReactComponent>]
+    static member LazyLoadLazyComponentAttributeClass() =
+        let showPreview, setShowPreview = React.useState(false)
+        let text, setText = React.useState("Component loaded after 2 seconds")
+        Html.div [
+            Html.input [
+                prop.testId "input"
+                prop.value text
+                prop.onChange (fun (e: string) -> setText(e))
+            ]
+            Html.label [
+                Html.input [
+                    prop.testId "checkbox"
+                    prop.type' "checkbox"
+                    prop.onChange (fun (e: bool) -> setShowPreview(e))
+                ]
+                Html.text "Load Component"
+            ]
+            if showPreview then
+                React.Suspense(
+                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
+                    children = [
+                        Html.h1 "Preview"
+                        TestLazyComponentClass.LazyLoadComponent(text)
+                    ]
+                )
+        ]
+
+    [<ReactComponent>]
+    static member LazyLoadLazyComponentAttributeLetFromPath() =
+        let showPreview, setShowPreview = React.useState(false)
+        let text, setText = React.useState("Component loaded after 2 seconds")
+        Html.div [
+            Html.input [
+                prop.testId "input"
+                prop.value text
+                prop.onChange (fun (e: string) -> setText(e))
+            ]
+            Html.label [
+                Html.input [
+                    prop.testId "checkbox"
+                    prop.type' "checkbox"
+                    prop.onChange (fun (e: bool) -> setShowPreview(e))
+                ]
+                Html.text "Load Component"
+            ]
+            if showPreview then
+                React.Suspense(
+                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
+                    children = [
+                        Html.h1 "Preview"
+                        TestLazyComponent.LazyLoadComponentAttributeFromPath(text)
+                    ]
+                )
+        ]
+
+    [<ReactComponent>]
+    static member LazyLoadLazyComponentAttributeClassFromPath() =
+        let showPreview, setShowPreview = React.useState(false)
+        let text, setText = React.useState("Component loaded after 2 seconds")
+        Html.div [
+            Html.input [
+                prop.testId "input"
+                prop.value text
+                prop.onChange (fun (e: string) -> setText(e))
+            ]
+            Html.label [
+                Html.input [
+                    prop.testId "checkbox"
+                    prop.type' "checkbox"
+                    prop.onChange (fun (e: bool) -> setShowPreview(e))
+                ]
+                Html.text "Load Component"
+            ]
+            if showPreview then
+                React.Suspense(
+                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
+                    children = [
+                        Html.h1 "Preview"
+                        TestLazyComponentClass.LazyLoadComponentFromPath(text)
                     ]
                 )
         ]

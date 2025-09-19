@@ -11,35 +11,19 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 `React.lazy` lets you define components that are loaded dynamically, enabling code-splitting and improving performance by only loading components when needed. Lazy components must be rendered inside a `Suspense` boundary to handle loading states.
 
-```fsharp
-// Simulate a lazy component
-let LazyHello: LazyComponent<unit> =
-    React.lazy'(fun () ->
-        promise {
-            do! Promise.sleep 2000
-            return! JsInterop.importDynamic "./Counter"
-        }
-    )
+## `[<ReactLazyComponent>]` attribute
 
-[<ReactComponent(true)>]
-let SuspenseDemo() =
-    let load, setLoad = React.useState(false)
-    Html.div [
-        Html.h3 [ prop.text "Suspense Example" ]
-        Html.p "Loading the component will take 2 seconds. Then the component will be cached and future reruns will be instant."
-        if load then
-            React.Suspense([ 
-                    React.lazyRender(LazyHello, ()) 
-                ],
-                Html.div [ prop.text "Loading..." ]
-            )
-        else
-            Html.button [
-                prop.text (if load then "Hide Lazy Component" else "Load Lazy Component")
-                prop.onClick (fun _ -> setLoad(not load))
-            ]
-    ]
-```
+This is the recommended way to define lazy components in Feliz. The attribute automatically wraps the component in `React.lazy` and ensures correct transpilation.
+
+Check out the [ReactLazyComponent documentation](../../feliz/react-component#reactlazycomponent) for more details.
+
+## React.lazy'
+
+`React.lazy'` is a lower-level API that allows you to define lazy components.
+
+To ensure correct rendering:
+- use `React.lazy'` to define lazy components and `React.lazyRender` to render them.
+- `React.lazy'` must be used as `let`-binding to ensure correct transpilation as `const` in JavaScript.
 
 import SuspenseDemo from '../../../feliz-docs/fableoutput/Examples/React/Suspense'
 import RawSuspenseDemo from '!!raw-loader!../../../feliz-docs/Examples/React/Suspense.fs'
@@ -48,8 +32,3 @@ import RawSuspenseDemo from '!!raw-loader!../../../feliz-docs/Examples/React/Sus
   <SuspenseDemo />
 </ComponentRender>
 
-## Feliz specifics
-
-To ensure correct rendering of lazy components in Feliz:
-- use `React.lazy'` to define lazy components and `React.lazyRender` to render them.
-- `React.lazy'` must be used as `let`-binding to ensure correct transpilation as `const` in JavaScript.

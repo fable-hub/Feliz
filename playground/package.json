@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "dotnet fable watch ./src -o ./src/fableoutput --exclude Feliz.CompilerPlugins -e .tsx --lang ts --noCache  --run vite",
+    "dev": "dotnet fable watch ./src -o ./src/fableoutput --exclude Feliz.CompilerPlugins -e .tsx --lang ts --noCache --run vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },

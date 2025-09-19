@@ -1,4 +1,4 @@
-module Examples.ReactComponent
+module Examples.Feliz.ReactComponent
 
 open Feliz
 
@@ -23,6 +23,3 @@ let ComponentMemo (text: string) (count: int) =
             ]
     ]
 
-
-[<ReactLazyComponent>]
-let ComponentLazy () = Fable.Core.JsInterop.importDynamic "./RenderingLists" |> unbox<ReactElement>

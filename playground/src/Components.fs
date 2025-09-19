@@ -1,69 +1,50 @@
 module Components 
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Feliz
+open Fable.Core
+open Fable.Core.JS
 
-[<RequireQualifiedAccess>]
-[<StringEnum>]
-type CounterVariant =
-    | Increment
-    | Decrement
-    | Both
 
-[<Fable.Core.JS.PojoAttribute>]
-type CounterConfig(?stepSize: int, ?counterVariant: CounterVariant) = 
-    member val stepSize = stepSize with get, set
-    member val counterVariant = counterVariant with get, set
+// [<ReactLazyComponent>]
+// let LazyCounter(init) = Counter.Counter.Counter(init)
 
-/// internal helper
-module private CounterConfig =
-    let Default = CounterConfig(1, CounterVariant.Both)
 
-[<Mangle(false); Erase>]
-type Components =
+[<ReactLazyComponent>]
+let private LazyCounter(init: int) : ReactElement = React.DynamicImported "./Counter"
 
-    [<ReactComponent>]
-    static member Counter(?init: int, ?text: string, ?classNames: ResizeArray<string>, ?config: CounterConfig) =
-        let config = defaultArg config CounterConfig.Default
-        let init = defaultArg init 0
-        let counter, setCounter = React.useState(init)
+    // Counter.Counter.Counter(init)
 
-        let IncrementBtn() =
-            Html.button [
-                prop.text "Increment"
-                prop.onClick (fun _ -> setCounter(counter + config.stepSize.Value) )
-            ]
 
-        let DecrementBtn() =
-            Html.button [
-                prop.text "Decrement"
-                prop.onClick (fun _ -> setCounter(counter - config.stepSize.Value))
-            ]
-
+[<ReactComponent>]
+let LazyLoad() =
+        let showPreview, setShowPreview = React.useState(false)
+        let count, setCount = React.useState(0)
         Html.div [
-            prop.className (
-                match classNames with
-                | Some names when names.Count > 0 ->
-                    names
-                | _ -> ResizeArray [| "counter" |]
-            )
-            prop.children [
-                Html.h1 "Main component!"
-                if text.IsSome then
-                    Html.p text.Value
-                Html.div [
-                    Html.p $"Counter: {counter} - {config.stepSize.Value}"
-                    Html.div [
-                        match config.counterVariant with
-                        | Some CounterVariant.Increment -> IncrementBtn()
-                        | Some CounterVariant.Decrement -> DecrementBtn()
-                        | Some CounterVariant.Both 
-                        | None ->
-                            IncrementBtn()
-                            DecrementBtn()
-                    ]
-                ]
-
+            Html.input [
+                prop.testId "input"
+                prop.type'.number
+                prop.value count
+                prop.onChange (fun (e: int) -> setCount(e))
             ]
+            Html.label [
+                Html.input [
+                    prop.testId "checkbox"
+                    prop.type' "checkbox"
+                    prop.onChange (fun (e: bool) -> setShowPreview(e))
+                ]
+                Html.text "Load Component"
+            ]
+            if showPreview then
+                React.Suspense(
+                    fallback = Html.div [ prop.testId "loading"; prop.text "Loading..." ],
+                    children = [
+                        Html.h1 "Preview"
+                        LazyCounter(count)
+                    ]
+                )
         ]
+
+let Main() =
+    Html.div [
+        LazyLoad()
+    ]
