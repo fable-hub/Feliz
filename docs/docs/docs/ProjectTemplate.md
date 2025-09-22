@@ -3,6 +3,9 @@ title: Feliz Template
 sidebar_position: 2
 ---
 
+:::info
+This site is still WIP for this release!
+:::
 
 
 # Project Template [![Nuget](https://img.shields.io/nuget/v/Feliz.Template.svg?maxAge=0&colorB=brightgreen)](https://www.nuget.org/packages/Feliz.Template)

@@ -3,6 +3,10 @@ title: Type-Safe CSS
 sidebar_position: 6
 ---
 
+:::info
+This site is still WIP for this release!
+:::
+
 # Type-Safe CSS
 
 When you are working with a CSS framework such as [Bootstrap](https://getbootstrap.com/), [Bulma](https://bulma.io/), [FontAwesome](https://fontawesome.com/) or others, you often have to learn and remember a large number CSS class names to be able to use them in your application, for example to make a primary-colored button using Bulma, you write:

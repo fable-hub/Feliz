@@ -6,8 +6,8 @@ open Elmish
 module private Util =
     type UseSyncExternalStoreSubscribe = delegate of (unit -> unit) -> (unit -> unit)
 
-    [<ImportMember("use-sync-external-store/shim")>]
-    let useSyncExternalStore(subscribe: UseSyncExternalStoreSubscribe, getSnapshot: unit -> 'Model): 'Model = jsNative
+    [<ImportMember("react")>]
+    let useSyncExternalStore(subscribe: UseSyncExternalStoreSubscribe, getSnapshot: unit -> 'Model, getServerSnapshot: (unit -> 'Model) option): 'Model = jsNative
 
     [<ImportMember("react")>]
     let useState(init: unit -> 'State): 'State * ('State -> unit) = jsNative
@@ -112,7 +112,7 @@ type React =
         let state, setState = useState(fun () -> ElmishState(program, arg, dependencies))
         if state.IsOutdated(arg, dependencies) then
             ElmishState(program, arg, dependencies) |> setState
-        let finalState, dispatch, subscribed, queuedMessages = useSyncExternalStore(state.Subscribe, fun () -> state.State)
+        let finalState, dispatch, subscribed, queuedMessages = useSyncExternalStore(state.Subscribe, (fun () -> state.State), None)
         // Run any queued messages that were dispatched before the Elmish program finished subscribing
         useEffect((fun () ->
             if subscribed && queuedMessages.Count > 0 then

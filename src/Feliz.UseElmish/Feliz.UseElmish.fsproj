@@ -7,11 +7,6 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         
     </PropertyGroup>
-    <PropertyGroup>
-        <NpmDependencies>
-            <NpmPackage Name="use-sync-external-store" Version="&gt;= 1.0.0 &lt; 2.0.0" ResolutionStrategy="Max" />
-        </NpmDependencies>
-    </PropertyGroup>
     <ItemGroup>
         <Compile Include="UseElmish.fs" />
     </ItemGroup>

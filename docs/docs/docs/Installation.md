@@ -3,6 +3,10 @@ title: Installation
 sidebar_position: 1
 ---
 
+:::info
+This site is still WIP for this release!
+:::
+
 # Feliz - Installation
 
 To install Feliz into your project, you need to install the nuget package into your F# project
