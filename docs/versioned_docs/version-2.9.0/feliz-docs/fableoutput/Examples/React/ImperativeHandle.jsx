@@ -1,19 +1,17 @@
+
 import { forwardRef } from "../../fable_modules/Feliz.2.9.0/Internal.fs.js";
 import { reactElement, reactApi } from "../../fable_modules/Feliz.2.9.0/Interop.fs.js";
-import { toArray, map } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Option.js";
-import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/List.js";
+import { toArray, map } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Option.js";
+import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/List.js";
 import React from "react";
-import { iterate } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Seq.js";
+import { iterate } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Seq.js";
 
 export const ForwardRefImperativeChild = forwardRef((tupledArg) => {
-    const ref = tupledArg[1];
     const patternInput = reactApi.useState("");
-    const setDivText = patternInput[1];
-    const divText = patternInput[0];
     const inputRef = reactApi.useRef(undefined);
-    reactApi.useImperativeHandle(ref, (() => map((innerRef) => ({
+    reactApi.useImperativeHandle(tupledArg[1], (() => map((innerRef) => ({
         focus: () => {
-            setDivText(innerRef.className);
+            patternInput[1](innerRef.className);
         },
     }), inputRef.current)));
     const children = ofArray([reactElement("input", {
@@ -21,7 +19,7 @@ export const ForwardRefImperativeChild = forwardRef((tupledArg) => {
         type: "text",
         ref: inputRef,
     }), reactElement("div", {
-        children: divText,
+        children: patternInput[0],
     })]);
     return reactElement("div", {
         children: reactApi.Children.toArray(Array.from(children)),

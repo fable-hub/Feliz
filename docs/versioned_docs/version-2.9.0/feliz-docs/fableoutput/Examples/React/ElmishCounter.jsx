@@ -1,11 +1,12 @@
-import { Record, Union } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Types.js";
-import { record_type, int32_type, union_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Reflection.js";
+
+import { Record, Union } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Types.js";
+import { record_type, int32_type, union_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Reflection.js";
 import { Cmd_none } from "../../fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
 import React from "react";
 import { React_useElmish_Z6C327F2E } from "../../fable_modules/Feliz.UseElmish.2.5.0/UseElmish.fs.js";
 import { ProgramModule_mkProgram } from "../../fable_modules/Fable.Elmish.4.0.0/program.fs.js";
 import { reactApi, reactElement } from "../../fable_modules/Feliz.2.9.0/Interop.fs.js";
-import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/List.js";
+import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/List.js";
 
 export class Msg extends Union {
     constructor(tag, fields) {
@@ -49,10 +50,9 @@ export function update(msg, state) {
 export function Main() {
     const patternInput = React_useElmish_Z6C327F2E(() => ProgramModule_mkProgram(init, update, (_arg, _arg_1) => {
     }), undefined, []);
-    const state_1 = patternInput[0];
     const dispatch = patternInput[1];
     const children = ofArray([reactElement("h1", {
-        children: [state_1.Count],
+        children: [patternInput[0].Count],
     }), reactElement("button", {
         children: "Increment",
         onClick: (_arg_2) => {

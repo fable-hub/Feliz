@@ -6,8 +6,5 @@
     "transpile": "dotnet fable -o ./fableoutput --exclude Feliz.CompilerPlugins --noCache -e .jsx",
     "test": "npm run transpile && vitest --run",
     "test:watch": "npm run transpile -- --watch --run vitest"
-  },
-  "dependencies": {
-    "use-sync-external-store": "^1.5.0"
   }
 }

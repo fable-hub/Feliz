@@ -1,8 +1,9 @@
-import { Union, Record } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Types.js";
-import { union_type, record_type, int32_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Reflection.js";
+
+import { Union, Record } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Types.js";
+import { union_type, record_type, int32_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Reflection.js";
 import React from "react";
 import { reactElement, reactApi } from "../../fable_modules/Feliz.2.9.0/Interop.fs.js";
-import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/List.js";
+import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/List.js";
 
 export class State extends Record {
     constructor(Count) {
@@ -43,7 +44,6 @@ export function update(state, _arg) {
 
 export function Counter() {
     const patternInput = reactApi.useReducer(update, initialState);
-    const state_1 = patternInput[0];
     const dispatch = patternInput[1];
     const children = ofArray([reactElement("button", {
         onClick: (_arg_1) => {
@@ -56,7 +56,7 @@ export function Counter() {
         },
         children: "Decrement",
     }), reactElement("h1", {
-        children: [state_1.Count],
+        children: [patternInput[0].Count],
     })]);
     return reactElement("div", {
         children: reactApi.Children.toArray(Array.from(children)),

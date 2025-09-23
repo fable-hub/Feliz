@@ -1,13 +1,14 @@
-import { Record, Union } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Types.js";
-import { record_type, int32_type, union_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Reflection.js";
+
+import { Record, Union } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Types.js";
+import { record_type, int32_type, union_type } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Reflection.js";
 import { Cmd_none } from "../../fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
 import React from "react";
 import { reactElement, reactApi } from "../../fable_modules/Feliz.2.9.0/Interop.fs.js";
 import { React_useElmish_Z6C327F2E } from "../../fable_modules/Feliz.UseElmish.2.5.0/UseElmish.fs.js";
 import { ProgramModule_mkProgram } from "../../fable_modules/Fable.Elmish.4.0.0/program.fs.js";
-import { some } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/Option.js";
 import { useEffectWithDeps } from "../../fable_modules/Feliz.2.9.0/ReactInterop.js";
-import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.13/List.js";
+import { some } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/Option.js";
+import { ofArray } from "../../fable_modules/fable-library-js.5.0.0-alpha.14/List.js";
 
 export class Msg extends Union {
     constructor(tag, fields) {
@@ -50,14 +51,12 @@ export function update(msg, state) {
 
 export function Main() {
     const patternInput = reactApi.useState(0);
-    const setLocalCount = patternInput[1];
     const localCount = patternInput[0] | 0;
     const patternInput_1 = React_useElmish_Z6C327F2E(() => ProgramModule_mkProgram(init, update, (_arg, _arg_1) => {
     }), undefined, []);
-    const state_1 = patternInput_1[0];
     const dispatch = patternInput_1[1];
     const subscriptionId = reactApi.useRef(0);
-    const subscribeToTimer = () => {
+    useEffectWithDeps(() => {
         const loop = () => {
             dispatch(new Msg(0, []));
             console.log(some("Incremented count"));
@@ -70,10 +69,9 @@ export function Main() {
                 clearTimeout(subscriptionId.current);
             },
         };
-    };
-    useEffectWithDeps(subscribeToTimer, []);
+    }, []);
     const children = ofArray([reactElement("h1", {
-        children: [state_1.Count + localCount],
+        children: [patternInput_1[0].Count + localCount],
     }), reactElement("button", {
         children: "Increment",
         onClick: (_arg_2) => {
@@ -87,7 +85,7 @@ export function Main() {
     }), reactElement("button", {
         children: "Increment local state",
         onClick: (_arg_4) => {
-            setLocalCount(localCount + 1);
+            patternInput[1](localCount + 1);
         },
     })]);
     return reactElement("div", {

@@ -4,6 +4,10 @@ displayed_sidebar: docsSidebar
 sidebar_position: 0
 ---
 
+:::info
+This site is still WIP for this release!
+:::
+
 # Feliz [![Nuget](https://img.shields.io/nuget/v/Feliz.svg?maxAge=0&colorB=brightgreen)](https://www.nuget.org/packages/Feliz)
 
 A fresh retake of the base React DSL to build React applications, optimized for happiness.

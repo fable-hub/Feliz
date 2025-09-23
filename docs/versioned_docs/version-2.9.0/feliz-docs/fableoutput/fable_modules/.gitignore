@@ -1,0 +1,4 @@
+!**/*.fs.js
+!project_cracked.json
+**/*.fs
+**/*.fableproj

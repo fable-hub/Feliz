@@ -1,0 +1,25 @@
+---
+title: Reactivity
+sidebar_position: 5
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+
+Reactivity in Feliz is built on top of React's hooks API. Information can be stored in component state using the `useState` hook. Changes to state trigger a re-render of the component.
+
+Check out the example below!
+
+:::tip[Follow along with React docs]
+
+If you are new to React, we recommend reading the [React documentation](https://react.dev/learn/describing-the-ui) tutorial!
+
+:::
+
+import Counter from '../../feliz-docs/fableoutput/Examples/React/Counter'
+import RawCounter from '!!raw-loader!../../feliz-docs/Examples/React/Counter.fs'
+
+<ComponentRender code={RawCounter} defaultOpen> 
+  <Counter />
+</ComponentRender>
+
+You can read more about Reacts implementation in Feliz in the [React API](./../react/hooks/useState.mdx) documentation.

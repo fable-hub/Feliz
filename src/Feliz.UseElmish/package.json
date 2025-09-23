@@ -1,8 +1,5 @@
 {
   "private": true,
   "name": "feliz-useelmish",
-  "version": "0.0.0",
-  "dependencies": {
-    "use-sync-external-store": "^1.5.0"
-  }
+  "version": "0.0.0"
 }

@@ -85,7 +85,7 @@ let citiesMap = React.functionComponent(fun () ->
 
 ### Marker with overlay content on hover
 
-Hover over the markers to show the overlay with the name of the city. This example uses [Feliz.Popover](#/Ecosystem/Popover) to render the popover content of the marker.
+Hover over the markers to show the overlay with the name of the city. This example uses [Feliz.Popover](../../02_Components/Feliz.Popover.md) to render the popover content of the marker.
 
 ```fsharp
 open Feliz
@@ -170,7 +170,7 @@ let citiesMap = React.functionComponent(fun () ->
 
 ### Marker with overlay content on click
 
-Click on the markers to show the overlay with the name of the city. This example uses [Feliz.Popover](#/Ecosystem/Popover) to render the popover content of the marker.
+Click on the markers to show the overlay with the name of the city. This example uses [Feliz.Popover](../../02_Components/Feliz.Popover.md) to render the popover content of the marker.
 
 ```fsharp
 open Feliz
