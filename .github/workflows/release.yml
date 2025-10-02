@@ -1,0 +1,27 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, feliz_v3.0 ]
+
+jobs:
+  release-to-nuget:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' 
+
+      - name: Setup Node.js and NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Release to NuGet
+        run: dotnet run --project ./build/Build.fsproj release ${{ secrets.NUGET_API_KEY }}
