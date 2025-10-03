@@ -5,7 +5,6 @@
     <PackageTags>fable;template;fsharp</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageType>Template</PackageType>
-    <Version>4.5.0</Version>
     <PackProjectInputFile>$(MSBuildProjectFullPath)</PackProjectInputFile>
     <NoBuild>true</NoBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
