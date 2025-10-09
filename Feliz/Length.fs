@@ -142,4 +142,4 @@ type length =
     static member inline maxContent : ICssUnit = unbox "max-content"
     
     /// Allows specifying custom ICssUnits
-    static member inline custom (cssUnit: string) = unbox cssUnit
+    static member inline custom (cssUnit: string) : ICssUnit = unbox cssUnit
