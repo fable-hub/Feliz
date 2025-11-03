@@ -99,7 +99,20 @@ let Component() = ...
 
 ## import .. from
 
-You can pass string arguments to the attribute to import specific named imports from a module.
+You can pass string arguments to the attribute to import specific named imports from a file.
+
+:::danger
+For file imports use relative paths only! They MUST start with `./` or `../`! Otherwise Fable might not be able to resolve the path correctly
+:::
+
+```fsharp
+[<ReactComponent(import = "Counter", from = "../Counter")>] // from file
+let Component() = React.Imported()
+
+[<ReactComponent(import = "Counter", from = "my-awesome-counter")>] // from node_modules
+let Component() = React.Imported()
+```
+
 
 import RawNativeCounter from '!!raw-loader!../../feliz-docs/Examples/Feliz/NativeCounter.tsx'
 import RawReactComponentImport from '!!raw-loader!../../feliz-docs/Examples/Feliz/ReactComponentImport.fs'

@@ -7,7 +7,7 @@ open Feliz
 [<Erase; Mangle(false)>]
 type Components =
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member DivWithClassesAndChildren() =
         Html.div [
             prop.className "simple-div"
@@ -21,7 +21,7 @@ type Components =
             ]
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member ConditionalHtmlNode(show: bool) =
         Html.div [
             if show then    
@@ -35,19 +35,19 @@ type Components =
         ]
 
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member DisplayConditionalHtmlNodeTrue() =
         Html.div [
             Components.ConditionalHtmlNode(true)
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member DisplayConditionalHtmlNodeFalse() =
         Html.div [
             Components.ConditionalHtmlNode(false)
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member ComponentWithSubcomponent() =
         Html.div [
             prop.id "simpleDiv"
@@ -59,7 +59,7 @@ type Components =
             ]
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member ComponentWithArgs(idBase: string, initCount: int, ?text: string, ?onClick: unit -> unit) =
         let count, setCount = React.useStateWithUpdater(initCount)
         let text = defaultArg text "Default Text"
@@ -79,14 +79,14 @@ type Components =
             ]
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member DisplayComponentWithArgs() =
         Html.div [
             Components.ComponentWithArgs("no_optional", 0)
             Components.ComponentWithArgs("with_optional", 0, text = "Hello, World!", onClick = fun () -> Browser.Dom.console.log("Button clicked!"))
         ]
 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member SVGElement() =
         Svg.svg [
             svg.viewBox (0, 0, 100, 100)
@@ -122,7 +122,7 @@ type Components =
     ///     Interop.svgAttribute "transform" removedUnits
     /// ```
     /// 
-    [<JSX.Component>]
+    [<ReactComponent>]
     static member NestedSVGElement() =
         Svg.svg [
             Svg.g [

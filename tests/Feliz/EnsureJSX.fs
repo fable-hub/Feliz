@@ -4,6 +4,7 @@ open Fable.Core
 open Feliz
 open Feliz.JSX
 
+/// For all of these it is alreaedy really good if they do not throw during transpilation.
 [<Erase; Mangle(false)>]
 type Components =
 

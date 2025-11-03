@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="REALLYNEEDTOLOOKFORME.fs" />
+    <Compile Include="NestedFolder/NestedFile.fs" />
+    <Compile Include="NestedFolder/NestedFile2.fs" />
+    <Compile Include="NestedFolder/SuperNested/SuperNestedFile.fs" />
     <Compile Include="Components.fs" />
     <Compile Include="App.fs" />
     <Compile Include="Main.fs" />

@@ -1,10 +1,13 @@
-﻿namespace Feliz
+namespace Feliz
 
 open Browser.Types
 open Fable.Core
 open Feliz.Styles
 
+
+
 module SvgHelper =
+
     let inline createElementWithChild (tag: string) (children: obj) =
         ReactLegacy.createElement(tag, children = unbox<ReactElement> children)
 

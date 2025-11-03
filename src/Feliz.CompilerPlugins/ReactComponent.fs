@@ -1,4 +1,4 @@
-﻿namespace Feliz
+namespace Feliz
 
 open Fable
 open Fable.AST
@@ -153,12 +153,27 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from:string
     override this.TransformCall(compiler, memb, expr) =
         let reactElType = expr.Type
         let membArgs = memb.CurriedParameterGroups |> List.concat
+
         match expr with
         | Call(callee, info, _typeInfo, _range) ->
             let reactComponent =
                 match import, from with
-                | Some importedMember, Some externalModule ->
-                    AstUtils.makeImport importedMember externalModule
+                | Some importedMember, Some externalModule -> // This is `[<ReactComponent(member, path)>]`.
+                    // For relative imports `[<ReactComponent(member, "./NativeCounter")>]`
+                    // The call might come from file XX.fs, but the component import is defined in file YY. 
+                    // Relative component import path is relative to file YY. Therefore we need to resolve relative path from XX to YY and YY to `externalModule`
+                    let fsharpSourcePath = 
+                        match callee with
+                        | Import({ Selector = _; Path = fsharpPath }, _, _) ->
+                            Some fsharpPath
+                        | _ -> None
+                    match fsharpSourcePath with
+                    | Some fsp ->
+                        /// returns resolved relative path or input if not relative (exmp: `[<ReactComponent(member, "my-awesome-lib")>]`)
+                        let resolvedPath = PathUtils.resolveReactComponentPaths fsp externalModule 
+                        AstUtils.makeImport importedMember resolvedPath
+                    | None ->
+                        AstUtils.makeImport importedMember externalModule
                 | _ ->
                     callee
 

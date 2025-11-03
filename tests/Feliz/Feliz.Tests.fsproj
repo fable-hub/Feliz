@@ -5,6 +5,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="package.json" />
+    <Compile Include="RelativeImports/NF1/NF2/NF3/NativeCounter3.fs" />
+    <Compile Include="RelativeImports/NF1/NF2/NativeCounter2.fs" />
+    <Compile Include="RelativeImports/NF1/NativeCounter1.fs" />
+    <Compile Include="RelativeImports/NativeCounterRoot.fs" />
+    <Compile Include="RelativeImports/RelativePathImports.test.fs" />
+    <Compile Include="DependencyImports.test.fs" />
     <Compile Include="ExtractChildren.test.fs" />
     <Compile Include="CodeSplitting.fs" />
     <Compile Include="PropHelpers.test.fs" />

@@ -6,6 +6,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PathUtils.fs" />
     <Compile Include="AstUtils.fs" />
     <Compile Include="ReactComponent.fs" />
     <Compile Include="Hook.fs" />

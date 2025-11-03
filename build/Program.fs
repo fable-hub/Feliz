@@ -122,11 +122,15 @@ module Tests =
             with _ -> false
         else false
 
-    let findValidTestFolders root filteropt =
+    let findValidNPMTestFolders root filteropt =
         Directory.GetDirectories(root)
         |> Array.filter (fun dir -> hasMatchingFsproj dir filteropt && hasTestScriptInPackageJson dir)
 
-    let run (workingDir: string) =
+    let findValidNETTestFolders root filteropt =
+        Directory.GetDirectories(root)
+        |> Array.filter (fun dir -> hasMatchingFsproj dir filteropt)
+
+    let runNpmTest (workingDir: string) =
         let args =
             CmdLine.Empty
             |> CmdLine.append "test"
@@ -138,18 +142,39 @@ module Tests =
             workingDir
         )
 
+    let runNETTest (workingDir: string) =
+        let args =
+            CmdLine.Empty
+            |> CmdLine.append "test"
+            |> CmdLine.toString
+
+        Command.Run(
+            "dotnet",
+            args,
+            workingDir
+        )
+
     let runAll (filteropt: string option) =
         match filteropt with
         | Some filter ->
             printGreenfn "Running tests in folder matching %s" filter
         | None ->
             printGreenfn "Running tests in all folders"
-        let testFolders = findValidTestFolders TestRoot filteropt
-        for folder in testFolders do
+        let npmTestFolders = findValidNPMTestFolders TestRoot filteropt
+        for folder in npmTestFolders do
             let folderName = Path.GetFileName(folder)
             printGreenfn "Running tests in %s" folderName
-            run folder
+            runNpmTest folder
             printGreenfn "Finished running tests in %s" folderName
+        let netTestFolders = findValidNETTestFolders TestRoot filteropt
+        for folder in netTestFolders do
+            let folderName = Path.GetFileName(folder)
+            printGreenfn "Running tests in %s" folderName
+            runNETTest folder
+            printGreenfn "Finished running tests in %s" folderName
+        if npmTestFolders.Length = 0 && netTestFolders.Length = 0 then
+            printRedfn "No test projects found matching the given filter."
+            failwith "No test projects found."
 
 
 module Pack =
