@@ -137,13 +137,38 @@ type Components =
             ]
         ]
 
-    // [<JSX.Component>]
-    // static member ConditionalProperty(?condition: bool) =
-    //     Html.div [
-    //         if condition.IsSome && condition.Value then
-    //             prop.className "conditional-class"
-    //             prop.onClick (fun _ -> Browser.Dom.console.log("Div clicked!"))
-    //         prop.children [
-    //             Html.div "Hello, World!"
-    //         ]
-    //     ]
+    [<ReactComponent>]
+    static member SingleTupleInput1(testing: (int * string * System.Guid)) =
+        let (a, b, c) = testing
+        Html.div [
+            Html.div [
+                prop.testId "int"
+                prop.text a
+            ]
+            Html.div [
+                prop.testId "string"
+                prop.text b
+            ]
+            Html.div [
+                prop.testId "guid"
+                prop.text c
+            ]
+        ]
+
+    [<ReactComponent>]
+    static member SingleTupleInput2(notTestingInsteadSomethingElse: (int * string * System.Guid)) =
+        let (a, b, c) = notTestingInsteadSomethingElse
+        Html.div [
+            Html.div [
+                prop.testId "int"
+                prop.text a
+            ]
+            Html.div [
+                prop.testId "string"
+                prop.text b
+            ]
+            Html.div [
+                prop.testId "guid"
+                prop.text c
+            ]
+        ]

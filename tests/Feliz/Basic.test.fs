@@ -186,6 +186,28 @@ describe "Simple createElement calls" <| fun _ ->
         let text = render.getByText "42.42"
         expect(text).toBeInTheDocument()
 
+describe "Single Tuple Input Tests #644" <| fun _ ->
+
+    test "Component with single tuple input passes args correctly" <| fun _ ->
+        let guid = System.Guid.NewGuid()
+        RTL.render(
+            Components.SingleTupleInput1((42, "Test", guid))
+        ) |> ignore
+
+        expect(RTL.screen.getByTestId "int").toHaveTextContent("42")
+        expect(RTL.screen.getByTestId "string").toHaveTextContent("Test")
+        expect(RTL.screen.getByTestId "guid").toHaveTextContent(guid.ToString())
+
+    test "Component with single tuple input passes args correctly and with different argument name" <| fun _ ->
+        let guid = System.Guid.NewGuid()
+        RTL.render(
+            Components.SingleTupleInput2((42, "Test", guid))
+        ) |> ignore
+
+        expect(RTL.screen.getByTestId "int").toHaveTextContent("42")
+        expect(RTL.screen.getByTestId "string").toHaveTextContent("Test")
+        expect(RTL.screen.getByTestId "guid").toHaveTextContent(guid.ToString())
+
 describe "Basic Tests" <| fun _ ->
 
     test "Html elements can be rendered" <| fun _ ->

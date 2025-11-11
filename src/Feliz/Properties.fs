@@ -1799,6 +1799,9 @@ type prop =
     /// Defines the text content of the element. Alias for `children [ Html.text value ]`
     static member inline text (value: string) = PropHelper.mkAttr "children" [value]
 
+    /// Defines the text content of the element. Alias for `children [ Html.text value ]`
+    static member inline text (value: System.Guid) = PropHelper.mkAttr "children" [value.ToString()]
+
     /// Defines the text content of the element. Alias for `children [ Html.text (sprintf ...) ]`
     static member inline textf fmt = Printf.kprintf prop.text fmt
 
