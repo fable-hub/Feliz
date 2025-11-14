@@ -10,30 +10,30 @@
 
     <ItemGroup>
         <Compile Include="Types.fs" />
-        <Compile Include="Helper\Helpers.fs" />
-        <Compile Include="Helper\DateParsing.fs" />
-        <Compile Include="StyleHelper\StyleTypes.fs" />
-        <Compile Include="StyleHelper\Length.fs" />
-        <Compile Include="StyleHelper\BorderStyle.fs" />
-        <Compile Include="StyleHelper\GridTypes.fs" />
-        <Compile Include="StyleHelper\TextDecorationLine.fs" />
-        <Compile Include="StyleHelper\TextDecorationStyle.fs" />
-        <Compile Include="StyleHelper\TransformOrigin.fs" />
-        <Compile Include="StyleHelper\TransitionProperty.fs" />
-        <Compile Include="StyleHelper\TransitionTimingFunction.fs" />
-        <Compile Include="StyleHelper\Transform.fs" />
+        <Compile Include="Helper/Helpers.fs" />
+        <Compile Include="Helper/DateParsing.fs" />
+        <Compile Include="StyleHelper/StyleTypes.fs" />
+        <Compile Include="StyleHelper/Length.fs" />
+        <Compile Include="StyleHelper/BorderStyle.fs" />
+        <Compile Include="StyleHelper/GridTypes.fs" />
+        <Compile Include="StyleHelper/TextDecorationLine.fs" />
+        <Compile Include="StyleHelper/TextDecorationStyle.fs" />
+        <Compile Include="StyleHelper/TransformOrigin.fs" />
+        <Compile Include="StyleHelper/TransitionProperty.fs" />
+        <Compile Include="StyleHelper/TransitionTimingFunction.fs" />
+        <Compile Include="StyleHelper/Transform.fs" />
         <Compile Include="Styles.fs" />
-        <Compile Include="PropertyHelper\Key.fs" />
+        <Compile Include="PropertyHelper/Key.fs" />
         <Compile Include="Properties.fs" />
-        <Compile Include="React\ReactTypes.fs" />
-        <Compile Include="React\React.fs" />
-        <Compile Include="React\ReactDOM.fs" />
+        <Compile Include="React/ReactTypes.fs" />
+        <Compile Include="React/React.fs" />
+        <Compile Include="React/ReactDOM.fs" />
         <Compile Include="Svg.fs" />
         <Compile Include="Html.fs" />
         <Compile Include="JSX.fs" />
-        <Compile Include="StringEnums\Colors.fs" />
-        <Compile Include="StringEnums\Fonts.fs" />
-        <Compile Include="StringEnums\Locale.fs" />
+        <Compile Include="StringEnums/Colors.fs" />
+        <Compile Include="StringEnums/Fonts.fs" />
+        <Compile Include="StringEnums/Locale.fs" />
     </ItemGroup>
 
     <ItemGroup>
