@@ -37,7 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
+        <Content Include="**\*.fsproj; **\*.fs; **\*.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
     </ItemGroup>
 
     <ItemGroup>

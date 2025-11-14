@@ -16,11 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.0.0-rc.8 - 2025-11-03
+
+### 🐛 Fixed
+
+- Update Feliz `/fable` content after packing to include all `**/*.fs` files not only `*.fs` by @Freymaurer
+
 ## 3.0.0-rc.7 - 2025-11-03
 
 ### 🐛 Fixed
 
-- Trying to fix issues with fsproj setup 😞 #644 by @Freymaurer
+- Trying to fix issues with fsproj setup 😞 by @Freymaurer
 
 ## 3.0.0-rc.6 - 2025-11-03
 
