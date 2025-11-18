@@ -4,11 +4,11 @@ open Feliz
 open Browser.Dom
 open Fable.Core
 open Fable.Core.JsInterop
+open Shared
 
 [<ReactComponent>]
 let App() =
     Html.div [
-        prop.children [
-            Html.div "Hello, Feliz!"
-        ]
+        Components.Test(null)
+        Components.Test("Hello")
     ]

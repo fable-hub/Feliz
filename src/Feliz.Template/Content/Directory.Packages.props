@@ -3,8 +3,8 @@
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
     <ItemGroup>
-        <PackageVersion Include="Feliz" Version="3.0.0-rc.1" />
-        <PackageVersion Include="Vitest" Version="1.0.0-rc.1" />
+        <PackageVersion Include="Feliz" Version="3.0.0-rc.9" />
+        <PackageVersion Include="Vitest" Version="1.0.0-rc.2" />
         <PackageVersion Include="Vitest.JestDom" Version="1.0.0-rc.1" />
         <PackageVersion Include="Vitest.ReactTestingLibrary" Version="1.0.0-rc.1" />
         <PackageVersion Include="Vitest.UserEvent" Version="1.0.0-rc.1" />
