@@ -80,6 +80,11 @@ let isRecord (compiler: PluginHelper) (fableType: Fable.Type) =
     | Fable.Type.DeclaredType (entity, genericArgs) -> compiler.GetEntity(entity).IsFSharpRecord
     | _ -> false
 
+let isAnonymRecord (compiler: PluginHelper) (fableType: Fable.Type) =
+    match fableType with
+    | Fable.Type.AnonymousRecordType _ -> true
+    | _ -> false
+
 let isPropertyList (compiler: PluginHelper) (fableType: Fable.Type) =
     match fableType with
     | Fable.Type.List(genericArg) ->

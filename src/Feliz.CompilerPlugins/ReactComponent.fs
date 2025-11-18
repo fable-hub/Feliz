@@ -202,7 +202,7 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
             if
                 List.length membArgs = info.Args.Length
                 && info.Args.Length = 1
-                && AstUtils.isRecord compiler info.Args[0].Type
+                && AstUtils.isAnonymousRecord info.Args[0].Type
             then
                 // F# Component { Value = 1 }
                 // JSX <Component Value={1} />
@@ -308,7 +308,7 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                 | None -> decl
 
             // do not rewrite components accepting records as input
-            if decl.Args.Length = 1 && AstUtils.isRecord compiler decl.Args[0].Type then
+            if decl.Args.Length = 1 && AstUtils.isAnonymousRecord decl.Args[0].Type then
                 // check whether the record type is defined in this file
                 // trigger warning if that is case
                 let definedInThisFileAndIsUpperCase =

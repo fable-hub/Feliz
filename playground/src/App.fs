@@ -9,6 +9,5 @@ open Shared
 [<ReactComponent>]
 let App() =
     Html.div [
-        Components.Test(null)
-        Components.Test("Hello")
+        Components.RecordTypeContainer()
     ]

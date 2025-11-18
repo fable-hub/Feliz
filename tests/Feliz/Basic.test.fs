@@ -234,3 +234,13 @@ describe "Tests for specific style elements" <| fun _ ->
 
         expect(div).toBeInTheDocument()
         expect(div).toHaveStyle("font-size: small")
+
+describe "Record Type Input Tests #606, #603" <| fun _ ->
+
+    test "Component with record type input passes args correctly" <| fun _ ->
+        RTL.render(
+            RecordTypeInputTesting.RecordTypeContainer()
+        ) |> ignore
+
+        expect(RTL.screen.getByTestId "single-greet").toHaveTextContent("Hello, my name is Alice and I work as a Developer.")
+        expect(RTL.screen.getByTestId "single-exists").toHaveTextContent("true")
