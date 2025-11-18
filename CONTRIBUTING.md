@@ -63,10 +63,9 @@ Thats awesome! There are many ways you can contribute to the Feliz project:
 
 Feliz uses a f# build project to run common tasks such as testing. You can find the entrypoint for the build project under `./build/Build.fsproj`.
 
-:::info
-- **On Windows** you can also use `.\build.cmd` to run the build tasks instead of `dotnet run --project ./build/Build.fsproj`.
-- **On MacOS/Linux** you can also use `./build.sh` to run the build tasks instead of `dotnet run --project ./build/Build.fsproj`.
-:::
+> [!TIP]
+> **On Windows** you can also use `.\build.cmd` to run the build tasks instead of `dotnet run --project ./build/Build.fsproj`.
+> **On MacOS/Linux** you can also use `./build.sh` to run the build tasks instead of `dotnet run --project ./build/Build.fsproj`.
 
 ## Testing
 
