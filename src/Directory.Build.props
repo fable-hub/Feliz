@@ -14,7 +14,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-        <None Include="$(MSBuildThisFileDirectory)\..\fable_logo.png" Pack="true" PackagePath="\" />
+        <None Include="$(MSBuildThisFileDirectory)\..\build\fable_logo.png" Pack="true" PackagePath="\" />
         <None Include="$(MSBuildThisFileDirectory)\..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
