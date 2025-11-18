@@ -26,11 +26,11 @@ module HtmlHelper =
         return [arrNext_, null]; // return full arr and None option for children"""
 
     let createElement (name: string) (props: IReactProperty list) : ReactElement =
-        
+
         match unbox<(string*obj) list> props |> extractByKeyFast "children" with
         | props, Some (_, children) ->
             ReactLegacy.createElement(
-                name, 
+                name,
                 Fable.Core.JsInterop.createObj props,
                 unbox<ReactElement list> children
             )
@@ -527,6 +527,9 @@ type Html =
 
     static member inline metadata xs = HtmlHelper.createElement "metadata" xs
     static member inline metadata (children: #seq<ReactElement>) = HtmlHelper.createElementWithChildren "metadata" children
+
+    static member inline menu xs = HtmlHelper.createElement "menu" xs
+    static member inline menu(children: #seq<ReactElement>) = HtmlHelper.createElementWithChildren "menu" children
 
     static member inline meter xs = HtmlHelper.createElement "meter" xs
     static member inline meter (value: float) = HtmlHelper.createElementWithChild "meter" value
