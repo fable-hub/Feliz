@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Subscription.test.fs" />
     <Compile Include="Main.test.fs" />
   </ItemGroup>
 
