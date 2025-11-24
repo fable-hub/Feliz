@@ -229,3 +229,13 @@ module RecordTypeInputTesting =
                 ]
             )
         ]
+
+module NullnessTesting =
+
+    [<ReactComponent>]
+    let NullishPropComponent (maybeText: string | null) =
+        Html.div [
+            match maybeText with
+            | null -> Html.h1 [ prop.testId "no-text"; prop.text "No text provided." ]
+            | text -> Html.h1 [ prop.testId "has-text"; prop.text text ]
+        ]

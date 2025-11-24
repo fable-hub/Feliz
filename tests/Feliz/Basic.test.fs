@@ -264,3 +264,24 @@ describe "Props Aliasing Tests #687" <| fun _ ->
 
         let c = RTL.screen.getByTestId "props-aliasing"
         expect(c).toBeInTheDocument()
+
+describe "Nullness Tests" <| fun _ ->
+
+    test "Component with nullable prop handles null correctly" <| fun _ ->
+        RTL.render(
+            NullnessTesting.NullishPropComponent(null)
+        ) |> ignore
+
+        let noText = RTL.screen.getByTestId "no-text"
+        expect(noText).toBeInTheDocument()
+        expect(noText).toHaveTextContent("No text provided.")
+
+    test "Component with nullable prop handles non-null correctly" <| fun _ ->
+
+        RTL.render(
+            NullnessTesting.NullishPropComponent("Hello, Nullable!")
+        ) |> ignore
+
+        let hasText = RTL.screen.getByTestId "has-text"
+        expect(hasText).toBeInTheDocument()
+        expect(hasText).toHaveTextContent("Hello, Nullable!")
