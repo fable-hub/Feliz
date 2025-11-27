@@ -11,15 +11,58 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 `React.memo` lets you optimize components by memoizing their output. This prevents unnecessary rerenders when the props haven't changed, improving performance for pure components.
 
+Without memoization, a component will rerender whenever its parent rerenders, even if its props remain the same. By wrapping a component with `React.memo`, React will skip rendering the component and reuse the last rendered output if the props are unchanged.
+
+## ReactMemoComponentAttribute
+
+The `[<ReactMemoComponent>]` attribute provides a convenient way to memoize functional components in Feliz. It does the transformation on transpile level so you don't have to wrap your component manually.
+
 ```fsharp
 [<ReactMemoComponent>] // memoizes component to prevent rerender whenever parent rerenders
 let ChildComponent (onClick: unit -> unit) = 
     // ... component implementation
 ```
 
-import UseCallback from '../../../feliz-docs/fableoutput/Examples/React/UseCallback'
-import RawUseCallback from '!!raw-loader!../../../feliz-docs/Examples/React/UseCallback.fs'
+Check out the [ReactMemoComponentAttribute documentation](../../feliz/react-component.mdx) for more details.
 
-<ComponentRender code={RawUseCallback}>
-  <UseCallback />
+import MemoAttribute from '../../../feliz-docs/fableoutput/Examples/React/MemoAttribute'
+import RawMemoAttribute from '!!raw-loader!../../../feliz-docs/Examples/React/MemoAttribute.fs'
+
+<ComponentRender code={RawMemoAttribute}>
+  <MemoAttribute />
+</ComponentRender>
+
+## React.memo function
+
+:::warning
+This approach has several limitations compared to using the `[<ReactMemoComponent>]` attribute (see example below):
+- You must use a `let` binding for your component, to ensure Fable transpiling as `const`.
+- You must use any F# type transpiling to a JavaScript object for props (e.g., anonymous record, `[<PojoAttribute>]`).
+:::
+
+```fsharp
+let MemoizedComponent =
+    React.memo<{|text: string|}> (fun props ->
+    // ... component implementation
+    )
+```
+
+import MemoFunction from '../../../feliz-docs/fableoutput/Examples/React/MemoFunction'
+import RawMemoFunction from '!!raw-loader!../../../feliz-docs/Examples/React/MemoFunction.fs'
+
+<ComponentRender code={RawMemoFunction}>
+  <MemoFunction />
+</ComponentRender>
+
+## areEqual 
+
+The `React.memo` function also accepts an optional second argument, `areEqual`, which is a custom comparison function for props. This function receives the previous and next props and should return `true` if they are equal (i.e., no rerender needed) or `false` if they are different (i.e., rerender needed).
+
+This is useful as memo only does a shallow comparison of props by default. If your props are complex objects or arrays, you may need to provide a custom comparison function to accurately determine equality.
+
+import MemoFunctionAreEqual from '../../../feliz-docs/fableoutput/Examples/React/MemoFunctionAreEqual'
+import RawMemoFunctionAreEqual from '!!raw-loader!../../../feliz-docs/Examples/React/MemoFunctionAreEqual.fs'
+
+<ComponentRender code={RawMemoFunctionAreEqual}>
+  <MemoFunctionAreEqual />
 </ComponentRender>

@@ -37,12 +37,12 @@ root.render (Counter())
 ### ✨ Features
 
  - Flexible **API design**: Combine the reliability of F# type safety with the flexibility to interop easily with native JavaScript.
- - Discoverable **attributes** with no more functions, `Html` attributes or css properties globally available so they are easy to find.
+ - Discoverable **attributes** with no more functions, `Html` attributes or CSS properties globally available so they are easy to find.
  - Proper **documentation**: each attribute and CSS property
  - Full **React API** support: Feliz aims to support the React API for building components using hooks, context and more.
  - Fully **Type-safe**: no more `Margin of obj` but instead utilizing a plethora of overloaded functions to account for the overloaded nature of `CSS` attributes, covering 90%+ of the CSS styles, values and properties.
  - **Compatible** with [Femto](https://github.com/Zaid-Ajaj/Femto).
- - Approximately **Zero** bundle size increase where everything function body is erased from the generated javascript unless you actually use said function.
+ - Approximately **Zero** bundle size increase where everything function body is erased from the generated JavaScript unless you actually use said function.
 
 ### 🚀 Quick Start
 
@@ -63,4 +63,4 @@ npm start
 
 ### 📚 Documentation
 
-Feliz has extensive documentation at [https://zaid-ajaj.github.io/Feliz](https://zaid-ajaj.github.io/Feliz) with live examples along side code samples, check them out and if you have any question, let us know!
+Feliz has extensive documentation at [https://zaid-ajaj.github.io/Feliz](https://zaid-ajaj.github.io/Feliz) with live examples alongside code samples, check them out and if you have any question, let us know!

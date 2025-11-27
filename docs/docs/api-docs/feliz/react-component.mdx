@@ -192,40 +192,105 @@ import ReactComponentImport from '../../feliz-docs/fableoutput/Examples/Feliz/Re
 
 React `memo` components can be created using the `[<ReactMemoComponent>]` attribute. It works the same way as `[<ReactComponent>]`, but wraps the component in `React.memo` and ensures that it is defined as a `const` in the generated JavaScript code.
 
-<Tabs>
+import MemoAttribute from '../../feliz-docs/fableoutput/Examples/React/MemoAttribute'
+import RawMemoAttribute from '!!raw-loader!../../feliz-docs/Examples/React/MemoAttribute.fs'
 
-<TabItem value="F#" label="F#">
+<ComponentRender code={RawMemoAttribute}>
+  <MemoAttribute />
+</ComponentRender>
+
+### areEqual with js emit
+
+You can pass a custom equality function to the `[<ReactMemoComponent>]` attribute using the `areEqual` parameter. The value must be a JavaScript function expressed as a string. This function will be used to determine whether the component should re-render based on its props.
 
 ```fsharp
-[<ReactMemoComponent>]
-let Component(text: string, count: int) =
-    Html.div [
-        for i in 1 .. count do
-            Html.p [
-                prop.key i
-                prop.text (sprintf "%d: %s" i text)
-            ]
+[<ReactMemoComponent("(prevProps, nextProps) => 
+    prevProps.fruits.length === nextProps.fruits.length 
+    && prevProps.fruits.every((value, index) => 
+        value === nextProps.fruits[index]
+    )"
+)>]
+let RenderTextWithEffect (fruits: string []) =
+```
+
+This behavior is similiar to the `[<Emit>]` attribute in Fable. 
+
+:::info
+`areEqual` is implemented using the `[<StringSyntax("javascript")>]` attribute. This will provide syntax highlighting and basic validation in supported editors.
+
+<details>
+<summary>Example: Rider</summary>
+
+
+import RiderStringSyntax from '../../../static/img/rider-stringsyntax-attribute.png'
+
+<img src={RiderStringSyntax} alt="Rider StringSyntax Attribute" />;
+
+
+</details>
+
+:::
+
+:::danger
+The areEqual functions runs on the transformed js output, so you must assume, that your params are passed as a single object containing all props!
+:::
+
+import MemoAttributeAreEqualEmit from '../../feliz-docs/fableoutput/Examples/React/MemoAttributeAreEqualEmit'
+import RawMemoAttributeAreEqualEmit from '!!raw-loader!../../feliz-docs/Examples/React/MemoAttributeAreEqualEmit.fs'
+
+<ComponentRender code={RawMemoAttributeAreEqualEmit}>
+  <MemoAttributeAreEqualEmit />
+</ComponentRender>
+
+### areEqual with F# function
+
+We can also emit a call to a f# function defined in the same file. This function must have the correct signature to be used as an equality function.
+
+```fsharp
+let areEqualFn prop1 prop2 =
+    prop1 = prop2
+
+[<ReactMemoComponent(nameof areEqualFn)>] // or "areEqualFn"
+let RenderTextWithEffect (fruits: string []) =
+    React.useEffect (fun () -> console.log("Rerender!") )
+    Html.div [ 
+        prop.text (fruits |> String.concat ", "); 
+        prop.testId "memo-attribute" 
     ]
-
 ```
 
-</TabItem>
+:::info
+This works as f# equality does not check reference equality for arrays and sequences, but checks the content of them. Which is what is used by shallow comparison of React.memo.
+:::
 
-<TabItem value="JSX" label="JSX">
+:::danger
+The areEqual functions runs on the transformed js output, so you must assume, that your params are passed as a single object containing all props!
 
-```jsx
-export const Component = memo((componentInputProps) => {
-    const count = componentInputProps.count;
-    const text = componentInputProps.text;
-    // ... 
-});
+In the example above, if you want to compare the `fruits` prop, you need to access it as `prop1.fruits` and `prop2.fruits` in the `areEqualFn` function:
+
+```fsharp
+let areEqualFn (prop1: {|fruits: string []|}) (prop2: {|fruits: string []|}) =
+    prop1.fruits = prop2.fruits
 ```
+:::
 
-</TabItem>
+:::danger[Name Mangling]
+If you define your equality function as static member or inside a module, Fable might mangle the name of the function during transpilation. In this case, you need to provide the mangled name to the `areEqual` parameter. You can see this behavior int his [Fable Repl](https://fable.io/repl/#?code=PYBwpgdgBAYghgIwDZgHQGFgCcwChcC2wAJgK4pQCiAjqXEgJYAuAnjNALy5Q9QpNQ4OGnSTsoILKACMEqSABMULr1VyZy9Yvz8oAD00Q4BMMABmVWvWZsIqIWBH1xAehdQAzgAtg5YlAQwAC5LURt2AH0HJzEIfFZwUOtWdnQkOA8PWRVeDyY4JgYAYygTAkCsQWErWK1ZSVAlHLU6zQbtXF0WQ2NTCxjwiDSMrPtq0Vd3AZSh9MzpKPHnCCA&html=Q&css=Q).
 
+```fsharp
+module EqualityFn =
+    let areEqualFn prop1 prop2 =
+        prop1 = prop2
+```
+:::
 
-</Tabs>
+import MemoAttributeAreEqualFnEmit from '../../feliz-docs/fableoutput/Examples/React/MemoAttributeAreEqualEmitFnName'
+import RawMemoAttributeAreEqualFnEmit from '!!raw-loader!../../feliz-docs/Examples/React/MemoAttributeAreEqualEmitFnName.fs'
+import RawMemoAttributeAreEqualFnEmitJS from '!!raw-loader!../../feliz-docs/fableoutput/Examples/React/MemoAttributeAreEqualEmitFnName.jsx'
 
+<ComponentRender code={[{language: 'fsharp', fileName: 'MemoAttributeAreEqualEmitFnName.fs', content: RawMemoAttributeAreEqualFnEmit}, {language: 'jsx', fileName: 'MemoAttributeAreEqualEmitFnName.jsx', content: RawMemoAttributeAreEqualFnEmitJS}]}>
+  <MemoAttributeAreEqualFnEmit />
+</ComponentRender>
 
 ## `[<ReactLazyComponent>]`
 

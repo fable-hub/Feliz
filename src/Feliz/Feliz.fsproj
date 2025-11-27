@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <Compile Include="Types.fs" />
+        <Compile Include="Helper/MemoFsharpEquality.fs" />
         <Compile Include="Helper/Helpers.fs" />
         <Compile Include="Helper/DateParsing.fs" />
         <Compile Include="StyleHelper/StyleTypes.fs" />

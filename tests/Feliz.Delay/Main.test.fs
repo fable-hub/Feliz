@@ -30,7 +30,7 @@ let DuspenseCompInner() =
 
 let asyncComponent : JS.Promise<unit -> ReactElement> = JsInterop.importDynamic "./CodeSplitting.fs"
 
-let LazyComponent: LazyComponent<unit> =
+let LazyComponent =
     React.lazy'(fun () -> promise {
         do! Promise.sleep 1000
         return! asyncComponent

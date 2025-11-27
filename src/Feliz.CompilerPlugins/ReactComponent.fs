@@ -3,10 +3,16 @@ namespace Feliz
 open Fable
 open Fable.AST
 open Fable.AST.Fable
+open System.Diagnostics.CodeAnalysis
 
 // Tell Fable to scan for plugins in this assembly
 [<assembly: ScanForPlugins>]
 do ()
+
+type MemoStrategy = 
+| EqualsShallow 
+| EqualsCustom of string 
+// | FSharpEquality
 
 module internal ReactComponentHelpers =
     let (|ReactLazyMemo|_|) =
@@ -94,7 +100,7 @@ module internal ReactComponentHelpers =
         | TypeCast(body, _) -> transformToDynImport compilerInfo body
         | _ -> body
 
-    let applyImportOrMemoOrLazy import from memo (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
+    let applyImportOrMemoOrLazy import from (memo: MemoStrategy option) (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
         match import, from, memo, lazy' with
         | Some _, Some _, _, _ ->
             let reactElType = decl.Body.Type
@@ -107,14 +113,23 @@ module internal ReactComponentHelpers =
                     Tags = tags
             }
 
-        | _, _, Some true, _ ->
-            let memoFn = AstUtils.makeImport "memo" "react"
+        | _, _, Some memoStrategy, _ ->
+            let memoFn = Sequential [
+                AstUtils.makeImport "default as React" "react"
+                AstUtils.makeImport "memo" "react"
+            ]
 
-            let body =
-                decl.Body
-                |> injectReactImport
-                |> fun body -> [ Delegate(decl.Args, body, None, Tags.empty) ]
-                |> AstUtils.makeCall memoFn
+            let body = 
+                AstUtils.makeCall memoFn [
+                AstUtils.emitJs (sprintf "function %s(props) { return ($0)(props); }" decl.Name) [
+                    Delegate(decl.Args, decl.Body, Some decl.Name, Tags.empty)
+                ]
+                match memoStrategy with
+                | EqualsShallow -> ()
+                | EqualsCustom js -> 
+                    AstUtils.emitJs js []
+                // | FSharpEquality -> AstUtils.emitJs "GenericFSharpEqualFn" []
+            ]
             // Change declaration kind from function to value
             let info =
                 AstUtils.memberName decl.MemberRef
@@ -122,12 +137,14 @@ module internal ReactComponentHelpers =
                 |> GeneratedValue
                 |> GeneratedMemberRef
 
-            {
+            let nextDecl = {
                 decl with
                     MemberRef = info
                     Args = []
                     Body = body
             }
+
+            nextDecl
 
         | _, _, _, Some true ->
             let lazyFn = AstUtils.makeImport "lazy" "react"
@@ -166,7 +183,7 @@ module internal ReactComponentHelpers =
 open ReactComponentHelpers
 
 /// <summary>Transforms a function into a React function component. Make sure the function is defined at the module level</summary>
-type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: string, ?memo: bool, ?lazy': bool) =
+type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: string, ?memo: MemoStrategy, ?lazy': bool) =
     inherit MemberDeclarationPluginAttribute()
     override _.FableMinimumVersion = "5.0"
     new() = ReactComponentAttribute(exportDefault = false)
@@ -249,15 +266,16 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                     | None -> reactEl
                     | Some(ident, value) -> Let(ident, value, reactEl)
 
-                match [| memo, lazy', callee |] with
-                // If the call is memo or lazy and the function has an identifier, we can set the displayName
-                | [| (Some true), _, (IdentExpr i) |]
-                | [| _, (Some true), (IdentExpr i) |] ->
-                    Sequential [
-                        (AstUtils.makeSet (IdentExpr(i)) "displayName" (AstUtils.makeStrConst i.Name))
-                        expr
-                    ]
-                | _ -> expr
+                // match [| memo, lazy', callee |] with
+                // // If the call is memo or lazy and the function has an identifier, we can set the displayName
+                // | [| (Some true), _, (IdentExpr i) |]
+                // | [| _, (Some true), (IdentExpr i) |] ->
+                //     Sequential [
+                //         // (AstUtils.makeSet (IdentExpr(i)) "displayName" (AstUtils.makeStrConst i.Name))
+                //         expr
+                //     ]
+                // | _ -> expr
+                expr
         | _ ->
             // return expression as is when it is not a call expression
             expr
@@ -266,7 +284,7 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
 
         let info = compiler.GetMember(decl.MemberRef)
 
-        if memo.IsSome && lazy'.IsSome && memo.Value && lazy'.Value then
+        if memo.IsSome && lazy'.IsSome && lazy'.Value then
             let errorMessage =
                 sprintf "Cannot use both memo and lazy options in [<ReactComponent>] for %s" decl.Name
 
@@ -431,18 +449,34 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                         Body = body
                 }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
-
-type ReactMemoComponentAttribute(?exportDefault: bool) =
+type ReactMemoComponentAttribute private (memo: MemoStrategy, ?exportDefault: bool) =
     inherit
         ReactComponentAttribute(
             ?exportDefault = exportDefault,
             ?import = None,
             ?from = None,
-            memo = true,
+            memo = memo,
             lazy' = false
         )
-
-    new() = ReactMemoComponentAttribute(exportDefault = false)
+    // new() = ReactMemoComponentAttribute(memo = MemoStrategy.EqualsShallow, exportDefault = false)
+    new() =
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=false)
+    new(exportDefault: bool) =
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=exportDefault)
+    new([<StringSyntax("javascript")>] areEqual:string, exportDefault: bool) = 
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual, exportDefault=exportDefault)
+    new([<StringSyntax("javascript")>] areEqual:string) = 
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual)
 
 type ReactLazyComponentAttribute() =
-    inherit ReactComponentAttribute(false, ?import = None, ?from = None, memo = false, lazy' = true)
+    inherit ReactComponentAttribute(false, ?import = None, ?from = None, ?memo = None, lazy' = true)
+
+// type ReactMemoComponentFsEqualityAttribute (exportDefault: bool) =
+//     inherit ReactComponentAttribute(memo = MemoStrategy.FSharpEquality, lazy' = false, exportDefault=exportDefault, ?import=None, ?from=None)
+//     new() = ReactMemoComponentFsEqualityAttribute(exportDefault=false)
+
+// [<RequireQualifiedAccessAttribute>]
+// module ReactMemoComponent =
+
+//     type FsEquality = ReactMemoComponentFsEqualityAttribute
+

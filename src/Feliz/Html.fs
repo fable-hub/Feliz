@@ -4,8 +4,8 @@ open Fable.React
 open Fable.Core
 open Fable.Core.JsInterop
 open System
-
 module HtmlHelper =
+    
     let inline createElementWithChild (tag: string) (children: obj) =
         ReactLegacy.createElement(tag, children = unbox<ReactElement> children)
 

@@ -19,6 +19,13 @@ module ReactInternal =
     [<Import("createElement","react")>]
     let createElement(``type``: ReactNode): ReactElement = jsNative
 
+    [<Import("memo", "react")>]
+    let memoInternal<'props>
+        (
+            renderElement: 'props -> ReactElement,
+            areEqual: ('props -> 'props -> bool)
+        ) : 'props -> ReactElement = jsNative
+
 
 open ReactInternal
 
@@ -383,11 +390,41 @@ useLayoutEffect(() => {
     /// By default it will only shallowly compare complex objects in the props object. For more control, a custom `arePropsEqual` function can be provided.
     /// </summary>
     /// <param name='element'>A render function or a React.functionComponent.</param>
-    /// <param name='arePropsEqual'>A custom comparison function to use instead of React's default shallow compare.</param>
-    [<ImportMember("react")>]
-    static member inline memo
-        (element: 'props -> ReactElement, ?arePropsEqual: 'props -> 'props -> bool) : 'props -> ReactElement
-        = jsNative
+    /// <param name='areEqual'>A custom comparison function to use instead of React's default shallow compare.</param>
+    [<Import("memo", "react")>]
+    static member inline memo<'props>(ele: 'props -> ReactElement, ?areEqual: 'props -> 'props -> bool) : MemoComponent<'props> = jsNative
+
+
+    
+    /// <summary>
+    /// This is a Feliz helper function to call a memo component.
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// 
+    /// ```fsharp
+    /// let ComponentLazy: {|text: string|} -> ReactElement = 
+    ///     React.lazy'(fun () ->
+    ///         importDynamic "./LazyComponent.jsx"
+    ///     )
+    /// ```
+    /// 
+    /// Can be calles like this:
+    /// 
+    /// ```fsharp
+    /// React.lazyRender(ComponentLazy, {|text = "Hello"|})
+    /// ```
+    /// 
+    /// </remarks>
+    static member inline memoRender<'props> (ele: MemoComponent<'props>, props: 'props, ?withKey: 'props -> string) : ReactElement = 
+        if (Interop.isObject (box props) |> not) then
+            Browser.Dom.console.error "React.memoRender: props must be an object."
+        let props = Interop.setKeyOnObj withKey props
+        ReactLegacy.createElement (unbox<ReactElement> ele, props)
+
+    static member inline memoRender<'props> (ele: MemoComponent<unit>, ?withKey: string) : ReactElement = 
+        let props = Interop.setKeyOnObj (withKey |> Option.map (fun k -> fun _ -> k)) (createObj [])
+        ReactLegacy.createElement (unbox<ReactElement> ele, props)
 
     //
     // React.useContext
@@ -538,6 +575,8 @@ useLayoutEffect(() => {
     /// 
     /// </remarks>
     static member inline lazyRender<'props>(lazyComponent: LazyComponent<'props>, props: 'props): ReactElement =
+        if (Interop.isObject (box props) |> not) then
+            Browser.Dom.console.error "React.lazyRender: props must be an object."
         ReactLegacy.createElement(
             unbox<ReactElement> lazyComponent,
             props

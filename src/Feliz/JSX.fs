@@ -1,6 +1,5 @@
 namespace Feliz.JSX
 
-open Fable.React
 open Fable.Core
 open Fable.Core.JsInterop
 open System
@@ -762,7 +761,7 @@ type Html =
     static member inline text (value: float) : ReactElement = unbox value
     static member inline text (value: int) : ReactElement = unbox value
     static member inline text (value: string) : ReactElement = unbox value
-    static member inline text (value: System.Guid) : ReactElement = unbox (string value)
+    static member inline text (value: Guid) : ReactElement = unbox (string value)
 
     static member inline textf fmt = Printf.kprintf Html.text fmt
 

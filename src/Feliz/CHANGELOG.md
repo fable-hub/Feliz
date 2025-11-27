@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.0.0-rc.13 - 2025-11-26
+
+### ✨ Added
+
+- Added support for custom equality functions in `[<ReactMemoComponent>]` via the `areEqual` parameter #665
+. (by @melanore)
+
+### 🔄 Changed
+
+- Updated `React.memo` to require a corresponding `React.memoRender` call when rendering the component. This leads to more native behavior for the memoized components. (by @Freymaurer)
+
+### 🗑️ Deprecated
+
+- Removed name setting for memo components, as this would remove the `memo` tag in react dev tools (by @Freymaurer)
+
 ## 3.0.0-rc.12 - 2025-11-21
 
 ### 🐛 Fixed

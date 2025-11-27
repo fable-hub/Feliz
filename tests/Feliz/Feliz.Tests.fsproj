@@ -20,9 +20,17 @@
     <Compile Include="EnsureJSX.test.fs" />
     <Compile Include="Basic.fs" />
     <Compile Include="Basic.test.fs" />
-    <Compile Include="ReactBindings.fs" />
-    <Compile Include="ReactBindings.test.fs" />
-    <Compile Include="FsReact.fs" />
+    <Compile Include="ReactBindings/Context.test.fs" />
+    <Compile Include="ReactBindings/Fragment.test.fs" />
+    <Compile Include="ReactBindings/Lazy.test.fs" />
+    <Compile Include="ReactBindings/Memo.test.fs" />
+    <Compile Include="ReactBindings/StrictMode.test.fs" />
+    <Compile Include="ReactBindings/UseCallback.test.fs" />
+    <Compile Include="ReactBindings/UseEffect.test.fs" />
+    <Compile Include="ReactBindings/UseLayoutEffect.test.fs" />
+    <Compile Include="ReactBindings/UseMemo.test.fs" />
+    <Compile Include="ReactBindings/UseRef.test.fs" />
+    <Compile Include="ReactBindings/UseState.test.fs" />
     <Compile Include="FsReact.test.fs" />
   </ItemGroup>
   <ItemGroup />
