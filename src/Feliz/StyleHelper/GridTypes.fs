@@ -1,5 +1,6 @@
-namespace Feliz.Styles
+namespace Feliz
 
+open Feliz.Styles
 open Fable.Core
 
 [<Erase>]
