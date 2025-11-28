@@ -68,13 +68,13 @@
           "Fable.Core": "[4.5.0, )",
           "Fable.React.Types": "[18.4.0, )",
           "Fable.ReactDom.Types": "[18.2.0, )",
-          "Feliz.CompilerPlugins": "[2.2.0, )"
+          "Feliz.CompilerPlugins": "[1.0.0, )"
         }
       },
       "feliz.compilerplugins": {
         "type": "Project",
         "dependencies": {
-          "Fable.AST": "[5.0.0-beta.2, )"
+          "Fable.AST": "[5.0.0-beta.3, )"
         }
       },
       "feliz.useelmish": {
@@ -85,9 +85,9 @@
       },
       "Fable.AST": {
         "type": "CentralTransitive",
-        "requested": "[5.0.0-beta.2, )",
-        "resolved": "5.0.0-beta.2",
-        "contentHash": "MpmUPehD2py+zreWR1yxEAtktRZiBFpoR0H9brveZjshc504ARbDmts3W9aEDatNTwBapSa9qJ0jXXo4+sNglw=="
+        "requested": "[5.0.0-beta.3, )",
+        "resolved": "5.0.0-beta.3",
+        "contentHash": "4mK/Rma6ZBi9/G/p+u3DvpsEroFH3KHT2B7vwT6TeL6pjbK68AYW8ZzllbnI6t1gS/HvojJu7TYx8GDRhziVcQ=="
       },
       "Fable.Browser.Dom": {
         "type": "CentralTransitive",
