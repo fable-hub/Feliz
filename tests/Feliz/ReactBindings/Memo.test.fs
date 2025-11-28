@@ -9,7 +9,7 @@ open Feliz
 open Browser
 open Vitest
 
-module MemoComponents =
+module Components =
 
     [<ReactMemoComponent>]
     let MemoAttribute(text: string, onRender: unit -> unit) =
@@ -69,7 +69,7 @@ module MemoComponents =
     let private RenderArrayWithEffectEquals (a: {|fruitArray: string[]|}) (b: {|fruitArray: string[]|}) =
         a = b
 
-    [<ReactMemoComponent(areEqual = "MemoComponents_RenderArrayWithEffectEquals")>]
+    [<ReactMemoComponent(areEqual = "Components_RenderArrayWithEffectEquals")>]
     let private MemoAttributeAreEqualFsEqual (fruitArray: string [], onRender: unit -> unit) =
         React.useEffect (onRender)
         Html.div [ 
@@ -152,17 +152,17 @@ module MemoComponents =
 describe "memo" <| fun _ ->
     testPromise "prevents re-rendering when props do not change (attribute)" <| fun _ -> promise {
         let onRender = vi.fn(fun () -> ())  
-        let render = RTL.render (MemoComponents.MemoAttribute("Hello", onRender))
+        let render = RTL.render (Components.MemoAttribute("Hello", onRender))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (MemoComponents.MemoAttribute("Hello", onRender))
+        render.rerender (Components.MemoAttribute("Hello", onRender))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (MemoComponents.MemoAttribute("World", onRender))
+        render.rerender (Components.MemoAttribute("World", onRender))
         expect(onRender).toHaveBeenCalledTimes 2
     }
 
     testPromise "prevents re-rendering when props do not change (attribute array with fsharp areEqual)" <| fun _ -> promise {
         let onRender = vi.fn(fun () -> ())
-        let render = RTL.render (MemoComponents.MemoAttributeAreEqualFsEqualWrapper onRender)
+        let render = RTL.render (Components.MemoAttributeAreEqualFsEqualWrapper onRender)
         expect(onRender).toHaveBeenCalledTimes 1
         let changeFruitArrayBtn = render.getByTestId("change-fruit-array")
         let changeThemeBtn = render.getByTestId("change-theme")
@@ -176,7 +176,7 @@ describe "memo" <| fun _ ->
 
     testPromise "prevents re-rendering when props do not change (attribute array with js areEqual)" <| fun _ -> promise {
         let onRender = vi.fn(fun () -> ())
-        let render = RTL.render (MemoComponents.MemoAttributeAreEqualJsEqualWrapper (onRender))
+        let render = RTL.render (Components.MemoAttributeAreEqualJsEqualWrapper (onRender))
         expect(onRender).toHaveBeenCalledTimes 1
         let changeFruitArrayBtn = render.getByTestId("change-fruit-array")
         let changeThemeBtn = render.getByTestId("change-theme")
@@ -190,23 +190,23 @@ describe "memo" <| fun _ ->
 
     testPromise "prevents re-rendering when props do not change (function)" <| fun _ -> promise {
         let onRender = vi.fn(fun () -> ())  
-        let render = RTL.render (React.memoRender(MemoComponents.MemoFunction, {| text = "Hello"; onRender = onRender |}))
+        let render = RTL.render (React.memoRender(Components.MemoFunction, {| text = "Hello"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (React.memoRender(MemoComponents.MemoFunction, {| text = "Hello"; onRender = onRender |}))
+        render.rerender (React.memoRender(Components.MemoFunction, {| text = "Hello"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (React.memoRender(MemoComponents.MemoFunction, {| text = "World"; onRender = onRender |}))
+        render.rerender (React.memoRender(Components.MemoFunction, {| text = "World"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 2
     }
 
     testPromise "prevents re-rendering when props do not change (function unit)" <| fun _ -> promise {
-        let render = RTL.render (React.memoRender(MemoComponents.MemoFunctionUnit))
+        let render = RTL.render (React.memoRender(Components.MemoFunctionUnit))
         let text = render.getByTestId("text")
         expect(text).toBeInTheDocument()
         expect(text).toHaveTextContent("")
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit)) // rerender should not change anything, because of memo
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit))
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit))
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit))
+        render.rerender (React.memoRender(Components.MemoFunctionUnit)) // rerender should not change anything, because of memo
+        render.rerender (React.memoRender(Components.MemoFunctionUnit))
+        render.rerender (React.memoRender(Components.MemoFunctionUnit))
+        render.rerender (React.memoRender(Components.MemoFunctionUnit))
         let btn = render.getByTestId("btn")
         do! userEvent.click btn
         expect(text).toHaveTextContent("1") // state change triggers rerender increasing counter
@@ -216,14 +216,14 @@ describe "memo" <| fun _ ->
 
     testPromise "prevents re-rendering when props do not change (function areEqual)" <| fun _ -> promise {
         let onRender = vi.fn(fun () -> ())  
-        let render = RTL.render (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}))
+        let render = RTL.render (React.memoRender(Components.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}))
+        render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 1
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "World"; onRender = onRender |}))
+        render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "World"; onRender = onRender |}))
         expect(onRender).toHaveBeenCalledTimes 2
         let onRender2 = vi.fn(fun () -> ())
-        render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "World"; onRender = onRender2 |}))
+        render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "World"; onRender = onRender2 |}))
         expect(onRender).toHaveBeenCalledTimes 2 // should not rerender because areEqual says props are equal
         expect(onRender2).toHaveBeenCalledTimes 0 // new onRender was never called, because it was actually never passed into rendered component
     }
@@ -232,23 +232,23 @@ describe "memo" <| fun _ ->
 
         testPromise "prevents re-rendering when props do not change (function)" <| fun _ -> promise {
             let onRender = vi.fn(fun () -> ())  
-            let render = RTL.render (React.memoRender(MemoComponents.MemoFunction, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
+            let render = RTL.render (React.memoRender(Components.MemoFunction, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 1
-            render.rerender (React.memoRender(MemoComponents.MemoFunction, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
+            render.rerender (React.memoRender(Components.MemoFunction, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 1
-            render.rerender (React.memoRender(MemoComponents.MemoFunction, {| text = "World"; onRender = onRender |}, withKey = fun s -> s.text))
+            render.rerender (React.memoRender(Components.MemoFunction, {| text = "World"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 2
         }
 
         testPromise "prevents re-rendering when props do not change (function unit)" <| fun _ -> promise {
-            let render = RTL.render (React.memoRender(MemoComponents.MemoFunctionUnit, withKey = "unique-key"))
+            let render = RTL.render (React.memoRender(Components.MemoFunctionUnit, withKey = "unique-key"))
             let text = render.getByTestId("text")
             expect(text).toBeInTheDocument()
             expect(text).toHaveTextContent("")
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit, withKey = "unique-key")) // rerender should not change anything, because of memo
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit, withKey = "unique-key"))
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit, withKey = "unique-key"))
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionUnit, withKey = "unique-key"))
+            render.rerender (React.memoRender(Components.MemoFunctionUnit, withKey = "unique-key")) // rerender should not change anything, because of memo
+            render.rerender (React.memoRender(Components.MemoFunctionUnit, withKey = "unique-key"))
+            render.rerender (React.memoRender(Components.MemoFunctionUnit, withKey = "unique-key"))
+            render.rerender (React.memoRender(Components.MemoFunctionUnit, withKey = "unique-key"))
             let btn = render.getByTestId("btn")
             do! userEvent.click btn
             expect(text).toHaveTextContent("1") // state change triggers rerender increasing counter
@@ -258,14 +258,14 @@ describe "memo" <| fun _ ->
 
         testPromise "prevents re-rendering when props do not change (function areEqual)" <| fun _ -> promise {
             let onRender = vi.fn(fun () -> ())  
-            let render = RTL.render (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
+            let render = RTL.render (React.memoRender(Components.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 1
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
+            render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "Hello"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 1
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "World"; onRender = onRender |}, withKey = fun s -> s.text))
+            render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "World"; onRender = onRender |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 2
             let onRender2 = vi.fn(fun () -> ())
-            render.rerender (React.memoRender(MemoComponents.MemoFunctionAreEqual, {| text = "World"; onRender = onRender2 |}, withKey = fun s -> s.text))
+            render.rerender (React.memoRender(Components.MemoFunctionAreEqual, {| text = "World"; onRender = onRender2 |}, withKey = fun s -> s.text))
             expect(onRender).toHaveBeenCalledTimes 2 // should not rerender because areEqual says props are equal
             expect(onRender2).toHaveBeenCalledTimes 0 // new onRender was never called, because it was actually never passed into rendered component
         }

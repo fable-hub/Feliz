@@ -2,6 +2,7 @@ module Feliz.AstUtils
 
 open Fable
 open Fable.AST
+open Fable.AST.Fable
 open System
 open System.Linq
 open System.Text.RegularExpressions
@@ -41,6 +42,32 @@ let makeCallInfo args: Fable.CallInfo = {
     MemberRef = None
     Tags = []
 }
+
+module ImportFromFableLib =
+
+    let private getLibPath (com: PluginHelper) (moduleName: string) =
+        match com.Options.Language with
+        | TypeScript -> com.LibraryDir + "/" + moduleName + ".ts"
+        | JavaScript -> com.LibraryDir + "/" + moduleName + ".js"
+        | _ ->
+            failwith "Only JavaScript and TypeScript are supported"
+
+    let private makeImportLibWithInfo (com: PluginHelper) t memberName (moduleName: string) info =
+        let selector = memberName
+
+        Import(
+            {
+                Selector = selector
+                Path = getLibPath com moduleName
+                Kind = LibraryImport info
+            },
+            t,
+            None
+        )
+
+    let makeImportLib (com: PluginHelper) t memberName moduleName =
+        Fable.AST.Fable.LibraryImportInfo.Create(isInstanceMember = false, isModuleMember = true)
+        |> makeImportLibWithInfo com t memberName moduleName
 
 let emitJs macro args  =
     let callInfo = makeCallInfo args
