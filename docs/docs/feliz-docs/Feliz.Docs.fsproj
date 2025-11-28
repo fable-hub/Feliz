@@ -62,6 +62,7 @@
     <Compile Include="Examples/Feliz/ReactComponentImport.fs" />
     <Compile Include="Examples/Feliz/ReactLazyComponent.fs" />
     <Compile Include="Examples/Feliz/ReactLazyComponentPath.fs" />
+    <Compile Include="Examples/Feliz/ReactMemoComponentAreEqualFn.fs" />
     <Compile Include="Examples/Guides/UnboxStringEnum.fs" />
     <Compile Include="Examples/Guides/BrowserTypesEvents.fs" />
     <Compile Include="Examples/Guides/BrowserTypesGlobalNamespaces.fs" />

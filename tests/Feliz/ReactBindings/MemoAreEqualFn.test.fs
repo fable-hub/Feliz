@@ -1,19 +1,8 @@
-module Components
+module Tests.ReactBindings.MemoAreEqualFnTests
 
 open Feliz
-open Fable.Core
-open Fable.Core.JsInterop
-open Browser.Dom
-open Shared
-
-type jsx = JSX.Html
-
-// let private areEqualFn = fun prop1 prop2 -> prop1 = prop2
-
-// [<Emit("\"use memo\"")>]
-// let use_memo: unit = jsNative
-
-
+open Browser
+open Vitest
 
 module Components =
 
@@ -86,36 +75,52 @@ module Components =
         ]
 
 
+describe "React memo equality strategies" <| fun _ ->
 
-[<ReactComponent>]
-let Main () =
-    let fruitArray, setFruitArray = React.useState ([| "Apple"; "Banana"; "Orange" |]) // This stays the same array
-    let sortedFruits = Array.sort fruitArray // this creates a new array instance on each render
-    let theme, setTheme = React.useState "light"
-    Html.div [
-        prop.style [ 
-            if theme = "light" then 
-                style.backgroundColor "white"
-                style.color "black"
-            else 
-                style.backgroundColor "black"
-                style.color "white"
-        ]
-        prop.children [
-            // Html.button [
-            //     prop.testId "change-fruit-array"
-            //     prop.text "Change Fruit Array"
-            //     prop.onClick (fun _ -> setFruitArray [| "Apple"; "Banana"; "Orange"; "Cherry" |])
-            // ]
-            // Html.button [
-            //     prop.testId "change-theme"
-            //     prop.text "Change Theme"
-            //     prop.onClick (fun _ -> 
-            //         if theme = "light" then 
-            //             setTheme "dark" 
-            //         else 
-            //             setTheme "light")
-            // ]
-            Components.ParentWithFnFsButFunctions()
-        ]
-    ]
+    testPromise "FsEquals prevents re-render for structurally equal props" <| fun _ -> promise {
+        let render = RTL.render (Components.ParentListFsEquals())
+        let count = RTL.screen.getByTestId "memo-fs-count"
+        let btn = RTL.screen.getByTestId "btn-list-fs"
+
+        expect(count).toHaveTextContent "1"
+
+        do! userEvent.click (btn)
+        // With F# equality the child should NOT re-render because the list contents are structurally equal
+        expect(count).toHaveTextContent "1"
+    }
+
+    testPromise "Shallow memo (default) re-renders when new prop instance provided" <| fun _ -> promise {
+        let render = RTL.render (Components.ParentListShallow())
+        let count = RTL.screen.getByTestId "memo-shallow-count"
+        let btn = RTL.screen.getByTestId "btn-list-shallow"
+
+        expect(count).toHaveTextContent "1"
+
+        do! userEvent.click (btn)
+        // With shallow JS equality a new list instance triggers re-render
+        expect(count).toHaveTextContent "2"
+    }
+
+    testPromise "FsEquals re-renders when function prop changes" <| fun _ -> promise {
+        // FsEquals should re-render because the function reference changes between renders
+        let renderFs = RTL.render (Components.ParentWithFnFs())
+        let countFs = RTL.screen.getByTestId "memo-fs-fn-count"
+        let btnFs = RTL.screen.getByTestId "btn-fn-fs"
+
+        expect(countFs).toHaveTextContent "1"
+        do! userEvent.click (btnFs)
+        expect(countFs).toHaveTextContent "2"
+
+    }
+
+    testPromise "FsEqualsButFunctions ignores function prop changes and does not re-render" <| fun _ -> promise {
+        // FsEqualsButFunctions should NOT re-render when only the function prop changes
+        let renderBf = RTL.render (Components.ParentWithFnFsButFunctions())
+        let countBf = RTL.screen.getByTestId "memo-fs-bf-count"
+        let btnBf = RTL.screen.getByTestId "btn-fn-bf"
+
+        expect(countBf).toHaveTextContent "1"
+        do! userEvent.click (btnBf)
+        expect(countBf).toHaveTextContent "1"
+    }
+    

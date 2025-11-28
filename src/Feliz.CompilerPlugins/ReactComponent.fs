@@ -9,10 +9,16 @@ open System.Diagnostics.CodeAnalysis
 [<assembly: ScanForPlugins>]
 do ()
 
+module AreEqualFn =
+    [<Literal>]
+    let FsEquals = 0
+    [<Literal>]
+    let FsEqualsButFunctions = 1
 type MemoStrategy = 
 | EqualsShallow 
 | EqualsCustom of string 
-// | FSharpEquality
+| FSharpEquality
+| FSharpEqualityButFunctions
 
 module internal ReactComponentHelpers =
     let (|ReactLazyMemo|_|) =
@@ -100,6 +106,28 @@ module internal ReactComponentHelpers =
         | TypeCast(body, _) -> transformToDynImport compilerInfo body
         | _ -> body
 
+    let [<Literal; StringSyntax("javascript")>] private ``JS<equalsButFunctions>`` = """function equalsButFunctions(x, y) {
+    if (x === y) {
+        return true;
+    }
+    else if ((typeof x === 'object' && !x[Symbol.iterator]) && !(y == null)) {
+        const keys = Object.keys(x);
+        const length = keys.length | 0;
+        let i = 0;
+        let result = true;
+        while ((i < length) && result) {
+            const key = keys[i];
+            i = ((i + 1) | 0);
+            const xValue = x[key];
+            result = ((typeof xValue === 'function') ? true : $0(xValue, y[key]));
+        }
+        return result;
+    }
+    else {
+        return $0(x, y);
+    }
+}"""
+
     let applyImportOrMemoOrLazy import from (memo: MemoStrategy option) (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
         match import, from, memo, lazy' with
         | Some _, Some _, _, _ ->
@@ -128,7 +156,13 @@ module internal ReactComponentHelpers =
                 | EqualsShallow -> ()
                 | EqualsCustom js -> 
                     AstUtils.emitJs js []
-                // | FSharpEquality -> AstUtils.emitJs "GenericFSharpEqualFn" []
+                | FSharpEquality -> 
+                    AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
+                | FSharpEqualityButFunctions ->
+                    AstUtils.emitJs ``JS<equalsButFunctions>`` [
+                        AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
+                    ]
+
             ]
             // Change declaration kind from function to value
             let info =
@@ -449,27 +483,42 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                         Body = body
                 }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
-type ReactMemoComponentAttribute private (memo: MemoStrategy, ?exportDefault: bool) =
+type ReactMemoComponentAttribute private (memo: MemoStrategy) =
     inherit
         ReactComponentAttribute(
-            ?exportDefault = exportDefault,
+            exportDefault = false,
             ?import = None,
             ?from = None,
             memo = memo,
             lazy' = false
         )
-    // new() = ReactMemoComponentAttribute(memo = MemoStrategy.EqualsShallow, exportDefault = false)
     new() =
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=false)
-    new(exportDefault: bool) =
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, exportDefault=exportDefault)
-    new([<StringSyntax("javascript")>] areEqual:string, exportDefault: bool) = 
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual, exportDefault=exportDefault)
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow)
     new([<StringSyntax("javascript")>] areEqual:string) = 
         ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual)
+    
+    /// <summary>
+    /// Transforms a function into a React memoized function component
+    /// using predefined equality strategies.
+    /// 
+    /// - ``1``: FsEquals - uses F# structural equality
+    /// - ``2``: FsEqualsButFunctions - uses F# structural equality but ignores function properties
+    /// </summary>
+    /// <param name="areEqualFn">The equality strategy to use</param>
+    new(areEqualFn: int) =
+        let memoStrategy =
+            match areEqualFn with
+            | 0 -> MemoStrategy.FSharpEquality
+            | 1 -> MemoStrategy.FSharpEqualityButFunctions
+            | _ -> MemoStrategy.FSharpEquality // default case, should not happen
+        ReactMemoComponentAttribute(memo=memoStrategy)
 
+// type TestComponentAttribute() =
+//     inherit ReactComponentAttribute(false, ?import = None, ?from = None, memo = MemoStrategy.FSharpEquality, lazy' = false)
 type ReactLazyComponentAttribute() =
     inherit ReactComponentAttribute(false, ?import = None, ?from = None, ?memo = None, lazy' = true)
+
+
 
 // type ReactMemoComponentFsEqualityAttribute (exportDefault: bool) =
 //     inherit ReactComponentAttribute(memo = MemoStrategy.FSharpEquality, lazy' = false, exportDefault=exportDefault, ?import=None, ?from=None)
@@ -478,5 +527,6 @@ type ReactLazyComponentAttribute() =
 // [<RequireQualifiedAccessAttribute>]
 // module ReactMemoComponent =
 
-//     type FsEquality = ReactMemoComponentFsEqualityAttribute
+//     type FsEqualAttribute() = 
+//         inherit ReactComponentAttribute(false, ?import = None, ?from = None, memo = MemoStrategy.FSharpEquality, lazy' = true)
 

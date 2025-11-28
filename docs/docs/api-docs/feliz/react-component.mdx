@@ -199,7 +199,24 @@ import RawMemoAttribute from '!!raw-loader!../../feliz-docs/Examples/React/MemoA
   <MemoAttribute />
 </ComponentRender>
 
-### areEqual with js emit
+### areEqual - Feliz predefined functions
+
+Feliz features prewritten equality functions for common scenarios that can be used with the `areEqualFn` parameter of the `[<ReactMemoComponent>]` attribute. This parameter
+accepts an integer value that corresponds to the desired equality function:
+
+- `0`/`AreEqualFn.FsEquals` - Uses F#'s built-in equality comparison (`=`) for all props. So everything that normally returns true when using F# equality `=` will return true here as well.
+- `1`/`AreEqualFn.FsEqualsButFunctions` - Uses F#'s built-in equality comparison (`=`) for all props, but ignores all functions in props. This is useful when you have functions as props that are recreated on each render, but you want to ignore them for equality checks.
+
+You can also use defined integer constants for example: `AreEqualFn.FsEquals` for better readability.
+
+import MemoAttributeAreEqualFn from '../../feliz-docs/fableoutput/Examples/Feliz/ReactMemoComponentAreEqualFn'
+import RawMemoAttributeAreEqualFn from '!!raw-loader!../../feliz-docs/Examples/Feliz/ReactMemoComponentAreEqualFn.fs'
+
+<ComponentRender code={RawMemoAttributeAreEqualFn} defaultOpen>
+  <MemoAttributeAreEqualFn />
+</ComponentRender>
+
+### areEqual - JavaScript code emit
 
 You can pass a custom equality function to the `[<ReactMemoComponent>]` attribute using the `areEqual` parameter. The value must be a JavaScript function expressed as a string. This function will be used to determine whether the component should re-render based on its props.
 
@@ -242,7 +259,7 @@ import RawMemoAttributeAreEqualEmit from '!!raw-loader!../../feliz-docs/Examples
   <MemoAttributeAreEqualEmit />
 </ComponentRender>
 
-### areEqual with F# function
+### areEqual - F# function call emit
 
 We can also emit a call to a f# function defined in the same file. This function must have the correct signature to be used as an equality function.
 
