@@ -1,10 +1,18 @@
 ---
-title: Upgrade from 2.x to 3.x
+title: Upgrade to v3
 displayed_sidebar: docsSidebar
-sidebar_position: 999
+sidebar_position: 102
 ---
 
 A lot fo F# wrapper magic was removed. React bindings now behave as close as possible to actual React functionality.
+
+## Update React version
+
+Feliz 3.x requires React 19 or higher. Update your `package.json` dependencies with
+
+```bash
+npm i react@19 react-dom@19
+```
 
 ## Update Fable Version
 
