@@ -171,15 +171,6 @@ $RECYCLE.BIN/
 # NuGet Packages Directory
 packages/
 
-# Generated documentation folder
-docs/output/
-
-# Temp folder used for publishing docs
-temp*/
-
-# Test results produced by build
-TestResults.xml
-TestResult.xml
 
 # Nuget outputs
 nuget/*.nupkg

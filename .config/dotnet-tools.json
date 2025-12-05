@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "fable": {
-      "version": "5.0.0-alpha.17",
+      "version": "5.0.0-alpha.19",
       "commands": [
         "fable"
       ],

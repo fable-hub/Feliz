@@ -25,11 +25,20 @@ dotnet tool update fable --prerelease
 
 ## Update .NET Framework
 
-Recommended is the use of .NET 8. You can check your local .NET version with `dotnet --version` and update your .fsproj files with
+Fable 5 is a .NET 10 tool. Check your .NET version with `dotnet --version` and [install a newer version](https://dotnet.microsoft.com/en-us/download) if needed.
 
-```xml
-<TargetFramework>net8.0</TargetFramework>
+:::warning
+If you are using a `global.json` file to pin your .NET SDK version, make sure to update it.
+
+```json
+{
+  "sdk": {
+    "version": "10.0.0",
+    "rollForward": "latestMinor"
+  }
+}
 ```
+:::
 
 ## React.memo
 
