@@ -23,7 +23,7 @@ Thats awesome! There are many ways you can contribute to the Feliz project:
 
 ## Requirements
 
-1. [.NET SDK 8.0 or later](https://dotnet.microsoft.com/en-us/download)
+1. [.NET SDK 10.0 or later](https://dotnet.microsoft.com/en-us/download)
 2. [Node.js 20 or later](https://nodejs.org/)
 
 ## Setup

@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.0.0-rc.16 - 2025-12-05
+
+### ✨ Added
+
+- Added `[<StringSyntax("jsx")>]` support for `Feliz.JSX.Html.jsx` function (by @Freymaurer)
+- Support for `"use memo"` and `"use no memo"` directive on `[<ReactMemoComponent(bool)>]` to better integrate with React Compiler in annotation mode (by @Freymaurer)
+
 ## 3.0.0-rc.15 - 2025-12-01
 
 ### ✨ Added

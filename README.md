@@ -63,4 +63,4 @@ npm start
 
 ### 📚 Documentation
 
-Feliz has extensive documentation at [https://zaid-ajaj.github.io/Feliz](https://zaid-ajaj.github.io/Feliz) with live examples alongside code samples, check them out and if you have any question, let us know!
+Feliz has extensive documentation at [https://fable-hub.github.io/Feliz/](https://fable-hub.github.io/Feliz/) with live examples alongside code samples, check them out and if you have any question, let us know!

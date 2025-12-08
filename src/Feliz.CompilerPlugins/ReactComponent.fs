@@ -34,6 +34,22 @@ module internal ReactComponentHelpers =
             | _ -> None
         | _ -> None
 
+    let injectUseMemoDirective (useMemoDirective: bool option) (body: Expr) =
+
+        match useMemoDirective with
+        | None ->
+            body
+        | Some false ->
+            Sequential [
+                AstUtils.emitJs "\"use no memo\"" []
+                body
+            ]
+        | Some true ->
+            Sequential [
+                AstUtils.emitJs "\"use memo\"" []
+                body
+            ]
+
     let injectReactImport body =
         let body =
             match body with
@@ -95,7 +111,6 @@ module internal ReactComponentHelpers =
         | Sequential body ->
             let next = body |> List.map (transformToDynImport compilerInfo)
             Sequential next
-        // | Delegate(args, body, name, tags) ->
         | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
             // Example:
             // ```fsharp
@@ -129,6 +144,7 @@ module internal ReactComponentHelpers =
 }"""
 
     let applyImportOrMemoOrLazy import from (memo: MemoStrategy option) (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
+
         match import, from, memo, lazy' with
         | Some _, Some _, _, _ ->
             let reactElType = decl.Body.Type
@@ -217,7 +233,7 @@ module internal ReactComponentHelpers =
 open ReactComponentHelpers
 
 /// <summary>Transforms a function into a React function component. Make sure the function is defined at the module level</summary>
-type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: string, ?memo: MemoStrategy, ?lazy': bool) =
+type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: string, ?memo: MemoStrategy, ?lazy': bool, ?useMemoDirective: bool) =
     inherit MemberDeclarationPluginAttribute()
     override _.FableMinimumVersion = "5.0"
     new() = ReactComponentAttribute(exportDefault = false)
@@ -300,15 +316,6 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                     | None -> reactEl
                     | Some(ident, value) -> Let(ident, value, reactEl)
 
-                // match [| memo, lazy', callee |] with
-                // // If the call is memo or lazy and the function has an identifier, we can set the displayName
-                // | [| (Some true), _, (IdentExpr i) |]
-                // | [| _, (Some true), (IdentExpr i) |] ->
-                //     Sequential [
-                //         // (AstUtils.makeSet (IdentExpr(i)) "displayName" (AstUtils.makeStrConst i.Name))
-                //         expr
-                //     ]
-                // | _ -> expr
                 expr
         | _ ->
             // return expression as is when it is not a call expression
@@ -408,10 +415,18 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                     // nothing to report
                     ()
 
-                decl |> applyImportOrMemoOrLazy import from memo lazy' compiler
+                let body =
+                    decl.Body
+                    |> injectUseMemoDirective useMemoDirective
+                { decl with Body = body }
+                |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else if decl.Args.Length = 1 && decl.Args[0].Type = Type.Unit then
                 // remove arguments from functions requiring unit as input
-                { decl with Args = [] }
+
+                let body =
+                    decl.Body
+                    |> injectUseMemoDirective useMemoDirective
+                { decl with Args = []; Body = body }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else
                 // rewrite all other arguments into getters of a single props object
@@ -476,6 +491,7 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                         let arg = propBindings |> List.fold (fun body (k, v) -> Let(k, v, body)) arg
                         Call(reactMemo, { callInfo with Args = arg :: restArgs }, t, r)
                     | _ -> propBindings |> List.fold (fun body (k, v) -> Let(k, v, body)) decl.Body
+                    |> injectUseMemoDirective useMemoDirective
 
                 {
                     decl with
@@ -483,19 +499,27 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                         Body = body
                 }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
-type ReactMemoComponentAttribute private (memo: MemoStrategy) =
+
+type ReactMemoComponentAttribute private (?memo: MemoStrategy, ?useMemoDirective: bool) =
     inherit
         ReactComponentAttribute(
             exportDefault = false,
-            ?import = None,
-            ?from = None,
-            memo = memo,
-            lazy' = false
+            ?memo = memo,
+            lazy' = false,
+            ?useMemoDirective = useMemoDirective
         )
     new() =
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow)
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, ?useMemoDirective = None)
+    /// <summary>
+    /// This constructor is meant to be used with **React Compiler** in annotation mode.
+    /// 
+    /// - `true` -> "use memo"
+    /// - `false` -> "use no memo"
+    /// </summary> 
+    new(useMemoDirective: bool) = 
+        ReactMemoComponentAttribute(?memo = None, useMemoDirective = useMemoDirective)
     new([<StringSyntax("javascript")>] areEqual:string) = 
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual)
+        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual, ?useMemoDirective = None)
     
     /// <summary>
     /// Transforms a function into a React memoized function component
@@ -513,20 +537,7 @@ type ReactMemoComponentAttribute private (memo: MemoStrategy) =
             | _ -> MemoStrategy.FSharpEquality // default case, should not happen
         ReactMemoComponentAttribute(memo=memoStrategy)
 
-// type TestComponentAttribute() =
-//     inherit ReactComponentAttribute(false, ?import = None, ?from = None, memo = MemoStrategy.FSharpEquality, lazy' = false)
 type ReactLazyComponentAttribute() =
     inherit ReactComponentAttribute(false, ?import = None, ?from = None, ?memo = None, lazy' = true)
 
-
-
-// type ReactMemoComponentFsEqualityAttribute (exportDefault: bool) =
-//     inherit ReactComponentAttribute(memo = MemoStrategy.FSharpEquality, lazy' = false, exportDefault=exportDefault, ?import=None, ?from=None)
-//     new() = ReactMemoComponentFsEqualityAttribute(exportDefault=false)
-
-// [<RequireQualifiedAccessAttribute>]
-// module ReactMemoComponent =
-
-//     type FsEqualAttribute() = 
-//         inherit ReactComponentAttribute(false, ?import = None, ?from = None, memo = MemoStrategy.FSharpEquality, lazy' = true)
 

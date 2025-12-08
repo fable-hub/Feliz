@@ -1,7 +1,7 @@
-#if !NET7_0_OR_GREATER 
 namespace System.Diagnostics.CodeAnalysis
-open System
+#if !NET7_0_OR_GREATER
 
+open System
 /// <summary>
 /// Backport of StringSyntaxAttribute from .NET 7+ for use in earlier framework versions.
 /// Specifies the syntax used in a string for enhanced IDE support (e.g., syntax highlighting, autocomplete).
@@ -29,4 +29,5 @@ type internal StringSyntaxAttribute
 
     /// <summary>Gets optional arguments associated with the specific syntax employed.</summary>
     member val public Arguments = arguments with get
+
 #endif

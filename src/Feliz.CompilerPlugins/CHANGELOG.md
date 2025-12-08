@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.0.0-rc.9 - 2025-12-05
+
+### ✨ Added
+
+- Support for `"use memo"` and `"use no memo"` directive on `[<ReactMemoComponent(bool)>]` to better integrate with React Compiler in annotation mode (by @Freymaurer)
+
 ## 3.0.0-rc.8 - 2025-11-28
 
 ### ✨ Added

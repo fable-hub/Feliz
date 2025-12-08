@@ -24,6 +24,8 @@
     <Compile Include="ReactBindings/Fragment.test.fs" />
     <Compile Include="ReactBindings/Lazy.test.fs" />
     <Compile Include="ReactBindings/Memo.test.fs" />
+    <Compile Include="ReactBindings/MemoAttribute.test.fs" />
+    <Compile Include="ReactBindings/MemoAttributeDirective.test.fs" />
     <Compile Include="ReactBindings/MemoAreEqualFn.test.fs" />
     <Compile Include="ReactBindings/StrictMode.test.fs" />
     <Compile Include="ReactBindings/UseCallback.test.fs" />

@@ -12,10 +12,12 @@ module JSXHelper =
     let inline createElement (name: string) (props: IReactProperty list) : ReactElement =
         JSX.create name !!props |> unbox
 
+open System.Diagnostics.CodeAnalysis
+
 [<Erase>]
 type Html =
 
-    static member inline jsx (template: string) : ReactElement = JSX.jsx template |> unbox
+    static member inline jsx ([<StringSyntax("jsx")>] template: string) : ReactElement = JSX.jsx template |> unbox
     static member inline a xs = JSXHelper.createElement "a" xs
     static member inline a (children: #seq<ReactElement>) = JSXHelper.createElementWithChild "a" children
 
