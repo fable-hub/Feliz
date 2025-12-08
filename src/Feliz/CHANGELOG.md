@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ✨ Added
+
+- Added `onTransitionStart` event handler support (by @Freymaurer)
+
 ## 3.0.0-rc.16 - 2025-12-05
 
 ### ✨ Added

@@ -1342,6 +1342,8 @@ type prop =
 
     static member inline onTransitionEnd (handler: TransitionEvent -> unit) = PropHelper.mkAttr "onTransitionEnd" handler
 
+    static member inline onTransitionStart (handler: TransitionEvent -> unit) = PropHelper.mkAttr "onTransitionStart" handler
+
     /// Fires when the volume is changed which (includes setting the volume to "mute").
     static member inline onVolumeChange (handler: Event -> unit) = PropHelper.mkAttr "onVolumeChange" handler
 
