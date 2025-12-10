@@ -25,10 +25,6 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.RoughViz", "src\Feliz
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.SelectSearch", "src\Feliz.SelectSearch\Feliz.SelectSearch.fsproj", "{8466AA1A-99BC-4589-9E6E-C45BFED08455}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.Svelte", "src\Feliz.Svelte\Feliz.Svelte.fsproj", "{A471C5EA-4A89-4285-AAB4-769C037856F8}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.SvelteComponent", "src\Feliz.SvelteComponent\Feliz.SvelteComponent.fsproj", "{4F313163-ABFD-4EAC-9515-4A575FC52D25}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.UseDeferred", "src\Feliz.UseDeferred\Feliz.UseDeferred.fsproj", "{E736C5A3-C1B1-4E9B-94CC-72EB787CA289}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Feliz.UseElmish", "src\Feliz.UseElmish\Feliz.UseElmish.fsproj", "{BF938244-4CE8-4838-B7D2-5A2801D674F5}"
@@ -99,14 +95,6 @@ Global
 		{8466AA1A-99BC-4589-9E6E-C45BFED08455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8466AA1A-99BC-4589-9E6E-C45BFED08455}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8466AA1A-99BC-4589-9E6E-C45BFED08455}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A471C5EA-4A89-4285-AAB4-769C037856F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A471C5EA-4A89-4285-AAB4-769C037856F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A471C5EA-4A89-4285-AAB4-769C037856F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A471C5EA-4A89-4285-AAB4-769C037856F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F313163-ABFD-4EAC-9515-4A575FC52D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F313163-ABFD-4EAC-9515-4A575FC52D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F313163-ABFD-4EAC-9515-4A575FC52D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F313163-ABFD-4EAC-9515-4A575FC52D25}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E736C5A3-C1B1-4E9B-94CC-72EB787CA289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E736C5A3-C1B1-4E9B-94CC-72EB787CA289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E736C5A3-C1B1-4E9B-94CC-72EB787CA289}.Release|Any CPU.ActiveCfg = Release|Any CPU
