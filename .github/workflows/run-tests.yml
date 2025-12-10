@@ -2,7 +2,7 @@ name: Run Tests
 
 on:
   pull_request:
-    branches: [ main, feliz_v3.0 ]
+    branches: [ main, 'major/**' ]
 
 jobs:
   run-tests:

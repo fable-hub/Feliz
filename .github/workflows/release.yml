@@ -2,7 +2,7 @@ name: Release to NuGet
 
 on:
   push:
-    branches: [ main, feliz_v3.0 ]
+    branches: [ main, 'major/**' ]
 
 jobs:
 
