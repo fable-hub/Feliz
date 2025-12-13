@@ -1667,7 +1667,7 @@ type prop =
     static member inline span (value: int) = PropHelper.mkAttr "span" value
 
     /// Defines whether the element may be checked for spelling errors.
-    static member inline spellcheck (value: bool) = PropHelper.mkAttr "spellcheck" (string value)
+    static member inline spellCheck (value: bool) = PropHelper.mkAttr "spellCheck" (string value)
 
     /// Controls the ratio of reflection of the specular lighting.
     ///
