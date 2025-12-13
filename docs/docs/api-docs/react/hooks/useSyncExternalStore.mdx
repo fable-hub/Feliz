@@ -8,8 +8,42 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useSyncExternalStore" name="useSyncExternalStore"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useSyncExternalStore` is a hook that lets you subscribe to an external store.
 
-:::
+This is good for detecting changes in theme (dark mode) or online status.
+Most events will require adding specific Fable Browser packages for your requirements
+
+Example
+- `navigator.onLine` needs the `Fable.Browser.Navigator` package
+- `window.matchMedia` needs the `Fable.Browser.MediaQueryList` package
+
+```fsharp
+
+let getSnapshot() = 
+    window.innerWidth
+
+let subscribe callback =
+    let handler = fun (_: Browser.Types.Event) -> callback()
+    window.addEventListener("resize", handler)
+    { new IDisposable with
+        member _.Dispose() =
+            window.removeEventListener("resize", handler)
+    }   
+
+[<ReactComponent(true)>]
+let CurrentWidth() =
+
+    let currentWidth = React.useSyncExternalStore(subscribe, getSnapshot)
+
+    Html.h1 $"Window width: {currentWidth}px"
+
+```
+
+import CurrentWidth from '../../../feliz-docs/fableoutput/Examples/React/UseSyncExternalStore'
+import RawCurrentWidth from '!!raw-loader!../../../feliz-docs/Examples/React/UseSyncExternalStore.fs'
+
+<ComponentRender code={RawCurrentWidth}> 
+  <CurrentWidth />
+</ComponentRender>
