@@ -630,6 +630,15 @@ useLayoutEffect(() => {
     [<ImportMember("react")>]
     static member inline useImperativeHandle(ref: IRefValue<'t>, createHandle: unit -> 't, ?dependencies: obj[]) = jsNative
 
+    /// <summary>
+    /// Subscribes to a data source, and returns the current value from it.
+    /// </summary>
+    /// <param name='subscribe'>A function that sets up a subscription to the external data source. It receives a callback to be called when the data source changes.</param>
+    /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
+    /// <returns>The current value from the external data source.</returns>
+    [<ImportMember("react")>]
+    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> 'a , getSnapshot: unit -> 'T): 'T = jsNative
+
 // This extensions module is required to help f# compiler understand overloads. 
 // Without this, for me the compiler was unable to resolve e.g. `useState` overload between `'t` and `unit -> 't`
 [<AutoOpen>]
