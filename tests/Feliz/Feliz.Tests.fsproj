@@ -34,6 +34,7 @@
     <Compile Include="ReactBindings/UseMemo.test.fs" />
     <Compile Include="ReactBindings/UseRef.test.fs" />
     <Compile Include="ReactBindings/UseState.test.fs" />
+    <Compile Include="ReactBindings/UseSyncExternalStore.test.fs" />
     <Compile Include="FsReact.test.fs" />
   </ItemGroup>
   <ItemGroup />
