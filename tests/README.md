@@ -17,7 +17,7 @@ To run a specific test project; in the **test project root**, run:
 npm run test
 ```
 
-or with watch mode:
+or in watch mode:
 ```bash
 npm run test:watch
 ```
@@ -33,7 +33,7 @@ For example, appending memo will check all files containing `memo`, see Vitest d
 npm run test memo
 ```
 
-or with watch mode (only in test project root):
+or in watch mode (only in test project root):
 ```bash
 npm run test:watch memo
 ```
