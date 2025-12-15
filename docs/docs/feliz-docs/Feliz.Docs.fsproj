@@ -44,6 +44,8 @@
     <Compile Include="Examples/React/MemoAttribute.fs" />
     <Compile Include="Examples/React/MemoAttributeAreEqualEmit.fs" />
     <Compile Include="Examples/React/MemoAttributeAreEqualEmitFnName.fs" />
+    <Compile Include="Examples/React/UseSyncExternalStore.fs" />
+    <Compile Include="Examples/React/UseSyncExternalStoreDisposable.fs" />
     <Compile Include="Examples/ReactDOM/CreatePortal.fs" />
     <Compile Include="Examples/ReactDOM/CreateRoot.fs" />
     <Compile Include="Examples/ReactDOM/HydrateRoot.fs" />

@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ✨ Added
+
+- Added `useSyncExternalStore` hook support (by @mjblacker)
+
+
 ### 🐛 Fixed
 
 - Fix `spellCheck` html prop naming convention from lowercase to camelCase, causing React warning "Invalid DOM property" (by @mjblacker)

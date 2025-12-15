@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useSyncExternalStore
-draft: true
+title: useSyncExternalStore
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,112 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useSyncExternalStore" name="useSyncExternalStore"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useSyncExternalStore` is a hook that lets you subscribe to an external store.
 
-:::
+UseSyncExternalStore is useful to read and subscribe to a value from a data source that is not part of React's standard state management.
+
+This hook is commonly used by third-party state libraries and for subscribing to browser API's such as getting the current theme (dark mode) or online status.
+
+
+```fsharp
+
+let getSnapshot() = 
+    window.innerWidth
+
+let subscribe callback =
+    let handler = fun (_: Browser.Types.Event) -> callback()
+    window.addEventListener("resize", handler)
+    fun () -> window.removeEventListener("resize", handler)
+
+[<ReactComponent(true)>]
+let UseSyncExternalStore() =
+    let currentWidth = React.useSyncExternalStore(subscribe, getSnapshot)
+
+    Html.h2 $"Window width: {currentWidth}px"
+
+```
+
+import UseSyncExternalStore from '../../../feliz-docs/fableoutput/Examples/React/UseSyncExternalStore'
+import RawUseSyncExternalStore from '!!raw-loader!../../../feliz-docs/Examples/React/UseSyncExternalStore.fs'
+
+<ComponentRender code={RawUseSyncExternalStore}> 
+  <UseSyncExternalStore />
+</ComponentRender>
+
+## UseSyncExternalStore with IDisposable
+
+If your subscriber returns an `IDisposable`, Feliz will automatically call its `Dispose` method when the component unmounts
+
+import UseSyncExternalStoreDisposable from '../../../feliz-docs/fableoutput/Examples/React/UseSyncExternalStoreDisposable'
+import RawUseSyncExternalStoreDisposable from '!!raw-loader!../../../feliz-docs/Examples/React/UseSyncExternalStoreDisposable.fs'
+
+<ComponentRender code={RawUseSyncExternalStoreDisposable}> 
+  <UseSyncExternalStoreDisposable />
+</ComponentRender>
+
+## Fable specifics
+
+Due to the way Fable is packaged most browser API's will require adding specific Fable Browser packages to your project
+
+Example
+- `window.matchMedia` requires the `Fable.Browser.MediaQueryList` package
+- `navigator.onLine` requires the `Fable.Browser.Navigator` package
+
+### Detecting dark mode
+```fsharp
+open Feliz
+open Browser
+
+let isDarkQuery = "(prefers-color-scheme: dark)"
+
+let getSnapshot() = 
+    // Uses the Fable.Browser.MediaQueryList package
+    window.matchMedia(isDarkQuery).matches
+
+let subscribe callback =
+    let handler = fun (_: Browser.Types.Event) -> callback()
+    window.matchMedia(isDarkQuery).addEventListener("change", handler)
+    fun () -> window.matchMedia(isDarkQuery).removeEventListener("change", handler)
+
+[<ReactComponent(true)>]
+let DarkModeStatus() =
+    let isDarkMode = React.useSyncExternalStore(subscribe, getSnapshot)
+
+    match isDarkMode with 
+    | true -> Html.h2 "Currently in dark mode"
+    | false -> Html.h2 "Currently in light mode"
+
+```
+
+
+### Detecting online status (with IDisposable)
+```fsharp
+open Feliz
+open Browser
+
+let getSnapshot() = 
+    // Uses the Fable.Browser.Navigator package
+    navigator.onLine
+
+let subscribe callback =
+    let onlineHandler = fun (_: Browser.Types.Event) -> callback()
+    window.addEventListener("online", onlineHandler)
+    window.addEventListener("offline", onlineHandler)
+    { new IDisposable with
+        member _.Dispose() =
+            window.removeEventListener("online", onlineHandler)
+            window.removeEventListener("offline", onlineHandler)
+    }   
+
+[<ReactComponent(true)>]
+let OnlineStatus() =
+    let isOnline = React.useSyncExternalStore(subscribe, getSnapshot)
+    Html.h2 [
+        if isOnline then
+            prop.text "You are online"
+        else
+            prop.text "You are offline"
+    ]
+```
