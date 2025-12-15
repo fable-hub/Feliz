@@ -637,7 +637,7 @@ useLayoutEffect(() => {
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
     [<ImportMember("react")>]
-    static member inline useSyncExternalStore(subscribe: Func<(unit -> unit),(unit -> unit)> , getSnapshot: unit -> 'T): 'T = jsNative
+    static member inline useSyncExternalStore(subscribe: Func<(unit -> unit),(unit -> unit)> , getSnapshot: unit -> 'T, ?getServerSnapshot: unit -> 'T): 'T = jsNative
 
     /// <summary>
     /// Subscribes to a data source, and returns the current value from it.
@@ -645,8 +645,8 @@ useLayoutEffect(() => {
     /// <param name='subscribe'>A function that sets up a subscription to the external data source. It receives a callback to be called when the data source changes.</param>
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
-    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> (unit -> unit), getSnapshot: unit -> 'T): 'T =
-        React.useSyncExternalStore( Func<_,_> subscribe, getSnapshot)
+    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> (unit -> unit), getSnapshot: unit -> 'T, ?getServerSnapshot: unit -> 'T): 'T =
+        React.useSyncExternalStore( Func<_,_> subscribe, getSnapshot, ?getServerSnapshot = getServerSnapshot)
 
     /// <summary>
     /// Subscribes to a data source, and returns the current value from it.
@@ -654,13 +654,14 @@ useLayoutEffect(() => {
     /// <param name='subscribe'>A function that sets up a subscription to the external data source. It receives a callback to be called when the data source changes.</param>
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
-    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> #IDisposable, getSnapshot: unit -> 'T): 'T =
+    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> #IDisposable, getSnapshot: unit -> 'T, ?getServerSnapshot: unit -> 'T): 'T =
         React.useSyncExternalStore( Func<_,_> 
             (fun (callback) ->
                 let disp = subscribe(callback)
                 fun () -> disp.Dispose()
             ), 
-            getSnapshot
+            getSnapshot,
+            ?getServerSnapshot = getServerSnapshot
         )
 
 
