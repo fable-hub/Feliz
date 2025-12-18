@@ -34,15 +34,60 @@ let root = ReactDOM.createRoot (document.getElementById "root")
 root.render (Counter())
 ```
 
+And alternatively, with the Elmish syntax:
+
+```fsharp
+module Example.ElmishCounter
+
+open Fable.Core
+open Feliz
+open Feliz.UseElmish
+open Elmish
+
+type Msg =
+    | Increment
+    | Decrement
+
+type State = { Count : int }
+
+let init() = { Count = 0 }, Cmd.none
+
+let update msg state =
+    match msg with
+    | Increment -> { state with Count = state.Count + 1 }, Cmd.none
+    | Decrement -> { state with Count = state.Count - 1 }, Cmd.none
+
+[<Erase; Mangle(false)>]
+type Main =
+
+    [<ReactComponent(true)>]
+    static member Main() =
+    
+        let state, dispatch = React.useElmish(init, update, [| |])
+        Html.div [
+            Html.h1 state.Count
+            Html.button [
+                prop.text "Increment"
+                prop.onClick (fun _ -> dispatch Increment)
+            ]
+
+            Html.button [
+                prop.text "Decrement"
+                prop.onClick (fun _ -> dispatch Decrement)
+            ]
+        ]
+```
+
 ### ✨ Features
 
  - Flexible **API design**: Combine the reliability of F# type safety with the flexibility to interop easily with native JavaScript.
- - Discoverable **attributes** with no more functions, `Html` attributes or CSS properties globally available so they are easy to find.
+ - Discoverable **attributes** with no more functions, `Html` attributes, or CSS properties globally available so they are easy to find.
  - Proper **documentation**: each attribute and CSS property
- - Full **React API** support: Feliz aims to support the React API for building components using hooks, context and more.
- - Fully **Type-safe**: no more `Margin of obj` but instead utilizing a plethora of overloaded functions to account for the overloaded nature of `CSS` attributes, covering 90%+ of the CSS styles, values and properties.
+ - Full **React API** support: Feliz aims to support the React API for building components using hooks, context, and more.
+ - Fully **Type-safe**: no more `Margin of obj` but instead utilizing a plethora of overloaded functions to account for the overloaded nature of `CSS` attributes, covering 90%+ of the CSS styles, values, and properties.
  - **Compatible** with [Femto](https://github.com/Zaid-Ajaj/Femto).
- - Approximately **Zero** bundle size increase where everything function body is erased from the generated JavaScript unless you actually use said function.
+ - **Optional** [Elm](https://fable-hub.github.io/Feliz/ecosystem/Hooks/Feliz.UseElmish) architecture design. 
+ - Approximately **Zero** bundle size increase where the entire function body is erased from the generated JavaScript unless you actually use said function.
 
 ### 🚀 Quick Start
 
