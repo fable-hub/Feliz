@@ -38,7 +38,7 @@ module private Util =
             let subscribed = false
             (model, initialDispatch, subscribed, queuedMessages), cmd
 
-        let subscribe = FsReact.createSyncExternalStoreSubscribe(fun callback ->
+        let subscribe = UseSyncExternalStoreSubscribe(fun callback ->
             // printfn "Subscribing %O..." guid
             let mutable dispose = false
             // needsDispose is used to determine whether the model inside state needs to be disposed of when the subscription is terminated.
