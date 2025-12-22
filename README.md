@@ -65,12 +65,11 @@ npm start
 
 Explore the full docs at [https://fable-hub.github.io/Feliz/](https://fable-hub.github.io/Feliz/) — packed with live examples and practical guidance. Highlights:
 
+- Feliz syntax: comprehensive reference for `Html`, `prop`, `style`, React hooks, and more. Browse: https://fable-hub.github.io/Feliz/category/feliz
 - Guides: curated walkthroughs and best practices — from getting started to advanced patterns. Start here: https://fable-hub.github.io/Feliz/category/guides
-- API Docs: comprehensive reference for `Html`, `prop`, `style`, `Svg`, React hooks, and more. Browse: https://fable-hub.github.io/Feliz/api-docs
 - Ecosystem: discover community libraries and official add‑ons (UI, components, hooks, testing, tooling). Explore: https://fable-hub.github.io/Feliz/ecosystem
-- Hooks • Feliz.UseElmish: integrate Elmish state machines with React components. Learn more: https://fable-hub.github.io/Feliz/ecosystem/Hooks/Feliz.UseElmish
-- Use with Elmish (API): idiomatic interop between Elmish and Feliz. Details: https://fable-hub.github.io/Feliz/api-docs/UseWithElmish
-- Upgrade Guide: migrating to v3 with key changes and tips. Read: https://fable-hub.github.io/Feliz/api-docs/Upgrade
+  - Feliz.UseElmish: integrate Elmish state machines with React components. Learn more: https://fable-hub.github.io/Feliz/ecosystem/Hooks/Feliz.UseElmish
+  - Vitest: testing library for Feliz components. Learn more: https://fable-hub.github.io/Feliz/ecosystem/Testing/Feliz.Vitest
 
 If anything’s unclear or you’re missing an example, please open an issue or discussion — contributions are very welcome!
 
