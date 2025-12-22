@@ -1,19 +1,10 @@
 module Feliz.UseElmish
 
+open System
 open Fable.Core
 open Elmish
 
 module private Util =
-    type UseSyncExternalStoreSubscribe = delegate of (unit -> unit) -> (unit -> unit)
-
-    [<ImportMember("react")>]
-    let useSyncExternalStore(subscribe: UseSyncExternalStoreSubscribe, getSnapshot: unit -> 'Model, getServerSnapshot: (unit -> 'Model) option): 'Model = jsNative
-
-    [<ImportMember("react")>]
-    let useState(init: unit -> 'State): 'State * ('State -> unit) = jsNative
-
-    [<ImportMember "react">]
-    let useEffect(effect: unit -> unit, dependencies: obj array) : unit = jsNative
 
     [<Emit "setTimeout($0)">]
     let setTimeout(callback: unit -> unit) : unit = jsNative
@@ -105,21 +96,22 @@ module private Util =
         member _.IsOutdated(arg', dependencies') = arg <> arg' || dependencies <> dependencies'
 
 open Util
+open Feliz
 
 [<Erase>]
 type React =
     static member useElmish(program: unit -> Program<'Arg, 'Model, 'Msg, unit>, arg: 'Arg, ?dependencies: obj array): 'Model * ('Msg -> unit) =
-        let state, setState = useState(fun () -> ElmishState(program, arg, dependencies))
+        let state, setState = React.useState(fun () -> ElmishState(program, arg, dependencies))
         if state.IsOutdated(arg, dependencies) then
             ElmishState(program, arg, dependencies) |> setState
-        let finalState, dispatch, subscribed, queuedMessages = useSyncExternalStore(state.Subscribe, (fun () -> state.State), None)
+        let finalState, dispatch, subscribed, queuedMessages = React.useSyncExternalStore(state.Subscribe, UseSyncExternalStoreSnapshot(fun () -> state.State), UseSyncExternalStoreSnapshot(fun () -> state.State))
         // Run any queued messages that were dispatched before the Elmish program finished subscribing
-        useEffect((fun () ->
+        React.useEffect((fun () ->
             if subscribed && queuedMessages.Count > 0 then
                 for msg in queuedMessages do
                     setTimeout(fun () -> dispatch msg)
                 queuedMessages.Clear()
-        ), [| subscribed; queuedMessages |])
+        ), [| box subscribed; box queuedMessages |])
         finalState, dispatch
 
     static member inline useElmish(program: unit -> Program<unit, 'Model, 'Msg, unit>, ?dependencies: obj array) =

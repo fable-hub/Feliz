@@ -24,17 +24,14 @@ or
 dotnet femto install Feliz.UseElmish
 ```
 
-:::danger
-Unable to show live example because Feliz.UseElmish does not support Server-Side Rendering (SSR). Help me out by contributing a PR if you need this feature.
-:::
-
 Here is an example to demonstrate how to build such component:
 
+import ElmishCounter from '../../feliz-docs/fableoutput/Examples/React/ElmishCounter'
 import RawElmishCounter from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounter.fs'
 
-<CodeBlock language="fsharp" showLineNumbers>
-{RawElmishCounter}
-</CodeBlock>
+<ComponentRender code={RawElmishCounter}>
+    <ElmishCounter />
+</ComponentRender>
 
 The difference here from a full-fledged Elmish applications is that there isn't an "Elmish entry point" to run the component and manage its life-cycle. Instead, the `React.useElmish` hooks manages the Elmish life-cycle internally within the React component so that it can run standalone inside other React components:
 
@@ -113,12 +110,12 @@ ReactDOM.render(App(), document.getElementById "feliz-app")
 
 Next, let's combine this hook with other React hooks such as `React.useState` and `React.useEffect`:
 
+import ElmishCounterSubscription from '../../feliz-docs/fableoutput/Examples/React/ElmishCounterSubscription'
 import RawElmishCounterSubscription from '!!raw-loader!../../feliz-docs/Examples/React/ElmishCounterSubscription.fs'
 
-<CodeBlock language="fsharp" >
-  {RawElmishCounterSubscription}
-</CodeBlock>
-
+<ComponentRender code={RawElmishCounterSubscription}>
+    <ElmishCounterSubscription />
+</ComponentRender>
 
 ### Disposing of resources
 

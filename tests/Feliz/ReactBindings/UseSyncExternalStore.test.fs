@@ -35,7 +35,6 @@ type Components =
             snapshot
         )
         
-
         Html.div [
 
         ]

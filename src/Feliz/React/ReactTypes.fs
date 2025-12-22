@@ -42,6 +42,9 @@ module ReactTypes =
 
     type ReactNode = U6<ReactElement, seq<ReactElement>, string, float, int, bool>
 
+    type UseSyncExternalStoreSubscribe = delegate of (unit -> unit) -> (unit -> unit)
+    type UseSyncExternalStoreSnapshot<'T> = delegate of unit -> 'T
+
     [<Erase>]
     type IReactRoot =
         /// Renders the provided React element into the DOM in the supplied container.

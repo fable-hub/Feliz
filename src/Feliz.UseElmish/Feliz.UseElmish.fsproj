@@ -16,4 +16,7 @@
     <ItemGroup>
         <PackageReference Include="Fable.Elmish"/>
     </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Feliz\Feliz.fsproj" />
+    </ItemGroup>
 </Project>
