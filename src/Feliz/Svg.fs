@@ -165,7 +165,7 @@ type Svg =
     static member inline view (children: #seq<ReactElement>) = SvgHelper.createElementWithChildren "view" children
 
 type svg =
-        /// Specifies a CSS class for this element.
+    /// Specifies a CSS class for this element.
     static member inline className (value: string) = SvgHelper.svgAttribute "className" value
     /// Takes a `seq<string>` and joins them using a space to combine the classes into a single class property.
     ///
@@ -515,6 +515,9 @@ type svg =
     /// Defines the list of numbers that make up the kernel matrix for the
     /// <feConvolveMatrix> element.
     static member inline kernelMatrix (values: seq<int>) = SvgHelper.svgAttribute "kernelMatrix" (values |> unbox<seq<string>>  |> String.concat " ")
+
+    /// A unique identifier for the element. Used by React to identify elements.
+    static member key(value: string) = SvgHelper.svgAttribute "key" value
     /// Fires when a media event is aborted.
     static member inline onAbort (handler: Event -> unit) = SvgHelper.svgAttribute "onAbort" handler
     /// Fires when animation is aborted.

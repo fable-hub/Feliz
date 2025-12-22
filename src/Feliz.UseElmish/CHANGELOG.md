@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 4.1.0 - 2025-12-22
+
+### ✨ Added
+
+- Support for server side rendering (SSR) with React 19 #697 (by @mjblacker)
+
 ## 4.0.0 - 2025-12-10
 
 ## 4.0.0-rc.2 - 2025-10-02
