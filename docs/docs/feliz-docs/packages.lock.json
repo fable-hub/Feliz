@@ -80,7 +80,8 @@
       "feliz.useelmish": {
         "type": "Project",
         "dependencies": {
-          "Fable.Elmish": "[4.0.0, )"
+          "Fable.Elmish": "[4.0.0, )",
+          "Feliz": "[3.0.0-rc.1, )"
         }
       },
       "Fable.AST": {

@@ -34,7 +34,7 @@ let root = ReactDOM.createRoot (document.getElementById "root")
 root.render (Counter())
 ```
 
-### ✨ Features
+## ✨ Features
 
  - Flexible **API design**: Combine the reliability of F# type safety with the flexibility to interop easily with native JavaScript.
  - Discoverable **attributes** with no more functions, `Html` attributes or CSS properties globally available so they are easy to find.
@@ -44,7 +44,56 @@ root.render (Counter())
  - **Compatible** with [Femto](https://github.com/Zaid-Ajaj/Femto).
  - Approximately **Zero** bundle size increase where everything function body is erased from the generated JavaScript unless you actually use said function.
 
-### 🚀 Quick Start
+### ⚡Combine with Elmish "model-view-update" architecture
+
+Feliz offers a `React.useElmish` hook to seamlessly integrate Elmish state machines with React components. You can use it by referencing the [Feliz.UseElmish](https://www.nuget.org/packages/Feliz.UseElmish/) package.
+
+You can read more on this topic in the [documentation](https://fable-hub.github.io/Feliz/ecosystem/Hooks/Feliz.UseElmish).
+
+
+```fsharp
+module App
+
+open Fable.Core
+open Feliz
+open Feliz.UseElmish
+open Elmish
+
+type Msg =
+    | Increment
+    | Decrement
+
+type State = { Count : int }
+
+let init() = { Count = 0 }, Cmd.none
+
+let update msg state =
+    match msg with
+    | Increment -> { state with Count = state.Count + 1 }, Cmd.none
+    | Decrement -> { state with Count = state.Count - 1 }, Cmd.none
+
+[<Erase; Mangle(false)>]
+type Main =
+
+    [<ReactComponent(true)>]
+    static member Main() =
+    
+        let state, dispatch = React.useElmish(init, update, [| |])
+        Html.div [
+            Html.h1 state.Count
+            Html.button [
+                prop.text "Increment"
+                prop.onClick (fun _ -> dispatch Increment)
+            ]
+
+            Html.button [
+                prop.text "Decrement"
+                prop.onClick (fun _ -> dispatch Decrement)
+            ]
+        ]
+```
+
+## 🚀 Quick Start
 
 ```bash
 # install the template (if you haven't already)
@@ -61,19 +110,17 @@ dotnet tool restore
 npm start
 ```
 
-### 📚 Documentation
+## 📚 Documentation
 
 Explore the full docs at [https://fable-hub.github.io/Feliz/](https://fable-hub.github.io/Feliz/) — packed with live examples and practical guidance. Highlights:
 
 - Feliz syntax: comprehensive reference for `Html`, `prop`, `style`, React hooks, and more. Browse: https://fable-hub.github.io/Feliz/category/feliz
 - Guides: curated walkthroughs and best practices — from getting started to advanced patterns. Start here: https://fable-hub.github.io/Feliz/category/guides
 - Ecosystem: discover community libraries and official add‑ons (UI, components, hooks, testing, tooling). Explore: https://fable-hub.github.io/Feliz/ecosystem
-  - Feliz.UseElmish: integrate Elmish state machines with React components. Learn more: https://fable-hub.github.io/Feliz/ecosystem/Hooks/Feliz.UseElmish
-  - Vitest: testing library for Feliz components. Learn more: https://fable-hub.github.io/Feliz/ecosystem/Testing/Feliz.Vitest
 
 If anything’s unclear or you’re missing an example, please open an issue or discussion — contributions are very welcome!
 
-### ⌚ Changelog
+## ⌚ Changelog
 
 Each project in Feliz has its own changelog file in the `src` folder. Check them out for the latest changes!
 
