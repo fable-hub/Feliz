@@ -965,46 +965,46 @@ module svg =
     type alignmentBaseline =
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline alphabetic = SvgHelper.svgAttribute "alignment-baseline" "alphabetic"
+        static member inline alphabetic = SvgHelper.svgAttribute "alignmentBaseline" "alphabetic"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline baseline = SvgHelper.svgAttribute "alignment-baseline" "baseline"
+        static member inline baseline = SvgHelper.svgAttribute "alignmentBaseline" "baseline"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline bottom = SvgHelper.svgAttribute "alignment-baseline" "bottom"
+        static member inline bottom = SvgHelper.svgAttribute "alignmentBaseline" "bottom"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline center = SvgHelper.svgAttribute "alignment-baseline" "center"
+        static member inline center = SvgHelper.svgAttribute "alignmentBaseline" "center"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline central = SvgHelper.svgAttribute "alignment-baseline" "central"
+        static member inline central = SvgHelper.svgAttribute "alignmentBaseline" "central"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline hanging = SvgHelper.svgAttribute "alignment-baseline" "hanging"
+        static member inline hanging = SvgHelper.svgAttribute "alignmentBaseline" "hanging"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline ideographic = SvgHelper.svgAttribute "alignment-baseline" "ideographic"
+        static member inline ideographic = SvgHelper.svgAttribute "alignmentBaseline" "ideographic"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline mathematical = SvgHelper.svgAttribute "alignment-baseline" "mathematical"
+        static member inline mathematical = SvgHelper.svgAttribute "alignmentBaseline" "mathematical"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline middle = SvgHelper.svgAttribute "alignment-baseline" "middle"
+        static member inline middle = SvgHelper.svgAttribute "alignmentBaseline" "middle"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline textAfterEdge = SvgHelper.svgAttribute "alignment-baseline" "text-after-edge"
+        static member inline textAfterEdge = SvgHelper.svgAttribute "alignmentBaseline" "text-after-edge"
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline textBeforeEdge = SvgHelper.svgAttribute "alignment-baseline" "text-before-edge"
+        static member inline textBeforeEdge = SvgHelper.svgAttribute "alignmentBaseline" "text-before-edge"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline textBottom = SvgHelper.svgAttribute "alignment-baseline" "text-bottom"
+        static member inline textBottom = SvgHelper.svgAttribute "alignmentBaseline" "text-bottom"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline textTop = SvgHelper.svgAttribute "alignment-baseline" "text-top"
+        static member inline textTop = SvgHelper.svgAttribute "alignmentBaseline" "text-top"
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
-        static member inline top = SvgHelper.svgAttribute "alignment-baseline" "top"
+        static member inline top = SvgHelper.svgAttribute "alignmentBaseline" "top"
 
     /// Specifies the interpolation mode for the animation.
     [<Erase>]

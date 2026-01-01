@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 3.1.1 - 2025-12-15
 
+### 🐛 Fixed
+
+- Changes `alignment-baseline` to `alignmentBaseline` (by @njlr)
+
 ### ✨ Added
 
 - Support for the [autocorrect attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/autocorrect) (by @kerams)
