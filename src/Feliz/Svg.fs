@@ -423,6 +423,9 @@ type svg =
     static member inline viewBox (minX: int, minY: int, width: int, height: int) =
         SvgHelper.svgAttribute "viewBox" ($"{minX} {minY} {width} {height}")
 
+    static member inline viewBox (rawString: string) =
+        SvgHelper.svgAttribute "viewBox" rawString
+
     /// Set visible area of the SVG image.
     static member inline viewPort (x: int, y: int, height: int, width: int) =
         SvgHelper.svgAttribute "viewport" (
