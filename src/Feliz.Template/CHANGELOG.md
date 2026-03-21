@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 5.1.0 - 2026-03-20
+
+### 🔄 Changed
+
+- Update dependencies
+- Update Fable to 5.0.0-rc.5
+
 ## 5.0.0 - 2025-12-10
 
 ### 🔄 Changed
@@ -59,4 +66,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Added
 
 - Last release before start of Changelog
-

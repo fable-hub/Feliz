@@ -3,10 +3,10 @@
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
     <ItemGroup>
-        <PackageVersion Include="Feliz" Version="3.0.0" />
+        <PackageVersion Include="Feliz" Version="3.2.0" />
         <PackageVersion Include="Vitest" Version="1.0.0" />
         <PackageVersion Include="Vitest.JestDom" Version="1.0.0" />
-        <PackageVersion Include="Vitest.ReactTestingLibrary" Version="1.0.0" />
+        <PackageVersion Include="Vitest.ReactTestingLibrary" Version="1.1.0" />
         <PackageVersion Include="Vitest.UserEvent" Version="1.0.0" />
         <PackageVersion Include="FSharp.Core" Version="10.0.101" />
     </ItemGroup>
