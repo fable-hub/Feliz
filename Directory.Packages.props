@@ -17,6 +17,7 @@
     <PackageVersion Include="EasyBuild.PackageReleaseNotes.Tasks" Version="2.0.0" />
     <!-- dotnet testing for compilerplugins -->
     <PackageVersion Include="Expecto" Version="10.2.3" />
+    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="10.0.6" />
     <PackageVersion Include="YoloDev.Expecto.TestSdk" Version="0.15.5" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
   </ItemGroup>
