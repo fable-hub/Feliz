@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ✨ Added
+
+- Support for `prop.spread` helper to spread object-based props #704 (by @Freymaurer)
+
 ## 3.2.0 - 2026-03-20
 
 ### 🔄 Changed

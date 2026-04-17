@@ -197,6 +197,14 @@ Html.div [
 ]
 
 ```
+
+If you receive props as a JavaScript object, you can also use `prop.spread` and inject them with `yield!`:
+
+```fsharp
+Html.div [
+  yield! prop.spread myInteropProps
+]
+```
 :::tip
 The same logic is used for `IStyleAttribute` and `ISvgAttribute`
 :::

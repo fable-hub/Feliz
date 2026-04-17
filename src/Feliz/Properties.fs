@@ -10,6 +10,9 @@ open System
 module PropHelper =
 
     let inline mkAttr (key: string) (value: obj) : IReactProperty = unbox (key, value)
+
+    [<Emit "Object.entries($0)">]
+    let inline objectEntries (value: obj) : (string * obj)[] = jsNative
 [<StringEnum; RequireQualifiedAccess>]
 type AriaDropEffect =
     /// A duplicate of the source object will be dropped into the target.
@@ -1700,6 +1703,29 @@ type prop =
 
     /// Defines the first number if other than 1.
     static member inline start (value: string) = PropHelper.mkAttr "start" value
+
+    /// Spreads a JavaScript object as React props.
+    ///
+    /// This helper converts object entries into `IReactProperty` values so they can be
+    /// injected with `yield!` inside an `Html.*` prop list.
+    ///
+    /// ```fsharp
+    /// let dynamicProps = createObj [
+    ///     "id" ==> "save-button"
+    ///     "title" ==> "Save"
+    /// ]
+    ///
+    /// Html.button [
+    ///     yield! prop.spread dynamicProps
+    ///     prop.text "Save"
+    /// ]
+    /// ```
+    ///
+    /// `prop.spread` is dynamic: keys and values are not type-checked by Feliz.
+    static member inline spread(props: obj) : IReactProperty[] =
+        props
+        |> PropHelper.objectEntries
+        |> Array.map (fun (key, value) -> PropHelper.mkAttr key value)
 
     /// Defines the standard deviation for the blur operation.
     static member inline stdDeviation (value: float) = PropHelper.mkAttr "stdDeviation" value

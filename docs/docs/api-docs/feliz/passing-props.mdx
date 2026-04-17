@@ -73,3 +73,24 @@ let MyButton(children: ReactElement, props: IReactProperty list) =
         yield! props // same as `...props` in JSX. Can overwrite existing props
     ]
 ```
+
+### Using `prop.spread` with object props
+
+When your props come from a JavaScript object (for example from interop code), use `prop.spread` to convert that object into `IReactProperty[]`, then `yield!` the result.
+
+```fsharp
+let dynamicProps =
+    createObj [
+        "id" ==> "save-button"
+        "title" ==> "Save"
+        "data-testid" ==> "save-button"
+        "onClick" ==> (fun _ -> Browser.Dom.console.log("clicked"))
+    ]
+
+Html.button [
+    prop.text "Save"
+    yield! prop.spread dynamicProps
+]
+```
+
+`prop.spread` is dynamic and does not provide the same compile-time guarantees as explicit Feliz props. Prefer explicit typed props whenever possible, and use spreading when interop or dynamic scenarios require it.

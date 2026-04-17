@@ -186,6 +186,93 @@ describe "Simple createElement calls" <| fun _ ->
         let text = render.getByText "42.42"
         expect(text).toBeInTheDocument()
 
+describe "prop.spread integration" <| fun _ ->
+
+    test "spreads normal attributes" <| fun _ ->
+        let spreadProps =
+            createObj [
+                "id" ==> "spread-button"
+                "title" ==> "Spread Title"
+                "data-testid" ==> "spread-button"
+                "data-state" ==> "active"
+            ]
+
+        RTL.render(
+            Html.button [
+                yield! prop.spread spreadProps
+                prop.text "Click Me"
+            ]
+        ) |> ignore
+
+        let button = RTL.screen.getByTestId "spread-button"
+        expect(button).toHaveAttribute("id", "spread-button")
+        expect(button).toHaveAttribute("title", "Spread Title")
+        expect(button).toHaveAttribute("data-state", "active")
+
+    test "spread props override earlier explicit props" <| fun _ ->
+        let spreadProps =
+            createObj [
+                "title" ==> "spread-title"
+                "id" ==> "spread-id"
+            ]
+
+        RTL.render(
+            Html.div [
+                prop.testId "spread-priority"
+                prop.title "explicit-title"
+                prop.id "explicit-id"
+                yield! prop.spread spreadProps
+            ]
+        ) |> ignore
+
+        let div = RTL.screen.getByTestId "spread-priority"
+        expect(div).toHaveAttribute("title", "spread-title")
+        expect(div).toHaveAttribute("id", "spread-id")
+
+    test "explicit props after spread override spread values" <| fun _ ->
+        let spreadProps =
+            createObj [
+                "data-testid" ==> "spread-priority-2"
+                "title" ==> "spread-title"
+                "id" ==> "spread-id"
+            ]
+
+        RTL.render(
+            Html.div [
+                yield! prop.spread spreadProps
+                prop.title "explicit-title"
+                prop.id "explicit-id"
+            ]
+        ) |> ignore
+
+        let div = RTL.screen.getByTestId "spread-priority-2"
+        expect(div).toHaveAttribute("title", "explicit-title")
+        expect(div).toHaveAttribute("id", "explicit-id")
+
+    testPromise "spreads children and onClick" <| fun _ -> promise {
+        let mutable clicks = 0
+
+        let spreadProps =
+            createObj [
+                "data-testid" ==> "spread-with-children"
+                "children" ==> [ Html.span [ prop.testId "spread-child"; prop.text "Spread child" ] ]
+                "onClick" ==> (fun _ -> clicks <- clicks + 1)
+            ]
+
+        RTL.render(
+            Html.button [
+                yield! prop.spread spreadProps
+            ]
+        ) |> ignore
+
+        let child = RTL.screen.getByTestId "spread-child"
+        expect(child).toHaveTextContent("Spread child")
+
+        let button = RTL.screen.getByTestId "spread-with-children"
+        do! userEvent.click(button)
+        expect(clicks).toBe(1)
+    }
+
 describe "Single Tuple Input Tests #644" <| fun _ ->
 
     test "Component with single tuple input passes args correctly" <| fun _ ->
