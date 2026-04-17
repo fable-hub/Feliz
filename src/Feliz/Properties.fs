@@ -1473,7 +1473,7 @@ type prop =
     ///
     /// Each point is defined by a pair of numbers representing a X and a Y coordinate in
     /// the user coordinate system.
-    static member inline points (coordinates: string) = PropHelper.mkAttr "points"
+    static member inline points (coordinates: string) = PropHelper.mkAttr "points" coordinates
 
     /// Represents the x location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing.
