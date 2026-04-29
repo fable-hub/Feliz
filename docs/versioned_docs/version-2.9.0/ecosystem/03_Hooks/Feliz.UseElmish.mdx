@@ -107,7 +107,9 @@ open Browser.Dom
 ReactDOM.render(App(), document.getElementById "feliz-app")
 ```
 
-> The dependencies array follows the same rules of `React.useEffect`
+> The dependencies array is compared using F# structural equality (`=` / `<>`). `React.useElmish` re-initializes when the dependencies become structurally different.
+>
+> This differs from `React.useEffect`, which compares dependency entries using `Object.is`.
 
 ### Combining with other hooks
 

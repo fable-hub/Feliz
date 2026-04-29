@@ -17,11 +17,15 @@
     <Compile Include="UseElmish\Unmount\InFlightEitherError.test.fs" />
     <Compile Include="UseElmish\DependencyChange\OldPromiseIsolation.test.fs" />
     <Compile Include="UseElmish\DependencyStable\ParentRerenderInitCmd.test.fs" />
+    <Compile Include="UseElmish\DispatchStability\DispatchRef.test.fs" />
     <Compile Include="UseElmish\DependencyChange\ReinitOnce.test.fs" />
     <Compile Include="UseElmish\StrictMode\InFlightPromiseIsolation.test.fs" />
+    <Compile Include="UseElmish\StrictMode\InitCmdOfEffect.test.fs" />
     <Compile Include="UseElmish\Subscription\DependencySwap.test.fs" />
     <Compile Include="UseElmish\Subscription\DynamicIdsDiff.test.fs" />
+    <Compile Include="UseElmish\Disposal\SubscriptionThrowDoesNotBlockCleanup.test.fs" />
     <Compile Include="UseElmish\ModelDisposable\Transition.test.fs" />
+    <Compile Include="UseElmish\ModelDisposable\PostUnmountDispatch.test.fs" />
     <Compile Include="UseElmish\StrictMode\ToggleSubscriptionStress.test.fs" />
     <Compile Include="SubscriptionCleanup.test.fs" />
     <Compile Include="Subscription.test.fs" />

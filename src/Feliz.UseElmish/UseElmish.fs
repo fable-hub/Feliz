@@ -24,6 +24,10 @@ module private Util =
         let mutable finalDispatch = None
         let mutable lastDisposedModel: obj option = None
         let mutable unmountCleanupAlreadyRan = false
+        let onError = Program.onError program
+
+        let reportDisposeError (context: string) (ex: exn) =
+            onError (context, ex)
 
         let tryGetUnionFields (value: obj) : obj[] option =
 #if FABLE_COMPILER
@@ -57,7 +61,10 @@ module private Util =
                 match candidate with
                 | :? IDisposable as disposable ->
                     disposed <- true
-                    disposable.Dispose()
+                    try
+                        disposable.Dispose()
+                    with ex ->
+                        reportDisposeError "Unable to dispose model state value." ex
                 | _ -> ()
 
             tryDispose value
@@ -100,7 +107,10 @@ module private Util =
                             | Some trackedDisposable -> removeTrackedDisposable trackedDisposable
                             | None -> ()
 
-                            subscriptionDisposable.Dispose()
+                            try
+                                subscriptionDisposable.Dispose()
+                            with ex ->
+                                reportDisposeError "Unable to dispose subscription." ex
                 }
 
             trackedDisposableRef <- Some trackedDisposable
@@ -143,17 +153,19 @@ module private Util =
                 let mutable dispose = false
 
                 let mapInit _init _arg =
-                    let cmd' =
+                    let model', cmd' =
                         if unmountCleanupAlreadyRan then
-                            let _, replayCmd = _init _arg
-                            replayCmd
+                            // Re-run init to get a fresh model and cmd, avoiding ghost-subscribe
+                            // state pollution (e.g. Cmd.ofEffect in init firing during StrictMode's
+                            // extra subscribe cycle mutating ElmishState.state before real subscribe).
+                            _init _arg
                         else
-                            cmd
+                            let model, _, _, _ = state
+                            model, cmd
 
                     // Don't run the original commands after hot reload
                     cmd <- Cmd.none
-                    let model, _, _, _ = state
-                    model, cmd'
+                    model', cmd'
 
                 let mapTermination (predicate, terminate) =
                     (fun msg ->
@@ -163,8 +175,10 @@ module private Util =
                     ),
                     (fun model ->
                         match box model with
-                        // Before Elmish 4 it was allowed to have disposable states as a hack for termination
-                        | :? IDisposable as disposable -> disposable.Dispose()
+                        // Before Elmish 4 it was allowed to have disposable states as a hack for termination.
+                        // Use disposeLatestModel() so the lastDisposedModel guard prevents double-disposal
+                        // when DisposeOnUnmount already ran (e.g. delayed dispatch arriving after unmount).
+                        | :? IDisposable -> disposeLatestModel ()
                         | _ -> terminate model
                     )
 
