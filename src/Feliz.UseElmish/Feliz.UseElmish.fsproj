@@ -9,6 +9,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="UseElmish.fs" />
+        <Compile Include="UseElmishNext.fs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="*.fsproj; *.fs; *.js;" Exclude="**\*.fs.js" PackagePath="fable\" />
