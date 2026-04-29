@@ -23,6 +23,7 @@
     <Compile Include="UseElmish\StrictMode\InitCmdOfEffect.test.fs" />
     <Compile Include="UseElmish\Subscription\DependencySwap.test.fs" />
     <Compile Include="UseElmish\Subscription\DynamicIdsDiff.test.fs" />
+    <Compile Include="UseElmish\OnError\ProgramOverloadAmbiguity.test.fs" />
     <Compile Include="UseElmish\Disposal\SubscriptionThrowDoesNotBlockCleanup.test.fs" />
     <Compile Include="UseElmish\ModelDisposable\Transition.test.fs" />
     <Compile Include="UseElmish\ModelDisposable\PostUnmountDispatch.test.fs" />

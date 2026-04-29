@@ -40,28 +40,23 @@ module DisposalThrowHarness =
 
     let update _msg (model: Model) = model, Cmd.none
 
-    let subscribe
-        (onFirstDisposeAttempt: unit -> unit)
-        (onSecondDispose: unit -> unit)
-        (_model: Model)
-        : Sub<Msg> =
-        [
-            [ "first-throws" ],
-            (fun _dispatch ->
-                { new IDisposable with
-                    member _.Dispose() =
-                        onFirstDisposeAttempt ()
-                        failwith "first subscription dispose failed"
-                }
-            )
+    let subscribe (onFirstDisposeAttempt: unit -> unit) (onSecondDispose: unit -> unit) (_model: Model) : Sub<Msg> = [
+        [ "first-throws" ],
+        (fun _dispatch ->
+            { new IDisposable with
+                member _.Dispose() =
+                    onFirstDisposeAttempt ()
+                    failwith "first subscription dispose failed"
+            }
+        )
 
-            [ "second-ok" ],
-            (fun _dispatch ->
-                { new IDisposable with
-                    member _.Dispose() = onSecondDispose ()
-                }
-            )
-        ]
+        [ "second-ok" ],
+        (fun _dispatch ->
+            { new IDisposable with
+                member _.Dispose() = onSecondDispose ()
+            }
+        )
+    ]
 
     [<Erase>]
     type Child =
@@ -71,16 +66,14 @@ module DisposalThrowHarness =
                 onFirstDisposeAttempt: unit -> unit,
                 onSecondDispose: unit -> unit,
                 onModelDispose: unit -> unit,
-                onError: unit -> unit
+                onError: (string * exn) -> unit
             ) =
             let _, _ =
                 React.useElmish (
-                    (fun () ->
-                        Program.mkProgram (init onModelDispose) update (fun _ _ -> ())
-                        |> Program.withSubscription (subscribe onFirstDisposeAttempt onSecondDispose)
-                        |> Program.withErrorHandler (fun _ -> onError ())
-                    ),
-                    ()
+                    init onModelDispose,
+                    update,
+                    subscribe onFirstDisposeAttempt onSecondDispose,
+                    onError = onError
                 )
 
             Html.h1 [ prop.testId TestIds.ChildMounted; prop.text "mounted" ]
@@ -102,9 +95,18 @@ module DisposalThrowHarness =
                     prop.onClick (fun _ -> setShowChild (not showChild))
                 ]
 
-                Html.h2 [ prop.testId TestIds.FirstDisposeAttempts; prop.text firstDisposeAttempts ]
-                Html.h2 [ prop.testId TestIds.SecondDisposeCount; prop.text secondDisposeCount ]
-                Html.h2 [ prop.testId TestIds.ModelDisposeCount; prop.text modelDisposeCount ]
+                Html.h2 [
+                    prop.testId TestIds.FirstDisposeAttempts
+                    prop.text firstDisposeAttempts
+                ]
+                Html.h2 [
+                    prop.testId TestIds.SecondDisposeCount
+                    prop.text secondDisposeCount
+                ]
+                Html.h2 [
+                    prop.testId TestIds.ModelDisposeCount
+                    prop.text modelDisposeCount
+                ]
                 Html.h2 [ prop.testId TestIds.ErrorCount; prop.text errorCount ]
 
                 if showChild then
@@ -112,7 +114,7 @@ module DisposalThrowHarness =
                         (fun () -> setFirstDisposeAttempts (fun previous -> previous + 1)),
                         (fun () -> setSecondDisposeCount (fun previous -> previous + 1)),
                         (fun () -> setModelDisposeCount (fun previous -> previous + 1)),
-                        (fun () -> setErrorCount (fun previous -> previous + 1))
+                        (fun _ -> setErrorCount (fun previous -> previous + 1))
                     )
             ]
 

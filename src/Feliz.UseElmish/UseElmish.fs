@@ -6,7 +6,22 @@ open Fable.Core.JsInterop
 open Elmish
 open Feliz
 
+// This module must be public, as the helper function is used by inline overloads of `useElmish`.
+// Otherwise we will run into `TypeError: (0 , Util_programWithCustomErrorHandler) is not a function` in the generated JavaScript when using those overloads.
+module UseElmishHelper =
+
+    let programWithCustomErrorHandler
+        (onError: option<(string * exn) -> unit>)
+        (program: Program<'Arg, 'Model, 'Msg, unit>)
+        =
+        match onError with
+        | Some onError -> Program.withErrorHandler onError program
+        | None -> program
+
+
 module private Util =
+
+    /// This must stay inline. As the module is private, the
 
     [<Emit "setTimeout($0)">]
     let setTimeout (callback: unit -> unit) : unit = jsNative
@@ -26,8 +41,7 @@ module private Util =
         let mutable unmountCleanupAlreadyRan = false
         let onError = Program.onError program
 
-        let reportDisposeError (context: string) (ex: exn) =
-            onError (context, ex)
+        let reportDisposeError (context: string) (ex: exn) = onError (context, ex)
 
         let tryGetUnionFields (value: obj) : obj[] option =
 #if FABLE_COMPILER
@@ -61,6 +75,7 @@ module private Util =
                 match candidate with
                 | :? IDisposable as disposable ->
                     disposed <- true
+
                     try
                         disposable.Dispose()
                     with ex ->
@@ -235,6 +250,7 @@ type React =
     static member useElmish
         (program: unit -> Program<'Arg, 'Model, 'Msg, unit>, arg: 'Arg, ?dependencies: obj array)
         : 'Model * ('Msg -> unit) =
+
         let state, setState =
             React.useState (fun () -> ElmishState(program, arg, dependencies))
 
@@ -279,20 +295,48 @@ type React =
             init: 'Arg -> 'Model * Cmd<'Msg>,
             update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
             arg: 'Arg,
-            ?dependencies: obj array
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
         ) =
-        React.useElmish ((fun () -> Program.mkProgram init update (fun _ _ -> ())), arg, ?dependencies = dependencies)
-
-    static member inline useElmish
-        (init: unit -> 'Model * Cmd<'Msg>, update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>, ?dependencies: obj array)
-        =
-        React.useElmish ((fun () -> Program.mkProgram init update (fun _ _ -> ())), ?dependencies = dependencies)
-
-    static member inline useElmish
-        (init: 'Model * Cmd<'Msg>, update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>, ?dependencies: obj array)
-        =
         React.useElmish (
-            (fun () -> Program.mkProgram (fun () -> init) update (fun _ _ -> ())),
+            (fun () ->
+                Program.mkProgram init update (fun _ _ -> ())
+                |> fun x ->
+                    match onError with
+                    | Some onError -> Program.withErrorHandler onError x
+                    | None -> x
+            ),
+            arg,
+            ?dependencies = dependencies
+        )
+
+    static member inline useElmish
+        (
+            init: unit -> 'Model * Cmd<'Msg>,
+            update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
+        ) =
+        React.useElmish (
+            (fun () ->
+                Program.mkProgram init update (fun _ _ -> ())
+                |> UseElmishHelper.programWithCustomErrorHandler onError
+            ),
+            ?dependencies = dependencies
+        )
+
+    static member inline useElmish
+        (
+            init: 'Model * Cmd<'Msg>,
+            update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
+        ) =
+        React.useElmish (
+            (fun () ->
+                Program.mkProgram (fun () -> init) update (fun _ _ -> ())
+                |> UseElmishHelper.programWithCustomErrorHandler onError
+            ),
             ?dependencies = dependencies
         )
 
@@ -302,12 +346,14 @@ type React =
             update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
             subscribe: 'Model -> Sub<'Msg>,
             arg: 'Arg,
-            ?dependencies: obj array
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
         ) =
         React.useElmish (
             (fun () ->
                 Program.mkProgram init update (fun _ _ -> ())
                 |> Program.withSubscription subscribe
+                |> UseElmishHelper.programWithCustomErrorHandler onError
             ),
             arg,
             ?dependencies = dependencies
@@ -318,12 +364,14 @@ type React =
             init: unit -> 'Model * Cmd<'Msg>,
             update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
             subscribe: 'Model -> Sub<'Msg>,
-            ?dependencies: obj array
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
         ) =
         React.useElmish (
             (fun () ->
                 Program.mkProgram init update (fun _ _ -> ())
                 |> Program.withSubscription subscribe
+                |> UseElmishHelper.programWithCustomErrorHandler onError
             ),
             ?dependencies = dependencies
         )
@@ -333,12 +381,14 @@ type React =
             init: 'Model * Cmd<'Msg>,
             update: 'Msg -> 'Model -> 'Model * Cmd<'Msg>,
             subscribe: 'Model -> Sub<'Msg>,
-            ?dependencies: obj array
+            ?dependencies: obj array,
+            ?onError: (string * exn) -> unit
         ) =
         React.useElmish (
             (fun () ->
                 Program.mkProgram (fun () -> init) update (fun _ _ -> ())
                 |> Program.withSubscription subscribe
+                |> UseElmishHelper.programWithCustomErrorHandler onError
             ),
             ?dependencies = dependencies
         )
