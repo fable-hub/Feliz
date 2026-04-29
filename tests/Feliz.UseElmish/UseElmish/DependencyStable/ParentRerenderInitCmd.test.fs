@@ -1,4 +1,4 @@
-module UseElmishNextDependencyStableParentRerenderInitCmdTests
+module UseElmishDependencyStableParentRerenderInitCmdTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -22,7 +22,7 @@ module TestIds =
 
 module StableDependencyInitCmdHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { InitRuns: int }
 
@@ -44,7 +44,7 @@ module StableDependencyInitCmdHarness =
         [<ReactComponent>]
         static member Render(dependencyValue: string) =
             let model, _ =
-                React.useElmishNext (init, update, dependencies = [| box dependencyValue |])
+                React.useElmish (init, update, dependencies = [| box dependencyValue |])
 
             Html.h1 [ prop.testId TestIds.InitRuns; prop.text model.InitRuns ]
 
@@ -66,9 +66,9 @@ module StableDependencyInitCmdHarness =
                 Child.Render("stable-dependency")
             ]
 
-describe "UseElmishNext stable dependency parent rerender"
+describe "UseElmish stable dependency parent rerender"
 <| fun () ->
-    testPromise "UseElmishNext_DependencyStable_ParentRerender_DoesNotReplayInitCmd"
+    testPromise "UseElmish_DependencyStable_ParentRerender_DoesNotReplayInitCmd"
     <| fun () -> promise {
         let render = RTL.render (StableDependencyInitCmdHarness.Parent.Render())
 
@@ -81,3 +81,4 @@ describe "UseElmishNext stable dependency parent rerender"
         expect(render.getByTestId TestIds.ParentTicks).toHaveTextContent "2"
         expect(render.getByTestId TestIds.InitRuns).toHaveTextContent "1"
     }
+

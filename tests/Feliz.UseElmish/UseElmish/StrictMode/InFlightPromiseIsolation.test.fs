@@ -1,4 +1,4 @@
-module UseElmishNextStrictModeInFlightPromiseIsolationTests
+module UseElmishStrictModeInFlightPromiseIsolationTests
 
 open System.Collections.Generic
 open Fable.Core
@@ -16,7 +16,7 @@ module TestIds =
 
 module StrictModePromiseIsolationHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     let private pendingDeferreds = ResizeArray<PromiseTest.Deferred<int>>()
 
@@ -50,7 +50,7 @@ module StrictModePromiseIsolationHarness =
     type Child =
         [<ReactComponent>]
         static member Render(onEffect: int -> unit) =
-            let model, _ = React.useElmishNext (init, update onEffect)
+            let model, _ = React.useElmish (init, update onEffect)
 
             Html.h1 [ prop.testId TestIds.Count; prop.text model.Count ]
 
@@ -66,9 +66,9 @@ module StrictModePromiseIsolationHarness =
                 Child.Render(fun _ -> setEffectCount (fun previous -> previous + 1))
             ]
 
-describe "UseElmishNext strict mode in-flight promise isolation"
+describe "UseElmish strict mode in-flight promise isolation"
 <| fun () ->
-    testPromise "UseElmishNext_StrictMode_InFlightPromise_NoGhostSideEffects"
+    testPromise "UseElmish_StrictMode_InFlightPromise_NoGhostSideEffects"
     <| fun () -> promise {
         StrictModePromiseIsolationHarness.reset ()
 
@@ -92,3 +92,4 @@ describe "UseElmishNext strict mode in-flight promise isolation"
                 expect(render.getByTestId TestIds.EffectCount).toHaveTextContent "1"
             )
     }
+

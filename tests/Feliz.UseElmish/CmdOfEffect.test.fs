@@ -1,4 +1,4 @@
-module UseElmishNextCmdOfEffectTests
+module UseElmishCmdOfEffectTests
 
 open Feliz
 open Vitest
@@ -26,7 +26,7 @@ module TestIds =
 
 module EffectHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Count: int; Status: string }
 
@@ -70,7 +70,7 @@ module EffectHarness =
 
     [<ReactComponent>]
     let Render () =
-        let model, dispatch = React.useElmishNext (init, update)
+        let model, dispatch = React.useElmish (init, update)
 
         Html.div [
             Html.h1 [ prop.testId TestIds.Count; prop.text model.Count ]
@@ -104,7 +104,7 @@ module EffectHarness =
 
     [<ReactComponent>]
     let RenderWithInitEffect () =
-        let model, _ = React.useElmishNext (initWithEffect, update)
+        let model, _ = React.useElmish (initWithEffect, update)
 
         Html.div [
             Html.h1 [ prop.testId TestIds.Count; prop.text model.Count ]
@@ -112,7 +112,7 @@ module EffectHarness =
             Html.h2 [ prop.testId TestIds.Status; prop.text model.Status ]
         ]
 
-describeTags "UseElmishNext Cmd.ofEffect" [ "activeDev" ]
+describeTags "UseElmish Cmd.ofEffect" [ "activeDev" ]
 <| fun () ->
     testPromise "Cmd.ofEffect dispatches one message"
     <| fun () -> promise {
@@ -164,3 +164,4 @@ describeTags "UseElmishNext Cmd.ofEffect" [ "activeDev" ]
                 expect(render.getByTestId TestIds.Status).toHaveTextContent "effect"
             )
     }
+

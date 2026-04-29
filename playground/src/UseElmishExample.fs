@@ -37,7 +37,6 @@ module TestIds =
 module CleanupHarness =
     open Elmish
     open Feliz.UseElmish
-    open Feliz.UseElmishNext
 
     type State = { Count: int }
 
@@ -73,7 +72,7 @@ module CleanupHarness =
     type Child =
         [<ReactComponent>]
         static member Render(setParentCounter: (int -> int) -> unit) =
-            let state, dispatch = React.useElmishNext (init, update, subscribe setParentCounter)
+            let state, dispatch = React.useElmish (init, update, subscribe setParentCounter)
 
             Html.div [
                 Html.h1 [ prop.testId TestIds.ChildCounter; prop.text state.Count ]

@@ -1,4 +1,4 @@
-module UseElmishNextUnmountInFlightEitherErrorTests
+module UseElmishUnmountInFlightEitherErrorTests
 
 open Fable.Core
 open Feliz
@@ -21,7 +21,7 @@ module TestIds =
 
 module private PendingEitherErrorUnmountHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Status: string }
 
@@ -55,7 +55,7 @@ module private PendingEitherErrorUnmountHarness =
     type Child =
         [<ReactComponent>]
         static member Render(deferred: PromiseTest.Deferred<int>, onError: string -> unit) =
-            let model, dispatch = React.useElmishNext (init, update deferred onError)
+            let model, dispatch = React.useElmish (init, update deferred onError)
 
             Html.div [
                 Html.h1 [ prop.text model.Status ]
@@ -94,9 +94,9 @@ module private PendingEitherErrorUnmountHarness =
                     Child.Render(deferredRef.current, (fun _ -> setErrorCount (fun previous -> previous + 1)))
             ]
 
-describe "UseElmishNext unmount in-flight either error"
+describe "UseElmish unmount in-flight either error"
 <| fun () ->
-    testPromise "UseElmishNext_Unmount_InFlightEitherError_IgnoresErrorPath"
+    testPromise "UseElmish_Unmount_InFlightEitherError_IgnoresErrorPath"
     <| fun () -> promise {
         let render = RTL.render (PendingEitherErrorUnmountHarness.Parent.Render())
 
@@ -110,3 +110,4 @@ describe "UseElmishNext unmount in-flight either error"
 
         expect(render.getByTestId TestIds.ErrorCount).toHaveTextContent "0"
     }
+

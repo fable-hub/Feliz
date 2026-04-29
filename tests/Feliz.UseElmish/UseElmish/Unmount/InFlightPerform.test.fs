@@ -1,4 +1,4 @@
-module UseElmishNextUnmountInFlightPerformTests
+module UseElmishUnmountInFlightPerformTests
 
 open Fable.Core
 open Feliz
@@ -21,7 +21,7 @@ module TestIds =
 
 module private PendingPerformUnmountHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Status: string }
 
@@ -46,7 +46,7 @@ module private PendingPerformUnmountHarness =
     type Child =
         [<ReactComponent>]
         static member Render(deferred: PromiseTest.Deferred<int>, onSuccess: int -> unit) =
-            let model, dispatch = React.useElmishNext (init, update deferred onSuccess)
+            let model, dispatch = React.useElmish (init, update deferred onSuccess)
 
             Html.div [
                 Html.h1 [ prop.text model.Status ]
@@ -85,9 +85,9 @@ module private PendingPerformUnmountHarness =
                     Child.Render(deferredRef.current, (fun _ -> setSuccessCount (fun previous -> previous + 1)))
             ]
 
-describe "UseElmishNext unmount in-flight perform"
+describe "UseElmish unmount in-flight perform"
 <| fun () ->
-    testPromise "UseElmishNext_Unmount_InFlightPerform_IgnoresResult"
+    testPromise "UseElmish_Unmount_InFlightPerform_IgnoresResult"
     <| fun () -> promise {
         let render = RTL.render (PendingPerformUnmountHarness.Parent.Render())
 
@@ -101,3 +101,4 @@ describe "UseElmishNext unmount in-flight perform"
 
         expect(render.getByTestId TestIds.SuccessCount).toHaveTextContent "0"
     }
+

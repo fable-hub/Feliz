@@ -1,4 +1,4 @@
-module UseElmishNextCmdOfPromiseTests
+module UseElmishCmdOfPromiseTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -40,7 +40,7 @@ module TestIds =
 
 module PromiseHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Count: int; Status: string }
 
@@ -86,7 +86,7 @@ module PromiseHarness =
 
     [<ReactComponent>]
     let Render () =
-        let model, dispatch = React.useElmishNext (init, update)
+        let model, dispatch = React.useElmish (init, update)
 
         Html.div [
             Html.h1 [ prop.testId TestIds.Count; prop.text model.Count ]
@@ -124,7 +124,7 @@ module PromiseHarness =
             ]
         ]
 
-describeTags "UseElmishNext Cmd.OfPromise" [ "activeDev" ]
+describeTags "UseElmish Cmd.OfPromise" [ "activeDev" ]
 <| fun () ->
     testPromise "Cmd.OfPromise.perform maps success"
     <| fun () -> promise {
@@ -188,3 +188,4 @@ describeTags "UseElmishNext Cmd.OfPromise" [ "activeDev" ]
         expect(render.getByTestId TestIds.Count).toHaveTextContent "0"
         expect(render.getByTestId TestIds.Status).toHaveTextContent "idle"
     }
+

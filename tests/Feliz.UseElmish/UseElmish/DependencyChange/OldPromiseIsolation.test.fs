@@ -1,4 +1,4 @@
-module UseElmishNextDependencyChangeOldPromiseIsolationTests
+module UseElmishDependencyChangeOldPromiseIsolationTests
 
 open Fable.Core
 open Feliz
@@ -33,7 +33,7 @@ module TestIds =
 
 module private DependencySwapPromiseIsolationHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Count: int; Instance: int }
 
@@ -66,7 +66,7 @@ module private DependencySwapPromiseIsolationHarness =
         [<ReactComponent>]
         static member Render(instance: int, getDeferred: int -> PromiseTest.Deferred<int>, reportSource: int -> unit) =
             let model, dispatch =
-                React.useElmishNext (init, update getDeferred reportSource, instance, dependencies = [| box instance |])
+                React.useElmish (init, update getDeferred reportSource, instance, dependencies = [| box instance |])
 
             Html.div [
                 Html.h1 [ prop.testId TestIds.Instance; prop.text model.Instance ]
@@ -123,9 +123,9 @@ module private DependencySwapPromiseIsolationHarness =
                 Child.Render(instance, getDeferred, reportSource)
             ]
 
-describe "UseElmishNext dependency reset promise isolation"
+describe "UseElmish dependency reset promise isolation"
 <| fun () ->
-    testPromise "UseElmishNext_DependencyChange_OldPromiseCompletion_DoesNotTouchNewInstance"
+    testPromise "UseElmish_DependencyChange_OldPromiseCompletion_DoesNotTouchNewInstance"
     <| fun () -> promise {
         let render = RTL.render (DependencySwapPromiseIsolationHarness.Parent.Render())
 
@@ -154,3 +154,4 @@ describe "UseElmishNext dependency reset promise isolation"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
+

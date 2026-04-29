@@ -1,4 +1,4 @@
-module UseElmishNextDependencyChangeReinitOnceTests
+module UseElmishDependencyChangeReinitOnceTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -22,7 +22,7 @@ module TestIds =
 
 module DependencyResetSingleInitHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Dependency: int; InitRuns: int }
 
@@ -49,7 +49,7 @@ module DependencyResetSingleInitHarness =
         [<ReactComponent>]
         static member Render(dependencyValue: int) =
             let model, _ =
-                React.useElmishNext (init, update, dependencyValue, dependencies = [| box dependencyValue |])
+                React.useElmish (init, update, dependencyValue, dependencies = [| box dependencyValue |])
 
             Html.div [
                 Html.h1 [
@@ -75,9 +75,9 @@ module DependencyResetSingleInitHarness =
                 Child.Render(dependencyValue)
             ]
 
-describe "UseElmishNext dependency change reinit once"
+describe "UseElmish dependency change reinit once"
 <| fun () ->
-    testPromise "UseElmishNext_DependencyChange_ReinitRunsOnce_NewInstanceOnly"
+    testPromise "UseElmish_DependencyChange_ReinitRunsOnce_NewInstanceOnly"
     <| fun () -> promise {
         let render = RTL.render (DependencyResetSingleInitHarness.Parent.Render())
 
@@ -99,3 +99,4 @@ describe "UseElmishNext dependency change reinit once"
 
         expect(render.getByTestId TestIds.InitRuns).toHaveTextContent "1"
     }
+

@@ -1,4 +1,4 @@
-module UseElmishNextModelDisposableTransitionTests
+module UseElmishModelDisposableTransitionTests
 
 open Fable.Core
 open Feliz
@@ -21,7 +21,7 @@ module TestIds =
 
 module DisposableTransitionHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type TransitionDisposable(onDispose: unit -> unit) =
         let mutable disposed = false
@@ -56,7 +56,7 @@ module DisposableTransitionHarness =
     type Child =
         [<ReactComponent>]
         static member Render(onDispose: unit -> unit) =
-            let model, dispatch = React.useElmishNext (init, update onDispose)
+            let model, dispatch = React.useElmish (init, update onDispose)
 
             Html.div [
                 Html.button [
@@ -91,9 +91,9 @@ module DisposableTransitionHarness =
                     Child.Render(fun () -> setDisposeCount (fun previous -> previous + 1))
             ]
 
-describe "UseElmishNext disposable transition"
+describe "UseElmish disposable transition"
 <| fun () ->
-    testPromise "UseElmishNext_ModelDisposable_TransitionToDisposable_DisposedOnUnmount"
+    testPromise "UseElmish_ModelDisposable_TransitionToDisposable_DisposedOnUnmount"
     <| fun () -> promise {
         let render = RTL.render (DisposableTransitionHarness.Parent.Render())
 
@@ -112,3 +112,4 @@ describe "UseElmishNext disposable transition"
 
         expect(render.getByTestId TestIds.DisposeCount).toHaveTextContent "1"
     }
+

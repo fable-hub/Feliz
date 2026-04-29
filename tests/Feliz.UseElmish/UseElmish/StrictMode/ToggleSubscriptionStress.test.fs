@@ -1,4 +1,4 @@
-module UseElmishNextStrictModeToggleSubscriptionStressTests
+module UseElmishStrictModeToggleSubscriptionStressTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -34,7 +34,7 @@ module TestIds =
 
 module StrictModeToggleStressHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { ChildCount: int }
 
@@ -70,7 +70,7 @@ module StrictModeToggleStressHarness =
     type Child =
         [<ReactComponent>]
         static member Render(onParentEvent: unit -> unit) =
-            let model, _ = React.useElmishNext (init, update onParentEvent, subscribe)
+            let model, _ = React.useElmish (init, update onParentEvent, subscribe)
 
             Html.h1 [
                 prop.testId TestIds.ChildCount
@@ -103,9 +103,9 @@ module StrictModeToggleStressHarness =
                     Child.Render(fun () -> setParentCount (fun previous -> previous + 1))
             ]
 
-describe "UseElmishNext strict mode toggle stress"
+describe "UseElmish strict mode toggle stress"
 <| fun () ->
-    testPromise "UseElmishNext_StrictMode_RepeatMountUnmount_NoZombieSubscriptions"
+    testPromise "UseElmish_StrictMode_RepeatMountUnmount_NoZombieSubscriptions"
     <| fun () -> promise {
         let render =
             RTL.render (React.StrictMode [ StrictModeToggleStressHarness.Parent.Render() ])
@@ -148,3 +148,4 @@ describe "UseElmishNext strict mode toggle stress"
 
         do! RTL.waitFor (fun () -> expect(render.getByTestId TestIds.ParentCount).toHaveTextContent "3")
     }
+

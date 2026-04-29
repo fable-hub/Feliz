@@ -11,20 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="UseElmishNext.CmdOfEffect.test.fs" />
-    <Compile Include="UseElmishNext.CmdOfPromise.test.fs" />
-    <Compile Include="UseElmishNext\Unmount\InFlightPerform.test.fs" />
-    <Compile Include="UseElmishNext\Unmount\InFlightEitherError.test.fs" />
-    <Compile Include="UseElmishNext\DependencyChange\OldPromiseIsolation.test.fs" />
-    <Compile Include="UseElmishNext\DependencyStable\ParentRerenderInitCmd.test.fs" />
-    <Compile Include="UseElmishNext\DependencyChange\ReinitOnce.test.fs" />
-    <Compile Include="UseElmishNext\StrictMode\InFlightPromiseIsolation.test.fs" />
-    <Compile Include="UseElmishNext\Subscription\DependencySwap.test.fs" />
-    <Compile Include="UseElmishNext\Subscription\DynamicIdsDiff.test.fs" />
-    <Compile Include="UseElmishNext\ModelDisposable\Transition.test.fs" />
-    <Compile Include="UseElmishNext\StrictMode\ToggleSubscriptionStress.test.fs" />
-    <Compile Include="UseElmishNext.SubscriptionCleanup.test.fs" />
-    <Compile Include="UseElmishNext.Main.test.fs" />
+    <Compile Include="CmdOfEffect.test.fs" />
+    <Compile Include="CmdOfPromise.test.fs" />
+    <Compile Include="UseElmish\Unmount\InFlightPerform.test.fs" />
+    <Compile Include="UseElmish\Unmount\InFlightEitherError.test.fs" />
+    <Compile Include="UseElmish\DependencyChange\OldPromiseIsolation.test.fs" />
+    <Compile Include="UseElmish\DependencyStable\ParentRerenderInitCmd.test.fs" />
+    <Compile Include="UseElmish\DependencyChange\ReinitOnce.test.fs" />
+    <Compile Include="UseElmish\StrictMode\InFlightPromiseIsolation.test.fs" />
+    <Compile Include="UseElmish\Subscription\DependencySwap.test.fs" />
+    <Compile Include="UseElmish\Subscription\DynamicIdsDiff.test.fs" />
+    <Compile Include="UseElmish\ModelDisposable\Transition.test.fs" />
+    <Compile Include="UseElmish\StrictMode\ToggleSubscriptionStress.test.fs" />
+    <Compile Include="SubscriptionCleanup.test.fs" />
     <Compile Include="Subscription.test.fs" />
     <Compile Include="Main.test.fs" />
   </ItemGroup>

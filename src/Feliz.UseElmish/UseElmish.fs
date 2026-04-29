@@ -2,7 +2,9 @@ module Feliz.UseElmish
 
 open System
 open Fable.Core
+open Fable.Core.JsInterop
 open Elmish
+open Feliz
 
 module private Util =
 
@@ -10,32 +12,69 @@ module private Util =
     let setTimeout (callback: unit -> unit) : unit = jsNative
 
     type ElmishState<'Arg, 'Model, 'Msg when 'Arg: equality>
-        (program: unit -> Program<'Arg, 'Model, 'Msg, unit>, arg: 'Arg, dependencies: obj[] option) =
-        // let guid = System.Guid.NewGuid()
+        (programFactory: unit -> Program<'Arg, 'Model, 'Msg, unit>, arg: 'Arg, dependencies: obj[] option) =
 
-        // let logGuidfn msg =
-        //     printfn "[UseElmish %O] %s ..." guid msg
-
-        // do logGuidfn "Creating..."
-
-        // React will run the subscribe function when the component is mounted and after each hot reload
-        // However we need to store the initial model here for two reasons:
-        // - It looks like useSyncExternalStore returns the state before running subscribe
-        // - We can restore the model after a hot reload
-        let program = program ()
-        // Keep track of messages are that dispach from the initial No-Op dispatch
-        // And dispatch them after the Elmish program has subscribed using the "real" dispatch
+        let program = programFactory ()
         let queuedMessages = ResizeArray<'Msg>()
+        let trackedSubscriptionDisposables = ResizeArray<IDisposable>()
 
         // To assure that dispatch function is stable (for example for memo).
         // We need to store external reference to final dispatch function assuring that initial version
         // will forward to it at some point.
         let mutable finalDispatch = None
+        let mutable lastDisposedModel: obj option = None
+        let mutable unmountCleanupAlreadyRan = false
 
+        let tryGetUnionFields (value: obj) : obj[] option =
+#if FABLE_COMPILER
+            if isNull value then
+                None
+            else
+                let fields: obj[] = value?fields
+
+                if isNull fields then None else Some fields
+#else
+            None
+#endif
+
+        let hasDisposableValue (value: obj) =
+            let isDisposable (candidate: obj) =
+                match candidate with
+                | :? IDisposable -> true
+                | _ -> false
+
+            isDisposable value
+            || (
+                match tryGetUnionFields value with
+                | Some fields -> fields |> Array.exists isDisposable
+                | None -> false
+            )
+
+        let disposeDisposableValues (value: obj) =
+            let mutable disposed = false
+
+            let tryDispose (candidate: obj) =
+                match candidate with
+                | :? IDisposable as disposable ->
+                    disposed <- true
+                    disposable.Dispose()
+                | _ -> ()
+
+            tryDispose value
+
+            match tryGetUnionFields value with
+            | Some fields ->
+                for field in fields do
+                    tryDispose field
+            | None -> ()
+
+            disposed
+
+        // Keep track of messages that are dispatched from the initial No-Op dispatch
+        // and dispatch them after the Elmish program has subscribed using the real dispatch.
         let mutable state, cmd =
-            let mutable model, cmd = Program.init program arg
-            // Initial dispatch is a No-Op before the Elmish program has subscribed
-            // So here we store the messages and dispatch them after the Elmish program has subscribed
+            let model, cmd = Program.init program arg
+
             let initialDispatch (msg: 'Msg) =
                 match finalDispatch with
                 | Some dispatch -> dispatch msg
@@ -44,64 +83,111 @@ module private Util =
             let subscribed = false
             (model, initialDispatch, subscribed, queuedMessages), cmd
 
+        let removeTrackedDisposable (disposable: IDisposable) =
+            trackedSubscriptionDisposables.Remove(disposable) |> ignore
+
+        let trackSubscriptionDisposable (subscriptionDisposable: IDisposable) =
+            let mutable disposed = false
+            let mutable trackedDisposableRef: IDisposable option = None
+
+            let trackedDisposable =
+                { new IDisposable with
+                    member _.Dispose() =
+                        if not disposed then
+                            disposed <- true
+
+                            match trackedDisposableRef with
+                            | Some trackedDisposable -> removeTrackedDisposable trackedDisposable
+                            | None -> ()
+
+                            subscriptionDisposable.Dispose()
+                }
+
+            trackedDisposableRef <- Some trackedDisposable
+            trackedSubscriptionDisposables.Add trackedDisposable
+            trackedDisposable
+
+        let disposeTrackedSubscriptions () =
+            if trackedSubscriptionDisposables.Count > 0 then
+                let activeDisposables = trackedSubscriptionDisposables.ToArray()
+                trackedSubscriptionDisposables.Clear()
+
+                for disposable in activeDisposables do
+                    disposable.Dispose()
+
+        let disposeLatestModel () =
+            let model, _, _, _ = state
+            let boxedModel = box model
+
+            let shouldDispose =
+                match lastDisposedModel with
+                | Some previous when obj.ReferenceEquals(previous, boxedModel) -> false
+                | _ -> true
+
+            if shouldDispose && disposeDisposableValues boxedModel then
+                lastDisposedModel <- Some boxedModel
+
+        let mapSubscription (subscribe: 'Model -> Sub<'Msg>) : 'Model -> Sub<'Msg> =
+            fun model ->
+                subscribe model
+                |> List.map (fun (subscriptionId, subscription) ->
+                    subscriptionId,
+                    (fun dispatch ->
+                        let subscriptionDisposable = subscription dispatch
+                        trackSubscriptionDisposable subscriptionDisposable
+                    )
+                )
+
         let subscribe =
             UseSyncExternalStoreSubscribe(fun callback ->
-                // logGuidfn "Subscribing..."
                 let mutable dispose = false
-                // needsDispose is used to determine whether the model inside state needs to be disposed of when the subscription is terminated.
-                // If the model does implement System.IDisposable, we set needsDispose to true, which ensures that the Dispose() method is called when the subscription is terminated.
-                // If the model doesn't implement System.IDisposable or the subscription isn't being terminated, we use the provided terminate function to handle the model.
-                // Added because, in strict mode, subscribing and unsubscribing can happen more than once
-                let needsDispose =
-                    let (model, _, _, _) = state
-
-                    // logGuidfn $"{model}"
-
-                    match box model with
-                    | :? System.IDisposable -> true
-                    | _ -> false
-
-                // logGuidfn $"Need dispose {needsDispose}..."
 
                 let mapInit _init _arg =
-                    let cmd' = cmd
+                    let cmd' =
+                        if unmountCleanupAlreadyRan then
+                            let _, replayCmd = _init _arg
+                            replayCmd
+                        else
+                            cmd
+
                     // Don't run the original commands after hot reload
                     cmd <- Cmd.none
-                    let (model, _, _, _) = state
+                    let model, _, _, _ = state
                     model, cmd'
 
                 let mapTermination (predicate, terminate) =
                     (fun msg ->
-                        // logGuidfn $"Checking termination for message {msg}..."
-                        let predicate = predicate msg
-                        let mustDispose = needsDispose && dispose
-                        // logGuidfn $"Termination predicate: {predicate}, must dispose: {mustDispose}"
-                        predicate || mustDispose
+                        let model, _, _, _ = state
+                        let mustDispose = dispose && hasDisposableValue (box model)
+                        predicate msg || mustDispose
                     ),
                     (fun model ->
-                        // logGuidfn "Terminating..."
-
                         match box model with
                         // Before Elmish 4 it was allowed to have disposable states as a hack for termination
-                        | :? System.IDisposable as disp -> disp.Dispose()
+                        | :? IDisposable as disposable -> disposable.Dispose()
                         | _ -> terminate model
                     )
 
                 // Because, in strict mode, subscribing and unsubscribing can happen more than once, Elmish's model that's
                 // passed in as a parameter could potentially be outdated. To ensure that the latest version of the model
-                // is always used, we retrieve it from state and pass it as latestModel to the update function
-                let mapUpdate update msg model =
-                    let (latestModel, _, _, _) = state
-                    update msg latestModel
+                // is always used, we retrieve it from state and pass it as latestModel to the update function.
+                let mapUpdate update msg _model =
+                    let latestModel, _, _, _ = state
+
+                    if dispose then
+                        latestModel, Cmd.none
+                    else
+                        update msg latestModel
 
                 // Restart the program after each hot reload to get the proper dispatch reference
                 program
-                |> Program.map mapInit mapUpdate id id id mapTermination
+                |> Program.map mapInit mapUpdate id id mapSubscription mapTermination
                 |> Program.withSetState (fun model dispatch ->
-                    let (oldModel, initialDispatch, _, _) = state
+                    let oldModel, initialDispatch, _, _ = state
                     let subscribed = true
                     finalDispatch <- Some dispatch
                     state <- model, initialDispatch, subscribed, queuedMessages
+
                     // Skip re-renders if model hasn't changed
                     if not (obj.ReferenceEquals(model, oldModel)) then
                         callback ()
@@ -109,19 +195,26 @@ module private Util =
                 |> Program.runWith arg
 
                 (fun () ->
-                    // logGuidfn "Unsubscribing..."
                     dispose <- true
+                    disposeTrackedSubscriptions ()
                 )
             )
 
         member _.State = state
         member _.Subscribe = subscribe
 
+        member _.BeginMountCycle() = unmountCleanupAlreadyRan <- false
+
+        member _.DisposeOnUnmount() =
+            if not unmountCleanupAlreadyRan then
+                unmountCleanupAlreadyRan <- true
+                disposeTrackedSubscriptions ()
+                disposeLatestModel ()
+
         member _.IsOutdated(arg', dependencies') =
             arg <> arg' || dependencies <> dependencies'
 
 open Util
-open Feliz
 
 [<Erase>]
 type React =
@@ -140,7 +233,17 @@ type React =
                 UseSyncExternalStoreSnapshot(fun () -> state.State),
                 UseSyncExternalStoreSnapshot(fun () -> state.State)
             )
-        // Run any queued messages that were dispatched before the Elmish program finished subscribing
+
+        React.useEffect (
+            (fun () ->
+                state.BeginMountCycle()
+
+                fun () -> state.DisposeOnUnmount()
+            ),
+            [| box state |]
+        )
+
+        // Run any queued messages that were dispatched before the Elmish program finished subscribing.
         React.useEffect (
             (fun () ->
                 if subscribed && queuedMessages.Count > 0 then

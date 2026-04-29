@@ -1,4 +1,4 @@
-module UseElmishNextSubscriptionDynamicIdsDiffTests
+module UseElmishSubscriptionDynamicIdsDiffTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -37,7 +37,7 @@ module TestIds =
 
 module DynamicSubscriptionDiffHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = {
         ListenA: bool
@@ -93,7 +93,7 @@ module DynamicSubscriptionDiffHarness =
     type Child =
         [<ReactComponent>]
         static member Render() =
-            let model, dispatch = React.useElmishNext (init, update, subscribe)
+            let model, dispatch = React.useElmish (init, update, subscribe)
 
             Html.div [
                 Html.button [
@@ -118,9 +118,9 @@ module DynamicSubscriptionDiffHarness =
                 Html.h2 [ prop.testId TestIds.CountB; prop.text model.CountB ]
             ]
 
-describe "UseElmishNext dynamic subscription diff"
+describe "UseElmish dynamic subscription diff"
 <| fun () ->
-    testPromise "UseElmishNext_Subscription_DynamicIds_StopRemovedSubOnly"
+    testPromise "UseElmish_Subscription_DynamicIds_StopRemovedSubOnly"
     <| fun () -> promise {
         let render = RTL.render (DynamicSubscriptionDiffHarness.Child.Render())
 
@@ -141,3 +141,4 @@ describe "UseElmishNext dynamic subscription diff"
         expect(render.getByTestId TestIds.CountA).toHaveTextContent "1"
         expect(render.getByTestId TestIds.CountB).toHaveTextContent "2"
     }
+

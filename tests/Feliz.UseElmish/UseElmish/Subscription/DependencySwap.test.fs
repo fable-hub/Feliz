@@ -1,4 +1,4 @@
-module UseElmishNextSubscriptionDependencySwapTests
+module UseElmishSubscriptionDependencySwapTests
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -34,7 +34,7 @@ module TestIds =
 
 module SubscriptionDependencySwapHarness =
     open Elmish
-    open Feliz.UseElmishNext
+    open Feliz.UseElmish
 
     type Model = { Dependency: int }
 
@@ -67,7 +67,7 @@ module SubscriptionDependencySwapHarness =
         [<ReactComponent>]
         static member Render(dependencyValue: int, onEvent: int -> unit) =
             let _, _ =
-                React.useElmishNext (
+                React.useElmish (
                     init,
                     update onEvent,
                     subscribe dependencyValue,
@@ -112,9 +112,9 @@ module SubscriptionDependencySwapHarness =
                 Child.Render(dependencyValue, onEvent)
             ]
 
-describe "UseElmishNext subscription dependency swap"
+describe "UseElmish subscription dependency swap"
 <| fun () ->
-    testPromise "UseElmishNext_Subscription_DependencyResubscribe_ReplacesListener"
+    testPromise "UseElmish_Subscription_DependencyResubscribe_ReplacesListener"
     <| fun () -> promise {
         let render = RTL.render (SubscriptionDependencySwapHarness.Parent.Render())
 
@@ -146,3 +146,4 @@ describe "UseElmishNext subscription dependency swap"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
+
