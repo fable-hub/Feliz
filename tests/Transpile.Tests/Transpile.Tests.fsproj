@@ -11,6 +11,7 @@
     <Compile Include="JSXHtmlTranspile.test.fs" />
     <Compile Include="TranspileFailure.test.fs" />
     <Compile Include="ParallelIsolation.test.fs" />
+    <Compile Include="ReactLazyComponentTests\ReactLazyComponentSuccess.test.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 
