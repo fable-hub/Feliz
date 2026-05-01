@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="TranspileUtils.fs" />
+    <Compile Include="JSXHtmlTranspile.test.fs" />
+    <Compile Include="TranspileFailure.test.fs" />
+    <Compile Include="ParallelIsolation.test.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Expecto" />
+    <PackageReference Include="YoloDev.Expecto.TestSdk" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+</Project>

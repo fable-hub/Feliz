@@ -214,3 +214,4 @@ dist
 fableoutput/
 # keep fableoutput from older docs versions
 !docs/versioned_docs/**/fableoutput
+tests/Transpile.Tests/temp/
