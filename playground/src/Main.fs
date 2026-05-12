@@ -3,10 +3,7 @@
 open Feliz
 open Browser.Dom
 
-let private root = ReactDOM.createRoot(document.getElementById "root")
+let private root = ReactDOM.createRoot (document.getElementById "root")
 
-root.render(
-    React.StrictMode [
-        App.App()
-    ]
-)
+// root.render (React.StrictMode [ UseElmishExample.CleanupHarness.Parent.Render() ])
+root.render (Components.Main())

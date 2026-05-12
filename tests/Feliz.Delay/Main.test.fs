@@ -87,7 +87,10 @@ Vitest.describe("Feliz.Delay Tests", fun _ ->
                 Vitest.expect(render.queryByTestId "render" |> Option.isSome).toBeTruthy() // Child is now rendered
                 Vitest.expect(render.queryByTestId "async-load" |> Option.isNone).toBeTruthy() // Suspense child is still not rendered
             )
-        do! Promise.sleep 1000
+
+        do! RTL.act(fun () -> promise {
+            do! Promise.sleep 1000
+        })
 
         do!
             RTL.waitFor (fun () ->

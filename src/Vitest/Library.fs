@@ -57,11 +57,15 @@ type IAssertion<'a> =
     abstract member toMatch: expected: System.Text.RegularExpressions.Regex -> unit
     abstract member toMatchObject: expected: obj -> unit
     abstract member toThrowError: expected: string -> unit
+
     [<Emit("$0.toThrowError($1)")>]
     abstract member toThrowErrorPromise: expected: string -> Promise<unit>
+
     abstract member toThrowError: expected: System.Text.RegularExpressions.Regex -> unit
+
     [<Emit("$0.toThrowError($1)")>]
     abstract member toThrowErrorPromise: expected: System.Text.RegularExpressions.Regex -> Promise<unit>
+
     abstract member toMatchSnapshot: unit -> unit
     abstract member toMatchInlineSnapshot: obj -> unit
     abstract member toMatchFileSnapshot: path: string -> Promise<unit>
@@ -71,31 +75,37 @@ type IAssertion<'a> =
     abstract member toThrowErrorMatchingInlineSnapshot: snapshot: string * hint: string -> unit
     abstract member toHaveBeenCalled: unit -> unit
     abstract member toHaveBeenCalledTimes: amount: int -> unit
+
     [<Emit("$0.toHaveBeenCalledWith(...$1)")>]
-    abstract member toHaveBeenCalledWith: arg: obj [] -> unit
-    abstract member toHaveBeenCalledBefore : mock: obj -> unit
-    abstract member toHaveBeenCalledBefore : mock: obj * failIfNoFirstInvocation: bool -> unit
-    abstract member toHaveBeenCalledAfter : mock: obj -> unit
-    abstract member toHaveBeenCalledAfter : mock: obj * failIfNoFirstInvocation: bool -> unit
+    abstract member toHaveBeenCalledWith: arg: obj[] -> unit
+
+    abstract member toHaveBeenCalledBefore: mock: obj -> unit
+    abstract member toHaveBeenCalledBefore: mock: obj * failIfNoFirstInvocation: bool -> unit
+    abstract member toHaveBeenCalledAfter: mock: obj -> unit
+    abstract member toHaveBeenCalledAfter: mock: obj * failIfNoFirstInvocation: bool -> unit
+
     [<Emit("$0.toHaveBeenCalledExactlyOnceWith(...$1)")>]
-    abstract member toHaveBeenCalledExactlyOnceWith : arg: obj [] -> unit
+    abstract member toHaveBeenCalledExactlyOnceWith: arg: obj[] -> unit
+
     [<Emit("$0.toHaveBeenLastCalledWith(...$1)")>]
-    abstract member toHaveBeenLastCalledWith : arg: obj [] -> unit
+    abstract member toHaveBeenLastCalledWith: arg: obj[] -> unit
+
     [<Emit("$0.toHaveBeenNthCalledWith($1,...$2)")>]
-    abstract member toHaveBeenNthCalledWith : time: int * arg: obj [] -> unit
-    abstract member toHaveReturned : unit -> unit
-    abstract member toHaveReturnedTimes : amount: int -> unit
-    abstract member toHaveReturnedWith : returnValue: obj -> unit
-    abstract member toHaveLastReturnedWith : returnValue: obj -> unit
-    abstract member toHaveNthReturnedWith : time: int * returnValue: obj -> unit
-    abstract member toHaveResolved : unit -> unit
-    abstract member toHaveResolvedTimes : amount: int -> unit
-    abstract member toHaveResolvedWith : returnValue: obj -> unit
-    abstract member toHaveLastResolvedWith : returnValue: obj -> unit
-    abstract member toHaveNthResolvedWith : time: int * returnValue: obj -> unit
-    abstract member toSatisfy : ('a -> bool) -> unit
-    abstract member resolves : IAssertion<Promise<obj>>
-    abstract member rejects : IAssertion<obj>
+    abstract member toHaveBeenNthCalledWith: time: int * arg: obj[] -> unit
+
+    abstract member toHaveReturned: unit -> unit
+    abstract member toHaveReturnedTimes: amount: int -> unit
+    abstract member toHaveReturnedWith: returnValue: obj -> unit
+    abstract member toHaveLastReturnedWith: returnValue: obj -> unit
+    abstract member toHaveNthReturnedWith: time: int * returnValue: obj -> unit
+    abstract member toHaveResolved: unit -> unit
+    abstract member toHaveResolvedTimes: amount: int -> unit
+    abstract member toHaveResolvedWith: returnValue: obj -> unit
+    abstract member toHaveLastResolvedWith: returnValue: obj -> unit
+    abstract member toHaveNthResolvedWith: time: int * returnValue: obj -> unit
+    abstract member toSatisfy: ('a -> bool) -> unit
+    abstract member resolves: IAssertion<Promise<obj>>
+    abstract member rejects: IAssertion<obj>
 
 
 // [<Erase>]
@@ -103,7 +113,7 @@ type IAssertion<'a> =
 //     inherit IAssertion<Promise<'a>>
 //     abstract member toBe: expected: 'a -> Promise<unit>
 
-    //https://vitest.dev/api/expect.html#expect-assertions
+//https://vitest.dev/api/expect.html#expect-assertions
 
 // type IAssertionCollection<'a> =
 //     inherit IAssertion<seq<'a>>
@@ -131,12 +141,11 @@ type Task =
     abstract member result: TestResult
 
 [<Erase>]
-type Constructor = 
-    interface end
+type Constructor = interface end
 
 /// <summary>
 /// Represents a type that can be used with `expect.any()`
-/// 
+///
 /// There are most likely missing constructors here, feel free to open a PR to add them
 /// </summary>
 /// <remarks>
@@ -147,14 +156,19 @@ type Constructor =
 type any =
     [<Emit("Number")>]
     static member Number: Constructor = jsNative
+
     [<Emit("String")>]
     static member String: Constructor = jsNative
+
     [<Emit("Boolean")>]
     static member Boolean: Constructor = jsNative
+
     [<Emit("Function")>]
     static member Function: Constructor = jsNative
+
     [<Emit("Object")>]
     static member Object: Constructor = jsNative
+
     /// This only works for ResizeArray!
     [<Emit("Array")>]
     static member Array: Constructor = jsNative
@@ -183,6 +197,7 @@ type SuiteAPI =
 
     [<Emit("$0.only")>]
     abstract member Only: SuiteAPI
+
     abstract member todo: name: string * fn: (unit -> unit) -> unit
 
     [<Emit("$0.todo")>]
@@ -220,16 +235,19 @@ type TestAPI =
 
     [<Emit("$0.todo")>]
     abstract member Todo: TestAPI
+
     abstract member fails: name: string * fn: (unit -> unit) -> unit
     abstract member fails: name: string * fn: (unit -> Promise<unit>) -> unit
 
     [<Emit("$0.fails")>]
     abstract member Fails: TestAPI
+
     abstract member concurrent: name: string * fn: (unit -> unit) -> unit
     abstract member concurrent: name: string * fn: (unit -> Promise<unit>) -> unit
 
     [<Emit("$0.concurrent")>]
     abstract member Concurrent: TestAPI
+
     abstract member sequential: name: string * fn: (unit -> unit) -> unit
     abstract member sequential: name: string * fn: (unit -> Promise<unit>) -> unit
 
@@ -249,14 +267,12 @@ type TestContext =
     abstract member annotate: message: string * attachment: TestAttachment -> Promise<TestAnnotation>
     abstract member annotate: message: string * ``type``: string * attachment: TestAttachment -> Promise<TestAnnotation>
     abstract member signal: AbortSignal
-    abstract member onTestFailed: fn: (TestContext -> unit) -> unit 
+    abstract member onTestFailed: fn: (TestContext -> unit) -> unit
     abstract member onTestFinished: fn: (TestContext -> unit) -> unit
 
 [<AllowNullLiteral>]
 [<Global>]
-type ViWaitForOptions
-    [<ParamObject; Emit("$0")>]
-    (?timeout: int, ?interval: int) =
+type ViWaitForOptions [<ParamObject; Emit("$0")>] (?timeout: int, ?interval: int) =
     member val timeout = defaultArg timeout 5000 with get, set
     member val interval = defaultArg interval 50 with get, set
 
@@ -264,14 +280,16 @@ type ViWaitForOptions
 [<Global>]
 type RuntimeConfig
     [<ParamObject; Emit("$0")>]
-    (?allowOnly: bool,
-    ?testTimeout: int,
-    ?hookTimeout: int,
-    ?clearMocks: bool,
-    ?restoreMocks: bool,
-    ?fakeTimers: obj,
-    ?maxConcurrency: int,
-    ?sequence: obj) =
+    (
+        ?allowOnly: bool,
+        ?testTimeout: int,
+        ?hookTimeout: int,
+        ?clearMocks: bool,
+        ?restoreMocks: bool,
+        ?fakeTimers: obj,
+        ?maxConcurrency: int,
+        ?sequence: obj
+    ) =
     member val allowOnly = defaultArg allowOnly true with get, set
     member val testTimeout = defaultArg testTimeout 5000 with get, set
     member val hookTimeout = defaultArg hookTimeout 5000 with get, set
@@ -296,7 +314,8 @@ type TestOptions
         ?shuffle: bool,
         ?only: bool,
         ?todo: bool,
-        ?fails: bool
+        ?fails: bool,
+        ?tags: string[]
     ) =
     member val timeout = timeout with get, set
     member val retry = retry with get, set
@@ -308,6 +327,7 @@ type TestOptions
     member val only = only with get, set
     member val todo = todo with get, set
     member val fails = fails with get, set
+    member val tags = tags with get, set
 
 [<StringEnum(CaseRules.LowerFirst)>]
 type AccessType =
@@ -332,37 +352,37 @@ type Vi =
     abstract member advanceTimersByTimeAsync: ms: int -> Promise<unit>
     abstract member advanceTimersToNextTimer: unit -> unit
     abstract member advanceTimersToNextTimerAsync: unit -> Promise<unit>
-    abstract member advanceTimersToNextFrame : unit -> unit
-    abstract member getTimerCount : unit -> int
-    abstract member clearAllTimers : unit -> unit
-    abstract member getMockedSystemTime : unit -> System.DateTime option
-    abstract member getRealSystemTime : unit -> int
-    abstract member runAllTicks : unit -> IVitest
-    abstract member runAllTimers : unit -> IVitest
-    abstract member runAllTimersAsync : unit -> Promise<IVitest>
-    abstract member runOnlyPendingTimers : unit -> IVitest
-    abstract member runOnlyPendingTimersAsync : unit -> Promise<IVitest>
-    abstract member setSystemTime : string -> unit
-    abstract member setSystemTime : System.DateTime -> unit
-    abstract member setSystemTime : int -> unit
-    abstract member useFakeTimers : unit -> IVitest
-    abstract member useFakeTimers : obj -> IVitest
-    abstract member isFakeTimers : unit -> bool
-    abstract member useRealTimers : unit -> IVitest
-    abstract member waitFor : fn: (unit -> Promise<'a>) -> Promise<'a>
-    abstract member waitFor : fn: (unit -> Promise<'a>) * timeout: int -> Promise<'a>
-    abstract member waitFor : fn: (unit -> Promise<'a>) * options: ViWaitForOptions -> Promise<'a>
-    abstract member waitFor : fn: (unit -> 'a) -> Promise<'a>
-    abstract member waitFor : fn: (unit -> 'a) * timeout: int -> Promise<'a>
-    abstract member waitFor : fn: (unit -> 'a) * options: ViWaitForOptions -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> Promise<'a>) -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> Promise<'a>) * timeout: int -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> Promise<'a>) * options: ViWaitForOptions -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> 'a) -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> 'a) * timeout: int -> Promise<'a>
-    abstract member waitUntil : fn: (unit -> 'a) * options: ViWaitForOptions -> Promise<'a>
-    abstract member setConfig : config: RuntimeConfig -> unit
-    abstract member resetConfig : unit -> unit
+    abstract member advanceTimersToNextFrame: unit -> unit
+    abstract member getTimerCount: unit -> int
+    abstract member clearAllTimers: unit -> unit
+    abstract member getMockedSystemTime: unit -> System.DateTime option
+    abstract member getRealSystemTime: unit -> int
+    abstract member runAllTicks: unit -> IVitest
+    abstract member runAllTimers: unit -> IVitest
+    abstract member runAllTimersAsync: unit -> Promise<IVitest>
+    abstract member runOnlyPendingTimers: unit -> IVitest
+    abstract member runOnlyPendingTimersAsync: unit -> Promise<IVitest>
+    abstract member setSystemTime: string -> unit
+    abstract member setSystemTime: System.DateTime -> unit
+    abstract member setSystemTime: int -> unit
+    abstract member useFakeTimers: unit -> IVitest
+    abstract member useFakeTimers: obj -> IVitest
+    abstract member isFakeTimers: unit -> bool
+    abstract member useRealTimers: unit -> IVitest
+    abstract member waitFor: fn: (unit -> Promise<'a>) -> Promise<'a>
+    abstract member waitFor: fn: (unit -> Promise<'a>) * timeout: int -> Promise<'a>
+    abstract member waitFor: fn: (unit -> Promise<'a>) * options: ViWaitForOptions -> Promise<'a>
+    abstract member waitFor: fn: (unit -> 'a) -> Promise<'a>
+    abstract member waitFor: fn: (unit -> 'a) * timeout: int -> Promise<'a>
+    abstract member waitFor: fn: (unit -> 'a) * options: ViWaitForOptions -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> Promise<'a>) -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> Promise<'a>) * timeout: int -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> Promise<'a>) * options: ViWaitForOptions -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> 'a) -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> 'a) * timeout: int -> Promise<'a>
+    abstract member waitUntil: fn: (unit -> 'a) * options: ViWaitForOptions -> Promise<'a>
+    abstract member setConfig: config: RuntimeConfig -> unit
+    abstract member resetConfig: unit -> unit
 
 [<Erase>]
 type Vitest =
@@ -378,6 +398,7 @@ type Vitest =
 
     [<Import("test", "vitest")>]
     static member Test: TestAPI = jsNative
+
     [<ImportMember("vitest")>]
     static member inline test(name: string, fn: unit -> unit) : unit = jsNative
 
@@ -397,7 +418,7 @@ type Vitest =
     // static member expectPromise<'a>(value: Promise<'a>) : IPromiseAssertion<'a> = jsNative
 
     [<ImportMember("vitest")>]
-    static member expect<'a>(value: 'a, ?msg : string) : IAssertion<'a> = jsNative
+    static member expect<'a>(value: 'a, ?msg: string) : IAssertion<'a> = jsNative
 
     [<Import("expect", "vitest")>]
     static member Expect: ExpectStatic = jsNative
@@ -433,7 +454,7 @@ type Vitest =
 module VitestExtensions =
 
     type Vitest with
-        
+
         [<ImportMember("vitest")>]
         static member inline test(name: string, fn: unit -> Promise<unit>) : unit = jsNative
 
@@ -444,22 +465,23 @@ module VitestExtensions =
         static member inline test(name: string, fn: TestContext -> Promise<unit>) : unit = jsNative
 
         [<ImportMember("vitest")>]
-        static member inline test(name: string, options: TestOptions, fn: TestContext -> Promise<unit>) : unit = jsNative
+        static member inline test(name: string, options: TestOptions, fn: TestContext -> Promise<unit>) : unit =
+            jsNative
 
-        static member inline test(name: string, fn: unit -> Async<unit>) : unit = 
-            Vitest.test(name, fn >> Async.StartAsPromise)
+        static member inline test(name: string, fn: unit -> Async<unit>) : unit =
+            Vitest.test (name, fn >> Async.StartAsPromise)
 
-        static member inline test(name: string, options: TestOptions, fn: unit -> Async<unit>) : unit = 
-            Vitest.test(name, options, fn >> Async.StartAsPromise)
+        static member inline test(name: string, options: TestOptions, fn: unit -> Async<unit>) : unit =
+            Vitest.test (name, options, fn >> Async.StartAsPromise)
 
-        static member inline test(name: string, fn: TestContext -> Async<unit>) : unit = 
-            Vitest.test(name, fn >> Async.StartAsPromise)
+        static member inline test(name: string, fn: TestContext -> Async<unit>) : unit =
+            Vitest.test (name, fn >> Async.StartAsPromise)
 
-        static member inline test(name: string, options: TestOptions, fn: TestContext -> Async<unit>) : unit = 
-            Vitest.test(name, fn >> Async.StartAsPromise)
+        static member inline test(name: string, options: TestOptions, fn: TestContext -> Async<unit>) : unit =
+            Vitest.test (name, fn >> Async.StartAsPromise)
 
-        static member inline test(name: string, fn: Async<unit>) : unit = 
-            Vitest.test(name, fun () -> fn |> Async.StartAsPromise)
+        static member inline test(name: string, fn: Async<unit>) : unit =
+            Vitest.test (name, fun () -> fn |> Async.StartAsPromise)
 
-        static member inline test(name: string, options: TestOptions, fn: Async<unit>) : unit = 
-            Vitest.test(name, options, fun () -> fn |> Async.StartAsPromise)
+        static member inline test(name: string, options: TestOptions, fn: Async<unit>) : unit =
+            Vitest.test (name, options, fun () -> fn |> Async.StartAsPromise)

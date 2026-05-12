@@ -84,6 +84,13 @@
           "Fable.AST": "[5.0.0-rc.3, )"
         }
       },
+      "feliz.useelmish": {
+        "type": "Project",
+        "dependencies": {
+          "Fable.Elmish": "[4.0.0, )",
+          "Feliz": "[3.0.0-rc.1, )"
+        }
+      },
       "Fable.AST": {
         "type": "CentralTransitive",
         "requested": "[5.0.0-rc.3, )",
@@ -95,6 +102,16 @@
         "requested": "[4.5.0, )",
         "resolved": "4.5.0",
         "contentHash": "ZcX8XN5sQZGCbrS8VYnsa/ynhrCBfpDyqDkTl33GTXOpgfKibxoq0+W0hCSbRzuukVNoLtqGL/B6+8yTNDXbNA=="
+      },
+      "Fable.Elmish": {
+        "type": "CentralTransitive",
+        "requested": "[4.0.0, )",
+        "resolved": "4.0.0",
+        "contentHash": "F7yJFmXWmg0EYfAstxNWdei1SJB+Q83pCxxGlfmLJ7uxIiYd6CbRjaHDBxC0SmHeT1E4kbjHCTFys2HHg90oow==",
+        "dependencies": {
+          "FSharp.Core": "4.7.2",
+          "Fable.Core": "3.7.1"
+        }
       },
       "Fable.React.Types": {
         "type": "CentralTransitive",

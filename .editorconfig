@@ -14,6 +14,8 @@ insert_final_newline = true
 [*.{fs,fsx,fsproj,props,}]
 indent_size = 4
 
-[*.fs]
+[*.{fs,fsx}]
 fsharp_multiline_bracket_style = stroustrup
 fsharp_newline_before_multiline_computation_expression = false
+fsharp_multi_line_lambda_closing_newline = true
+fsharp_max_array_or_list_width = 60

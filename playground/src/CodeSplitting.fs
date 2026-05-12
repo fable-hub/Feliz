@@ -6,9 +6,42 @@ open Feliz
 [<Erase; Mangle(false)>]
 type CodeSplitting =
 
-    [<ReactComponent(true)>]
-    static member MyCodeSplitComponent (?text: string) =
+    [<ReactComponent>]
+    static member MyCodeSplitComponent
+        (text: string, ?testId: string, ?className: string, ?onClick: Browser.Types.MouseEvent -> unit)
+        =
         Html.div [
-            prop.testId "async-load"
-            prop.text (Option.defaultValue "Loaded" text)
+            if testId.IsSome then
+                prop.testId testId.Value
+            if className.IsSome then
+                prop.className className.Value
+            if onClick.IsSome then
+                prop.onClick onClick.Value
+            prop.text text
         ]
+
+    [<ReactComponent>]
+    static member MyCodeSplitComponentCurried (text: string) (testId: string option) =
+        Html.div [
+            if testId.IsSome then
+                prop.testId testId.Value
+            prop.text text
+        ]
+
+    [<ReactComponent>]
+    static member MyCodeSplitComponentWithAnoRecord
+        (props:
+            {|
+                text: string
+                testId: string option
+            |})
+        =
+        Html.div [
+            if props.testId.IsSome then
+                prop.testId props.testId.Value
+            prop.text props.text
+        ]
+
+    [<ReactComponent(true)>]
+    static member MyCodeSplitComponentTupledWithPrimitives(x: int, y: float) =
+        Html.div [ prop.text (sprintf "%i-%f" x y) ]

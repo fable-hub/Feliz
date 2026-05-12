@@ -12,13 +12,15 @@ do ()
 module AreEqualFn =
     [<Literal>]
     let FsEquals = 0
+
     [<Literal>]
     let FsEqualsButFunctions = 1
-type MemoStrategy = 
-| EqualsShallow 
-| EqualsCustom of string 
-| FSharpEquality
-| FSharpEqualityButFunctions
+
+type MemoStrategy =
+    | EqualsShallow
+    | EqualsCustom of string
+    | FSharpEquality
+    | FSharpEqualityButFunctions
 
 module internal ReactComponentHelpers =
     let (|ReactLazyMemo|_|) =
@@ -37,18 +39,9 @@ module internal ReactComponentHelpers =
     let injectUseMemoDirective (useMemoDirective: bool option) (body: Expr) =
 
         match useMemoDirective with
-        | None ->
-            body
-        | Some false ->
-            Sequential [
-                AstUtils.emitJs "\"use no memo\"" []
-                body
-            ]
-        | Some true ->
-            Sequential [
-                AstUtils.emitJs "\"use memo\"" []
-                body
-            ]
+        | None -> body
+        | Some false -> Sequential [ AstUtils.emitJs "\"use no memo\"" []; body ]
+        | Some true -> Sequential [ AstUtils.emitJs "\"use memo\"" []; body ]
 
     let injectReactImport body =
         let body =
@@ -56,17 +49,10 @@ module internal ReactComponentHelpers =
             | Sequential body -> body
             | _ -> [ body ]
 
-        Sequential [ AstUtils.makeImport "default as React" "react"; yield! body ]
-
-    let (|IsCreateElement|_|) =
-        function
-        | Import({
-                     Selector = "createElement"
-                     Path = "react"
-                 },
-                 _,
-                 _) as e -> Some e
-        | _ -> None
+        Sequential [
+            AstUtils.makeImport "default as React" "react"
+            yield! body
+        ]
 
     let mkImportPath (fsharpSourcePath: string) (compilerInfo: PluginHelper) =
         let extensionIndex = fsharpSourcePath.LastIndexOf "."
@@ -82,47 +68,167 @@ module internal ReactComponentHelpers =
 
     ]
 
-    let rec transformToDynImport compilerInfo body =
-        match body with
-        | Call(IsCreateElement _, info, t, r) ->
-            let relativeImport =
-                IdentExpr {
-                    Name = "import"
-                    Type = Any
-                    IsMutable = false
-                    IsThisArgument = false
-                    IsCompilerGenerated = true
-                    Range = None
-                    IsInlineIfLambda = false
-                }
+    module LazyImportByRef =
 
-            let pathInfo = getPathInfo info.Args compilerInfo
-            let info = { info with Args = pathInfo }
+        let private (|IsCreateElement|_|) =
+            function
+            | Import({
+                         Selector = "createElement"
+                         Path = "react"
+                     },
+                     _,
+                     _) as e -> Some e
+            | _ -> None
 
-            let t =
-                DeclaredType(
-                    {
-                        FullName = "Fable.Core.JS.Promise`1"
-                        Path = CoreAssemblyName "Fable.Core"
-                    },
-                    [ AnonymousRecordType([| "default" |], [ Type.Any ], false) ]
-                )
+        let rec private (|InnerDeclaredTypeFullName|_|) (type': Type) =
+            match type' with
+            | LambdaType(_, InnerDeclaredTypeFullName returnType) -> Some(returnType)
+            | DeclaredType({ FullName = fullName }, _) -> Some fullName
+            | _ -> None
 
-            Call(relativeImport, info, t, r)
-        | Sequential body ->
-            let next = body |> List.map (transformToDynImport compilerInfo)
-            Sequential next
-        | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
-            // Example:
-            // ```fsharp
-            // [<ReactLazyComponent>]
-            // let LazyCounter(init) = Counter.Counter.Counter(init)
-            // ```
-            transformToDynImport compilerInfo body
-        | TypeCast(body, _) -> transformToDynImport compilerInfo body
-        | _ -> body
+        let rec private (|IsReactElementImport|_|) =
+            function
+            | Import({ Selector = selector; Path = _ }, InnerDeclaredTypeFullName fullName, _) ->
+                Some(selector, fullName)
+            | _ -> None
 
-    let [<Literal; StringSyntax("javascript")>] private ``JS<equalsButFunctions>`` = """function equalsButFunctions(x, y) {
+        let private (|IsObjectExpression|_|) =
+            function
+            | ObjectExpr(properties, _, _) -> Some properties
+            | _ -> None
+
+        let rec private tryGetSourceArgName (arg: Expr) =
+            match arg with
+            | IdentExpr({ Name = name; Range = range }) -> Some(name, range)
+            | Value(ValueKind.NewOption(Some expr, _, _), _) -> tryGetSourceArgName expr
+            | TypeCast(body, _) -> tryGetSourceArgName body
+            | _ -> None
+
+        let verify (body: Expr) (lazyComponentName) (compilerInfo: PluginHelper) : unit =
+            let rec loopAst (body: Expr) : unit =
+                match body with
+                | Call(IsCreateElement _, info, _, _) ->
+
+                    match info.Args with
+                    | IsReactElementImport(sourceComponentName, returnTypeFullName) :: IsObjectExpression properties :: _ ->
+                        if returnTypeFullName.EndsWith "ReactElement" |> not then
+                            let errorMsg =
+                                String.concat "" [
+                                    sprintf
+                                        "The lazy component `%s` call is expected to return a ReactElement. "
+                                        lazyComponentName
+                                    sprintf
+                                        "However, the component being lazily imported `%s` seems to return %s. "
+                                        sourceComponentName
+                                        returnTypeFullName
+                                    "This will likely lead to runtime errors. "
+                                    "To fix this issue, make sure that the component being lazily imported returns a ReactElement."
+                                ]
+
+                            compilerInfo.LogError(errorMsg)
+                            ()
+
+                        let lazyArgList =
+                            properties
+                            |> List.choose (fun property ->
+
+                                match tryGetSourceArgName property.Body with
+                                | Some(argName, range) ->
+                                    // returns sourceName, lazyName and range of the argument.
+                                    Some(property.Name, argName, range)
+                                | None -> None
+                            )
+
+                        if
+                            lazyArgList
+                            |> List.forall (fun (sourceName, lazyName, _) -> sourceName = lazyName)
+                        then
+                            ()
+                        else
+                            let (sourceNames, lazyNames, ranges) = lazyArgList |> List.unzip3
+                            let range = ranges |> List.tryPick id
+
+                            let errorMsg =
+                                String.concat "" [
+                                    "Argument names used in the lazy component call do not match with the ones in the source component. "
+                                    "This will likely lead to runtime errors. "
+                                    "To fix this issue, make sure that argument names used in the lazy component call are exactly the same as the ones in the source component. "
+                                    "\r\n\r\n"
+                                    sprintf "Source component `%s` argument names:\r\n[" sourceComponentName
+                                    (String.concat ", " sourceNames)
+                                    "] "
+                                    "\r\n"
+                                    sprintf "But lazy component `%s` argument names were:\r\n[" lazyComponentName
+                                    (String.concat ", " lazyNames)
+                                    "] "
+                                ]
+
+                            compilerInfo.LogError(errorMsg, ?range = range)
+                    | _ -> ()
+
+                | Sequential body -> body |> List.iter loopAst
+                | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
+                    // Example:
+                    // ```fsharp
+                    // [<ReactLazyComponent>]
+                    // let LazyCounter(init) = Counter.Counter.Counter(init)
+                    // ```
+                    loopAst body
+                | TypeCast(body, _) -> loopAst body
+                | _ -> ()
+
+            loopAst body
+
+        let transformToDynImport (compilerInfo: PluginHelper) (body: Expr) =
+
+            let rec loopAst (body: Expr) =
+                match body with
+                | Call(IsCreateElement _, info, _, r) ->
+
+                    let relativeImport =
+                        IdentExpr {
+                            Name = "import"
+                            Type = Any
+                            IsMutable = false
+                            IsThisArgument = false
+                            IsCompilerGenerated = true
+                            Range = None
+                            IsInlineIfLambda = false
+                        }
+
+                    let pathInfo = getPathInfo info.Args compilerInfo
+                    let info = { info with Args = pathInfo }
+
+                    let t =
+                        DeclaredType(
+                            {
+                                FullName = "Fable.Core.JS.Promise`1"
+                                Path = CoreAssemblyName "Fable.Core"
+                            },
+                            [
+                                AnonymousRecordType([| "default" |], [ Type.Any ], false)
+                            ]
+                        )
+
+                    Call(relativeImport, info, t, r)
+                | Sequential body ->
+                    let next = body |> List.map loopAst
+                    Sequential next
+                | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
+                    // Example:
+                    // ```fsharp
+                    // [<ReactLazyComponent>]
+                    // let LazyCounter(init) = Counter.Counter.Counter(init)
+                    // ```
+                    loopAst body
+                | TypeCast(body, _) -> loopAst body
+                | _ -> body
+
+            loopAst body
+
+    [<Literal; StringSyntax("javascript")>]
+    let private ``JS<equalsButFunctions>`` =
+        """function equalsButFunctions(x, y) {
     if (x === y) {
         return true;
     }
@@ -144,7 +250,14 @@ module internal ReactComponentHelpers =
     }
 }"""
 
-    let applyImportOrMemoOrLazy import from (memo: MemoStrategy option) (lazy': bool option) (compiler: PluginHelper) (decl: MemberDecl) =
+    let applyImportOrMemoOrLazy
+        import
+        from
+        (memo: MemoStrategy option)
+        (lazy': bool option)
+        (compiler: PluginHelper)
+        (decl: MemberDecl)
+        =
 
         match import, from, memo, lazy' with
         | Some _, Some _, _, _ ->
@@ -159,28 +272,27 @@ module internal ReactComponentHelpers =
             }
 
         | _, _, Some memoStrategy, _ ->
-            let memoFn = Sequential [
-                AstUtils.makeImport "default as React" "react"
-                AstUtils.makeImport "memo" "react"
-            ]
-
-            let body = 
-                AstUtils.makeCall memoFn [
-                AstUtils.emitJs (sprintf "function %s(props) { return ($0)(props); }" decl.Name) [
-                    Delegate(decl.Args, decl.Body, Some decl.Name, Tags.empty)
+            let memoFn =
+                Sequential [
+                    AstUtils.makeImport "default as React" "react"
+                    AstUtils.makeImport "memo" "react"
                 ]
-                match memoStrategy with
-                | EqualsShallow -> ()
-                | EqualsCustom js -> 
-                    AstUtils.emitJs js []
-                | FSharpEquality -> 
-                    AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
-                | FSharpEqualityButFunctions ->
-                    AstUtils.emitJs ``JS<equalsButFunctions>`` [
-                        AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
-                    ]
 
-            ]
+            let body =
+                AstUtils.makeCall memoFn [
+                    AstUtils.emitJs (sprintf "function %s(props) { return ($0)(props); }" decl.Name) [
+                        Delegate(decl.Args, decl.Body, Some decl.Name, Tags.empty)
+                    ]
+                    match memoStrategy with
+                    | EqualsShallow -> ()
+                    | EqualsCustom js -> AstUtils.emitJs js []
+                    | FSharpEquality -> AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
+                    | FSharpEqualityButFunctions ->
+                        AstUtils.emitJs ``JS<equalsButFunctions>`` [
+                            AstUtils.ImportFromFableLib.makeImportLib compiler Type.Any "equals" "Util"
+                        ]
+
+                ]
             // Change declaration kind from function to value
             let info =
                 AstUtils.memberName decl.MemberRef
@@ -207,7 +319,7 @@ module internal ReactComponentHelpers =
 
                     let dynImport =
                         // Transform createElement call to dynamic import to file of the component
-                        transformToDynImport compiler body
+                        LazyImportByRef.transformToDynImport compiler body
 
                     let args = [ Delegate([], dynImport, None, Tags.empty) ]
                     args
@@ -234,7 +346,8 @@ module internal ReactComponentHelpers =
 open ReactComponentHelpers
 
 /// <summary>Transforms a function into a React function component. Make sure the function is defined at the module level</summary>
-type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: string, ?memo: MemoStrategy, ?lazy': bool, ?useMemoDirective: bool) =
+type ReactComponentAttribute
+    (?exportDefault: bool, ?import: string, ?from: string, ?memo: MemoStrategy, ?lazy': bool, ?useMemoDirective: bool) =
     inherit MemberDeclarationPluginAttribute()
     override _.FableMinimumVersion = "5.0"
     new() = ReactComponentAttribute(exportDefault = false)
@@ -307,7 +420,8 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                             let name = sprintf "tuple_%d" tupleArgBinding // `.Transform` will create names starting with `tuple_` for a single tuple argument; see #644
                             tupleArgBinding <- tupleArgBinding + 1
                             name, expr
-                        ]) // if input is a single tupled argument, we don't have names
+                          ]
+                    ) // if input is a single tupled argument, we don't have names
                     |> AstUtils.objExpr
 
                 let reactEl = AstUtils.createElement reactElType [ reactComponent; propsObj ]
@@ -394,7 +508,8 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                             | _ -> None
 
                         | Declaration.ActionDeclaration _action -> None
-                        | _ -> None)
+                        | _ -> None
+                    )
 
                 match definedInThisFileAndIsUpperCase with
                 | Some recordTypeName ->
@@ -416,17 +531,15 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                     // nothing to report
                     ()
 
-                let body =
-                    decl.Body
-                    |> injectUseMemoDirective useMemoDirective
+                let body = decl.Body |> injectUseMemoDirective useMemoDirective
+
                 { decl with Body = body }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else if decl.Args.Length = 1 && decl.Args[0].Type = Type.Unit then
                 // remove arguments from functions requiring unit as input
 
-                let body =
-                    decl.Body
-                    |> injectUseMemoDirective useMemoDirective
+                let body = decl.Body |> injectUseMemoDirective useMemoDirective
+
                 { decl with Args = []; Body = body }
                 |> applyImportOrMemoOrLazy import from memo lazy' compiler
             else
@@ -436,16 +549,17 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                 /// let Test2(testing: (int * string * System.Guid)) = ...
                 /// becomes:
                 /// decl.Args: [
-                ///     {Name = "testing_"; Type = System.Int32; IsCompilerGenerated = true}, 
-                ///     {Name = "testing__1"; Type = System.String; IsCompilerGenerated = true}, 
+                ///     {Name = "testing_"; Type = System.Int32; IsCompilerGenerated = true},
+                ///     {Name = "testing__1"; Type = System.String; IsCompilerGenerated = true},
                 ///     {Name = "testing__2"; Type = System.Guid; IsCompilerGenerated = true}
                 /// ]
                 let isPredictedTuple = // https://github.com/fable-hub/Feliz/issues/644
-                    decl.Args.Length > 1 &&
-                    decl.Args.[0].IsCompilerGenerated &&
-                    decl.Args.[0].Name.EndsWith("_") && // e.g.: testing_
-                    decl.Args.[1].IsCompilerGenerated &&
-                    decl.Args.[1].Name.Contains(decl.Args.[0].Name) // e.g.: testing__1
+                    decl.Args.Length > 1
+                    && decl.Args.[0].IsCompilerGenerated
+                    && decl.Args.[0].Name.EndsWith("_")
+                    && // e.g.: testing_
+                    decl.Args.[1].IsCompilerGenerated
+                    && decl.Args.[1].Name.Contains(decl.Args.[0].Name) // e.g.: testing__1
 
                 if isPredictedTuple then
                     let warningMsg =
@@ -455,21 +569,46 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                                 decl.Name
                             "To fix this issue, consider spreading the arguments or using a anonymous record type."
                         ]
+
                     compiler.LogWarning(warningMsg, ?range = decl.Body.Range)
 
+                // This is a transpile time check for lazy import by reference, e.g.
+                // `let LazyCounter (texti, id) = CodeSplitting.CodeSplitting.MyCodeSplitComponent(text = texti, testId = id)`)
+                //
+                // The example above will fail, as we expect lazy call argument names to match with the source component argument names. In this case, we expect `text` and `testId` instead of `texti` and `id`. This check will create transpile time errors in this case.
+                //
+                // Why? The generated code will be:
+                // ```fsharp
+                // export const LazyCounter: any = lazy((): Promise<{ default: any }> => {
+                //     return import("./CodeSplitting.tsx");
+                // });
+                //
+                // createElement(LazyCounter, {
+                //     texti: "This is a lazily loaded component",
+                //     id: "My Id",
+                // })
+                // ```
+                // It uses `texti` and `id` instead of `text` and `testId` which are the expected argument names in the source component. This will likely lead to runtime errors because the lazy component won't receive the expected props.
+                if lazy'.IsSome && lazy'.Value then
+                    ReactComponentHelpers.LazyImportByRef.verify decl.Body decl.Name compiler
+
+                let fieldNames, genericArgs =
+                    decl.Args
+                    |> List.mapi (fun i arg ->
+                        if isPredictedTuple then
+                            "tuple_" + string i, arg.Type
+                        else
+                            arg.DisplayName, arg.Type
+                    )
+                    |> List.unzip
+
                 let propsArg =
-                    let fieldNames, genericArgs =
-                        decl.Args 
-                        |> List.mapi (fun i arg -> 
-                            if isPredictedTuple then
-                                "tuple_" + string i, arg.Type
-                            else
-                                arg.DisplayName, arg.Type
-                        ) 
-                        |> List.unzip
+
                     let type_ =
                         Fable.Type.AnonymousRecordType(Array.ofList fieldNames, genericArgs, false)
+
                     let mutable propsName = "$props"
+
                     while fieldNames |> List.contains propsName do
                         propsName <- propsName + "_"
 
@@ -481,7 +620,8 @@ type ReactComponentAttribute(?exportDefault: bool, ?import: string, ?from: strin
                         let getterKey = if arg.DisplayName = "key" then "$key" else arg.DisplayName
                         let getterKind = ExprGet(AstUtils.makeStrConst getterKey)
                         let getter = Get(IdentExpr propsArg, getterKind, Any, None)
-                        (arg, getter) :: bindings)
+                        (arg, getter) :: bindings
+                    )
                     |> List.rev
 
                 let body =
@@ -509,23 +649,23 @@ type ReactMemoComponentAttribute private (?memo: MemoStrategy, ?useMemoDirective
             lazy' = false,
             ?useMemoDirective = useMemoDirective
         )
-    new() =
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsShallow, ?useMemoDirective = None)
+
+    new() = ReactMemoComponentAttribute(memo = MemoStrategy.EqualsShallow, ?useMemoDirective = None)
     /// <summary>
     /// This constructor is meant to be used with **React Compiler** in annotation mode.
-    /// 
+    ///
     /// - `true` -> "use memo"
     /// - `false` -> "use no memo"
-    /// </summary> 
-    new(useMemoDirective: bool) = 
-        ReactMemoComponentAttribute(?memo = None, useMemoDirective = useMemoDirective)
-    new([<StringSyntax("javascript")>] areEqual:string) = 
-        ReactMemoComponentAttribute(memo=MemoStrategy.EqualsCustom areEqual, ?useMemoDirective = None)
-    
+    /// </summary>
+    new(useMemoDirective: bool) = ReactMemoComponentAttribute(?memo = None, useMemoDirective = useMemoDirective)
+
+    new([<StringSyntax("javascript")>] areEqual: string) =
+        ReactMemoComponentAttribute(memo = MemoStrategy.EqualsCustom areEqual, ?useMemoDirective = None)
+
     /// <summary>
     /// Transforms a function into a React memoized function component
     /// using predefined equality strategies.
-    /// 
+    ///
     /// - ``1``: FsEquals - uses F# structural equality
     /// - ``2``: FsEqualsButFunctions - uses F# structural equality but ignores function properties
     /// </summary>
@@ -536,7 +676,8 @@ type ReactMemoComponentAttribute private (?memo: MemoStrategy, ?useMemoDirective
             | 0 -> MemoStrategy.FSharpEquality
             | 1 -> MemoStrategy.FSharpEqualityButFunctions
             | _ -> MemoStrategy.FSharpEquality // default case, should not happen
-        ReactMemoComponentAttribute(memo=memoStrategy)
+
+        ReactMemoComponentAttribute(memo = memoStrategy)
 
 type ReactLazyComponentAttribute() =
     inherit ReactComponentAttribute(false, ?import = None, ?from = None, ?memo = None, lazy' = true)

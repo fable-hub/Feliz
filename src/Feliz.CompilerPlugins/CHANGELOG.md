@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.2.0 - 2026-05-12
+
+### ✨ Added
+
+- Added transpile time check for `[<ReactLazyComponent>]`. Ensure that argument names in lazy component call sides match argument names in lazy loaded source component. #712 (by @Freymaurer)
+
 ## 3.1.0 - 2026-03-20
 
 ### 🔄 Changed

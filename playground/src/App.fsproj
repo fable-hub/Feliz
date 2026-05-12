@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Include="Shared.fs" />
+    <Compile Include="UseElmishExample.fs" />
     <Compile Include="CodeSplitting.fs" />
     <Compile Include="Components.fs" />
     <Compile Include="App.fs" />
@@ -15,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Feliz\Feliz.fsproj" />
+    <ProjectReference Include="..\..\src\Feliz.UseElmish\Feliz.UseElmish.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

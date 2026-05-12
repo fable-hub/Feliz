@@ -22,6 +22,16 @@
     <Compile Include="Basic.test.fs" />
     <Compile Include="ReactBindings/Context.test.fs" />
     <Compile Include="ReactBindings/Fragment.test.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Fixtures/Models.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Fixtures/LazyLoadWrapper.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Sources/TupledSource.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Sources/CurriedSource.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Sources/AnonRecordSource.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Sources/RecordClassSource.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Wrappers/ByReference.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Wrappers/ByPath.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/Loading.test.fs" />
+    <Compile Include="ReactBindings/ReactLazyComponent/InputArgs.test.fs" />
     <Compile Include="ReactBindings/Lazy.test.fs" />
     <Compile Include="ReactBindings/Memo.test.fs" />
     <Compile Include="ReactBindings/MemoAttribute.test.fs" />
