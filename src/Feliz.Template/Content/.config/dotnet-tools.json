@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "fable": {
-      "version": "5.0.0-rc.5",
+      "version": "5.0.0",
       "commands": [
         "fable"
       ],
@@ -17,7 +17,7 @@
       "rollForward": false
     },
     "fantomas": {
-      "version": "7.0.1",
+      "version": "7.0.5",
       "commands": [
         "fantomas"
       ],
