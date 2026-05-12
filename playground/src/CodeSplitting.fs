@@ -20,10 +20,28 @@ type CodeSplitting =
             prop.text text
         ]
 
-    [<ReactComponent(true)>]
+    [<ReactComponent>]
     static member MyCodeSplitComponentCurried (text: string) (testId: string option) =
         Html.div [
             if testId.IsSome then
                 prop.testId testId.Value
             prop.text text
         ]
+
+    [<ReactComponent>]
+    static member MyCodeSplitComponentWithAnoRecord
+        (props:
+            {|
+                text: string
+                testId: string option
+            |})
+        =
+        Html.div [
+            if props.testId.IsSome then
+                prop.testId props.testId.Value
+            prop.text props.text
+        ]
+
+    [<ReactComponent(true)>]
+    static member MyCodeSplitComponentTupledWithPrimitives(x: int, y: float) =
+        Html.div [ prop.text (sprintf "%i-%f" x y) ]

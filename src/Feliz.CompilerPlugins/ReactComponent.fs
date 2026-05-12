@@ -119,15 +119,16 @@ module internal ReactComponentHelpers =
                      _) as e -> Some e
             | _ -> None
 
-        let private (|IsReactElementImport|_|) =
+        let rec private (|InnerDeclaredTypeFullName|_|) (type': Type) =
+            match type' with
+            | LambdaType(_, InnerDeclaredTypeFullName returnType) -> Some(returnType)
+            | DeclaredType({ FullName = fullName }, _) -> Some fullName
+            | _ -> None
+
+        let rec private (|IsReactElementImport|_|) =
             function
-            | Import({ Selector = selector; Path = _ },
-                     LambdaType(_,
-                                DeclaredType({
-                                                 FullName = "Fable.React.ReactElement"
-                                             },
-                                             _)),
-                     _) -> Some selector
+            | Import({ Selector = selector; Path = _ }, InnerDeclaredTypeFullName fullName, _) ->
+                Some(selector, fullName)
             | _ -> None
 
         let private (|IsObjectExpression|_|) =
@@ -148,7 +149,23 @@ module internal ReactComponentHelpers =
                 | Call(IsCreateElement _, info, _, _) ->
 
                     match info.Args with
-                    | IsReactElementImport sourceComponentName :: IsObjectExpression properties :: _ ->
+                    | IsReactElementImport(sourceComponentName, returnTypeFullName) :: IsObjectExpression properties :: _ ->
+                        if returnTypeFullName.EndsWith "ReactElement" |> not then
+                            let errorMsg =
+                                String.concat "" [
+                                    sprintf
+                                        "The lazy component `%s` call is expected to return a ReactElement. "
+                                        lazyComponentName
+                                    sprintf
+                                        "However, the component being lazily imported `%s` seems to return %s. "
+                                        sourceComponentName
+                                        returnTypeFullName
+                                    "This will likely lead to runtime errors. "
+                                    "To fix this issue, make sure that the component being lazily imported returns a ReactElement."
+                                ]
+
+                            compilerInfo.LogError(errorMsg)
+                            ()
 
                         let lazyArgList =
                             properties
@@ -612,7 +629,6 @@ type ReactComponentAttribute
                 // ```
                 // It uses `texti` and `id` instead of `text` and `testId` which are the expected argument names in the source component. This will likely lead to runtime errors because the lazy component won't receive the expected props.
                 if lazy'.IsSome && lazy'.Value then
-
                     ReactComponentHelpers.LazyImportByRef.verify decl.Body decl.Name compiler
 
                 let fieldNames, genericArgs =

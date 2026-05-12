@@ -33,16 +33,16 @@ type Source =
 
     let primitiveSourceCode =
         """
-module LazyImportFixtures.SourcePrimitiveTupled
+module Source
 
 open Fable.Core
 open Feliz
 
 [<Erase; Mangle(false)>]
-type SourceExports =
+type Source =
 
     [<ReactComponent(true)>]
-    static member PrimitiveTupled (x: int, y: float) =
+    static member MyCodeSplitComponent (x: int, y: float) =
         Html.div [ prop.text (sprintf "%i-%f" x y) ]
 """
 
@@ -88,11 +88,14 @@ module RecordTypeInput =
         """
 module Types
 
+type PayloadClass(label: string) =
+    member _.Label = label
+
 type PayloadRecord = {
     Id: int
     Name: string option
     Meta: {| Flag: bool |}
-    Owner: payloadClass
+    Owner: PayloadClass
 }
 """
 

@@ -7,8 +7,8 @@ open Browser.Dom
 open Shared
 
 [<ReactLazyComponent>]
-let LazyCounter (texti, id) =
-    CodeSplitting.CodeSplitting.MyCodeSplitComponent(texti, id)
+let LazyCounter (a: int, b: float) : ReactElement =
+    CodeSplitting.CodeSplitting.MyCodeSplitComponentTupledWithPrimitives(a, b)
 
 
 [<ReactComponent(true)>]
@@ -27,8 +27,13 @@ let Main () =
             if render then
                 React.Suspense(
                     [
-                        Html.h1 "Hello from the main app!"
-                        LazyCounter("This is a lazily loaded component", "My Id")
+                        Html.div [
+                            prop.style [ style.border (1, borderStyle.solid, color.red) ]
+                            prop.children [
+                                Html.text "Below you can find the lazy loaded component:"
+                                LazyCounter(42, 3.14)
+                            ]
+                        ]
                     ],
                     Html.div "Loading..."
                 )

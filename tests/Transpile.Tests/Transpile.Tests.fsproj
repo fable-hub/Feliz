@@ -12,6 +12,9 @@
     <Compile Include="TranspileFailure.test.fs" />
     <Compile Include="ParallelIsolation.test.fs" />
     <Compile Include="ReactLazyComponentTests\ReactLazyComponentSuccess.test.fs" />
+    <Compile Include="ReactLazyComponentTests\ReactLazyImportByRef.SharedFixtures.fs" />
+    <Compile Include="ReactLazyComponentTests\ReactLazyImportByRefSuccess.test.fs" />
+    <Compile Include="ReactLazyComponentTests\ReactLazyImportByRefFailure.test.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 
