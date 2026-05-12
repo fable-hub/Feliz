@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.3.2 - 2026-05-12
+
+### 🔄 Fixed
+
+- Update for new Feliz.CompilerPlugins, including transpile time check for `[<ReactLazyComponent>]` to ensure that argument names in lazy component call sides match argument names in lazy loaded source component. #712 (by @Freymaurer)
+
 ## 3.3.1 - 2026-04-20
 
 ### 🐛 Fixed

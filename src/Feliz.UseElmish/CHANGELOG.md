@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 5.0.0 - 2026-05-12
+
+### 🔄 Changed 
+
+- Refactor base logic with added tests. No public API changes (by @Freymaurer)
+
+### 🐛 Fixed
+
+- Registered subscriptions are now properly disposed when component unmounts #711 (by @Freymaurer)
+
 ## 4.2.0 - 2026-03-20
 
 ### 🔄 Changed 
