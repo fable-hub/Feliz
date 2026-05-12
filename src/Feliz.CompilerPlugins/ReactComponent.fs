@@ -23,6 +23,18 @@ type MemoStrategy =
     | FSharpEqualityButFunctions
 
 module internal ReactComponentHelpers =
+
+    /// curried args are lists and tupled args are collected in the first list
+    let collectArgumentNames (args: list<list<Parameter>>) =
+        let acc = System.Collections.Generic.List<string>()
+
+        for argGroup in args do
+            for arg in argGroup do
+                if arg.Name.IsSome then
+                    acc.Add(arg.Name.Value)
+
+        acc
+
     let (|ReactLazyMemo|_|) =
         function
         | Import({ Selector = "memo"; Path = "react" }, _, _) as e -> Some e
@@ -54,16 +66,6 @@ module internal ReactComponentHelpers =
             yield! body
         ]
 
-    let (|IsCreateElement|_|) =
-        function
-        | Import({
-                     Selector = "createElement"
-                     Path = "react"
-                 },
-                 _,
-                 _) as e -> Some e
-        | _ -> None
-
     let mkImportPath (fsharpSourcePath: string) (compilerInfo: PluginHelper) =
         let extensionIndex = fsharpSourcePath.LastIndexOf "."
         fsharpSourcePath.Remove(extensionIndex) + compilerInfo.Options.FileExtension
@@ -78,47 +80,173 @@ module internal ReactComponentHelpers =
 
     ]
 
-    let rec transformToDynImport compilerInfo body =
-        match body with
-        | Call(IsCreateElement _, info, t, r) ->
-            let relativeImport =
-                IdentExpr {
-                    Name = "import"
-                    Type = Any
-                    IsMutable = false
-                    IsThisArgument = false
-                    IsCompilerGenerated = true
-                    Range = None
-                    IsInlineIfLambda = false
-                }
-
-            let pathInfo = getPathInfo info.Args compilerInfo
-            let info = { info with Args = pathInfo }
-
-            let t =
-                DeclaredType(
-                    {
-                        FullName = "Fable.Core.JS.Promise`1"
-                        Path = CoreAssemblyName "Fable.Core"
-                    },
-                    [
-                        AnonymousRecordType([| "default" |], [ Type.Any ], false)
-                    ]
+    let rec tryGetMemberRefFromComponentImport (info: CallInfo) =
+        match info.Args with
+        | args when args.Length > 0 ->
+            match args[0] with
+            | Import({
+                         Selector = _
+                         Path = _
+                         Kind = MemberImport memberRef
+                     },
+                     _,
+                     _) -> Some memberRef
+            | Sequential body ->
+                body
+                |> List.tryPick (
+                    function
+                    | Import({
+                                 Selector = _
+                                 Path = _
+                                 Kind = MemberImport memberRef
+                             },
+                             _,
+                             _) -> Some memberRef
+                    | _ -> None
                 )
+            | _ -> None
+        | _ -> None
 
-            Call(relativeImport, info, t, r)
-        | Sequential body ->
-            let next = body |> List.map (transformToDynImport compilerInfo)
-            Sequential next
-        | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
-            // Example:
-            // ```fsharp
-            // [<ReactLazyComponent>]
-            // let LazyCounter(init) = Counter.Counter.Counter(init)
-            // ```
-            transformToDynImport compilerInfo body
-        | TypeCast(body, _) -> transformToDynImport compilerInfo body
-        | _ -> body
+    module LazyImportByRef =
+
+        let private (|IsCreateElement|_|) =
+            function
+            | Import({
+                         Selector = "createElement"
+                         Path = "react"
+                     },
+                     _,
+                     _) as e -> Some e
+            | _ -> None
+
+        let private (|IsReactElementImport|_|) =
+            function
+            | Import({ Selector = selector; Path = _ },
+                     LambdaType(_,
+                                DeclaredType({
+                                                 FullName = "Fable.React.ReactElement"
+                                             },
+                                             _)),
+                     _) -> Some selector
+            | _ -> None
+
+        let private (|IsObjectExpression|_|) =
+            function
+            | ObjectExpr(properties, _, _) -> Some properties
+            | _ -> None
+
+        let rec private tryGetSourceArgName (arg: Expr) =
+            match arg with
+            | IdentExpr({ Name = name; Range = range }) -> Some(name, range)
+            | Value(ValueKind.NewOption(Some expr, _, _), _) -> tryGetSourceArgName expr
+            | TypeCast(body, _) -> tryGetSourceArgName body
+            | _ -> None
+
+        let verify (body: Expr) (lazyComponentName) (compilerInfo: PluginHelper) : unit =
+            let rec loopAst (body: Expr) : unit =
+                match body with
+                | Call(IsCreateElement _, info, _, _) ->
+
+                    match info.Args with
+                    | IsReactElementImport sourceComponentName :: IsObjectExpression properties :: _ ->
+
+                        let lazyArgList =
+                            properties
+                            |> List.choose (fun property ->
+
+                                match tryGetSourceArgName property.Body with
+                                | Some(argName, range) ->
+                                    // returns sourceName, lazyName and range of the argument.
+                                    Some(property.Name, argName, range)
+                                | None -> None
+                            )
+
+                        if
+                            lazyArgList
+                            |> List.forall (fun (sourceName, lazyName, _) -> sourceName = lazyName)
+                        then
+                            ()
+                        else
+                            let (sourceNames, lazyNames, ranges) = lazyArgList |> List.unzip3
+                            let range = ranges |> List.tryPick id
+
+                            let errorMsg =
+                                String.concat "" [
+                                    "Argument names used in the lazy component call do not match with the ones in the source component. "
+                                    "This will likely lead to runtime errors. "
+                                    "To fix this issue, make sure that argument names used in the lazy component call are exactly the same as the ones in the source component. "
+                                    "\r\n\r\n"
+                                    sprintf "Source component `%s` argument names:\r\n[" sourceComponentName
+                                    (String.concat ", " sourceNames)
+                                    "] "
+                                    "\r\n"
+                                    sprintf "But lazy component `%s` argument names were:\r\n[" lazyComponentName
+                                    (String.concat ", " lazyNames)
+                                    "] "
+                                ]
+
+                            compilerInfo.LogError(errorMsg, ?range = range)
+                    | _ -> ()
+
+                | Sequential body -> body |> List.iter loopAst
+                | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
+                    // Example:
+                    // ```fsharp
+                    // [<ReactLazyComponent>]
+                    // let LazyCounter(init) = Counter.Counter.Counter(init)
+                    // ```
+                    loopAst body
+                | TypeCast(body, _) -> loopAst body
+                | _ -> ()
+
+            loopAst body
+
+        let transformToDynImport (compilerInfo: PluginHelper) (body: Expr) =
+
+            let rec loopAst (body: Expr) =
+                match body with
+                | Call(IsCreateElement _, info, _, r) ->
+
+                    let relativeImport =
+                        IdentExpr {
+                            Name = "import"
+                            Type = Any
+                            IsMutable = false
+                            IsThisArgument = false
+                            IsCompilerGenerated = true
+                            Range = None
+                            IsInlineIfLambda = false
+                        }
+
+                    let pathInfo = getPathInfo info.Args compilerInfo
+                    let info = { info with Args = pathInfo }
+
+                    let t =
+                        DeclaredType(
+                            {
+                                FullName = "Fable.Core.JS.Promise`1"
+                                Path = CoreAssemblyName "Fable.Core"
+                            },
+                            [
+                                AnonymousRecordType([| "default" |], [ Type.Any ], false)
+                            ]
+                        )
+
+                    Call(relativeImport, info, t, r)
+                | Sequential body ->
+                    let next = body |> List.map loopAst
+                    Sequential next
+                | Let(_, _, body) -> // This case is relevant when props are used to hint at optional parameters
+                    // Example:
+                    // ```fsharp
+                    // [<ReactLazyComponent>]
+                    // let LazyCounter(init) = Counter.Counter.Counter(init)
+                    // ```
+                    loopAst body
+                | TypeCast(body, _) -> loopAst body
+                | _ -> body
+
+            loopAst body
 
     [<Literal; StringSyntax("javascript")>]
     let private ``JS<equalsButFunctions>`` =
@@ -213,7 +341,7 @@ module internal ReactComponentHelpers =
 
                     let dynImport =
                         // Transform createElement call to dynamic import to file of the component
-                        transformToDynImport compiler body
+                        LazyImportByRef.transformToDynImport compiler body
 
                     let args = [ Delegate([], dynImport, None, Tags.empty) ]
                     args
@@ -466,26 +594,38 @@ type ReactComponentAttribute
 
                     compiler.LogWarning(warningMsg, ?range = decl.Body.Range)
 
-
+                // This is a transpile time check for lazy import by reference, e.g.
+                // `let LazyCounter (texti, id) = CodeSplitting.CodeSplitting.MyCodeSplitComponent(text = texti, testId = id)`)
+                //
+                // The example above will fail, as we expect lazy call argument names to match with the source component argument names. In this case, we expect `text` and `testId` instead of `texti` and `id`. This check will create transpile time errors in this case.
+                //
+                // Why? The generated code will be:
+                // ```fsharp
+                // export const LazyCounter: any = lazy((): Promise<{ default: any }> => {
+                //     return import("./CodeSplitting.tsx");
+                // });
+                //
+                // createElement(LazyCounter, {
+                //     texti: "This is a lazily loaded component",
+                //     id: "My Id",
+                // })
+                // ```
+                // It uses `texti` and `id` instead of `text` and `testId` which are the expected argument names in the source component. This will likely lead to runtime errors because the lazy component won't receive the expected props.
                 if lazy'.IsSome && lazy'.Value then
-                    printfn "---"
-                    printfn "%A" decl.Body
-                    printfn "---"
-                    printfn "---"
-                    printfn "---"
-                    printfn "---"
-                    printfn "---"
+
+                    ReactComponentHelpers.LazyImportByRef.verify decl.Body decl.Name compiler
+
+                let fieldNames, genericArgs =
+                    decl.Args
+                    |> List.mapi (fun i arg ->
+                        if isPredictedTuple then
+                            "tuple_" + string i, arg.Type
+                        else
+                            arg.DisplayName, arg.Type
+                    )
+                    |> List.unzip
 
                 let propsArg =
-                    let fieldNames, genericArgs =
-                        decl.Args
-                        |> List.mapi (fun i arg ->
-                            if isPredictedTuple then
-                                "tuple_" + string i, arg.Type
-                            else
-                                arg.DisplayName, arg.Type
-                        )
-                        |> List.unzip
 
                     let type_ =
                         Fable.Type.AnonymousRecordType(Array.ofList fieldNames, genericArgs, false)

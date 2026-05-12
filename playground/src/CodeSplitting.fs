@@ -6,7 +6,7 @@ open Feliz
 [<Erase; Mangle(false)>]
 type CodeSplitting =
 
-    [<ReactComponent(true)>]
+    [<ReactComponent>]
     static member MyCodeSplitComponent
         (text: string, ?testId: string, ?className: string, ?onClick: Browser.Types.MouseEvent -> unit)
         =
@@ -17,5 +17,13 @@ type CodeSplitting =
                 prop.className className.Value
             if onClick.IsSome then
                 prop.onClick onClick.Value
+            prop.text text
+        ]
+
+    [<ReactComponent(true)>]
+    static member MyCodeSplitComponentCurried (text: string) (testId: string option) =
+        Html.div [
+            if testId.IsSome then
+                prop.testId testId.Value
             prop.text text
         ]
