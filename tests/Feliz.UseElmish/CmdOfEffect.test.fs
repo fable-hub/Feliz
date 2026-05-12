@@ -112,7 +112,7 @@ module EffectHarness =
             Html.h2 [ prop.testId TestIds.Status; prop.text model.Status ]
         ]
 
-describeTags "UseElmish Cmd.ofEffect" [ "activeDev" ]
+describeTags "UseElmish Cmd.ofEffect" []
 <| fun () ->
     testPromise "Cmd.ofEffect dispatches one message"
     <| fun () -> promise {
@@ -164,4 +164,3 @@ describeTags "UseElmish Cmd.ofEffect" [ "activeDev" ]
                 expect(render.getByTestId TestIds.Status).toHaveTextContent "effect"
             )
     }
-

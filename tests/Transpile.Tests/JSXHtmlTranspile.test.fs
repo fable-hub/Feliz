@@ -29,7 +29,7 @@ let jsxHtmlTranspileTests =
         test "transpiles minimal JSX component and emits stable code markers" {
             let spec = createSnippet "jsx-html-success" jsxHtmlSnippet
 
-            withTranspileSuccessKeepArtifacts
+            withTranspileSuccess
                 spec
                 (fun success ->
                     let output = readSourceOutput success

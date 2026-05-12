@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react';
-import { time } from 'console';
 
 console.log('loading vitest config');
 

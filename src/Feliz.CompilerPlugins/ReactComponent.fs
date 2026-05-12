@@ -23,18 +23,6 @@ type MemoStrategy =
     | FSharpEqualityButFunctions
 
 module internal ReactComponentHelpers =
-
-    /// curried args are lists and tupled args are collected in the first list
-    let collectArgumentNames (args: list<list<Parameter>>) =
-        let acc = System.Collections.Generic.List<string>()
-
-        for argGroup in args do
-            for arg in argGroup do
-                if arg.Name.IsSome then
-                    acc.Add(arg.Name.Value)
-
-        acc
-
     let (|ReactLazyMemo|_|) =
         function
         | Import({ Selector = "memo"; Path = "react" }, _, _) as e -> Some e
@@ -79,33 +67,6 @@ module internal ReactComponentHelpers =
             | _ -> ()
 
     ]
-
-    let rec tryGetMemberRefFromComponentImport (info: CallInfo) =
-        match info.Args with
-        | args when args.Length > 0 ->
-            match args[0] with
-            | Import({
-                         Selector = _
-                         Path = _
-                         Kind = MemberImport memberRef
-                     },
-                     _,
-                     _) -> Some memberRef
-            | Sequential body ->
-                body
-                |> List.tryPick (
-                    function
-                    | Import({
-                                 Selector = _
-                                 Path = _
-                                 Kind = MemberImport memberRef
-                             },
-                             _,
-                             _) -> Some memberRef
-                    | _ -> None
-                )
-            | _ -> None
-        | _ -> None
 
     module LazyImportByRef =
 

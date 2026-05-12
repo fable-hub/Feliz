@@ -21,8 +21,6 @@ module UseElmishHelper =
 
 module private Util =
 
-    /// This must stay inline. As the module is private, the
-
     [<Emit "setTimeout($0)">]
     let setTimeout (callback: unit -> unit) : unit = jsNative
 
