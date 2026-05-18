@@ -213,20 +213,6 @@ useEffect(() => {
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     [<Hook>]
-    static member inline useEffectOnce(setup: Func<unit, (unit -> unit)>) : unit =
-        JsInterop.emitJsExpr
-            (setup)
-            "import {useEffect} from 'react';
-useEffect(() => {
-        const setup = $0();
-        return setup;
-        }, []);"
-
-    /// The `useEffect` hook that creates a disposable effect for React function components.
-    /// This effect has no dependencies which means the effect is re-executed on every re-render.
-    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
-    /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
-    [<Hook>]
     static member inline useEffectOnce(setup: unit -> (unit -> unit)) : unit =
         React.useEffect (Func<_, _> setup, [||])
 
@@ -313,22 +299,8 @@ useLayoutEffect(() => {
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffectOnce(setup: Func<unit, (unit -> unit)>) : unit =
-        JsInterop.emitJsExpr
-            (setup)
-            "import {useLayoutEffect} from 'react';
-useLayoutEffect(() => {
-        const setup = $0();
-        return setup;
-        }, []);"
-
-    /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
-    /// This effect has no dependencies which means the effect is re-executed on every re-render.
-    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
-    /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
-    /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
     static member inline useLayoutEffectOnce(setup: unit -> (unit -> unit)) : unit =
-        React.useLayoutEffectOnce (Func<_, _> setup)
+        React.useLayoutEffect (Func<_, _> setup, [||])
 
     /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.

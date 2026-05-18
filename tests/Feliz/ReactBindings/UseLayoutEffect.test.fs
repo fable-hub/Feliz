@@ -73,7 +73,7 @@ module Components =
 
             ]
 
-        // #714
+        /// #714
         [<ReactComponent>]
         static member OnlyCleanup(disposeEffect: unit -> unit) =
             React.useLayoutEffectOnce ((fun () -> fun () -> disposeEffect ()))
