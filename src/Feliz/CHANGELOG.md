@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.3.3 - 2026-05-18
+
+### 🔄 Fixed
+
+- Update `React.useEffect`, `React.useEffectOnce`, `React.useLayoutEffect` and `React.useLayoutEffectOnce` to ensure proper cleanup function handling in case of empty body. #714 (by @Freymaurer)
+
 ## 3.3.2 - 2026-05-12
 
 ### 🔄 Fixed
