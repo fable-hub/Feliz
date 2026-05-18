@@ -6,36 +6,33 @@ open Fable.Core.JsInterop
 open Browser.Dom
 open Shared
 
-[<ReactLazyComponent>]
-let LazyCounter (a: int, b: float) : ReactElement =
-    CodeSplitting.CodeSplitting.MyCodeSplitComponentTupledWithPrimitives(a, b)
+// [<ReactLazyComponent>]
+// let LazyCounter (a: int, b: float) : ReactElement =
+//     CodeSplitting.CodeSplitting.MyCodeSplitComponentTupledWithPrimitives(a, b)
 
+type JSX = JSX.Html
+
+[<ReactComponent>]
+let MyComponent () =
+    React.useEffect (fun () -> (fun () -> console.log "Cleaning up MyComponent 1"))
+
+    React.useEffect (fun () ->
+        console.log "Setting up MyComponent 2" // No-op, added so there's something in the body
+        (fun () -> console.log "Cleaning up MyComponent 2")
+    )
+
+    JSX.div [ JSX.h1 "MyComponent" ]
 
 [<ReactComponent(true)>]
 let Main () =
-    let render, setRender = React.useState false
+    let render, setRender = React.useState true
 
-    Html.div [
-        prop.testId "main-app"
-        prop.children [
-            Html.h1 "Hello from the main app!"
-            Html.button [
-                prop.text "Load lazy component"
-                prop.onClick (fun _ -> setRender true)
-            ]
-
-            if render then
-                React.Suspense(
-                    [
-                        Html.div [
-                            prop.style [ style.border (1, borderStyle.solid, color.red) ]
-                            prop.children [
-                                Html.text "Below you can find the lazy loaded component:"
-                                LazyCounter(42, 3.14)
-                            ]
-                        ]
-                    ],
-                    Html.div "Loading..."
-                )
+    JSX.div [
+        JSX.button [
+            prop.text "Toggle MyComponent"
+            prop.onClick (fun _ -> setRender (not render))
         ]
+
+        if render then
+            MyComponent()
     ]

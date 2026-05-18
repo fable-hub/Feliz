@@ -7,24 +7,26 @@ open Browser.Types
 
 module ReactInternal =
 
-    [<Import("createElement","react")>]
-    let createElementWithChildren(``type``: ReactNode, props: obj, [<ParamArray>] children: seq<ReactElement>): ReactElement = jsNative
+    [<Import("createElement", "react")>]
+    let createElementWithChildren
+        (``type``: ReactNode, props: obj, [<ParamArray>] children: seq<ReactElement>)
+        : ReactElement =
+        jsNative
 
-    [<Import("createElement","react")>]
-    let createElementWithChild(``type``: ReactNode, props: obj, children: ReactElement): ReactElement = jsNative
+    [<Import("createElement", "react")>]
+    let createElementWithChild (``type``: ReactNode, props: obj, children: ReactElement) : ReactElement = jsNative
 
-    [<Import("createElement","react")>]
-    let createElementWithProps(``type``: ReactNode, props: obj): ReactElement = jsNative
+    [<Import("createElement", "react")>]
+    let createElementWithProps (``type``: ReactNode, props: obj) : ReactElement = jsNative
 
-    [<Import("createElement","react")>]
-    let createElement(``type``: ReactNode): ReactElement = jsNative
+    [<Import("createElement", "react")>]
+    let createElement (``type``: ReactNode) : ReactElement = jsNative
 
     [<Import("memo", "react")>]
     let memoInternal<'props>
-        (
-            renderElement: 'props -> ReactElement,
-            areEqual: ('props -> 'props -> bool)
-        ) : 'props -> ReactElement = jsNative
+        (renderElement: 'props -> ReactElement, areEqual: ('props -> 'props -> bool))
+        : 'props -> ReactElement =
+        jsNative
 
 
 open ReactInternal
@@ -32,95 +34,98 @@ open ReactInternal
 [<Erase>]
 type ReactLegacy =
 
-    static member inline createElement(``type``: string, props: obj, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(!^``type``, props, children)
+    static member inline createElement(``type``: string, props: obj, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (!^``type``, props, children)
 
-    static member inline createElement(``type``: string, props: obj, children: ReactElement): ReactElement = 
-        createElementWithChild(!^``type``, props, children)
+    static member inline createElement(``type``: string, props: obj, children: ReactElement) : ReactElement =
+        createElementWithChild (!^``type``, props, children)
 
-    static member inline createElement(``type``: string, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(!^``type``, null, children)
+    static member inline createElement(``type``: string, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (!^``type``, null, children)
 
-    static member inline createElement(``type``: string, children: ReactElement): ReactElement = 
-        createElementWithChild(!^``type``, null, children)
+    static member inline createElement(``type``: string, children: ReactElement) : ReactElement =
+        createElementWithChild (!^``type``, null, children)
 
-    static member inline createElement(``type``: string, props: obj): ReactElement = 
-        createElementWithProps(!^``type``, props)
+    static member inline createElement(``type``: string, props: obj) : ReactElement =
+        createElementWithProps (!^``type``, props)
 
-    static member inline createElement(``type``: ReactElement, props: obj, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(!^``type``, props, children)
-    static member inline createElement(``type``: ReactElement, props: obj, children: ReactElement): ReactElement = 
-        createElementWithChild(!^``type``, props, children)
+    static member inline createElement(``type``: ReactElement, props: obj, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (!^``type``, props, children)
 
-    static member inline createElement(``type``: ReactElement, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(!^``type``, null, children)
-    static member inline createElement(``type``: ReactElement, children: ReactElement): ReactElement = 
-        createElementWithChild(!^``type``, null, children)
+    static member inline createElement(``type``: ReactElement, props: obj, children: ReactElement) : ReactElement =
+        createElementWithChild (!^``type``, props, children)
 
-    static member inline createElement(``type``: ReactElement, props: obj): ReactElement = 
-        createElementWithProps(!^``type``, props)
+    static member inline createElement(``type``: ReactElement, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (!^``type``, null, children)
 
-    static member inline createElement(``type``: ReactNode, props: obj, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(``type``, props, children)
-        
-    static member inline createElement(``type``: ReactNode, props: obj, children: ReactElement): ReactElement = 
-        createElementWithChild(``type``, props, children)
+    static member inline createElement(``type``: ReactElement, children: ReactElement) : ReactElement =
+        createElementWithChild (!^``type``, null, children)
 
-    static member inline createElement(``type``: ReactNode, children: seq<ReactElement>): ReactElement = 
-        createElementWithChildren(``type``, null, children)
+    static member inline createElement(``type``: ReactElement, props: obj) : ReactElement =
+        createElementWithProps (!^``type``, props)
 
-    static member inline createElement(``type``: ReactNode, children: ReactElement): ReactElement = 
-        createElementWithChild(``type``, null, children)
+    static member inline createElement(``type``: ReactNode, props: obj, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (``type``, props, children)
 
-    static member inline createElement(``type``: ReactNode, props: obj): ReactElement = 
-        createElementWithProps(``type``, props)
+    static member inline createElement(``type``: ReactNode, props: obj, children: ReactElement) : ReactElement =
+        createElementWithChild (``type``, props, children)
 
-    static member inline createElement(``type``: ReactNode): ReactElement = 
-        createElement(``type``)
+    static member inline createElement(``type``: ReactNode, children: seq<ReactElement>) : ReactElement =
+        createElementWithChildren (``type``, null, children)
+
+    static member inline createElement(``type``: ReactNode, children: ReactElement) : ReactElement =
+        createElementWithChild (``type``, null, children)
+
+    static member inline createElement(``type``: ReactNode, props: obj) : ReactElement =
+        createElementWithProps (``type``, props)
+
+    static member inline createElement(``type``: ReactNode) : ReactElement = createElement (``type``)
 
 
     [<ImportMember("react")>]
-    static member inline forwardRef(render: 'props * IRefValue<'t> -> ReactElement): ('props * IRefValue<'t> -> ReactElement) = jsNative
+    static member inline forwardRef
+        (render: 'props * IRefValue<'t> -> ReactElement)
+        : ('props * IRefValue<'t> -> ReactElement) =
+        jsNative
 
 
 [<Erase>]
 type React =
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline Fragment (xs: seq<ReactElement>) =
-        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), children = xs)
+    static member inline Fragment(xs: seq<ReactElement>) =
+        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
-    static member inline Fragment (xs: ReactElement) =
-        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), children = xs)
+    static member inline Fragment(xs: ReactElement) =
+        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: int, xs: seq<ReactElement>) = // Fable.React.Helpers.fragment [ !!("key", key) ] xs
-        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key|}, xs)
+        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key |}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: string, xs: seq<ReactElement>) =
-        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key|}, xs)
+        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key |}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: System.Guid, xs: seq<ReactElement>) =
-        ReactLegacy.createElement(unbox<ReactNode> (import "Fragment" "react"), {|key = key.ToString()|}, xs)
+        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key.ToString() |}, xs)
 
     /// Placeholder empty React element to be used when importing external React components with the `[<ReactComponent>]` attribute.
     static member inline Imported() : ReactElement = Fable.Core.JS.undefined
 
     /// Dynamically import a React component from a given path.
-    /// 
+    ///
     /// Designed to be used with `[<ReactLazyComponent>]` attribute.
-    static member inline DynamicImported (path: string) : ReactElement = 
-        Fable.Core.JsInterop.importDynamic path
-        |> unbox
+    static member inline DynamicImported(path: string) : ReactElement =
+        Fable.Core.JsInterop.importDynamic path |> unbox
 
     /// The `useState` hook that creates a state variable for React function components from an initialization function.
     [<ImportMember("react")>]
-    static member inline useState<'t>(initializer: unit -> 't): ('t * ('t -> unit)) = jsNative
+    static member inline useState<'t>(initializer: unit -> 't) : ('t * ('t -> unit)) = jsNative
 
-        /// <summary>
+    /// <summary>
     /// Just like React.useState except that the updater function uses the previous state of the state variable as input and allows you to compute the next value using it.
     /// This is useful in cases where defining helpers functions inside the definition of a React function component would actually cache the initial value (because they become closures) during first render as opposed to using the current value after multiple render cycles.
     ///
@@ -140,21 +145,24 @@ type React =
 
     /// Accepts a reducer and returns the current state paired with a dispatch.
     [<ImportMember("react")>]
-    static member inline useReducer(update: 'state -> 'msg -> 'state, initialState: 'state) : ('state * ('msg -> unit)) = jsNative
+    static member inline useReducer
+        (update: 'state -> 'msg -> 'state, initialState: 'state)
+        : ('state * ('msg -> unit)) =
+        jsNative
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     [<ImportMember("react")>]
-    static member inline useEffect(setup: unit -> unit, ?dependencies: obj []) : unit = jsNative
+    static member inline useEffect(setup: unit -> unit, ?dependencies: obj[]) : unit = jsNative
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
-    // [<ImportMember("react")>]
-    static member inline useEffect(setup: unit -> (unit -> unit), ?dependencies: obj []) : unit = 
+    [<Hook>]
+    static member inline useEffect(setup: Func<unit, (unit -> unit)>, ?dependencies: obj[]) : unit =
         JsInterop.emitJsExpr
             (setup, dependencies)
             "import {useEffect} from 'react';
@@ -163,41 +171,49 @@ useEffect(() => {
         return setup;
         }, $1);"
 
+    /// The `useEffect` hook that creates a disposable effect for React function components.
+    /// This effect has no dependencies which means the effect is re-executed on every re-render.
+    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
+    /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
+    [<Hook>]
+    static member inline useEffect(setup: unit -> (unit -> unit), ?dependencies: obj[]) : unit =
+        React.useEffect (Func<_, _> setup, ?dependencies = dependencies)
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
-    static member inline useEffect(setup: unit -> #IDisposable, ?dependencies: obj []) =
-        React.useEffect(
-            (fun () ->
-                let disp = setup()
+    [<Hook>]
+    static member inline useEffect(setup: unit -> #IDisposable, ?dependencies: obj[]) =
+        React.useEffect (
+            Func<_, _>(fun () ->
+                let disp = setup ()
                 fun () -> disp.Dispose()
-            ), 
+            ),
             ?dependencies = dependencies
         )
 
-
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
-    static member inline useEffect(setup: unit -> #IDisposable option, ?dependencies: obj []) =
+    [<Hook>]
+    static member inline useEffect(setup: unit -> #IDisposable option, ?dependencies: obj[]) =
         React.useEffect (setup >> Helpers.optDispose, ?dependencies = dependencies)
 
-        /// The `useEffect` hook that creates a disposable effect for React function components.
+    /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     [<Hook>]
-    static member inline useEffectOnce(setup: unit -> unit) : unit = React.useEffect(setup, [| |])
+    static member inline useEffectOnce(setup: unit -> unit) : unit = React.useEffect (setup, [||])
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     [<Hook>]
-    static member inline useEffectOnce(setup: unit -> (unit -> unit)) : unit = 
+    static member inline useEffectOnce(setup: Func<unit, (unit -> unit)>) : unit =
         JsInterop.emitJsExpr
             (setup)
             "import {useEffect} from 'react';
@@ -206,15 +222,21 @@ useEffect(() => {
         return setup;
         }, []);"
 
+    /// The `useEffect` hook that creates a disposable effect for React function components.
+    /// This effect has no dependencies which means the effect is re-executed on every re-render.
+    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
+    /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
+    [<Hook>]
+    static member inline useEffectOnce(setup: unit -> (unit -> unit)) : unit =
+        React.useEffect (Func<_, _> setup, [||])
+
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useEffect(disposableEffect, [| |])`.
     [<Hook>]
-    static member inline useEffectOnce(setup: unit -> #IDisposable) =
-        React.useEffect(setup, [||])
-
+    static member inline useEffectOnce(setup: unit -> #IDisposable) = React.useEffect (setup, [||])
 
     /// The `useEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
@@ -233,14 +255,14 @@ useEffect(() => {
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
     [<ImportMember("react")>]
-    static member inline useLayoutEffect(setup: unit -> unit, ?dependencies: obj []) : unit = jsNative
+    static member inline useLayoutEffect(setup: unit -> unit, ?dependencies: obj[]) : unit = jsNative
 
     /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffect(setup: unit -> (unit -> unit), ?dependencies: obj []) : unit = 
+    static member inline useLayoutEffect(setup: Func<unit, (unit -> unit)>, ?dependencies: obj[]) : unit =
         JsInterop.emitJsExpr
             (setup, dependencies)
             "import {useLayoutEffect} from 'react';
@@ -254,12 +276,20 @@ useLayoutEffect(() => {
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffect(setup: unit -> #IDisposable, ?dependencies: obj []) : unit = 
+    static member inline useLayoutEffect(setup: unit -> (unit -> unit), ?dependencies: obj[]) : unit =
+        React.useLayoutEffect (Func<_, _> setup, ?dependencies = dependencies)
+
+    /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
+    /// This effect has no dependencies which means the effect is re-executed on every re-render.
+    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
+    /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
+    /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+    static member inline useLayoutEffect(setup: unit -> #IDisposable, ?dependencies: obj[]) : unit =
         React.useLayoutEffect (
-            (fun () -> 
-                let disp = setup()
+            Func<_, _>(fun () ->
+                let disp = setup ()
                 fun () -> disp.Dispose()
-            ), 
+            ),
             ?dependencies = dependencies
         )
 
@@ -268,23 +298,22 @@ useLayoutEffect(() => {
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffect(setup: unit -> #IDisposable option, ?dependencies: obj []) =
+    static member inline useLayoutEffect(setup: unit -> #IDisposable option, ?dependencies: obj[]) =
         React.useLayoutEffect (setup >> Helpers.optDispose, ?dependencies = dependencies)
-
-        /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
-    /// This effect has no dependencies which means the effect is re-executed on every re-render.
-    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
-    /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
-    /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffectOnce(setup: unit -> unit) : unit = 
-        React.useLayoutEffect(setup, [| |])
 
     /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffectOnce(setup: unit -> (unit -> unit)) : unit = 
+    static member inline useLayoutEffectOnce(setup: unit -> unit) : unit = React.useLayoutEffect (setup, [||])
+
+    /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
+    /// This effect has no dependencies which means the effect is re-executed on every re-render.
+    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
+    /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
+    /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+    static member inline useLayoutEffectOnce(setup: Func<unit, (unit -> unit)>) : unit =
         JsInterop.emitJsExpr
             (setup)
             "import {useLayoutEffect} from 'react';
@@ -298,16 +327,22 @@ useLayoutEffect(() => {
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffectOnce(setup: unit -> #IDisposable) : unit = 
-        React.useLayoutEffect(setup, [||])
+    static member inline useLayoutEffectOnce(setup: unit -> (unit -> unit)) : unit =
+        React.useLayoutEffectOnce (Func<_, _> setup)
 
     /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
     /// This effect has no dependencies which means the effect is re-executed on every re-render.
     /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
     /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
     /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
-    static member inline useLayoutEffectOnce(setup: unit -> #IDisposable option) =
-        React.useLayoutEffect (setup, [||])
+    static member inline useLayoutEffectOnce(setup: unit -> #IDisposable) : unit = React.useLayoutEffect (setup, [||])
+
+    /// The `useLayoutEffect` hook that creates a disposable effect for React function components.
+    /// This effect has no dependencies which means the effect is re-executed on every re-render.
+    /// To make the effect run once (for example you subscribe once to web sockets) then provide an empty array
+    /// for the dependencies: `React.useLayoutEffect(disposableEffect, [| |])`.
+    /// The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+    static member inline useLayoutEffectOnce(setup: unit -> #IDisposable option) = React.useLayoutEffect (setup, [||])
 
     /// Can be used to display a label for custom hooks in React DevTools.
     [<ImportMember("react")>]
@@ -368,15 +403,15 @@ useLayoutEffect(() => {
     /// <param name='createFunction'>A create function returning a value to be memoized.</param>
     /// <param name='dependencies'>An array of dependencies upon which the create function depends.</param>
     [<ImportMember("react")>]
-    static member inline useMemo<'a>(calculateValue: unit -> 'a, dependencies: obj array): 'a = jsNative
+    static member inline useMemo<'a>(calculateValue: unit -> 'a, dependencies: obj array) : 'a = jsNative
 
     /// <summary>
     /// The `useMemo` hook. Returns a memoized value. Pass a "create" function.
-    /// 
+    ///
     /// This will assume an empty array of dependencies, meaning the memoized value will not be recomputed.
     /// </summary>
     /// <param name='createFunction'>A create function returning a value to be memoized.</param>
-    static member inline useMemo<'a>(calculateValue: unit -> 'a): 'a = React.useMemo(calculateValue, [||])
+    static member inline useMemo<'a>(calculateValue: unit -> 'a) : 'a = React.useMemo (calculateValue, [||])
 
 
     //
@@ -390,38 +425,46 @@ useLayoutEffect(() => {
     /// <param name='element'>A render function or a React.functionComponent.</param>
     /// <param name='areEqual'>A custom comparison function to use instead of React's default shallow compare.</param>
     [<Import("memo", "react")>]
-    static member inline memo<'props>(ele: 'props -> ReactElement, ?areEqual: 'props -> 'props -> bool) : MemoComponent<'props> = jsNative
+    static member inline memo<'props>
+        (ele: 'props -> ReactElement, ?areEqual: 'props -> 'props -> bool)
+        : MemoComponent<'props> =
+        jsNative
 
 
-    
+
     /// <summary>
     /// This is a Feliz helper function to call a memo component.
-    /// 
+    ///
     /// </summary>
     /// <remarks>
-    /// 
+    ///
     /// ```fsharp
-    /// let ComponentLazy: {|text: string|} -> ReactElement = 
+    /// let ComponentLazy: {|text: string|} -> ReactElement =
     ///     React.lazy'(fun () ->
     ///         importDynamic "./LazyComponent.jsx"
     ///     )
     /// ```
-    /// 
+    ///
     /// Can be calles like this:
-    /// 
+    ///
     /// ```fsharp
     /// React.lazyRender(ComponentLazy, {|text = "Hello"|})
     /// ```
-    /// 
+    ///
     /// </remarks>
-    static member inline memoRender<'props> (ele: MemoComponent<'props>, props: 'props, ?withKey: 'props -> string) : ReactElement = 
+    static member inline memoRender<'props>
+        (ele: MemoComponent<'props>, props: 'props, ?withKey: 'props -> string)
+        : ReactElement =
         if (Interop.isObject (box props) |> not) then
             Browser.Dom.console.error "React.memoRender: props must be an object."
+
         let props = Interop.setKeyOnObj withKey props
         ReactLegacy.createElement (unbox<ReactElement> ele, props)
 
-    static member inline memoRender<'props> (ele: MemoComponent<unit>, ?withKey: string) : ReactElement = 
-        let props = Interop.setKeyOnObj (withKey |> Option.map (fun k -> fun _ -> k)) (createObj [])
+    static member inline memoRender<'props>(ele: MemoComponent<unit>, ?withKey: string) : ReactElement =
+        let props =
+            Interop.setKeyOnObj (withKey |> Option.map (fun k -> fun _ -> k)) (createObj [])
+
         ReactLegacy.createElement (unbox<ReactElement> ele, props)
 
     //
@@ -460,7 +503,7 @@ useLayoutEffect(() => {
 
     // /// <summary>
     // /// A Consumer component that subscribes to context changes.
-    // /// 
+    // ///
     // /// Recommended to use `useContext` instead of this.
     // /// </summary>
     // /// <param name='contextObject'>A context object returned from a previous React.createContext call.</param>
@@ -501,7 +544,7 @@ useLayoutEffect(() => {
 
     // /// <summary>
     // /// Forwards a given ref, allowing you to pass it further down to a child.
-    // /// 
+    // ///
     // /// In React 19, forwardRef is no longer necessary. Pass ref as a prop instead.
     // /// forwardRef will deprecated in a future release. Learn more [here](https://react.dev/blog/2024/12/05/react-19#ref-as-a-prop).
     // /// </summary>
@@ -522,8 +565,8 @@ useLayoutEffect(() => {
     /// </summary>
     /// <param name='children'>The elements that will be rendered with additional
     /// checks and warnings.</param>
-    static member StrictMode (children: seq<ReactElement>) : ReactElement = 
-        ReactLegacy.createElement(unbox<ReactNode> (import "StrictMode" "react"), children)
+    static member StrictMode(children: seq<ReactElement>) : ReactElement =
+        ReactLegacy.createElement (unbox<ReactNode> (import "StrictMode" "react"), children)
 
     /// <summary>
     /// Lets you define a component that is loaded dynamically. Which helps with code splitting.
@@ -536,7 +579,8 @@ useLayoutEffect(() => {
     ///  Where you would then pass in `fun () -> asyncComponent`.
     /// </param>
     [<Import("lazy", "react")>]
-    static member inline lazy'<'props>(load: unit -> JS.Promise<'props -> ReactElement>): LazyComponent<'props> = jsNative
+    static member inline lazy'<'props>(load: unit -> JS.Promise<'props -> ReactElement>) : LazyComponent<'props> =
+        jsNative
 
     /// <summary>
     /// Lets you define a component that is loaded dynamically. Which helps with code splitting.
@@ -548,59 +592,57 @@ useLayoutEffect(() => {
     ///
     ///  Where you would then pass in `fun () -> asyncComponent`.
     /// </param>
-    static member inline lazy'<'props>(load: Async<'props -> ReactElement>): LazyComponent<'props> = 
+    static member inline lazy'<'props>(load: Async<'props -> ReactElement>) : LazyComponent<'props> =
         React.lazy' (fun () -> load |> Async.StartAsPromise)
 
     /// <summary>
     /// This is a Feliz helper function to call a lazy loaded component.
-    /// 
+    ///
     /// </summary>
     /// <remarks>
-    /// 
+    ///
     /// ```fsharp
-    /// let ComponentLazy: {|text: string|} -> ReactElement = 
+    /// let ComponentLazy: {|text: string|} -> ReactElement =
     ///     React.lazy'(fun () ->
     ///         importDynamic "./LazyComponent.jsx"
     ///     )
     /// ```
-    /// 
+    ///
     /// Can be calles like this:
-    /// 
+    ///
     /// ```fsharp
     /// React.lazyRender(ComponentLazy, {|text = "Hello"|})
     /// ```
-    /// 
+    ///
     /// </remarks>
-    static member inline lazyRender<'props>(lazyComponent: LazyComponent<'props>, props: 'props): ReactElement =
+    static member inline lazyRender<'props>(lazyComponent: LazyComponent<'props>, props: 'props) : ReactElement =
         if (Interop.isObject (box props) |> not) then
             Browser.Dom.console.error "React.lazyRender: props must be an object."
-        ReactLegacy.createElement(
-            unbox<ReactElement> lazyComponent,
-            props
-        )
+
+        ReactLegacy.createElement (unbox<ReactElement> lazyComponent, props)
 
     /// <summary>
     /// This is a Feliz helper function to call a lazy loaded component.
-    /// 
+    ///
     /// </summary>
     /// <remarks>
-    /// 
+    ///
     /// ```fsharp
-    /// let ComponentLazy: {|text: string|} -> ReactElement = 
+    /// let ComponentLazy: {|text: string|} -> ReactElement =
     ///     React.lazy'(fun () ->
     ///         importDynamic "./LazyComponent.jsx"
     ///     )
     /// ```
-    /// 
+    ///
     /// Can be calles like this:
-    /// 
+    ///
     /// ```fsharp
     /// React.lazyRender(ComponentLazy, {|text = "Hello"|})
     /// ```
-    /// 
+    ///
     /// </remarks>
-    static member inline lazyRender(lazyComponent: LazyComponent<unit>): ReactElement =
-        ReactLegacy.createElement(unbox<ReactNode> lazyComponent, props = null)
+    static member inline lazyRender(lazyComponent: LazyComponent<unit>) : ReactElement =
+        ReactLegacy.createElement (unbox<ReactNode> lazyComponent, props = null)
 
     /// <summary>
     /// Lets you specify a loading indicator whenever a child element is not yet ready
@@ -610,10 +652,10 @@ useLayoutEffect(() => {
     /// </summary>
     /// <param name='children'>The elements that will be rendered within the suspense block.</param>
     /// <param name='fallback'>The element that will be rendered while the children are loading.</param>
-    static member inline Suspense(children: seq<ReactElement>, ?fallback: ReactElement) = 
-        ReactLegacy.createElement(
-            unbox<ReactNode> (import "Suspense" "react"), 
-            props = {| fallback = fallback |}, 
+    static member inline Suspense(children: seq<ReactElement>, ?fallback: ReactElement) =
+        ReactLegacy.createElement (
+            unbox<ReactNode> (import "Suspense" "react"),
+            props = {| fallback = fallback |},
             children = children
         )
 
@@ -625,7 +667,8 @@ useLayoutEffect(() => {
     /// <param name='createHandle'>A function that returns a new ref with changed behavior.</param>
     /// <param name='dependencies'>An array of dependencies upon which the imperative handle function depends.</param>
     [<ImportMember("react")>]
-    static member inline useImperativeHandle(ref: IRefValue<'t>, createHandle: unit -> 't, ?dependencies: obj[]) = jsNative
+    static member inline useImperativeHandle(ref: IRefValue<'t>, createHandle: unit -> 't, ?dependencies: obj[]) =
+        jsNative
 
     /// <summary>
     /// Subscribes to a data source, and returns the current value from it.
@@ -634,7 +677,13 @@ useLayoutEffect(() => {
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
     [<ImportMember("react")>]
-    static member inline useSyncExternalStore(subscribe: UseSyncExternalStoreSubscribe, getSnapshot: UseSyncExternalStoreSnapshot<'T>, ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>): 'T = jsNative
+    static member inline useSyncExternalStore
+        (
+            subscribe: UseSyncExternalStoreSubscribe,
+            getSnapshot: UseSyncExternalStoreSnapshot<'T>,
+            ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>
+        ) : 'T =
+        jsNative
 
     /// <summary>
     /// Subscribes to a data source, and returns the current value from it.
@@ -642,8 +691,17 @@ useLayoutEffect(() => {
     /// <param name='subscribe'>A function that sets up a subscription to the external data source. It receives a callback to be called when the data source changes.</param>
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
-    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> (unit -> unit), getSnapshot: UseSyncExternalStoreSnapshot<'T>, ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>): 'T = 
-        React.useSyncExternalStore( UseSyncExternalStoreSubscribe subscribe, getSnapshot, ?getServerSnapshot = getServerSnapshot)
+    static member inline useSyncExternalStore
+        (
+            subscribe: (unit -> unit) -> (unit -> unit),
+            getSnapshot: UseSyncExternalStoreSnapshot<'T>,
+            ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>
+        ) : 'T =
+        React.useSyncExternalStore (
+            UseSyncExternalStoreSubscribe subscribe,
+            getSnapshot,
+            ?getServerSnapshot = getServerSnapshot
+        )
 
     /// <summary>
     /// Subscribes to a data source, and returns the current value from it.
@@ -651,18 +709,23 @@ useLayoutEffect(() => {
     /// <param name='subscribe'>A function that sets up a subscription to the external data source. It receives a callback to be called when the data source changes.</param>
     /// <param name='getSnapshot'>A function that returns the current value of the external data source.</param>
     /// <returns>The current value from the external data source.</returns>
-    static member inline useSyncExternalStore(subscribe: (unit -> unit) -> #IDisposable, getSnapshot: UseSyncExternalStoreSnapshot<'T>, ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>): 'T =
-        React.useSyncExternalStore( UseSyncExternalStoreSubscribe
-            (fun (callback) ->
-                let disp = subscribe(callback)
+    static member inline useSyncExternalStore
+        (
+            subscribe: (unit -> unit) -> #IDisposable,
+            getSnapshot: UseSyncExternalStoreSnapshot<'T>,
+            ?getServerSnapshot: UseSyncExternalStoreSnapshot<'T>
+        ) : 'T =
+        React.useSyncExternalStore (
+            UseSyncExternalStoreSubscribe(fun (callback) ->
+                let disp = subscribe (callback)
                 fun () -> disp.Dispose()
-            ), 
+            ),
             getSnapshot,
             ?getServerSnapshot = getServerSnapshot
         )
 
 
-// This extensions module is required to help f# compiler understand overloads. 
+// This extensions module is required to help f# compiler understand overloads.
 // Without this, for me the compiler was unable to resolve e.g. `useState` overload between `'t` and `unit -> 't`
 [<AutoOpen>]
 module ReactExtensions =
@@ -670,14 +733,17 @@ module ReactExtensions =
     type ReactContext<'a> with
         member inline this.Provider(value: 'a, children: ReactElement) : ReactElement =
             ReactLegacy.createElement (unbox<ReactNode> this, {| value = value |}, children)
+
         member inline this.Provider(value: 'a, children: seq<ReactElement>) : ReactElement =
             ReactLegacy.createElement (unbox<ReactNode> this, {| value = value |}, children)
+
         member inline this.Consumer(children: ReactElement) : ReactElement =
             ReactLegacy.createElement (unbox<ReactNode> this?Consumer, children)
+
         member inline this.Consumer(children: seq<ReactElement>) : ReactElement =
             ReactLegacy.createElement (unbox<ReactNode> this?Consumer, children)
 
     type React with
         /// The `useState` hook that creates a state variable for React function components from an initialization function.
         [<ImportMember("react")>]
-        static member inline useState<'t>(init: 't): ('t * ('t -> unit)) = jsNative
+        static member inline useState<'t>(init: 't) : ('t * ('t -> unit)) = jsNative
