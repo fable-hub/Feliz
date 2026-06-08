@@ -97,7 +97,7 @@ type Main =
 
 ```bash
 # install the template (if you haven't already)
-dotnet new -i Feliz.Template
+dotnet new install Feliz.Template
 # create a new Feliz project from the installed template
 dotnet new feliz -n MyProject
 # navigate to the created project folder
