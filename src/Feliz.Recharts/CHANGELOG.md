@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 5.1.1 - 2026-07-09
+
+### 🐛 Fixed
+
+- `Feliz.Recharts.line.strokeOpacity` incorrectly emit `stroke-opacity` instead of `strokeOpacity`. #718 (by @Freymaurer, @projecteon)
+
 ## 5.1.0 - 2026-03-20
 
 ### 🔄 Changed 
