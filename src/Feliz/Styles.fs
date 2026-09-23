@@ -3482,6 +3482,8 @@ module style =
         static member inline visible = StyleHelper.mkStyle "overflow" "visible"
         /// The content is clipped - and no scrolling mechanism is provided.
         static member inline hidden = StyleHelper.mkStyle "overflow" "hidden"
+        /// The content is clipped - and no scrolling mechanism is provided. Additionally, programmatic scrolling is also blocked.
+        static member inline clip = StyleHelper.mkStyle "overflow" "clip"
         /// The content is clipped and a scrolling mechanism is provided.
         static member inline scroll = StyleHelper.mkStyle "overflow" "scroll"
         /// Should cause a scrolling mechanism to be provided for overflowing boxes
@@ -3497,6 +3499,8 @@ module style =
         static member inline visible = StyleHelper.mkStyle "overflowX" "visible"
         /// The content is clipped - and no scrolling mechanism is provided.
         static member inline hidden = StyleHelper.mkStyle "overflowX" "hidden"
+        /// The content is clipped - and no scrolling mechanism is provided. Additionally, programmatic scrolling is also blocked.
+        static member inline clip = StyleHelper.mkStyle "overflowX" "clip"
         /// The content is clipped and a scrolling mechanism is provided.
         static member inline scroll = StyleHelper.mkStyle "overflowX" "scroll"
         /// Should cause a scrolling mechanism to be provided for overflowing boxes
@@ -3662,6 +3666,8 @@ module style =
         static member inline visible = StyleHelper.mkStyle "overflowY" "visible"
         /// The content is clipped - and no scrolling mechanism is provided.
         static member inline hidden = StyleHelper.mkStyle "overflowY" "hidden"
+        /// The content is clipped - and no scrolling mechanism is provided. Additionally, programmatic scrolling is also blocked.
+        static member inline clip = StyleHelper.mkStyle "overflowY" "clip"
         /// The content is clipped and a scrolling mechanism is provided.
         static member inline scroll = StyleHelper.mkStyle "overflowY" "scroll"
         /// Should cause a scrolling mechanism to be provided for overflowing boxes
