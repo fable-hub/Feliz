@@ -33,6 +33,8 @@ Vitest integrates well with the vite bundler and provides a fast and reliable te
 
 The bindings for the Vitest ecosystem are developed and maintained by the [Fable Hub](https://github.com/fable-hub/Feliz) and used for testing in the Feliz project.
 
+Vitest 5 requires Node.js 22.12 or newer and Vite 6.4 or newer. Install a compatible `vite` alongside `vitest` in applications, and pass `--config` explicitly when the Vitest config lives above the directory where the test command runs.
+
 :::info
 The [Feliz template](../../api-docs/GettingStarted.mdx#template-nuget) also ships with Vitest preconfigured. You can get started with Vitest right away when creating a new Feliz project using the template.
 :::
@@ -49,4 +51,19 @@ describe "FragmentComponent" <| fun _ ->
         expect(first).toHaveTextContent "Hello"
         expect(second).toHaveTextContent "World"
     }
+```
+
+For data-driven tests, `test.for` keeps each F# record as one typed case. A mock callback can be created without an implementation:
+
+```fsharp
+(Vitest.Test.forCases [|
+    {| input = 1; expected = 2 |}
+    {| input = 4; expected = 5 |}
+|]).run("increments $input to $expected", fun case ->
+    Vitest.expect(case.input + 1).toBe(case.expected)
+)
+
+let callback = Vitest.vi.fn<int, unit>()
+callback 42
+Vitest.expect(callback).toHaveBeenCalledWith([| box 42 |])
 ```

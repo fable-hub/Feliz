@@ -22,7 +22,7 @@
 
   <PropertyGroup>
     <NpmDependencies>
-        <NpmPackage Name="vitest" Version="gt 3.1.0 lt 4.0.0" ResolutionStrategy="Max" />
+        <NpmPackage Name="vitest" Version="gte 5.0.0 lt 6.0.0" ResolutionStrategy="Max" />
     </NpmDependencies>
   </PropertyGroup>
 

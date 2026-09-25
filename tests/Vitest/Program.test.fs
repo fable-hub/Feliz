@@ -197,6 +197,21 @@ Vitest.describe("Vitest basics", fun () ->
     )
 )
 
+Vitest.describe("F# parameterized tests and mocks", fun () ->
+    (Vitest.Test.forCases [|
+        {| input = 1; expected = 2 |}
+        {| input = 4; expected = 5 |}
+    |]).run("increments $input to $expected", fun case ->
+        Vitest.expect(case.input + 1).toBe(case.expected)
+    )
+
+    Vitest.test("vi.fn can create a typed callback without an implementation", fun () ->
+        let callback = Vitest.vi.fn<int, unit>()
+        callback 42
+        Vitest.expect(callback).toHaveBeenCalledWith([| box 42 |])
+    )
+)
+
 Vitest.describe("TextContext", fun () -> 
 
     Vitest.test("sum adds two numbers with context", fun (ctx: TestContext) -> 
