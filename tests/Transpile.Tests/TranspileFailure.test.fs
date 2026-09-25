@@ -17,7 +17,7 @@ type Components =
 
     [<JSX.Component>]
     static member FailsDuringTranspile() =
-        let fileContents = File.ReadAllText(42)
+        let fileContents = File.ReadAllText("some/placeholder/this/should/fail/anyway")
         Html.div fileContents
 """
 
