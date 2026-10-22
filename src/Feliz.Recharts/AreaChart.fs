@@ -33,7 +33,7 @@ type areaChart =
         Interop.mkAreaChartAttr "baseValue" value
 
     static member inline children(elements: ReactElement list) =
-        unbox<IAreaChartProperty> (prop.children elements)
+        unbox<IAreaChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///

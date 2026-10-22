@@ -23,21 +23,21 @@ describe "HtmlHelper.createElement"
         }
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "extract from list"
     <| fun _ ->
@@ -54,21 +54,21 @@ describe "HtmlHelper.createElement"
         ]
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "extract from array"
     <| fun _ ->
@@ -85,21 +85,21 @@ describe "HtmlHelper.createElement"
         |]
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "extract from ResizeArray"
     <| fun _ ->
@@ -117,21 +117,21 @@ describe "HtmlHelper.createElement"
             ]
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "extract as last"
     <| fun _ ->
@@ -148,42 +148,42 @@ describe "HtmlHelper.createElement"
         ]
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "extract as exactlyOne"
     <| fun _ ->
         let child = [ Html.span []; Html.div [] ]
         let props = [ "children", box child ]
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
-        expect(child).toBeTruthy ()
+        expect(child).toBeTruthy()
 
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
 
-        expect(key).toBe ("children")
-        expect(child).toEqual (child)
+        expect(key).toBe("children")
+        expect(child).toEqual(child)
 
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe ((props |> Seq.length) - 1)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
     test "prop.spread converts object entries"
     <| fun _ ->
@@ -198,11 +198,11 @@ describe "HtmlHelper.createElement"
         let spreadProps = prop.spread dynamicProps
         let tupleProps = spreadProps |> Array.map unbox<string * obj>
 
-        expect(tupleProps.Length).toBe (4)
-        expect(tupleProps |> Array.exists (fun (k, _) -> k = "id")).toBeTruthy ()
-        expect(tupleProps |> Array.exists (fun (k, _) -> k = "title")).toBeTruthy ()
-        expect(tupleProps |> Array.exists (fun (k, _) -> k = "data-test")).toBeTruthy ()
-        expect(tupleProps |> Array.exists (fun (k, _) -> k = "onClick")).toBeTruthy ()
+        expect(tupleProps.Length).toBe(4)
+        expect(tupleProps |> Array.exists (fun (k, _) -> k = "id")).toBeTruthy()
+        expect(tupleProps |> Array.exists (fun (k, _) -> k = "title")).toBeTruthy()
+        expect(tupleProps |> Array.exists (fun (k, _) -> k = "data-test")).toBeTruthy()
+        expect(tupleProps |> Array.exists (fun (k, _) -> k = "onClick")).toBeTruthy()
 
     test "prop.spread output supports children extraction"
     <| fun _ ->
@@ -229,7 +229,7 @@ describe "HtmlHelper.createElement"
         let propsContainChildren: bool =
             extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
-        expect(key).toBe ("children")
-        expect(extractedChildren).toEqual (child)
-        expect(propsContainChildren).toBeFalsy ()
-        expect(extractedProps.Length).toBe (2)
+        expect(key).toBe("children")
+        expect(extractedChildren).toEqual(child)
+        expect(propsContainChildren).toBeFalsy()
+        expect(extractedProps.Length).toBe(2)

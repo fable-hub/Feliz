@@ -61,9 +61,10 @@ module CleanupHarness =
 
             addEventListener "my-custom-event" handler
 
-            { new System.IDisposable with
-                member _.Dispose() =
-                    removeEventListener "my-custom-event" handler
+            {
+                new System.IDisposable with
+                    member _.Dispose() =
+                        removeEventListener "my-custom-event" handler
             }
         )
     ]

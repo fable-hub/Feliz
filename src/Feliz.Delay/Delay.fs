@@ -26,11 +26,11 @@ module Delay =
     [<Erase; EditorBrowsable(EditorBrowsableState.Never); RequireQualifiedAccess>]
     module Interop =
         [<EditorBrowsable(EditorBrowsableState.Never)>]
-        let inline mkDelayAttr (key: string) (value: obj) = unbox<IDelayProperty> (key, value)
+        let inline mkDelayAttr (key: string) (value: obj) = unbox<IDelayProperty>(key, value)
 
         [<EditorBrowsable(EditorBrowsableState.Never)>]
         let inline mkDelaySuspenseAttr (key: string) (value: obj) =
-            unbox<IDelaySuspenseProperty> (key, value)
+            unbox<IDelaySuspenseProperty>(key, value)
 
     [<EditorBrowsable(EditorBrowsableState.Never)>]
     [<ReactComponent>]
@@ -114,7 +114,7 @@ module Delay =
         /// </summary>
         /// <param name='properties'>The properties for the React.delay component.</param>
         static member inline delay(properties: IDelayProperty list) =
-            DelayComp(unbox<DelayProps> (createObj !!properties))
+            DelayComp(unbox<DelayProps>(createObj !!properties))
 
         /// <summary>
         /// Delays rendering the children of this component for 100ms, rendering nothing for the duration.
@@ -127,7 +127,7 @@ module Delay =
         /// </summary>
         /// <param name='properties'>The properties for the React.delaySuspense component.</param>
         static member inline delaySuspense(properties: IDelaySuspenseProperty list) =
-            delaySuspenseComp (unbox<DelaySuspenseProps> (createObj !!properties))
+            delaySuspenseComp (unbox<DelaySuspenseProps>(createObj !!properties))
 
         /// <summary>
         /// React.suspense that uses the React.delay component as the fallback.

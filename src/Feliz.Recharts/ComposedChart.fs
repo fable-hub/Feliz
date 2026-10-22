@@ -31,7 +31,7 @@ type composedChart =
         Interop.mkComposedChartAttr "data" values
 
     static member inline children(elements: ReactElement list) =
-        unbox<IComposedChartProperty> (prop.children elements)
+        unbox<IComposedChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///

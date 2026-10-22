@@ -23,7 +23,7 @@ module Impl =
 
         try
             if isWindowDefined () && isWindowListenerFunction () then
-                let options = jsOptions<AddEventListenerOptions> (fun o -> o.passive <- true)
+                let options = jsOptions<AddEventListenerOptions>(fun o -> o.passive <- true)
 
                 window.addEventListener ("testPassiveEventSupport", ignore, options)
                 window.removeEventListener ("testPassiveEventSupport", ignore)
@@ -32,13 +32,13 @@ module Impl =
 
         passive
 
-    let defaultPassive = jsOptions<AddEventListenerOptions> (fun o -> o.passive <- true)
+    let defaultPassive = jsOptions<AddEventListenerOptions>(fun o -> o.passive <- true)
 
     let adjustPassive (maybeOptions: AddEventListenerOptions option) =
         maybeOptions
         |> Option.map (fun options ->
             if options.passive && not allowsPassiveEvents then
-                jsOptions<AddEventListenerOptions> (fun o ->
+                jsOptions<AddEventListenerOptions>(fun o ->
                     o.capture <- options.capture
                     o.once <- options.once
                     o.passive <- false
@@ -51,7 +51,7 @@ module Impl =
         maybeOptions
         |> Option.bind (fun options ->
             if options.capture then
-                Some(jsOptions<RemoveEventListenerOptions> (fun o -> o.capture <- true))
+                Some(jsOptions<RemoveEventListenerOptions>(fun o -> o.capture <- true))
             else
                 None
         )

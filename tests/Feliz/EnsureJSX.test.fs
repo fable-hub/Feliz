@@ -18,4 +18,4 @@ describe "EnsureJSX Tests"
 
         let div = RTL.screen.getByTestId "simpleDiv"
 
-        expect(div).toBeInTheDocument ()
+        expect(div).toBeInTheDocument()

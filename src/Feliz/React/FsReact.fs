@@ -8,10 +8,10 @@ open System
 type FsReact =
 
     /// Creates a disposable instance by providing the implementation of the dispose member.
-    static member inline createDisposable(dispose: unit -> unit) =
-        { new IDisposable with
+    static member inline createDisposable(dispose: unit -> unit) = {
+        new IDisposable with
             member _.Dispose() = dispose ()
-        }
+    }
 
     /// Creates a disposable instance by merging multiple IDisposables.
     static member inline createDisposable([<ParamArray>] disposables: #IDisposable[]) =

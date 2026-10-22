@@ -14,14 +14,14 @@ Vitest.describe (
 
                 let text = ele.getByTestId ("counter-display")
 
-                Vitest.expect(text).toBeInTheDocument ()
-                Vitest.expect(text).toHaveTextContent ("0")
+                Vitest.expect(text).toBeInTheDocument()
+                Vitest.expect(text).toHaveTextContent("0")
 
                 let btn = ele.getByTestId ("inc-btn")
 
                 do! UserEvent.userEvent.click (btn)
 
-                Vitest.expect(text).toHaveTextContent ("1")
+                Vitest.expect(text).toHaveTextContent("1")
             }
         )
 )

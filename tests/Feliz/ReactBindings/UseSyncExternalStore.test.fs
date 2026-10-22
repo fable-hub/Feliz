@@ -25,7 +25,7 @@ type Components =
 
         Html.div [
 
-        ]
+            ]
 
     [<ReactComponent>]
     static member ComponentUseSyncExternalStoreIDisposable
@@ -41,7 +41,7 @@ type Components =
 
         Html.div [
 
-        ]
+            ]
 
 
     [<ReactComponent>]
@@ -67,7 +67,7 @@ describe "useSyncExternalStore"
 
         // Check that effect was called once on mount
         expect(subscribe).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
-        expect(snapshot).toHaveBeenCalled ()
+        expect(snapshot).toHaveBeenCalled()
         expect(dispose).toHaveBeenCalledTimes 0
 
         // Unmount the component
@@ -75,7 +75,7 @@ describe "useSyncExternalStore"
 
         // Check that disposeEffect was called once on unmount
         expect(subscribe).toHaveBeenCalledTimes 1
-        expect(snapshot).toHaveBeenCalled ()
+        expect(snapshot).toHaveBeenCalled()
         expect(dispose).toHaveBeenCalledTimes 1
     }
 
@@ -92,7 +92,7 @@ describe "useSyncExternalStore"
 
         // Check that effect was called once on mount
         expect(subscribe).toHaveBeenCalledTimes 1 //"Effect should be called once on mount"
-        expect(snapshot).toHaveBeenCalled ()
+        expect(snapshot).toHaveBeenCalled()
         expect(dispose).toHaveBeenCalledTimes 0
 
         // Unmount the component
@@ -100,7 +100,7 @@ describe "useSyncExternalStore"
 
         // Check that disposeEffect was called once on unmount
         expect(subscribe).toHaveBeenCalledTimes 1
-        expect(snapshot).toHaveBeenCalled ()
+        expect(snapshot).toHaveBeenCalled()
         expect(dispose).toHaveBeenCalledTimes 1
     }
 

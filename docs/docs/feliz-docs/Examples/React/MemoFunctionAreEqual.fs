@@ -13,7 +13,7 @@ let RenderArrayWithEffect (fruitArray: string[]) =
     ]
 
 let MemoFunction =
-    React.memo<{| fruitArray: string[] |}> (
+    React.memo<{| fruitArray: string[] |}>(
         (fun props -> RenderArrayWithEffect(props.fruitArray)),
         (fun prevProps nextProps ->
             prevProps.fruitArray.Length = nextProps.fruitArray.Length

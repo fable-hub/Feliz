@@ -59,9 +59,10 @@ module StrictModeToggleStressHarness =
             let handler = fun (_: obj) -> dispatch GotEvent
             addEventListener "strict-toggle-event" handler
 
-            { new System.IDisposable with
-                member _.Dispose() =
-                    removeEventListener "strict-toggle-event" handler
+            {
+                new System.IDisposable with
+                    member _.Dispose() =
+                        removeEventListener "strict-toggle-event" handler
             }
         )
     ]
@@ -116,7 +117,7 @@ describe "UseElmish strict mode toggle stress"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isNone).toBeTruthy())
 
         do! userEvent.click (render.getByTestId TestIds.FireEvent)
         do! RTL.act (fun () -> delay 40)
@@ -125,7 +126,7 @@ describe "UseElmish strict mode toggle stress"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isSome).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isSome).toBeTruthy())
 
         do! userEvent.click (render.getByTestId TestIds.FireEvent)
 
@@ -133,7 +134,7 @@ describe "UseElmish strict mode toggle stress"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isNone).toBeTruthy())
 
         do! userEvent.click (render.getByTestId TestIds.FireEvent)
         do! RTL.act (fun () -> delay 40)
@@ -142,7 +143,7 @@ describe "UseElmish strict mode toggle stress"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isSome).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildCount |> Option.isSome).toBeTruthy())
 
         do! userEvent.click (render.getByTestId TestIds.FireEvent)
 

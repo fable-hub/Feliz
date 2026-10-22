@@ -9,7 +9,7 @@ type Main =
 
     [<ReactComponent(true)>]
     static member SwitchingBetweenDateAndDateTime() =
-        let (date, setDate) = React.useState<DateTime option> (None)
+        let (date, setDate) = React.useState<DateTime option>(None)
         let (dateAndTime, toggleDateAndTime) = React.useState (false)
 
         let formattedDate =

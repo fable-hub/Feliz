@@ -55,10 +55,7 @@ type Component =
             Html.button [
                 prop.testId "toggle-button"
                 prop.onClick (fun _ -> setActive (not active))
-                prop.className [
-                    "btn"
-                    if active then "btn-active" else "btn-inactive"
-                ]
+                prop.className [ "btn"; if active then "btn-active" else "btn-inactive" ]
                 prop.text "Toggle"
             ]
             if active then
@@ -96,7 +93,7 @@ Vitest.describe (
             fun () -> promise {
                 let reactElement = RTL.render (Component.Counter())
                 let countdisplay = reactElement.getByTestId (CountDisplayTestId)
-                Vitest.expect(countdisplay.textContent).toBe ("Count: 0")
+                Vitest.expect(countdisplay.textContent).toBe("Count: 0")
             }
         )
 )
@@ -111,7 +108,7 @@ Vitest.describe (
             fun () -> promise {
                 let reactElement = RTL.render (Component.Counter())
                 let countDisplay = RTL.screen.getByText ("Count: 0")
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 0")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 0")
             }
         )
 
@@ -123,7 +120,7 @@ Vitest.describe (
                 let countDisplay =
                     RTL.screen.getByText (System.Text.RegularExpressions.Regex("Count: \\d+"))
 
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 0")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 0")
             }
         )
 
@@ -132,7 +129,7 @@ Vitest.describe (
             fun () -> promise {
                 let reactElement = RTL.render (Component.Counter())
                 let countDisplay = RTL.screen.getByText ((fun text _ -> text.StartsWith("Count: ")))
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 0")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 0")
             }
         )
 
@@ -143,7 +140,7 @@ Vitest.describe (
                     "getByText - finds unique static text",
                     fun () ->
                         let _ = RTL.render (Component.TextTestComponent())
-                        Vitest.expect(RTL.screen.getByText ("Welcome")).toBeInTheDocument ()
+                        Vitest.expect(RTL.screen.getByText ("Welcome")).toBeInTheDocument()
                 )
 
                 Vitest.test (
@@ -151,7 +148,7 @@ Vitest.describe (
                     fun () ->
                         let _ = RTL.render (Component.TextTestComponent())
                         let messages = RTL.screen.getAllByText ("Message")
-                        Vitest.expect(messages).toHaveLength (2)
+                        Vitest.expect(messages).toHaveLength(2)
                 )
 
                 Vitest.test (
@@ -159,7 +156,7 @@ Vitest.describe (
                     fun () ->
                         let _ = RTL.render (Component.TextTestComponent())
                         let messages = RTL.screen.queryByText ("Nonexistent")
-                        Vitest.expect(messages).toBeNull ()
+                        Vitest.expect(messages).toBeNull()
                 )
 
                 Vitest.test (
@@ -167,7 +164,7 @@ Vitest.describe (
                     fun () ->
                         let _ = RTL.render (Component.TextTestComponent())
                         let messages = RTL.screen.queryAllByText ("Nonexistent")
-                        Vitest.expect(messages).toHaveLength (0)
+                        Vitest.expect(messages).toHaveLength(0)
                 )
 
                 Vitest.test (
@@ -175,7 +172,7 @@ Vitest.describe (
                     fun () -> promise {
                         let _ = RTL.render (Component.TextTestComponent())
                         let! asyncText = RTL.screen.findByText ("Loaded asynchronously")
-                        Vitest.expect(asyncText).toBeInTheDocument ()
+                        Vitest.expect(asyncText).toBeInTheDocument()
                     }
                 )
 
@@ -184,7 +181,7 @@ Vitest.describe (
                     fun () -> promise {
                         let _ = RTL.render (Component.TextTestComponent())
                         let! asyncTexts = RTL.screen.findAllByText ("Loaded asynchronously")
-                        Vitest.expect(asyncTexts).toHaveLength (1)
+                        Vitest.expect(asyncTexts).toHaveLength(1)
                     }
                 )
         )
@@ -200,7 +197,7 @@ Vitest.describe (
                 let incrementButton = RTL.screen.getByTestId ("increase-button")
                 do! UserEvent.userEvent.click (incrementButton)
                 let countDisplay = RTL.screen.getByTestId (CountDisplayTestId)
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 1")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 1")
             }
         )
 )
@@ -215,7 +212,7 @@ Vitest.describe (
                 let incrementButton = RTL.screen.getByTestId ("increase-button")
                 RTL.fireEvent.custom ("click", incrementButton)
                 let countDisplay = RTL.screen.getByTestId (CountDisplayTestId)
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 1")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 1")
             }
         )
 
@@ -227,7 +224,7 @@ Vitest.describe (
                 let myEvent = RTL.createEvent ("click", input)
                 RTL.fireEventWith (input, myEvent)
                 let countDisplay = RTL.screen.getByTestId (CountDisplayTestId)
-                Vitest.expect(countDisplay.textContent).toBe ("Count: 1")
+                Vitest.expect(countDisplay.textContent).toBe("Count: 1")
             }
         )
 )
@@ -242,7 +239,7 @@ Vitest.describe (
                 let incrementButton = RTL.screen.getByTestId ("increase-button")
                 RTL.fireEvent.custom ("click", incrementButton)
                 let countDisplay = RTL.screen.getByTestId (CountDisplayTestId)
-                Vitest.expect(countDisplay).toBeEnabled ()
+                Vitest.expect(countDisplay).toBeEnabled()
             }
         )
 
@@ -251,9 +248,9 @@ Vitest.describe (
             fun () ->
                 let _ = RTL.render (Component.JestDomTest())
                 let toggleButton = RTL.screen.getByTestId ("toggle-button")
-                Vitest.expect(toggleButton).toBeInTheDocument ()
-                Vitest.expect(toggleButton).toHaveClass ([| "btn"; "btn-inactive" |])
-                Vitest.expect(toggleButton).not.toHaveClass ("btn-active")
+                Vitest.expect(toggleButton).toBeInTheDocument()
+                Vitest.expect(toggleButton).toHaveClass([| "btn"; "btn-inactive" |])
+                Vitest.expect(toggleButton).not.toHaveClass("btn-active")
         )
 
         Vitest.test (
@@ -264,14 +261,14 @@ Vitest.describe (
 
                 do! UserEvent.userEvent.click (toggleButton)
 
-                Vitest.expect(toggleButton).toHaveClass ([| "btn"; "btn-active" |])
-                Vitest.expect(toggleButton).not.toHaveClass ("btn-inactive")
+                Vitest.expect(toggleButton).toHaveClass([| "btn"; "btn-active" |])
+                Vitest.expect(toggleButton).not.toHaveClass("btn-inactive")
 
                 let text = RTL.screen.getByTestId ("active-text")
-                Vitest.expect(text).toBeInTheDocument ()
-                Vitest.expect(text).toBeVisible ()
-                Vitest.expect(text).toHaveTextContent ("Active!")
-                Vitest.expect(text).toHaveClass ([| "status-text"; "visible" |])
+                Vitest.expect(text).toBeInTheDocument()
+                Vitest.expect(text).toBeVisible()
+                Vitest.expect(text).toHaveTextContent("Active!")
+                Vitest.expect(text).toHaveClass([| "status-text"; "visible" |])
             }
         )
 )
@@ -285,9 +282,9 @@ describe "waitFor"
 
          do! userEvent.click (toggleButton)
 
-         expect(screen.queryByTestId ("delayed-text")).toBeNull ()
+         expect(screen.queryByTestId ("delayed-text")).toBeNull()
 
-         do! RTL.waitFor (fun () -> expect(screen.getByTestId ("delayed-text")).toBeInTheDocument ())
+         do! RTL.waitFor (fun () -> expect(screen.getByTestId ("delayed-text")).toBeInTheDocument())
      }
 
      testPromise "test promise"
@@ -298,9 +295,9 @@ describe "waitFor"
                  return 42
              }
 
-         let! number = RTL.waitFor<int> (fun () -> promise { return! mypromise () })
+         let! number = RTL.waitFor<int>(fun () -> promise { return! mypromise () })
 
-         expect(number).toBe (42)
+         expect(number).toBe(42)
      }
 
      testPromise "test promise"
@@ -312,9 +309,9 @@ describe "waitFor"
              }
 
          let! number =
-             RTL.waitFor<int> ((fun () -> promise { return! mypromise () }), RTLWaitForOptions(timeout = 2000))
+             RTL.waitFor<int>((fun () -> promise { return! mypromise () }), RTLWaitForOptions(timeout = 2000))
 
-         expect(number).toBe (42)
+         expect(number).toBe(42)
      }
 
      testPromise "test async"
@@ -324,9 +321,9 @@ describe "waitFor"
              return 42
          }
 
-         let! number = RTL.waitFor<int> (myasync)
+         let! number = RTL.waitFor<int>(myasync)
 
-         expect(number).toBe (42)
+         expect(number).toBe(42)
      }
 
      testPromise "test async"
@@ -336,9 +333,9 @@ describe "waitFor"
              return 42
          }
 
-         let! number = RTL.waitFor<int> (myasync, RTLWaitForOptions(timeout = 2000))
+         let! number = RTL.waitFor<int>(myasync, RTLWaitForOptions(timeout = 2000))
 
-         expect(number).toBe (42)
+         expect(number).toBe(42)
      })
 
 describe "act"
@@ -351,5 +348,5 @@ describe "act"
         do! RTL.act (fun () -> Promise.sleep 2000)
 
         let countDisplay = RTL.screen.getByTestId (CountDisplayTestId)
-        expect(countDisplay.textContent).toBe ("Count: 0")
+        expect(countDisplay.textContent).toBe("Count: 0")
     }

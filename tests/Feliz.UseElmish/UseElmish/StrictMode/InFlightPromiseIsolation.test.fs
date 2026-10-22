@@ -31,7 +31,7 @@ module StrictModePromiseIsolationHarness =
     type Msg = PromiseSucceeded of int
 
     let init () =
-        let deferred = PromiseTest.deferred<int> ()
+        let deferred = PromiseTest.deferred<int>()
         pendingDeferreds.Add deferred
         { Count = 0 }, Cmd.OfPromise.perform (fun (d: PromiseTest.Deferred<int>) -> d.promise) deferred PromiseSucceeded
 
@@ -75,7 +75,7 @@ describe "UseElmish strict mode in-flight promise isolation"
         let render =
             RTL.render (React.StrictMode [ StrictModePromiseIsolationHarness.Parent.Render() ])
 
-        do! RTL.waitFor (fun () -> expect(StrictModePromiseIsolationHarness.deferredCount () >= 2).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(StrictModePromiseIsolationHarness.deferredCount () >= 2).toBeTruthy())
 
         StrictModePromiseIsolationHarness.resolveAt 0 1
         do! RTL.act (fun () -> PromiseTest.delay 40)

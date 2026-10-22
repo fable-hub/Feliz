@@ -23,7 +23,7 @@ describe "ReactLazyComponent loading"
         do! renderAndLoad (fun () -> RefLazy.Tupled(text = "tupled-ref", testId = "ref-id", className = "ref-class"))
 
         let! loaded = screen.findByTestId "tupled-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "tupled-text").toHaveTextContent "tupled-ref"
     }
 
@@ -35,7 +35,7 @@ describe "ReactLazyComponent loading"
             )
 
         let! loaded = screen.findByTestId "tupled-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "tupled-text").toHaveTextContent "tupled-path"
     }
 
@@ -45,7 +45,7 @@ describe "ReactLazyComponent loading"
         do! renderAndLoad (fun () -> RefLazy.RecordAndClass(payload))
 
         let! loaded = screen.findByTestId "record-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "record-owner").toHaveTextContent "owner-ref"
     }
 
@@ -55,6 +55,6 @@ describe "ReactLazyComponent loading"
         do! renderAndLoad (fun () -> PathLazy.RecordAndClass(payload))
 
         let! loaded = screen.findByTestId "record-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "record-owner").toHaveTextContent "owner-path"
     }

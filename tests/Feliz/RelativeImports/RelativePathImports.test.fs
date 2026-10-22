@@ -15,7 +15,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below1"
         <| fun _ ->
@@ -23,7 +23,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below2"
         <| fun _ ->
@@ -31,7 +31,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below3"
         <| fun _ ->
@@ -39,7 +39,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
     describe "NF1 Level"
     <| fun _ ->
@@ -50,7 +50,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below1"
         <| fun _ ->
@@ -58,7 +58,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below2"
         <| fun _ ->
@@ -66,7 +66,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above1"
         <| fun _ ->
@@ -74,7 +74,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
     describe "NF2 Level"
     <| fun _ ->
@@ -85,7 +85,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Below1"
         <| fun _ ->
@@ -93,7 +93,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above2"
         <| fun _ ->
@@ -101,7 +101,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above1"
         <| fun _ ->
@@ -109,7 +109,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
     describe "NF3 Level"
     <| fun _ ->
@@ -120,7 +120,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above3"
         <| fun _ ->
@@ -128,7 +128,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above2"
         <| fun _ ->
@@ -136,7 +136,7 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()
 
         test "Above1"
         <| fun _ ->
@@ -144,4 +144,4 @@ describe "[<ReactComponent(module, path)>], resolved relative path"
 
             let div = RTL.screen.getByTestId "counter"
 
-            expect(div).toBeInTheDocument ()
+            expect(div).toBeInTheDocument()

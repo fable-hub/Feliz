@@ -42,20 +42,18 @@ module DisposalThrowHarness =
 
     let subscribe (onFirstDisposeAttempt: unit -> unit) (onSecondDispose: unit -> unit) (_model: Model) : Sub<Msg> = [
         [ "first-throws" ],
-        (fun _dispatch ->
-            { new IDisposable with
+        (fun _dispatch -> {
+            new IDisposable with
                 member _.Dispose() =
                     onFirstDisposeAttempt ()
                     failwith "first subscription dispose failed"
-            }
-        )
+        })
 
         [ "second-ok" ],
-        (fun _dispatch ->
-            { new IDisposable with
+        (fun _dispatch -> {
+            new IDisposable with
                 member _.Dispose() = onSecondDispose ()
-            }
-        )
+        })
     ]
 
     [<Erase>]
@@ -128,7 +126,7 @@ describe "UseElmish disposal robustness for throwing subscription dispose"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildMounted |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildMounted |> Option.isNone).toBeTruthy())
         do! RTL.act (fun () -> PromiseTest.delay 50)
 
         expect(render.getByTestId TestIds.FirstDisposeAttempts).toHaveTextContent "1"
@@ -136,5 +134,5 @@ describe "UseElmish disposal robustness for throwing subscription dispose"
         expect(render.getByTestId TestIds.ModelDisposeCount).toHaveTextContent "1"
 
         let errorCount = render.getByTestId(TestIds.ErrorCount).textContent |> int
-        expect(errorCount >= 1).toBeTruthy ()
+        expect(errorCount >= 1).toBeTruthy()
     }

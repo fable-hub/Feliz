@@ -13,7 +13,7 @@ type radarChart =
         Interop.mkRadarChartAttr "data" (List.toArray values)
 
     static member inline children(elements: ReactElement list) =
-        unbox<IRadarChartProperty> (prop.children elements)
+        unbox<IRadarChartProperty>(prop.children elements)
 
     static member inline width(value: int) = Interop.mkRadarChartAttr "width" value
     static member inline height(value: int) = Interop.mkRadarChartAttr "height" value

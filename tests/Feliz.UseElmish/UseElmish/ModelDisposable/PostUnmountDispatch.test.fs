@@ -90,7 +90,7 @@ describe "UseElmish disposable post-unmount dispatch"
         // Unmount the child — DisposeOnUnmount fires, disposeLatestModel() increments count to 1.
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildMounted |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.ChildMounted |> Option.isNone).toBeTruthy())
 
         // disposeLatestModel already ran; disposeCount should be 1 at this point.
         do! RTL.waitFor (fun () -> expect(render.getByTestId TestIds.DisposeCount).toHaveTextContent "1")

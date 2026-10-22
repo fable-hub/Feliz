@@ -25,7 +25,7 @@ type lineChart =
     static member inline data(values: 'a array) = Interop.mkLineChartAttr "data" values
 
     static member inline children(elements: ReactElement list) =
-        unbox<ILineChartProperty> (prop.children elements)
+        unbox<ILineChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///

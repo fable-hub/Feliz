@@ -91,7 +91,7 @@ type yAxis =
         Interop.mkYAxisAttr "label" label
 
     static member inline children(elements: ReactElement list) =
-        unbox<IYAxisProperty> (prop.children elements)
+        unbox<IYAxisProperty>(prop.children elements)
 
 module yAxis =
     /// The orientation of axis. Default is `left`.

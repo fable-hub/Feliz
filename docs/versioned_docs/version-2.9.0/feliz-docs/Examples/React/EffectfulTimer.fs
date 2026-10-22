@@ -21,8 +21,9 @@ let EffectfulTimer () =
                 )
                 1000
         // return IDisposable with cleanup code that stops the timer
-        { new IDisposable with
-            member this.Dispose() = clearInterval (subscriptionId)
+        {
+            new IDisposable with
+                member this.Dispose() = clearInterval (subscriptionId)
         }
 
     React.useEffect (subscribeToTimer, [| box paused |])

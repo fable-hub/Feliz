@@ -15,22 +15,22 @@ type floatingFocusManager =
         prop |> unbox<FloatingFocusManagerProps>
 
     static member inline children(value: seq<ReactElement>) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("children", value)
+        Helper.mkProperty<FloatingFocusManagerProps>("children", value)
 
     static member inline context(value: obj) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("context", value)
+        Helper.mkProperty<FloatingFocusManagerProps>("context", value)
 
     static member inline disabled(value: bool) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("disabled", value)
+        Helper.mkProperty<FloatingFocusManagerProps>("disabled", value)
 
     static member inline initialFocus(obj: obj) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("initialFocus", obj)
+        Helper.mkProperty<FloatingFocusManagerProps>("initialFocus", obj)
 
     static member inline returnFocus(value: bool) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("returnFocus", value)
+        Helper.mkProperty<FloatingFocusManagerProps>("returnFocus", value)
 
     static member inline guards(v: bool) =
-        Helper.mkProperty<FloatingFocusManagerProps> ("guards", v)
+        Helper.mkProperty<FloatingFocusManagerProps>("guards", v)
 
 
 [<Erase>]
@@ -38,13 +38,13 @@ type FloatingUi =
 
     static member inline FloatingFocusManager(props: seq<FloatingFocusManagerProps>) =
         ReactLegacy.createElement (
-            unbox<ReactElement> (import "FloatingFocusManager" "@floating-ui/react"),
+            unbox<ReactElement>(import "FloatingFocusManager" "@floating-ui/react"),
             createObj !!props
         )
 
     static member inline FloatingFocusManager(children: seq<ReactElement>) =
         ReactLegacy.createElement (
-            unbox<ReactElement> (import "FloatingFocusManager" "@floating-ui/react"),
+            unbox<ReactElement>(import "FloatingFocusManager" "@floating-ui/react"),
             {| children = children |}
         )
 

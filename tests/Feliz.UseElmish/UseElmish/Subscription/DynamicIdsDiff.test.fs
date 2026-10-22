@@ -71,9 +71,10 @@ module DynamicSubscriptionDiffHarness =
                 let handler = fun (_: obj) -> dispatch GotA
                 addEventListener "dynamic-sub-a" handler
 
-                { new System.IDisposable with
-                    member _.Dispose() =
-                        removeEventListener "dynamic-sub-a" handler
+                {
+                    new System.IDisposable with
+                        member _.Dispose() =
+                            removeEventListener "dynamic-sub-a" handler
                 }
             )
 
@@ -82,9 +83,10 @@ module DynamicSubscriptionDiffHarness =
             let handler = fun (_: obj) -> dispatch GotB
             addEventListener "dynamic-sub-b" handler
 
-            { new System.IDisposable with
-                member _.Dispose() =
-                    removeEventListener "dynamic-sub-b" handler
+            {
+                new System.IDisposable with
+                    member _.Dispose() =
+                        removeEventListener "dynamic-sub-b" handler
             }
         )
     ]

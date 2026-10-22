@@ -11,12 +11,10 @@ open Vitest
 module TestContext =
 
     let MyContext =
-        React.createContext<
-            {|
-                state: string
-                setState: string -> unit
-            |}
-         > ()
+        React.createContext<{|
+            state: string
+            setState: string -> unit
+        |}>()
 
 type Components =
 

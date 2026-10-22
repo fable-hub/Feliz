@@ -9,7 +9,7 @@ let RenderTextWithEffect (text: string) =
     Html.div [ prop.text text; prop.testId "memo-attribute" ]
 
 let MemoFunction =
-    React.memo<{| text: string |}> (fun props -> RenderTextWithEffect(props.text))
+    React.memo<{| text: string |}>(fun props -> RenderTextWithEffect(props.text))
 
 [<ReactComponent(true)>]
 let Main () =

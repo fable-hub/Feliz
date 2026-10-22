@@ -100,7 +100,7 @@ type xAxis =
         Interop.mkXAxisAttr "label" label
 
     static member inline children(elements: ReactElement list) =
-        unbox<IXAxisProperty> (prop.children elements)
+        unbox<IXAxisProperty>(prop.children elements)
 
 module xAxis =
     /// The orientation of axis. Default is `bottom`.

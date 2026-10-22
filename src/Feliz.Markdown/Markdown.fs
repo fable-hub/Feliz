@@ -60,57 +60,57 @@ module markdown =
     [<Erase; System.Obsolete "markdown.renderers is obsolete. Use markdown.components instead">]
     type renderers =
         static member inline code(render: ICodeProperties -> Fable.React.ReactElement) =
-            unbox<IMarkdownRenderer> (PropHelper.mkAttr "code" render)
+            unbox<IMarkdownRenderer>(PropHelper.mkAttr "code" render)
 
     [<Erase>]
     type components =
         static member inline p(render: IParagraphProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "p" render)
+            unbox<IComponent>(PropHelper.mkAttr "p" render)
 
         static member inline a(render: ILinkProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "a" render)
+            unbox<IComponent>(PropHelper.mkAttr "a" render)
 
         static member inline h1(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h1" render)
+            unbox<IComponent>(PropHelper.mkAttr "h1" render)
 
         static member inline h2(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h2" render)
+            unbox<IComponent>(PropHelper.mkAttr "h2" render)
 
         static member inline h3(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h3" render)
+            unbox<IComponent>(PropHelper.mkAttr "h3" render)
 
         static member inline h4(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h4" render)
+            unbox<IComponent>(PropHelper.mkAttr "h4" render)
 
         static member inline h5(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h5" render)
+            unbox<IComponent>(PropHelper.mkAttr "h5" render)
 
         static member inline h6(render: IHeadingProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "h6" render)
+            unbox<IComponent>(PropHelper.mkAttr "h6" render)
 
         static member inline table(render: ITableProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "table" render)
+            unbox<IComponent>(PropHelper.mkAttr "table" render)
 
         static member inline thead(render: ITableHeadProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "thead" render)
+            unbox<IComponent>(PropHelper.mkAttr "thead" render)
 
         static member inline tbody(render: ITableBodyProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "tbody" render)
+            unbox<IComponent>(PropHelper.mkAttr "tbody" render)
 
         static member inline trow(render: ITableRowProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "trow" render)
+            unbox<IComponent>(PropHelper.mkAttr "trow" render)
 
         static member inline tcell(render: ITableCellProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "tcell" render)
+            unbox<IComponent>(PropHelper.mkAttr "tcell" render)
 
         static member inline ol(render: IListProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "ol" render)
+            unbox<IComponent>(PropHelper.mkAttr "ol" render)
 
         static member inline ul(render: IListProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "ul" render)
+            unbox<IComponent>(PropHelper.mkAttr "ul" render)
 
         static member inline li(render: IListProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "li" render)
+            unbox<IComponent>(PropHelper.mkAttr "li" render)
 
         static member inline code(render: ICodeProperties -> ReactElement) =
             let renderInternal (props: obj) =
@@ -123,10 +123,10 @@ module markdown =
 
                 render (unbox<ICodeProperties> inputs)
 
-            unbox<IComponent> (PropHelper.mkAttr "code" renderInternal)
+            unbox<IComponent>(PropHelper.mkAttr "code" renderInternal)
 
         static member inline pre(render: ICodeProperties -> ReactElement) =
-            unbox<IComponent> (PropHelper.mkAttr "pre" render)
+            unbox<IComponent>(PropHelper.mkAttr "pre" render)
 
 
 type INodeType = interface end
@@ -210,12 +210,12 @@ type markdown =
 type Markdown =
     static member inline markdown(properties: seq<IReactProperty>) =
         ReactLegacy.createElement (
-            ``type`` = unbox<ReactNode> (importDefault "react-markdown"),
+            ``type`` = unbox<ReactNode>(importDefault "react-markdown"),
             props = Fable.Core.JsInterop.createObj !!properties
         )
 
     static member inline markdown(sourceMarkdown: string) =
         ReactLegacy.createElement (
-            ``type`` = unbox<ReactNode> (importDefault "react-markdown"),
+            ``type`` = unbox<ReactNode>(importDefault "react-markdown"),
             children = unbox<ReactElement> sourceMarkdown
         )

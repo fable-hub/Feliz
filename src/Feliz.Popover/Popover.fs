@@ -14,42 +14,42 @@ type IPopoverProperty = interface end
 type popover =
     /// The popover content.
     static member inline body(content: ReactElement list) =
-        unbox<IPopoverProperty> ("body", React.Fragment content)
+        unbox<IPopoverProperty>("body", React.Fragment content)
 
     /// Determines Whether or not the popover is rendered.
     static member inline isOpen(value: bool) =
-        unbox<IPopoverProperty> ("isOpen", value)
+        unbox<IPopoverProperty>("isOpen", value)
 
     /// A callback function executed every time the user does an action (mousedown or touchstart) outside the DOM tree of both Popover and Target. A canonical use-case is to automatically close the Popover on any external user action.
     static member inline onOuterAction(handler: unit -> unit) =
-        unbox<IPopoverProperty> ("onOuterAction", fun _ -> handler ())
+        unbox<IPopoverProperty>("onOuterAction", fun _ -> handler ())
 
     /// The polling speed (AKA time between each poll) in milliseconds for checking if a layout refresh is required. This polling is required because it is the only robust way to track the position of a target in the DOM. Defaults to 200. Set to a falsey value to disable.
     static member inline refreshIntervalMs(value: int) =
-        unbox<IPopoverProperty> ("refreshIntervalMs", value)
+        unbox<IPopoverProperty>("refreshIntervalMs", value)
 
     /// The polling speed (AKA time between each poll) in milliseconds for checking if a layout refresh is required. This polling is required because it is the only robust way to track the position of a target in the DOM. Defaults to 200. Set to a falsey value to disable.
     static member inline refreshIntervalMs(value: bool) =
-        unbox<IPopoverProperty> ("refreshIntervalMs", value)
+        unbox<IPopoverProperty>("refreshIntervalMs", value)
 
     /// The amount of time in milliseconds that it takes to complete the enter and exit animation. Defaults to '500'.
     static member inline enterExitTransitionDurationMs(value: int) =
-        unbox<IPopoverProperty> ("enterExitTransitionDurationMs", value)
+        unbox<IPopoverProperty>("enterExitTransitionDurationMs", value)
 
     /// The amount of time in milliseconds that it takes to complete the enter and exit animation. Defaults to '500'.
     static member inline enterExitTransitionDurationMs(value: bool) =
-        unbox<IPopoverProperty> ("enterExitTransitionDurationMs", value)
+        unbox<IPopoverProperty>("enterExitTransitionDurationMs", value)
 
     /// Defines the size of the tip pointer. Use .01 to disable tip. Defaults to '7'.
     static member inline tipSize(value: float) =
-        unbox<IPopoverProperty> ("tipSize", value)
+        unbox<IPopoverProperty>("tipSize", value)
 
     /// Disables the tip of the popover. When this option is used, then `popover.tipSize` should be omitted.
-    static member inline disableTip = unbox<IPopoverProperty> ("tipSize", 0.01)
+    static member inline disableTip = unbox<IPopoverProperty>("tipSize", 0.01)
 
     /// The content that this popover will orient itself around.
     static member inline children(children: ReactElement list) =
-        unbox<IPopoverProperty> ("children", React.KeyedFragment("popoverChildren", children))
+        unbox<IPopoverProperty>("children", React.KeyedFragment("popoverChildren", children))
 
 [<Erase>]
 type Popover =
@@ -66,42 +66,42 @@ module popover =
     [<Erase>]
     type preferPlace =
         /// Prefer an explicit side.
-        static member inline above = unbox<IPopoverProperty> ("preferPlace", "above")
+        static member inline above = unbox<IPopoverProperty>("preferPlace", "above")
         /// Prefer an explicit side.
-        static member inline right = unbox<IPopoverProperty> ("preferPlace", "right")
+        static member inline right = unbox<IPopoverProperty>("preferPlace", "right")
         /// Prefer an explicit side.
-        static member inline below = unbox<IPopoverProperty> ("preferPlace", "below")
+        static member inline below = unbox<IPopoverProperty>("preferPlace", "below")
         /// Prefer an explicit side.
-        static member inline left = unbox<IPopoverProperty> ("preferPlace", "left")
+        static member inline left = unbox<IPopoverProperty>("preferPlace", "left")
         /// Prefer an orientation.
-        static member inline row = unbox<IPopoverProperty> ("preferPlace", "row")
+        static member inline row = unbox<IPopoverProperty>("preferPlace", "row")
         /// Prefer an orientation.
-        static member inline column = unbox<IPopoverProperty> ("preferPlace", "column")
+        static member inline column = unbox<IPopoverProperty>("preferPlace", "column")
         /// Prefer an order.
-        static member inline atStart = unbox<IPopoverProperty> ("preferPlace", "start")
+        static member inline atStart = unbox<IPopoverProperty>("preferPlace", "start")
         /// Prefer an order.
-        static member inline atEnd = unbox<IPopoverProperty> ("preferPlace", "end")
+        static member inline atEnd = unbox<IPopoverProperty>("preferPlace", "end")
         /// No preference, automatic resolution. This is the default.
-        static member inline auto = unbox<IPopoverProperty> ("preferPlace", null)
+        static member inline auto = unbox<IPopoverProperty>("preferPlace", null)
 
     /// Like `preferPlace` except that the given place is a requirement. The resolver becomes scoped or disabled. It is scoped if the place is an orientation or order but disabled if it is a side. For example place: "row" scopes the resolver to above or below placement but place: "above" removes any need for the resolver.
     [<Erase>]
     type place =
         /// Prefer an explicit side.
-        static member inline above = unbox<IPopoverProperty> ("place", "above")
+        static member inline above = unbox<IPopoverProperty>("place", "above")
         /// Prefer an explicit side.
-        static member inline right = unbox<IPopoverProperty> ("place", "right")
+        static member inline right = unbox<IPopoverProperty>("place", "right")
         /// Prefer an explicit side.
-        static member inline below = unbox<IPopoverProperty> ("place", "below")
+        static member inline below = unbox<IPopoverProperty>("place", "below")
         /// Prefer an explicit side.
-        static member inline left = unbox<IPopoverProperty> ("place", "left")
+        static member inline left = unbox<IPopoverProperty>("place", "left")
         /// Prefer an orientation.
-        static member inline row = unbox<IPopoverProperty> ("place", "row")
+        static member inline row = unbox<IPopoverProperty>("place", "row")
         /// Prefer an orientation.
-        static member inline column = unbox<IPopoverProperty> ("place", "column")
+        static member inline column = unbox<IPopoverProperty>("place", "column")
         /// Prefer an order.
-        static member inline atStart = unbox<IPopoverProperty> ("place", "start")
+        static member inline atStart = unbox<IPopoverProperty>("place", "start")
         /// Prefer an order.
-        static member inline atEnd = unbox<IPopoverProperty> ("place", "end")
+        static member inline atEnd = unbox<IPopoverProperty>("place", "end")
         /// No preference, automatic resolution. This is the default.
-        static member inline auto = unbox<IPopoverProperty> ("place", null)
+        static member inline auto = unbox<IPopoverProperty>("place", null)

@@ -25,7 +25,7 @@ type pieChart =
     static member inline data(values: 'a array) = Interop.mkPieChartAttr "data" values
 
     static member inline children(elements: ReactElement list) =
-        unbox<IPieChartProperty> (prop.children elements)
+        unbox<IPieChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///

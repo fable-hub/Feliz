@@ -522,7 +522,7 @@ type RTL =
         jsNative
 
     static member inline waitFor<'a>(callback: Async<'a>, ?options: RTLWaitForOptions) : Promise<'a> =
-        RTL.waitFor<'a> ((fun () -> (callback |> Async.StartAsPromise)), ?options = options)
+        RTL.waitFor<'a>((fun () -> (callback |> Async.StartAsPromise)), ?options = options)
 
     [<Import("waitForElementToBeRemoved", "@testing-library/react")>]
     static member waitForElementToBeRemoved(callback: (unit -> obj), ?options: RTLWaitForOptions) : Promise<unit> =

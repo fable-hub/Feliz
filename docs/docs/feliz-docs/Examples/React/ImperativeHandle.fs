@@ -27,7 +27,7 @@ let ForwardRefImperativeChild (ref: IRefValue<{| focus: unit -> unit |} option>)
 
 [<ReactComponent(true)>]
 let ForwardRefImperativeParent () =
-    let ref = React.useRef<{| focus: unit -> unit |} option> (None)
+    let ref = React.useRef<{| focus: unit -> unit |} option>(None)
 
     Html.div [
         ForwardRefImperativeChild(ref)

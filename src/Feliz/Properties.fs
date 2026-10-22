@@ -1191,7 +1191,7 @@ type prop =
                 let value: double = !!ev.target?valueAsNumber
 
                 if not (isNullOrUndefined value) && not (Double.IsNaN value) then
-                    handler (unbox<int> (Math.Round value))
+                    handler (unbox<int>(Math.Round value))
             )
 
     /// Same as `onChange` that takes an event as input but instead lets you deal with the float changed from the `input` element directly when the input type is a number

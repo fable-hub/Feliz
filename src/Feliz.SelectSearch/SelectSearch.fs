@@ -119,7 +119,7 @@ type selectSearch =
                 ]
         |]
 
-        unbox<ISelectSearchAttribute> ("options", selectOptions)
+        unbox<ISelectSearchAttribute>("options", selectOptions)
 
     /// <summary>Sets the options of the select control</summary>
     static member options(groups: seq<SelectGroup>) =
@@ -135,7 +135,7 @@ type selectSearch =
                 ]
         |]
 
-        unbox<ISelectSearchAttribute> ("options", selectOptions)
+        unbox<ISelectSearchAttribute>("options", selectOptions)
 
     /// <summary>Sets the options of the select control</summary>
     static member options(mixedOptions: seq<SelectOption>) =
@@ -164,59 +164,59 @@ type selectSearch =
                     ]
         |]
 
-        unbox<ISelectSearchAttribute> ("options", selectOptions)
+        unbox<ISelectSearchAttribute>("options", selectOptions)
 
     /// <summary>Number of ms to wait until calling get options when searching</summary>
     static member inline debounce(debounceValue: int) =
-        unbox<ISelectSearchAttribute> ("debounce", debounceValue)
+        unbox<ISelectSearchAttribute>("debounce", debounceValue)
 
     /// <summary>Sets the currently selected value when in controlled mode</summary>
     static member inline value(currentValue: string) =
-        unbox<ISelectSearchAttribute> ("value", currentValue)
+        unbox<ISelectSearchAttribute>("value", currentValue)
 
     /// <summary>Sets the currently selected values when in controlled mode and multiple is enabled</summary>
     static member inline value(currentValues: string[]) =
-        unbox<ISelectSearchAttribute> ("value", currentValues)
+        unbox<ISelectSearchAttribute>("value", currentValues)
 
     /// <summary>Sets the currently selected values when in controlled mode and multiple is enabled</summary>
     static member inline value(currentValues: string list) =
-        unbox<ISelectSearchAttribute> ("value", Array.ofList currentValues)
+        unbox<ISelectSearchAttribute>("value", Array.ofList currentValues)
 
     /// <summary>Set to true if you want to allow multiple selected options. False by default</summary>
     static member inline multiple(selectingMultipleValues: bool) =
-        unbox<ISelectSearchAttribute> ("multiple", selectingMultipleValues)
+        unbox<ISelectSearchAttribute>("multiple", selectingMultipleValues)
 
     /// <summary>Set to true to enable search functionality. False by default</summary>
     static member inline search(searchable: bool) =
-        unbox<ISelectSearchAttribute> ("search", searchable)
+        unbox<ISelectSearchAttribute>("search", searchable)
 
     /// <summary>Disables all functionality</summary>
     static member inline disabled(disableControl: bool) =
-        unbox<ISelectSearchAttribute> ("disabled", disableControl)
+        unbox<ISelectSearchAttribute>("disabled", disableControl)
 
     /// <summary>The selectbox will blur by default when selecting an option. Set this to false to prevent this behavior. True by default</summary>
     static member inline closeOnSelect(closeMenuOnSelect: bool) =
-        unbox<ISelectSearchAttribute> ("closeOnSelect", closeMenuOnSelect)
+        unbox<ISelectSearchAttribute>("closeOnSelect", closeMenuOnSelect)
 
     /// <summary>Displayed if no option is selected and/or when search field is focused with empty value.</summary>
     static member inline placeholder(text: string) =
-        unbox<ISelectSearchAttribute> ("placeholder", text)
+        unbox<ISelectSearchAttribute>("placeholder", text)
 
     /// <summary>HTML ID on the top level element</summary>
     static member inline id(elementIdentifier: string) =
-        unbox<ISelectSearchAttribute> ("id", elementIdentifier)
+        unbox<ISelectSearchAttribute>("id", elementIdentifier)
 
     /// <summary>Autofocus on select</summary>
     static member inline autoFocus(autoFocusOnSelect: bool) =
-        unbox<ISelectSearchAttribute> ("authoFocus", autoFocusOnSelect)
+        unbox<ISelectSearchAttribute>("authoFocus", autoFocusOnSelect)
 
     /// <summary>Set empty message for empty options list</summary>
     static member inline emptyMessage(message: string) =
-        unbox<ISelectSearchAttribute> ("emptyMessage", message)
+        unbox<ISelectSearchAttribute>("emptyMessage", message)
 
     /// <summary>Set empty message for empty options list</summary>
     static member inline emptyMessage(message: unit -> ReactElement) =
-        unbox<ISelectSearchAttribute> ("emptyMessage", message)
+        unbox<ISelectSearchAttribute>("emptyMessage", message)
 
     /// <summary>Function to receive and handle value changes.</summary>
     static member inline onChange(handler: string -> unit) =
@@ -232,7 +232,7 @@ type selectSearch =
                 if not (String.IsNullOrWhiteSpace unboxed) then
                     handler unboxed
 
-        unbox<ISelectSearchAttribute> ("onChange", handler)
+        unbox<ISelectSearchAttribute>("onChange", handler)
 
     /// <summary>Function to receive and handle value changes. Use this overload when multiple is set to true</summary>
     static member inline onChange(handler: string list -> unit) =
@@ -242,15 +242,15 @@ type selectSearch =
             else
                 handler ([ unbox<string> values ])
 
-        unbox<ISelectSearchAttribute> ("onChange", internalHandler)
+        unbox<ISelectSearchAttribute>("onChange", internalHandler)
 
     /// <summary>Focus callback.</summary>
     static member inline onFocus(handler: unit -> unit) =
-        unbox<ISelectSearchAttribute> ("onFocus", handler)
+        unbox<ISelectSearchAttribute>("onFocus", handler)
 
     /// <summary>Blur callback.</summary>
     static member inline onBlur(handler: unit -> unit) =
-        unbox<ISelectSearchAttribute> ("onBlur", handler)
+        unbox<ISelectSearchAttribute>("onBlur", handler)
 
     /// <summary>Allows you to customize how each option is rendered</summary>
     static member inline renderOption(renderer: OptionRendererProps -> ReactElement) =
@@ -271,11 +271,11 @@ type selectSearch =
                 }
             )
 
-        unbox<ISelectSearchAttribute> ("renderOption", internalHandler)
+        unbox<ISelectSearchAttribute>("renderOption", internalHandler)
 
     /// <summary>Allows you to customize how the group header is render using the group name</summary>
     static member inline renderGroupHeader(renderer: string -> ReactElement) =
-        unbox<ISelectSearchAttribute> ("renderGroupHeader", renderer)
+        unbox<ISelectSearchAttribute>("renderGroupHeader", renderer)
 
     /// <summary>Allows you to customize how the search bar is rendered</summary>
     static member inline renderValue(renderer: ValueRendererProps -> ReactElement) =
@@ -285,11 +285,11 @@ type selectSearch =
 
                 let values =
                     if Interop.isArray (unbox (snapshot?value)) then
-                        Array.toList (unbox<string[]> (snapshot?value))
+                        Array.toList (unbox<string[]>(snapshot?value))
                     elif String.IsNullOrWhiteSpace(unbox (snapshot?value)) then
                         []
                     else
-                        [ unbox<string> (snapshot?value) ]
+                        [ unbox<string>(snapshot?value) ]
 
                 renderer {
                     attributes = unbox entries
@@ -302,26 +302,26 @@ type selectSearch =
                 }
             )
 
-        unbox<ISelectSearchAttribute> ("renderValue", internalHandler)
+        unbox<ISelectSearchAttribute>("renderValue", internalHandler)
 
     /// <summary>
     /// When search is enabled, this function allows to define how items are filtered.
     /// By default, the built-in filtering checks whether the name of the select item contains input query (case-insensitive)
     /// </summary>
     static member filterOptions(predicate: SelectItem -> string -> bool) =
-        unbox<ISelectSearchAttribute> ("filterOptions", Interop.createDefaultFilter predicate)
+        unbox<ISelectSearchAttribute>("filterOptions", Interop.createDefaultFilter predicate)
 
 module selectSearch =
     importSideEffects "./SelectSearch.css"
 
     /// <summary>This property controls when the options list should be rendered.</summary>
     type printOptions =
-        static member inline auto = unbox<ISelectSearchAttribute> ("printOptions", "auto")
-        static member inline always = unbox<ISelectSearchAttribute> ("printOptions", "always")
-        static member inline never = unbox<ISelectSearchAttribute> ("printOptions", "never")
-        static member inline onFocus = unbox<ISelectSearchAttribute> ("printOptions", "on-focus")
+        static member inline auto = unbox<ISelectSearchAttribute>("printOptions", "auto")
+        static member inline always = unbox<ISelectSearchAttribute>("printOptions", "always")
+        static member inline never = unbox<ISelectSearchAttribute>("printOptions", "never")
+        static member inline onFocus = unbox<ISelectSearchAttribute>("printOptions", "on-focus")
 
     /// <summary>Disables/Enables autoComplete functionality in search field.</summary>
     type autoComplete =
-        static member inline on = unbox<ISelectSearchAttribute> ("autoComplete", "on")
-        static member inline off = unbox<ISelectSearchAttribute> ("autoComplete", "off")
+        static member inline on = unbox<ISelectSearchAttribute>("autoComplete", "on")
+        static member inline off = unbox<ISelectSearchAttribute>("autoComplete", "off")

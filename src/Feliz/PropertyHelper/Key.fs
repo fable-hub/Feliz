@@ -4,7 +4,7 @@ type IKeyboardKey = interface end
 
 [<RequireQualifiedAccess>]
 module key =
-    let private create (key: string) = unbox<IKeyboardKey> (key, false, false)
+    let private create (key: string) = unbox<IKeyboardKey>(key, false, false)
 
     let enter = create "Enter"
     let escape = create "Escape"
@@ -53,12 +53,12 @@ module key =
 
     let ctrl (key: IKeyboardKey) =
         let (a, _, c) = unbox key
-        unbox<IKeyboardKey> (a, true, c)
+        unbox<IKeyboardKey>(a, true, c)
 
     let shift (key: IKeyboardKey) =
         let (a, b, _) = unbox key
-        unbox<IKeyboardKey> (a, b, true)
+        unbox<IKeyboardKey>(a, b, true)
 
     let ctrlAndShift (key: IKeyboardKey) =
         let (a, _, _) = unbox key
-        unbox<IKeyboardKey> (a, true, true)
+        unbox<IKeyboardKey>(a, true, true)

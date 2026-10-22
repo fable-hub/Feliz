@@ -43,7 +43,7 @@ type barChart =
     static member inline data(values: 'a array) = Interop.mkBarChartAttr "data" values
 
     static member inline children(elements: ReactElement list) =
-        unbox<IBarChartProperty> (prop.children elements)
+        unbox<IBarChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///

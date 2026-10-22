@@ -43,8 +43,9 @@ type Main =
 
             loop ()
             // return IDisposable with cleanup code
-            { new IDisposable with
-                member this.Dispose() = clearTimeout (subscriptionId.current)
+            {
+                new IDisposable with
+                    member this.Dispose() = clearTimeout (subscriptionId.current)
             }
 
         React.useEffect (subscribeToTimer, [||])

@@ -23,9 +23,7 @@ type ConditionalRendering =
                         Html.text " ⚠️"
                 ]
                 Html.small [
-                    prop.className [
-                        if isMany then "text-green-500" else "text-red-500"
-                    ]
+                    prop.className [ if isMany then "text-green-500" else "text-red-500" ]
                     prop.textf "%d left in store" count
                 ]
             ]

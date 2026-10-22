@@ -12,7 +12,7 @@ open Vitest
 module TestLazyComponent =
 
     let LazyLoadComponent =
-        React.lazy'<{| text: string |}> (fun () -> promise {
+        React.lazy'<{| text: string |}>(fun () -> promise {
             do! Promise.sleep 2000
             return! Fable.Core.JsInterop.importDynamic "../CodeSplitting.jsx"
         })
@@ -189,23 +189,24 @@ describe "lazy"
         let render = RTL.render (Components.LazyLoad())
 
         // Ensure loading message is not present initially
-        expect(RTL.screen.queryByText ("Loading...")).toBeNull ()
+        expect(RTL.screen.queryByText ("Loading...")).toBeNull()
 
         // Click the checkbox to load the lazy component
         let checkbox = screen.getByTestId ("checkbox")
         do! userEvent.click (checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement> (fun () -> promise { return! screen.findByTestId ("loading") })
+        let! loading =
+            RTL.waitFor<Types.HTMLElement>(fun () -> promise { return! screen.findByTestId ("loading") })
 
-        expect(loading).toBeTruthy ()
+        expect(loading).toBeTruthy()
 
         do!
-            RTL.waitFor<unit> (
+            RTL.waitFor<unit>(
                 (fun () -> promise {
                     // Wait for the lazy component to appear
                     let! lazyText = RTL.screen.findByText ("Component loaded after 2 seconds")
-                    expect(lazyText).not.toBeNull ()
+                    expect(lazyText).not.toBeNull()
                 }),
                 RTLWaitForOptions(timeout = 3000)
             )
@@ -215,9 +216,9 @@ describe "lazy"
         do! userEvent.``type`` (input, "hello")
 
         let! lazyText = RTL.screen.findByText ("hello")
-        expect(lazyText).not.toBeNull ()
+        expect(lazyText).not.toBeNull()
         let loading = RTL.screen.queryByTestId ("loading")
-        expect(loading).toBeNull ()
+        expect(loading).toBeNull()
     }
 
     testPromise "loads lazy component with attribute from let binding"
@@ -225,7 +226,7 @@ describe "lazy"
         let render = RTL.render (Components.LazyLoadLazyComponentAttributeLet())
 
         // Ensure loading message is not present initially
-        expect(RTL.screen.queryByText ("Loading...")).toBeNull ()
+        expect(RTL.screen.queryByText ("Loading...")).toBeNull()
 
         // Type into the input field
 
@@ -235,16 +236,17 @@ describe "lazy"
         do! userEvent.click (checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement> (fun () -> promise { return! screen.findByTestId ("loading") })
+        let! loading =
+            RTL.waitFor<Types.HTMLElement>(fun () -> promise { return! screen.findByTestId ("loading") })
 
-        expect(loading).not.toBeNull ()
+        expect(loading).not.toBeNull()
 
         do!
-            RTL.waitFor<unit> (
+            RTL.waitFor<unit>(
                 (fun () -> promise {
                     // Wait for the lazy component to appear
                     let! lazyText = RTL.screen.findByText ("Component loaded after 2 seconds")
-                    expect(lazyText).not.toBeNull ()
+                    expect(lazyText).not.toBeNull()
                 }),
                 RTLWaitForOptions(timeout = 3000)
             )
@@ -254,9 +256,9 @@ describe "lazy"
         do! userEvent.``type`` (input, "hello")
 
         let! lazyText = RTL.screen.findByText ("hello")
-        expect(lazyText).not.toBeNull ()
+        expect(lazyText).not.toBeNull()
         let loading = RTL.screen.queryByTestId ("loading")
-        expect(loading).toBeNull ()
+        expect(loading).toBeNull()
     }
 
     testPromise "loads lazy component with attribute from static member"
@@ -264,7 +266,7 @@ describe "lazy"
         let render = RTL.render (Components.LazyLoadLazyComponentAttributeClass())
 
         // Ensure loading message is not present initially
-        expect(RTL.screen.queryByText ("Loading...")).toBeNull ()
+        expect(RTL.screen.queryByText ("Loading...")).toBeNull()
 
         // Type into the input field
 
@@ -274,16 +276,17 @@ describe "lazy"
         do! userEvent.click (checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement> (fun () -> promise { return! screen.findByTestId ("loading") })
+        let! loading =
+            RTL.waitFor<Types.HTMLElement>(fun () -> promise { return! screen.findByTestId ("loading") })
 
-        expect(loading).not.toBeNull ()
+        expect(loading).not.toBeNull()
 
         do!
-            RTL.waitFor<unit> (
+            RTL.waitFor<unit>(
                 (fun () -> promise {
                     // Wait for the lazy component to appear
                     let! lazyText = RTL.screen.findByText ("Component loaded after 2 seconds")
-                    expect(lazyText).not.toBeNull ()
+                    expect(lazyText).not.toBeNull()
                 }),
                 RTLWaitForOptions(timeout = 3000)
             )
@@ -293,9 +296,9 @@ describe "lazy"
         do! userEvent.``type`` (input, "hello")
 
         let! lazyText = RTL.screen.findByText ("hello")
-        expect(lazyText).not.toBeNull ()
+        expect(lazyText).not.toBeNull()
         let loading = RTL.screen.queryByTestId ("loading")
-        expect(loading).toBeNull ()
+        expect(loading).toBeNull()
     }
 
     testPromise "loads lazy component with attribute from let binding from path"
@@ -303,7 +306,7 @@ describe "lazy"
         let render = RTL.render (Components.LazyLoadLazyComponentAttributeLetFromPath())
 
         // Ensure loading message is not present initially
-        expect(RTL.screen.queryByText ("Loading...")).toBeNull ()
+        expect(RTL.screen.queryByText ("Loading...")).toBeNull()
 
         // Type into the input field
 
@@ -313,16 +316,17 @@ describe "lazy"
         do! userEvent.click (checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement> (fun () -> promise { return! screen.findByTestId ("loading") })
+        let! loading =
+            RTL.waitFor<Types.HTMLElement>(fun () -> promise { return! screen.findByTestId ("loading") })
 
-        expect(loading).not.toBeNull ()
+        expect(loading).not.toBeNull()
 
         do!
-            RTL.waitFor<unit> (
+            RTL.waitFor<unit>(
                 (fun () -> promise {
                     // Wait for the lazy component to appear
                     let! lazyText = RTL.screen.findByText ("Component loaded after 2 seconds")
-                    expect(lazyText).not.toBeNull ()
+                    expect(lazyText).not.toBeNull()
                 }),
                 RTLWaitForOptions(timeout = 3000)
             )
@@ -332,9 +336,9 @@ describe "lazy"
         do! userEvent.``type`` (input, "hello")
 
         let! lazyText = RTL.screen.findByText ("hello")
-        expect(lazyText).not.toBeNull ()
+        expect(lazyText).not.toBeNull()
         let loading = RTL.screen.queryByTestId ("loading")
-        expect(loading).toBeNull ()
+        expect(loading).toBeNull()
     }
 
     testPromise "loads lazy component with attribute from static member from path"
@@ -342,7 +346,7 @@ describe "lazy"
         let render = RTL.render (Components.LazyLoadLazyComponentAttributeClassFromPath())
 
         // Ensure loading message is not present initially
-        expect(RTL.screen.queryByText ("Loading...")).toBeNull ()
+        expect(RTL.screen.queryByText ("Loading...")).toBeNull()
 
         // Type into the input field
 
@@ -352,16 +356,17 @@ describe "lazy"
         do! userEvent.click (checkbox)
 
         // Wait for loading indicator
-        let! loading = RTL.waitFor<Types.HTMLElement> (fun () -> promise { return! screen.findByTestId ("loading") })
+        let! loading =
+            RTL.waitFor<Types.HTMLElement>(fun () -> promise { return! screen.findByTestId ("loading") })
 
-        expect(loading).not.toBeNull ()
+        expect(loading).not.toBeNull()
 
         do!
-            RTL.waitFor<unit> (
+            RTL.waitFor<unit>(
                 (fun () -> promise {
                     // Wait for the lazy component to appear
                     let! lazyText = RTL.screen.findByText ("Component loaded after 2 seconds")
-                    expect(lazyText).not.toBeNull ()
+                    expect(lazyText).not.toBeNull()
                 }),
                 RTLWaitForOptions(timeout = 3000)
             )
@@ -371,7 +376,7 @@ describe "lazy"
         do! userEvent.``type`` (input, "hello")
 
         let! lazyText = RTL.screen.findByText ("hello")
-        expect(lazyText).not.toBeNull ()
+        expect(lazyText).not.toBeNull()
         let loading = RTL.screen.queryByTestId ("loading")
-        expect(loading).toBeNull ()
+        expect(loading).toBeNull()
     }

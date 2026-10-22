@@ -69,8 +69,8 @@ describe "Legacy Tests"
                 |> List.map Feliz.DateParsing.parse
                 |> List.forall (fun parsedDate -> parsedDate.IsNone)
 
-            Vitest.expect(allValid).toBeTruthy () //"Parsing worked in all cases where the date was valid"
-            Vitest.expect(allInvalid).toBeTruthy () //"Parsing did not work in all cases where the date was invalid"
+            Vitest.expect(allValid).toBeTruthy() //"Parsing worked in all cases where the date was valid"
+            Vitest.expect(allInvalid).toBeTruthy() //"Parsing did not work in all cases where the date was invalid"
     )
 
     Vitest.test (
@@ -164,9 +164,9 @@ describe "Legacy Tests"
         let render = render (FocusInputExample())
         let focusedInput = render.getByTestId "focused-input"
         let focusInputButton = render.getByTestId "focus-input"
-        expect(focusedInput).not.toHaveFocus ()
+        expect(focusedInput).not.toHaveFocus()
         do! userEvent.click (focusInputButton)
-        expect(focusedInput).toHaveFocus () //"Input is now active"
+        expect(focusedInput).toHaveFocus() //"Input is now active"
     }
 
     test "Styles are rendered correctly"
@@ -256,11 +256,11 @@ describe "Legacy Tests"
                 ]
             )
 
-        expect(screen.getByTestId "test-translateX").toHaveStyle ("transform: translateX(1em)") // "translateX should render"
-        expect(screen.getByTestId "test-translateY").toHaveStyle ("transform: translateY(2em)") // "translateY should render"
-        expect(screen.getByTestId "test-translateZ").toHaveStyle ("transform: translateZ(3em)") // "translateZ should render"
-        expect(screen.getByTestId "test-translate").toHaveStyle ("transform: translate(11em,22em)") // "translate should render"
-        expect(screen.getByTestId "test-translate3D").toHaveStyle ("transform: translate3d(111em,222em,333em)") // "translate3D should render"
+        expect(screen.getByTestId "test-translateX").toHaveStyle("transform: translateX(1em)") // "translateX should render"
+        expect(screen.getByTestId "test-translateY").toHaveStyle("transform: translateY(2em)") // "translateY should render"
+        expect(screen.getByTestId "test-translateZ").toHaveStyle("transform: translateZ(3em)") // "translateZ should render"
+        expect(screen.getByTestId "test-translate").toHaveStyle("transform: translate(11em,22em)") // "translate should render"
+        expect(screen.getByTestId "test-translate3D").toHaveStyle("transform: translate3d(111em,222em,333em)") // "translate3D should render"
 
     test "Combined translate functions render correctly for style.transform"
     <| fun _ ->
@@ -283,7 +283,7 @@ describe "Legacy Tests"
         let ele = RTL.screen.getByTestId "test-combined-translate"
 
         expect(ele)
-            .toHaveStyle (
+            .toHaveStyle(
                 "transform: translateX(1px) translateY(2.2px) translateZ(3.3em) translate(11px,22px) translate3d(111px,222px,333px)"
             ) // "Combined transform should render"
 

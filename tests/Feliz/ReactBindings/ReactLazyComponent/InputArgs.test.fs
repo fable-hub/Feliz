@@ -29,7 +29,7 @@ describe "ReactLazyComponent input arguments"
             )
 
         let! tupledRoot = screen.findByTestId "tupled-root"
-        expect(tupledRoot).toHaveAttribute ("class", "ref-class")
+        expect(tupledRoot).toHaveAttribute("class", "ref-class")
         expect(screen.getByTestId "tupled-testid").toHaveTextContent "ref-id"
 
         do! userEvent.click (screen.getByTestId "tupled-button")
@@ -46,7 +46,7 @@ describe "ReactLazyComponent input arguments"
             )
 
         let! tupledRoot = screen.findByTestId "tupled-root"
-        expect(tupledRoot).toHaveAttribute ("class", "path-class")
+        expect(tupledRoot).toHaveAttribute("class", "path-class")
         expect(screen.getByTestId "tupled-testid").toHaveTextContent "path-id"
 
         do! userEvent.click (screen.getByTestId "tupled-button")
@@ -58,7 +58,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> RefLazy.Curried ("curried-ref") (Some "curried-id"))
 
         let! loaded = screen.findByTestId "curried-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "curried-text").toHaveTextContent "curried-ref"
         expect(screen.getByTestId "curried-testid").toHaveTextContent "curried-id"
     }
@@ -68,7 +68,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> PathLazy.Curried ("curried-path") (None))
 
         let! loaded = screen.findByTestId "curried-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "curried-text").toHaveTextContent "curried-path"
         expect(screen.getByTestId "curried-testid").toHaveTextContent "none"
     }
@@ -78,7 +78,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> RefLazy.AnonymousRecord({| id = 123 |}))
 
         let! loaded = screen.findByTestId "anon-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(loaded).toHaveTextContent "123"
     }
 
@@ -87,7 +87,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> PathLazy.AnonymousRecord({| id = 321 |}))
 
         let! loaded = screen.findByTestId "anon-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(loaded).toHaveTextContent "321"
     }
 
@@ -97,7 +97,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> RefLazy.RecordAndClass(payload))
 
         let! loaded = screen.findByTestId "record-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "record-id").toHaveTextContent "10"
         expect(screen.getByTestId "record-name").toHaveTextContent "record-ref"
         expect(screen.getByTestId "record-score").toHaveTextContent "88"
@@ -110,7 +110,7 @@ describe "ReactLazyComponent input arguments"
         do! renderAndLoad (fun () -> PathLazy.RecordAndClass(payload))
 
         let! loaded = screen.findByTestId "record-root"
-        expect(loaded).toBeInTheDocument ()
+        expect(loaded).toBeInTheDocument()
         expect(screen.getByTestId "record-id").toHaveTextContent "11"
         expect(screen.getByTestId "record-name").toHaveTextContent "none"
         expect(screen.getByTestId "record-score").toHaveTextContent "99"

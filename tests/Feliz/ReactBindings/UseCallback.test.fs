@@ -48,6 +48,6 @@ describe "useCallback"
 
         do! userEvent.click (incEle)
 
-        expect(capturedFns[0]).not.toBe (capturedFns[1])
+        expect(capturedFns[0]).not.toBe(capturedFns[1])
 
     }

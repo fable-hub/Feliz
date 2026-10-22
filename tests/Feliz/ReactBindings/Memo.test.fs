@@ -11,15 +11,14 @@ open Vitest
 module Components =
 
     let MemoFunction =
-        React.memo<
-            {|
-                text: string
-                onRender: unit -> unit
-            |}
-         > (fun (props) ->
-            React.useEffect (fun () -> props.onRender ())
-            Html.div [ prop.text props.text; prop.testId "memo-function" ]
-        )
+        React.memo<{|
+            text: string
+            onRender: unit -> unit
+        |}>
+            (fun (props) ->
+                React.useEffect (fun () -> props.onRender ())
+                Html.div [ prop.text props.text; prop.testId "memo-function" ]
+            )
 
     let MemoFunctionUnit =
         React.memo (fun () ->
@@ -38,12 +37,10 @@ module Components =
         )
 
     let MemoFunctionAreEqual =
-        React.memo<
-            {|
-                text: string
-                onRender: unit -> unit
-            |}
-         > (
+        React.memo<{|
+            text: string
+            onRender: unit -> unit
+        |}>(
             (fun props ->
                 React.useEffect (fun () -> props.onRender ())
                 Html.div [ prop.text props.text; prop.testId "memo-function" ]
@@ -101,17 +98,17 @@ describe "memo"
     <| fun _ -> promise {
         let render = RTL.render (React.memoRender (Components.MemoFunctionUnit))
         let text = render.getByTestId ("text")
-        expect(text).toBeInTheDocument ()
-        expect(text).toHaveTextContent ("")
+        expect(text).toBeInTheDocument()
+        expect(text).toHaveTextContent("")
         render.rerender (React.memoRender (Components.MemoFunctionUnit)) // rerender should not change anything, because of memo
         render.rerender (React.memoRender (Components.MemoFunctionUnit))
         render.rerender (React.memoRender (Components.MemoFunctionUnit))
         render.rerender (React.memoRender (Components.MemoFunctionUnit))
         let btn = render.getByTestId ("btn")
         do! userEvent.click btn
-        expect(text).toHaveTextContent ("1") // state change triggers rerender increasing counter
+        expect(text).toHaveTextContent("1") // state change triggers rerender increasing counter
         do! userEvent.click btn
-        expect(text).toHaveTextContent ("2")
+        expect(text).toHaveTextContent("2")
     }
 
     testPromise "prevents re-rendering when props do not change (function areEqual)"
@@ -224,17 +221,17 @@ describe "memo"
                 RTL.render (React.memoRender (Components.MemoFunctionUnit, withKey = "unique-key"))
 
             let text = render.getByTestId ("text")
-            expect(text).toBeInTheDocument ()
-            expect(text).toHaveTextContent ("")
+            expect(text).toBeInTheDocument()
+            expect(text).toHaveTextContent("")
             render.rerender (React.memoRender (Components.MemoFunctionUnit, withKey = "unique-key")) // rerender should not change anything, because of memo
             render.rerender (React.memoRender (Components.MemoFunctionUnit, withKey = "unique-key"))
             render.rerender (React.memoRender (Components.MemoFunctionUnit, withKey = "unique-key"))
             render.rerender (React.memoRender (Components.MemoFunctionUnit, withKey = "unique-key"))
             let btn = render.getByTestId ("btn")
             do! userEvent.click btn
-            expect(text).toHaveTextContent ("1") // state change triggers rerender increasing counter
+            expect(text).toHaveTextContent("1") // state change triggers rerender increasing counter
             do! userEvent.click btn
-            expect(text).toHaveTextContent ("2")
+            expect(text).toHaveTextContent("2")
         }
 
         testPromise "prevents re-rendering when props do not change (function areEqual)"

@@ -28,7 +28,7 @@ type scatterChart =
         Interop.mkScatterChartAttr "data" values
 
     static member inline children(elements: ReactElement list) =
-        unbox<IScatterChartProperty> (prop.children elements)
+        unbox<IScatterChartProperty>(prop.children elements)
 
     /// The sizes of whitespace around the container.
     ///
@@ -129,7 +129,7 @@ type scatter =
     static member inline fill(color: string) = Interop.mkScatterAttr "fill" color
 
     static member inline children(elements: ReactElement list) =
-        unbox<IScatterProperty> (prop.children elements)
+        unbox<IScatterProperty>(prop.children elements)
 
     static member inline margin(?top: int, ?right: int, ?bottom: int, ?left: int) =
         let margin =
