@@ -236,11 +236,11 @@ module Release =
             |> CmdLine.append "--skip-duplicate"
             |> CmdLine.toString
 
-        Command.Run("dotnet", args, workingDirectory = Path.GetFullPath OutputDir)
+        Command.Run("dotnet", args, workingDirectory = Path.GetFullPath OutputDir, noEcho = true)
 
 [<EntryPoint>]
 let main args =
-    let argv = args |> Array.map (fun x -> x.ToLower()) |> Array.toList
+    let argv = args |> Array.toList
 
     match argv with
     | "setup" :: _ -> Setup.all ()
