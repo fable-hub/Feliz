@@ -4,11 +4,11 @@ open Feliz
 open Browser.Dom
 
 [<ReactComponent>]
-let Portal(content: ReactElement) =
-    ReactDOM.createPortal(content, document.body)
+let Portal (content: ReactElement) =
+    ReactDOM.createPortal (content, document.body)
 
 [<ReactComponent>]
-let PortalsPopup() =
+let PortalsPopup () =
     Html.div [
         prop.style [
             style.position.fixedRelativeToWindow
@@ -26,13 +26,11 @@ let PortalsPopup() =
     ]
 
 [<ReactComponent(true)>]
-let PortalsContainer() =
-    let showBanner, setShowBanner = React.useState(true)
+let PortalsContainer () =
+    let showBanner, setShowBanner = React.useState (true)
+
     Html.div [
-        prop.style [
-            style.padding 10
-            style.overflow.hidden
-        ]
+        prop.style [ style.padding 10; style.overflow.hidden ]
         prop.children [
             Html.button [
                 prop.text "Toggle Popup"

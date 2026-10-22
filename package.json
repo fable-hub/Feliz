@@ -1,6 +1,7 @@
 {
     "name": "feliz-packages",
     "private": true,
+    "type": "module",
     "scripts": {
         "publish-docs": "npm run build && node publish.js",
         "start": "dotnet tool restore && dotnet fable watch docs --noCache --exclude Feliz.CompilerPlugins --run webpack-dev-server",

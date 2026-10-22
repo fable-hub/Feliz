@@ -99,4 +99,3 @@ describe "UseElmish dependency change reinit once"
 
         expect(render.getByTestId TestIds.InitRuns).toHaveTextContent "1"
     }
-

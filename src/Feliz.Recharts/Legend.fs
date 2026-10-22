@@ -7,57 +7,73 @@ open Fable.Core.JsInterop
 
 [<Erase>]
 type legend =
-    static member inline width (value: int) = Interop.mkLegendAttr "width" value
-    static member inline height (value: int) = Interop.mkLegendAttr "height" value
-    static member inline iconSize (value: int) = Interop.mkLegendAttr "iconSize" value
-    static member inline chartWidth (value: int) = Interop.mkLegendAttr "chartWidth" value
-    static member inline chartHeight (value: int) = Interop.mkLegendAttr "chartHeight" value
-    static member inline margin (?top: int, ?left: int, ?right: int, ?bottom: int) = 
-        let margin = 
-            createObj [ 
+    static member inline width(value: int) = Interop.mkLegendAttr "width" value
+    static member inline height(value: int) = Interop.mkLegendAttr "height" value
+    static member inline iconSize(value: int) = Interop.mkLegendAttr "iconSize" value
+    static member inline chartWidth(value: int) = Interop.mkLegendAttr "chartWidth" value
+
+    static member inline chartHeight(value: int) =
+        Interop.mkLegendAttr "chartHeight" value
+
+    static member inline margin(?top: int, ?left: int, ?right: int, ?bottom: int) =
+        let margin =
+            createObj [
                 "top" ==> Option.defaultValue 0 top
                 "left" ==> Option.defaultValue 0 left
                 "right" ==> Option.defaultValue 0 right
-                "bottom" ==> Option.defaultValue 0 bottom ]
+                "bottom" ==> Option.defaultValue 0 bottom
+            ]
 
         Interop.mkLegendAttr "margin" margin
-    static member inline formatter (f: string -> 'a -> int -> ReactElement) = Interop.mkLegendAttr "formatter" (System.Func<_,_,_,_> f)
-    static member inline wrapperStyle (properties: #IStyleAttribute list) = Interop.mkLegendAttr "wrapperStyle" (createObj !!properties)
-    static member inline onClick (handler: ChartMouseEvent<'label, 'payload> -> unit) =
-        Interop.mkLegendAttr "onClick" <|
-            fun eventArgs ->
-                if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs
-                then ignore()
-                else handler eventArgs
 
-    static member inline onMouseEnter (handler: ChartMouseEvent<'label, 'payload> -> unit) =
-        Interop.mkLegendAttr "onMouseEnter" <|
-            fun eventArgs ->
-                if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs
-                then ignore()
-                else handler eventArgs
+    static member inline formatter(f: string -> 'a -> int -> ReactElement) =
+        Interop.mkLegendAttr "formatter" (System.Func<_, _, _, _> f)
 
-    static member inline onMouseMove (handler: ChartMouseEvent<'label, 'payload> -> unit) =
-        Interop.mkLegendAttr "onMouseMove" <|
-            fun eventArgs ->
-                if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs
-                then ignore()
-                else handler eventArgs
+    static member inline wrapperStyle(properties: #IStyleAttribute list) =
+        Interop.mkLegendAttr "wrapperStyle" (createObj !!properties)
 
-    static member inline onMouseLeave (handler: unit -> unit) = Interop.mkLegendAttr "onMouseLeave" handler
-    static member inline onMouseUp (handler: ChartMouseEvent<'label, 'payload> -> unit) =
-        Interop.mkLegendAttr "onMouseUp" <|
-            fun eventArgs ->
-                if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs
-                then ignore()
-                else handler eventArgs
+    static member inline onClick(handler: ChartMouseEvent<'label, 'payload> -> unit) =
+        Interop.mkLegendAttr "onClick"
+        <| fun eventArgs ->
+            if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs then
+                ignore ()
+            else
+                handler eventArgs
 
-    static member inline onMouseDown (handler: ChartMouseEvent<'label, 'payload> -> unit) =
-        Interop.mkLegendAttr "onMouseDown" <|
-            fun eventArgs ->
-                if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs
-                then ignore()
-                else handler eventArgs
+    static member inline onMouseEnter(handler: ChartMouseEvent<'label, 'payload> -> unit) =
+        Interop.mkLegendAttr "onMouseEnter"
+        <| fun eventArgs ->
+            if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs then
+                ignore ()
+            else
+                handler eventArgs
+
+    static member inline onMouseMove(handler: ChartMouseEvent<'label, 'payload> -> unit) =
+        Interop.mkLegendAttr "onMouseMove"
+        <| fun eventArgs ->
+            if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs then
+                ignore ()
+            else
+                handler eventArgs
+
+    static member inline onMouseLeave(handler: unit -> unit) =
+        Interop.mkLegendAttr "onMouseLeave" handler
+
+    static member inline onMouseUp(handler: ChartMouseEvent<'label, 'payload> -> unit) =
+        Interop.mkLegendAttr "onMouseUp"
+        <| fun eventArgs ->
+            if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs then
+                ignore ()
+            else
+                handler eventArgs
+
+    static member inline onMouseDown(handler: ChartMouseEvent<'label, 'payload> -> unit) =
+        Interop.mkLegendAttr "onMouseDown"
+        <| fun eventArgs ->
+            if isNullOrUndefined eventArgs || Interop.objectHas [ "isTooltipActive" ] eventArgs then
+                ignore ()
+            else
+                handler eventArgs
 
 
 module legend =

@@ -4,9 +4,10 @@ open Feliz
 open Fable.Core
 
 [<ReactComponent(true)>]
-let UseRef() =
-    let timeoutRef = React.useRef(None)
-    let message, setMessage = React.useState("No timeout started.")
+let UseRef () =
+    let timeoutRef = React.useRef (None)
+    let message, setMessage = React.useState ("No timeout started.")
+
     Html.div [
         Html.button [
             prop.text "Start Timeout"
@@ -16,15 +17,16 @@ let UseRef() =
                 | Some id -> JS.clearTimeout id
                 | None -> ()
                 // Start a new timeout
-                let id = 
-                    JS.setTimeout 
-                        (fun _ -> 
+                let id =
+                    JS.setTimeout
+                        (fun _ ->
                             timeoutRef.current <- None
-                            setMessage("Timeout finished!")
-                        ) 
+                            setMessage ("Timeout finished!")
+                        )
                         3000
+
                 timeoutRef.current <- Some id
-                setMessage("Timeout started. Will finish in 3 seconds.")
+                setMessage ("Timeout started. Will finish in 3 seconds.")
             )
         ]
         Html.button [
@@ -34,8 +36,8 @@ let UseRef() =
                 | Some id ->
                     JS.clearTimeout id
                     timeoutRef.current <- None
-                    setMessage("Timeout cancelled.")
-                | None -> setMessage("No timeout to cancel.")
+                    setMessage ("Timeout cancelled.")
+                | None -> setMessage ("No timeout to cancel.")
             )
         ]
         Html.p [ prop.text message ]

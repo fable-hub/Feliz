@@ -14,7 +14,10 @@ type Components =
             prop.id "simpleDiv"
             prop.testId "simpleDiv"
             prop.onClick (fun _ -> Browser.Dom.console.log ("Div clicked!"))
-            prop.children [ Html.h1 "Hello, World!"; Html.p "This is a simple div component." ]
+            prop.children [
+                Html.h1 "Hello, World!"
+                Html.p "This is a simple div component."
+            ]
         ]
 
     [<ReactComponent>]
@@ -61,7 +64,8 @@ type Components =
                     prop.text "Increment"
                     prop.onClick (fun _ ->
                         setCount (fun c -> c + 1)
-                        onClick ())
+                        onClick ()
+                    )
                 ]
                 Html.p $"Count: {count}"
             ]
@@ -83,7 +87,9 @@ type Components =
     static member SVGElement() =
         Svg.svg [
             svg.viewBox (0, 0, 100, 100)
-            svg.children [ Svg.circle [ svg.cx 50; svg.cy 50; svg.r 40; svg.fill "red" ] ]
+            svg.children [
+                Svg.circle [ svg.cx 50; svg.cy 50; svg.r 40; svg.fill "red" ]
+            ]
         ]
 
     /// ```fsharp
@@ -205,7 +211,10 @@ module RecordTypeInputTesting =
         let ctx = React.useContext RecordTypeCtx
 
         Html.div [
-            Html.div [ prop.testId "single-greet"; prop.text (recordInput.Greet()) ]
+            Html.div [
+                prop.testId "single-greet"
+                prop.text (recordInput.Greet())
+            ]
             Html.div [
                 prop.testId "single-exists"
                 prop.text (ctx.state |> Set.contains recordInput |> string)

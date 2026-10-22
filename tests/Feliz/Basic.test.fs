@@ -8,11 +8,13 @@ open Fable.Core
 open Vitest
 open Basic
 
-describe "Simple createElement calls" <| fun _ ->
+describe "Simple createElement calls"
+<| fun _ ->
 
-    test "Html.div children" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "Html.div children"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 Html.div [
                     Html.h1 "Hello, World!"
                     Html.p "This is a simple div component."
@@ -20,13 +22,14 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
         let p = render.getByText "This is a simple div component."
-        expect(p).toBeInTheDocument()
+        expect(p).toBeInTheDocument ()
 
-    test "JSX.div children" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "JSX.div children"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 JSX.Html.div [
                     JSX.Html.h1 "Hello, World!"
                     JSX.Html.p "This is a simple div component."
@@ -34,31 +37,28 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
         let p = render.getByText "This is a simple div component."
-        expect(p).toBeInTheDocument()
+        expect(p).toBeInTheDocument ()
 
-    test "Html.div child" <| fun _ ->
-        let render = 
-            RTL.render(
-                Html.div (Html.h1 "Hello, World!")
-            )
+    test "Html.div child"
+    <| fun _ ->
+        let render = RTL.render (Html.div (Html.h1 "Hello, World!"))
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
 
-    test "JSX.Html.div child" <| fun _ ->
-        let render = 
-            RTL.render(
-                JSX.Html.div (JSX.Html.h1 "Hello, World!")
-            )
+    test "JSX.Html.div child"
+    <| fun _ ->
+        let render = RTL.render (JSX.Html.div (JSX.Html.h1 "Hello, World!"))
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
 
-    test "Html.div [prop.children children]" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "Html.div [prop.children children]"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 Html.div [
                     prop.testId "simpleDiv"
                     prop.children [
@@ -69,13 +69,14 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
         let p = render.getByText "This is a simple div component."
-        expect(p).toBeInTheDocument()
+        expect(p).toBeInTheDocument ()
 
-    test "JSX.Html.div [prop.children children]" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "JSX.Html.div [prop.children children]"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 JSX.Html.div [
                     prop.testId "simpleDiv"
                     prop.children [
@@ -86,13 +87,14 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
         let p = render.getByText "This is a simple div component."
-        expect(p).toBeInTheDocument()
+        expect(p).toBeInTheDocument ()
 
-    test "Html.div [prop.children child]" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "Html.div [prop.children child]"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 Html.div [
                     prop.testId "simpleDiv"
                     prop.children (Html.h1 "Hello, World!")
@@ -100,11 +102,12 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
 
-    test "JSX.Html.div [prop.children child]" <| fun _ ->
-        let render = 
-            RTL.render(
+    test "JSX.Html.div [prop.children child]"
+    <| fun _ ->
+        let render =
+            RTL.render (
                 JSX.Html.div [
                     prop.testId "simpleDiv"
                     prop.children (JSX.Html.h1 "Hello, World!")
@@ -112,83 +115,57 @@ describe "Simple createElement calls" <| fun _ ->
             )
 
         let h1 = render.getByText "Hello, World!"
-        expect(h1).toBeInTheDocument()
+        expect(h1).toBeInTheDocument ()
 
-    test "Html.div [prop.text string]" <| fun _ ->
-        let render = 
-            RTL.render(
-                Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text "Hello, World!"
-                ]
-            )
+    test "Html.div [prop.text string]"
+    <| fun _ ->
+        let render =
+            RTL.render (Html.div [ prop.testId "simpleDiv"; prop.text "Hello, World!" ])
 
         let text = render.getByText "Hello, World!"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-    test "JSX.Html.div [prop.text string]" <| fun _ ->
-        let render = 
-            RTL.render(
-                JSX.Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text "Hello, World!"
-                ]
-            )
+    test "JSX.Html.div [prop.text string]"
+    <| fun _ ->
+        let render =
+            RTL.render (JSX.Html.div [ prop.testId "simpleDiv"; prop.text "Hello, World!" ])
 
         let text = render.getByText "Hello, World!"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-    test "Html.div [prop.text int]" <| fun _ ->
-        let render = 
-            RTL.render(
-                Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text 42
-                ]
-            )
+    test "Html.div [prop.text int]"
+    <| fun _ ->
+        let render = RTL.render (Html.div [ prop.testId "simpleDiv"; prop.text 42 ])
 
         let text = render.getByText "42"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-    test "JSX.Html.div [prop.text int]" <| fun _ ->
-        let render = 
-            RTL.render(
-                JSX.Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text 42
-                ]
-            )
+    test "JSX.Html.div [prop.text int]"
+    <| fun _ ->
+        let render = RTL.render (JSX.Html.div [ prop.testId "simpleDiv"; prop.text 42 ])
 
         let text = render.getByText "42"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-    test "Html.div [prop.text float]" <| fun _ ->
-        let render = 
-            RTL.render(
-                Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text 42.42
-                ]
-            )
+    test "Html.div [prop.text float]"
+    <| fun _ ->
+        let render = RTL.render (Html.div [ prop.testId "simpleDiv"; prop.text 42.42 ])
 
         let text = render.getByText "42.42"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-    test "JSX.Html.div [prop.text float]" <| fun _ ->
-        let render = 
-            RTL.render(
-                JSX.Html.div [
-                    prop.testId "simpleDiv"
-                    prop.text 42.42
-                ]
-            )
+    test "JSX.Html.div [prop.text float]"
+    <| fun _ ->
+        let render = RTL.render (JSX.Html.div [ prop.testId "simpleDiv"; prop.text 42.42 ])
 
         let text = render.getByText "42.42"
-        expect(text).toBeInTheDocument()
+        expect(text).toBeInTheDocument ()
 
-describe "prop.spread integration" <| fun _ ->
+describe "prop.spread integration"
+<| fun _ ->
 
-    test "spreads normal attributes" <| fun _ ->
+    test "spreads normal attributes"
+    <| fun _ ->
         let spreadProps =
             createObj [
                 "id" ==> "spread-button"
@@ -197,39 +174,34 @@ describe "prop.spread integration" <| fun _ ->
                 "data-state" ==> "active"
             ]
 
-        RTL.render(
-            Html.button [
-                yield! prop.spread spreadProps
-                prop.text "Click Me"
-            ]
-        ) |> ignore
+        RTL.render (Html.button [ yield! prop.spread spreadProps; prop.text "Click Me" ])
+        |> ignore
 
         let button = RTL.screen.getByTestId "spread-button"
-        expect(button).toHaveAttribute("id", "spread-button")
-        expect(button).toHaveAttribute("title", "Spread Title")
-        expect(button).toHaveAttribute("data-state", "active")
+        expect(button).toHaveAttribute ("id", "spread-button")
+        expect(button).toHaveAttribute ("title", "Spread Title")
+        expect(button).toHaveAttribute ("data-state", "active")
 
-    test "spread props override earlier explicit props" <| fun _ ->
-        let spreadProps =
-            createObj [
-                "title" ==> "spread-title"
-                "id" ==> "spread-id"
-            ]
+    test "spread props override earlier explicit props"
+    <| fun _ ->
+        let spreadProps = createObj [ "title" ==> "spread-title"; "id" ==> "spread-id" ]
 
-        RTL.render(
+        RTL.render (
             Html.div [
                 prop.testId "spread-priority"
                 prop.title "explicit-title"
                 prop.id "explicit-id"
                 yield! prop.spread spreadProps
             ]
-        ) |> ignore
+        )
+        |> ignore
 
         let div = RTL.screen.getByTestId "spread-priority"
-        expect(div).toHaveAttribute("title", "spread-title")
-        expect(div).toHaveAttribute("id", "spread-id")
+        expect(div).toHaveAttribute ("title", "spread-title")
+        expect(div).toHaveAttribute ("id", "spread-id")
 
-    test "explicit props after spread override spread values" <| fun _ ->
+    test "explicit props after spread override spread values"
+    <| fun _ ->
         let spreadProps =
             createObj [
                 "data-testid" ==> "spread-priority-2"
@@ -237,138 +209,151 @@ describe "prop.spread integration" <| fun _ ->
                 "id" ==> "spread-id"
             ]
 
-        RTL.render(
+        RTL.render (
             Html.div [
                 yield! prop.spread spreadProps
                 prop.title "explicit-title"
                 prop.id "explicit-id"
             ]
-        ) |> ignore
+        )
+        |> ignore
 
         let div = RTL.screen.getByTestId "spread-priority-2"
-        expect(div).toHaveAttribute("title", "explicit-title")
-        expect(div).toHaveAttribute("id", "explicit-id")
+        expect(div).toHaveAttribute ("title", "explicit-title")
+        expect(div).toHaveAttribute ("id", "explicit-id")
 
-    testPromise "spreads children and onClick" <| fun _ -> promise {
+    testPromise "spreads children and onClick"
+    <| fun _ -> promise {
         let mutable clicks = 0
 
         let spreadProps =
             createObj [
                 "data-testid" ==> "spread-with-children"
-                "children" ==> [ Html.span [ prop.testId "spread-child"; prop.text "Spread child" ] ]
+                "children"
+                ==> [
+                    Html.span [ prop.testId "spread-child"; prop.text "Spread child" ]
+                ]
                 "onClick" ==> (fun _ -> clicks <- clicks + 1)
             ]
 
-        RTL.render(
-            Html.button [
-                yield! prop.spread spreadProps
-            ]
-        ) |> ignore
+        RTL.render (Html.button [ yield! prop.spread spreadProps ]) |> ignore
 
         let child = RTL.screen.getByTestId "spread-child"
-        expect(child).toHaveTextContent("Spread child")
+        expect(child).toHaveTextContent ("Spread child")
 
         let button = RTL.screen.getByTestId "spread-with-children"
-        do! userEvent.click(button)
-        expect(clicks).toBe(1)
+        do! userEvent.click (button)
+        expect(clicks).toBe (1)
     }
 
-describe "Single Tuple Input Tests #644" <| fun _ ->
+describe "Single Tuple Input Tests #644"
+<| fun _ ->
 
-    test "Component with single tuple input passes args correctly" <| fun _ ->
+    test "Component with single tuple input passes args correctly"
+    <| fun _ ->
         let guid = System.Guid.NewGuid()
-        RTL.render(
-            Components.SingleTupleInput1((42, "Test", guid))
-        ) |> ignore
+        RTL.render (Components.SingleTupleInput1((42, "Test", guid))) |> ignore
 
-        expect(RTL.screen.getByTestId "int").toHaveTextContent("42")
-        expect(RTL.screen.getByTestId "string").toHaveTextContent("Test")
-        expect(RTL.screen.getByTestId "guid").toHaveTextContent(guid.ToString())
+        expect(RTL.screen.getByTestId "int").toHaveTextContent ("42")
+        expect(RTL.screen.getByTestId "string").toHaveTextContent ("Test")
+        expect(RTL.screen.getByTestId "guid").toHaveTextContent (guid.ToString())
 
-    test "Component with single tuple input passes args correctly and with different argument name" <| fun _ ->
+    test "Component with single tuple input passes args correctly and with different argument name"
+    <| fun _ ->
         let guid = System.Guid.NewGuid()
-        RTL.render(
-            Components.SingleTupleInput2((42, "Test", guid))
-        ) |> ignore
+        RTL.render (Components.SingleTupleInput2((42, "Test", guid))) |> ignore
 
-        expect(RTL.screen.getByTestId "int").toHaveTextContent("42")
-        expect(RTL.screen.getByTestId "string").toHaveTextContent("Test")
-        expect(RTL.screen.getByTestId "guid").toHaveTextContent(guid.ToString())
+        expect(RTL.screen.getByTestId "int").toHaveTextContent ("42")
+        expect(RTL.screen.getByTestId "string").toHaveTextContent ("Test")
+        expect(RTL.screen.getByTestId "guid").toHaveTextContent (guid.ToString())
 
-describe "Basic Tests" <| fun _ ->
+describe "Basic Tests"
+<| fun _ ->
 
-    test "Html elements can be rendered" <| fun _ ->
-        RTL.render(
-            Components.DivWithClassesAndChildren()
-        ) |> ignore
+    test "Html elements can be rendered"
+    <| fun _ ->
+        RTL.render (Components.DivWithClassesAndChildren()) |> ignore
 
         let div = RTL.screen.getByTestId "simpleDiv"
 
-        expect(div).toBeInTheDocument()
+        expect(div).toBeInTheDocument ()
 
-describe "Tests for specific style elements" <| fun _ ->
+describe "Tests for specific style elements"
+<| fun _ ->
 
-    test "style.fontsize._" <| fun _ ->
-        RTL.render(
+    test "style.fontsize._"
+    <| fun _ ->
+        RTL.render (
             Html.div [
                 prop.testId "fontSizeTest"
-                prop.style [style.fontSize.small]
+                prop.style [ style.fontSize.small ]
                 prop.text "This is small font size"
             ]
-        ) |> ignore
+        )
+        |> ignore
 
         let div = RTL.screen.getByTestId "fontSizeTest"
 
-        expect(div).toBeInTheDocument()
-        expect(div).toHaveStyle("font-size: small")
+        expect(div).toBeInTheDocument ()
+        expect(div).toHaveStyle ("font-size: small")
 
-describe "Record Type Input Tests #606, #603" <| fun _ ->
+describe "Record Type Input Tests #606, #603"
+<| fun _ ->
 
-    test "Component with record type input passes args correctly" <| fun _ ->
-        RTL.render(
-            RecordTypeInputTesting.RecordTypeContainer()
-        ) |> ignore
+    test "Component with record type input passes args correctly"
+    <| fun _ ->
+        RTL.render (RecordTypeInputTesting.RecordTypeContainer()) |> ignore
 
-        expect(RTL.screen.getByTestId "single-greet").toHaveTextContent("Hello, my name is Alice and I work as a Developer.")
-        expect(RTL.screen.getByTestId "single-exists").toHaveTextContent("true")
+        expect(RTL.screen.getByTestId "single-greet")
+            .toHaveTextContent ("Hello, my name is Alice and I work as a Developer.")
 
-describe "Props Aliasing Tests #687" <| fun _ ->
+        expect(RTL.screen.getByTestId "single-exists").toHaveTextContent ("true")
 
-    test "Component with input arg called props should be correctly aliased" <| fun _ ->
-        RTL.render(
-            PropsAliasingTesting.ArgsPropsAliasing([prop.style [ style.padding 20; style.backgroundColor.blanchedAlmond ]; prop.testId "main-component"])
-        ) |> ignore
+describe "Props Aliasing Tests #687"
+<| fun _ ->
+
+    test "Component with input arg called props should be correctly aliased"
+    <| fun _ ->
+        RTL.render (
+            PropsAliasingTesting.ArgsPropsAliasing(
+                [
+                    prop.style [ style.padding 20; style.backgroundColor.blanchedAlmond ]
+                    prop.testId "main-component"
+                ]
+            )
+        )
+        |> ignore
 
         let components = RTL.screen.getAllByTestId "main-component"
-        expect(components).toHaveLength(2)
-        for c in components do
-            expect(c).toBeInTheDocument()
+        expect(components).toHaveLength (2)
 
-    test "Component inner let binding called props, should be correctly aliased" <| fun _ ->
-        RTL.render(
-            PropsAliasingTesting.InnerLetBindingPropsAliasing("test", 0)
-        ) |> ignore
+        for c in components do
+            expect(c).toBeInTheDocument ()
+
+    test "Component inner let binding called props, should be correctly aliased"
+    <| fun _ ->
+        RTL.render (PropsAliasingTesting.InnerLetBindingPropsAliasing("test", 0))
+        |> ignore
 
         let c = RTL.screen.getByTestId "props-aliasing"
-        expect(c).toBeInTheDocument()
+        expect(c).toBeInTheDocument ()
 
-describe "Nullness Tests" <| fun _ ->
+describe "Nullness Tests"
+<| fun _ ->
 
-    test "Component with nullable prop handles null correctly" <| fun _ ->
-        RTL.render(
-            NullnessTesting.NullishPropComponent(null)
-        ) |> ignore
+    test "Component with nullable prop handles null correctly"
+    <| fun _ ->
+        RTL.render (NullnessTesting.NullishPropComponent(null)) |> ignore
 
         let noText = RTL.screen.getByTestId "no-text"
-        expect(noText).toBeInTheDocument()
-        expect(noText).toHaveTextContent("No text provided.")
+        expect(noText).toBeInTheDocument ()
+        expect(noText).toHaveTextContent ("No text provided.")
 
-    test "Component with nullable prop handles non-null correctly" <| fun _ ->
+    test "Component with nullable prop handles non-null correctly"
+    <| fun _ ->
 
-        RTL.render(
-            NullnessTesting.NullishPropComponent("Hello, Nullable!")
-        ) |> ignore
+        RTL.render (NullnessTesting.NullishPropComponent("Hello, Nullable!")) |> ignore
 
         let hasText = RTL.screen.getByTestId "has-text"
-        expect(hasText).toBeInTheDocument()
-        expect(hasText).toHaveTextContent("Hello, Nullable!")
+        expect(hasText).toBeInTheDocument ()
+        expect(hasText).toHaveTextContent ("Hello, Nullable!")

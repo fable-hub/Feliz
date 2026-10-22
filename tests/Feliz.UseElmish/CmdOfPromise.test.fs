@@ -188,4 +188,3 @@ describeTags "UseElmish Cmd.OfPromise" [ "activeDev" ]
         expect(render.getByTestId TestIds.Count).toHaveTextContent "0"
         expect(render.getByTestId TestIds.Status).toHaveTextContent "idle"
     }
-

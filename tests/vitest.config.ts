@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     globals: true, // enables afterEach `cleanup` from RTL. Without this all components will stay mounted after each test
     include: ['**/*.{test,spec}.?(c|m|fs.)[jt]s?(x)'],
     environment: 'jsdom',
-    setupFiles: [resolve(__dirname, 'vitest-setup.ts')],
+    setupFiles: [resolve(import.meta.dirname, 'vitest-setup.ts')],
     tags: [
       {
         name: 'async',

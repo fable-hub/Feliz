@@ -3,20 +3,26 @@ module Example.UseEffectDisposable
 open Feliz
 
 [<ReactComponent(true)>]
-let UseEffect() =
-    let count, setCount = React.useState(0)
+let UseEffect () =
+    let count, setCount = React.useState (0)
     // useEffect: run side effect when count changes
-    React.useEffect((fun () ->
-        Fable.Core.JS.console.log($"Count changed to {count}")
-        // Optional cleanup function
-        FsReact.createDisposable(fun () -> Fable.Core.JS.console.log("Cleanup effect"))
+    React.useEffect (
+        (fun () ->
+            Fable.Core.JS.console.log ($"Count changed to {count}")
+            // Optional cleanup function
+            FsReact.createDisposable (fun () -> Fable.Core.JS.console.log ("Cleanup effect"))
         // same as:
         // { new System.IDisposable with member this.Dispose() = Fable.Core.JS.console.log("Cleanup effect") }
-    ), [| box count |])
+        ),
+        [| box count |]
+    )
+
     Html.div [
         Html.button [
             prop.text $"Clicked {count} times"
-            prop.onClick (fun _ -> setCount(count + 1))
+            prop.onClick (fun _ -> setCount (count + 1))
         ]
-        Html.p [ prop.text "Open the browser console to see useEffect logs when count changes." ]
+        Html.p [
+            prop.text "Open the browser console to see useEffect logs when count changes."
+        ]
     ]

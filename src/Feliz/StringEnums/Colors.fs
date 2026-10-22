@@ -5,150 +5,456 @@ module color =
     /// Creates a color from components [hue](https://en.wikipedia.org/wiki/Hue), [saturation](https://en.wikipedia.org/wiki/Colorfulness) and [lightness](https://en.wikipedia.org/wiki/Lightness) where hue is a number that goes from 0 to 360 and both
     /// the `saturation` and `lightness` go from 0 to 100 as they are percentages.
     let hsl (hue: float, saturation: float, lightness: float) =
-        "hsl(" + (unbox<string> hue) + "," + (unbox<string> saturation) + "%," + (unbox<string> lightness) + "%)"
+        "hsl("
+        + (unbox<string> hue)
+        + ","
+        + (unbox<string> saturation)
+        + "%,"
+        + (unbox<string> lightness)
+        + "%)"
+
     let rgb (r: int, g: int, b: int) =
-        "rgb(" + (unbox<string> r) + "," + (unbox<string> g) + "," + (unbox<string> b) + ")"
+        "rgb("
+        + (unbox<string> r)
+        + ","
+        + (unbox<string> g)
+        + ","
+        + (unbox<string> b)
+        + ")"
+
     let rgba (r: int, g: int, b: int, a) =
-        "rgba(" + (unbox<string> r) + "," + (unbox<string> g) + "," + (unbox<string> b) + "," + (unbox<string> a) + ")"
-    let [<Literal>] indianRed = "#CD5C5C"
-    let [<Literal>] lightCoral = "#F08080"
-    let [<Literal>] salmon = "#FA8072"
-    let [<Literal>] darkSalmon = "#E9967A"
-    let [<Literal>] lightSalmon = "#FFA07A"
-    let [<Literal>] crimson = "#DC143C"
-    let [<Literal>] red = "#FF0000"
-    let [<Literal>] fireBrick = "#B22222"
-    let [<Literal>] darkRed = "#8B0000"
-    let [<Literal>] pink = "#FFC0CB"
-    let [<Literal>] lightPink = "#FFB6C1"
-    let [<Literal>] hotPink = "#FF69B4"
-    let [<Literal>] deepPink = "#FF1493"
-    let [<Literal>] mediumVioletRed = "#C71585"
-    let [<Literal>] paleVioletRed = "#DB7093"
-    let [<Literal>] coral = "#FF7F50"
-    let [<Literal>] tomato = "#FF6347"
-    let [<Literal>] orangeRed = "#FF4500"
-    let [<Literal>] darkOrange = "#FF8C00"
-    let [<Literal>] orange = "#FFA500"
-    let [<Literal>] gold = "#FFD700"
-    let [<Literal>] yellow = "#FFFF00"
-    let [<Literal>] lightYellow = "#FFFFE0"
-    let [<Literal>] limonChiffon = "#FFFACD"
-    let [<Literal>] lightGoldenRodYellow = "#FAFAD2"
-    let [<Literal>] papayaWhip = "#FFEFD5"
-    let [<Literal>] moccasin = "#FFE4B5"
-    let [<Literal>] peachPuff = "#FFDAB9"
-    let [<Literal>] paleGoldenRod = "#EEE8AA"
-    let [<Literal>] khaki = "#F0E68C"
-    let [<Literal>] darkKhaki = "#BDB76B"
-    let [<Literal>] lavender = "#E6E6FA"
-    let [<Literal>] thistle = "#D8BFD8"
-    let [<Literal>] plum = "#DDA0DD"
-    let [<Literal>] violet = "#EE82EE"
-    let [<Literal>] orchid = "#DA70D6"
-    let [<Literal>] fuchsia = "#FF00FF"
-    let [<Literal>] magenta = "#FF00FF"
-    let [<Literal>] mediumOrchid = "#BA55D3"
-    let [<Literal>] mediumPurple = "#9370DB"
-    let [<Literal>] rebeccaPurple = "#663399"
-    let [<Literal>] blueViolet = "#8A2BE2"
-    let [<Literal>] darkViolet = "#9400D3"
-    let [<Literal>] darkOrchid = "#9932CC"
-    let [<Literal>] darkMagenta = "#8B008B"
-    let [<Literal>] purple = "#800080"
-    let [<Literal>] indigo = "#4B0082"
-    let [<Literal>] slateBlue = "#6A5ACD"
-    let [<Literal>] darkSlateBlue = "#483D8B"
-    let [<Literal>] mediumSlateBlue = "#7B68EE"
-    let [<Literal>] greenYellow = "#ADFF2F"
-    let [<Literal>] chartreuse = "#7FFF00"
-    let [<Literal>] lawnGreen = "#7CFC00"
-    let [<Literal>] lime = "#00FF00"
-    let [<Literal>] limeGreen = "#32CD32"
-    let [<Literal>] paleGreen = "#98FB98"
-    let [<Literal>] lightGreen = "#90EE90"
-    let [<Literal>] mediumSpringGreen = "#00FA9A"
-    let [<Literal>] springGreen = "#00FF7F"
-    let [<Literal>] mediumSeaGreen = "#3CB371"
-    let [<Literal>] seaGreen = "#2E8B57"
-    let [<Literal>] forestGreen = "#228B22"
-    let [<Literal>] green = "#008000"
-    let [<Literal>] darkGreen = "#006400"
-    let [<Literal>] yellowGreen = "#9ACD32"
-    let [<Literal>] oliveDrab = "#6B8E23"
-    let [<Literal>] olive = "#808000"
-    let [<Literal>] darkOliveGreen = "#556B2F"
-    let [<Literal>] mediumAquamarine = "#66CDAA"
-    let [<Literal>] darkSeaGreen = "#8FBC8B"
-    let [<Literal>] lightSeaGreen = "#20B2AA"
-    let [<Literal>] darkCyan = "#008B8B"
-    let [<Literal>] teal = "#008080"
-    let [<Literal>] aqua = "#00FFFF"
-    let [<Literal>] cyan = "#00FFFF"
-    let [<Literal>] lightCyan = "#E0FFFF"
-    let [<Literal>] paleTurqouise = "#AFEEEE"
-    let [<Literal>] aquaMarine = "#7FFFD4"
-    let [<Literal>] turqouise = "#AFEEEE"
-    let [<Literal>] mediumTurqouise = "#48D1CC"
-    let [<Literal>] darkTurqouise = "#00CED1"
-    let [<Literal>] cadetBlue = "#5F9EA0"
-    let [<Literal>] steelBlue = "#4682B4"
-    let [<Literal>] lightSteelBlue = "#B0C4DE"
-    let [<Literal>] powederBlue = "#B0E0E6"
-    let [<Literal>] lightBlue = "#ADD8E6"
-    let [<Literal>] skyBlue = "#87CEEB"
-    let [<Literal>] lightSkyBlue = "#87CEFA"
-    let [<Literal>] deepSkyBlue = "#00BFFF"
-    let [<Literal>] dodgerBlue = "#1E90FF"
-    let [<Literal>] cornFlowerBlue = "#6495ED"
-    let [<Literal>] royalBlue = "#4169E1"
-    let [<Literal>] blue = "#0000FF"
-    let [<Literal>] mediumBlue = "#0000CD"
-    let [<Literal>] darkBlue = "#00008B"
-    let [<Literal>] navy = "#000080"
-    let [<Literal>] midnightBlue = "#191970"
-    let [<Literal>] cornSilk = "#FFF8DC"
-    let [<Literal>] blanchedAlmond = "#FFEBCD"
-    let [<Literal>] bisque = "#FFE4C4"
-    let [<Literal>] navajoWhite = "#FFDEAD"
-    let [<Literal>] wheat = "#F5DEB3"
-    let [<Literal>] burlyWood = "#DEB887"
-    let [<Literal>] tan = "#D2B48C"
-    let [<Literal>] rosyBrown = "#BC8F8F"
-    let [<Literal>] sandyBrown = "#F4A460"
-    let [<Literal>] goldenRod = "#DAA520"
-    let [<Literal>] darkGoldenRod = "#B8860B"
-    let [<Literal>] peru = "#CD853F"
-    let [<Literal>] chocolate = "#D2691E"
-    let [<Literal>] saddleBrown = "#8B4513"
-    let [<Literal>] sienna = "#A0522D"
-    let [<Literal>] brown = "#A52A2A"
-    let [<Literal>] maroon = "#A52A2A"
-    let [<Literal>] white = "#FFFFFF"
-    let [<Literal>] snow = "#FFFAFA"
-    let [<Literal>] honeyDew = "#F0FFF0"
-    let [<Literal>] mintCream = "#F5FFFA"
-    let [<Literal>] azure = "#F0FFFF"
-    let [<Literal>] aliceBlue = "#F0F8FF"
-    let [<Literal>] ghostWhite = "#F8F8FF"
-    let [<Literal>] whiteSmoke = "#F5F5F5"
-    let [<Literal>] seaShell = "#FFF5EE"
-    let [<Literal>] beige = "#F5F5DC"
-    let [<Literal>] oldLace = "#FDF5E6"
-    let [<Literal>] floralWhite = "#FFFAF0"
-    let [<Literal>] ivory = "#FFFFF0"
-    let [<Literal>] antiqueWhite = "#FAEBD7"
-    let [<Literal>] linen = "#FAF0E6"
-    let [<Literal>] lavenderBlush = "#FFF0F5"
-    let [<Literal>] mistyRose = "#FFE4E1"
-    let [<Literal>] gainsBoro = "#DCDCDC"
-    let [<Literal>] lightGray = "#D3D3D3"
-    let [<Literal>] silver = "#C0C0C0"
-    let [<Literal>] darkGray = "#A9A9A9"
-    let [<Literal>] gray = "#808080"
-    let [<Literal>] dimGray = "#696969"
-    let [<Literal>] lightSlateGray = "#778899"
-    let [<Literal>] slateGray = "#708090"
-    let [<Literal>] darkSlateGray = "#2F4F4F"
-    let [<Literal>] black = "#000000"
-    let [<Literal>] transparent = "transparent"
+        "rgba("
+        + (unbox<string> r)
+        + ","
+        + (unbox<string> g)
+        + ","
+        + (unbox<string> b)
+        + ","
+        + (unbox<string> a)
+        + ")"
+
+    [<Literal>]
+    let indianRed = "#CD5C5C"
+
+    [<Literal>]
+    let lightCoral = "#F08080"
+
+    [<Literal>]
+    let salmon = "#FA8072"
+
+    [<Literal>]
+    let darkSalmon = "#E9967A"
+
+    [<Literal>]
+    let lightSalmon = "#FFA07A"
+
+    [<Literal>]
+    let crimson = "#DC143C"
+
+    [<Literal>]
+    let red = "#FF0000"
+
+    [<Literal>]
+    let fireBrick = "#B22222"
+
+    [<Literal>]
+    let darkRed = "#8B0000"
+
+    [<Literal>]
+    let pink = "#FFC0CB"
+
+    [<Literal>]
+    let lightPink = "#FFB6C1"
+
+    [<Literal>]
+    let hotPink = "#FF69B4"
+
+    [<Literal>]
+    let deepPink = "#FF1493"
+
+    [<Literal>]
+    let mediumVioletRed = "#C71585"
+
+    [<Literal>]
+    let paleVioletRed = "#DB7093"
+
+    [<Literal>]
+    let coral = "#FF7F50"
+
+    [<Literal>]
+    let tomato = "#FF6347"
+
+    [<Literal>]
+    let orangeRed = "#FF4500"
+
+    [<Literal>]
+    let darkOrange = "#FF8C00"
+
+    [<Literal>]
+    let orange = "#FFA500"
+
+    [<Literal>]
+    let gold = "#FFD700"
+
+    [<Literal>]
+    let yellow = "#FFFF00"
+
+    [<Literal>]
+    let lightYellow = "#FFFFE0"
+
+    [<Literal>]
+    let limonChiffon = "#FFFACD"
+
+    [<Literal>]
+    let lightGoldenRodYellow = "#FAFAD2"
+
+    [<Literal>]
+    let papayaWhip = "#FFEFD5"
+
+    [<Literal>]
+    let moccasin = "#FFE4B5"
+
+    [<Literal>]
+    let peachPuff = "#FFDAB9"
+
+    [<Literal>]
+    let paleGoldenRod = "#EEE8AA"
+
+    [<Literal>]
+    let khaki = "#F0E68C"
+
+    [<Literal>]
+    let darkKhaki = "#BDB76B"
+
+    [<Literal>]
+    let lavender = "#E6E6FA"
+
+    [<Literal>]
+    let thistle = "#D8BFD8"
+
+    [<Literal>]
+    let plum = "#DDA0DD"
+
+    [<Literal>]
+    let violet = "#EE82EE"
+
+    [<Literal>]
+    let orchid = "#DA70D6"
+
+    [<Literal>]
+    let fuchsia = "#FF00FF"
+
+    [<Literal>]
+    let magenta = "#FF00FF"
+
+    [<Literal>]
+    let mediumOrchid = "#BA55D3"
+
+    [<Literal>]
+    let mediumPurple = "#9370DB"
+
+    [<Literal>]
+    let rebeccaPurple = "#663399"
+
+    [<Literal>]
+    let blueViolet = "#8A2BE2"
+
+    [<Literal>]
+    let darkViolet = "#9400D3"
+
+    [<Literal>]
+    let darkOrchid = "#9932CC"
+
+    [<Literal>]
+    let darkMagenta = "#8B008B"
+
+    [<Literal>]
+    let purple = "#800080"
+
+    [<Literal>]
+    let indigo = "#4B0082"
+
+    [<Literal>]
+    let slateBlue = "#6A5ACD"
+
+    [<Literal>]
+    let darkSlateBlue = "#483D8B"
+
+    [<Literal>]
+    let mediumSlateBlue = "#7B68EE"
+
+    [<Literal>]
+    let greenYellow = "#ADFF2F"
+
+    [<Literal>]
+    let chartreuse = "#7FFF00"
+
+    [<Literal>]
+    let lawnGreen = "#7CFC00"
+
+    [<Literal>]
+    let lime = "#00FF00"
+
+    [<Literal>]
+    let limeGreen = "#32CD32"
+
+    [<Literal>]
+    let paleGreen = "#98FB98"
+
+    [<Literal>]
+    let lightGreen = "#90EE90"
+
+    [<Literal>]
+    let mediumSpringGreen = "#00FA9A"
+
+    [<Literal>]
+    let springGreen = "#00FF7F"
+
+    [<Literal>]
+    let mediumSeaGreen = "#3CB371"
+
+    [<Literal>]
+    let seaGreen = "#2E8B57"
+
+    [<Literal>]
+    let forestGreen = "#228B22"
+
+    [<Literal>]
+    let green = "#008000"
+
+    [<Literal>]
+    let darkGreen = "#006400"
+
+    [<Literal>]
+    let yellowGreen = "#9ACD32"
+
+    [<Literal>]
+    let oliveDrab = "#6B8E23"
+
+    [<Literal>]
+    let olive = "#808000"
+
+    [<Literal>]
+    let darkOliveGreen = "#556B2F"
+
+    [<Literal>]
+    let mediumAquamarine = "#66CDAA"
+
+    [<Literal>]
+    let darkSeaGreen = "#8FBC8B"
+
+    [<Literal>]
+    let lightSeaGreen = "#20B2AA"
+
+    [<Literal>]
+    let darkCyan = "#008B8B"
+
+    [<Literal>]
+    let teal = "#008080"
+
+    [<Literal>]
+    let aqua = "#00FFFF"
+
+    [<Literal>]
+    let cyan = "#00FFFF"
+
+    [<Literal>]
+    let lightCyan = "#E0FFFF"
+
+    [<Literal>]
+    let paleTurqouise = "#AFEEEE"
+
+    [<Literal>]
+    let aquaMarine = "#7FFFD4"
+
+    [<Literal>]
+    let turqouise = "#AFEEEE"
+
+    [<Literal>]
+    let mediumTurqouise = "#48D1CC"
+
+    [<Literal>]
+    let darkTurqouise = "#00CED1"
+
+    [<Literal>]
+    let cadetBlue = "#5F9EA0"
+
+    [<Literal>]
+    let steelBlue = "#4682B4"
+
+    [<Literal>]
+    let lightSteelBlue = "#B0C4DE"
+
+    [<Literal>]
+    let powederBlue = "#B0E0E6"
+
+    [<Literal>]
+    let lightBlue = "#ADD8E6"
+
+    [<Literal>]
+    let skyBlue = "#87CEEB"
+
+    [<Literal>]
+    let lightSkyBlue = "#87CEFA"
+
+    [<Literal>]
+    let deepSkyBlue = "#00BFFF"
+
+    [<Literal>]
+    let dodgerBlue = "#1E90FF"
+
+    [<Literal>]
+    let cornFlowerBlue = "#6495ED"
+
+    [<Literal>]
+    let royalBlue = "#4169E1"
+
+    [<Literal>]
+    let blue = "#0000FF"
+
+    [<Literal>]
+    let mediumBlue = "#0000CD"
+
+    [<Literal>]
+    let darkBlue = "#00008B"
+
+    [<Literal>]
+    let navy = "#000080"
+
+    [<Literal>]
+    let midnightBlue = "#191970"
+
+    [<Literal>]
+    let cornSilk = "#FFF8DC"
+
+    [<Literal>]
+    let blanchedAlmond = "#FFEBCD"
+
+    [<Literal>]
+    let bisque = "#FFE4C4"
+
+    [<Literal>]
+    let navajoWhite = "#FFDEAD"
+
+    [<Literal>]
+    let wheat = "#F5DEB3"
+
+    [<Literal>]
+    let burlyWood = "#DEB887"
+
+    [<Literal>]
+    let tan = "#D2B48C"
+
+    [<Literal>]
+    let rosyBrown = "#BC8F8F"
+
+    [<Literal>]
+    let sandyBrown = "#F4A460"
+
+    [<Literal>]
+    let goldenRod = "#DAA520"
+
+    [<Literal>]
+    let darkGoldenRod = "#B8860B"
+
+    [<Literal>]
+    let peru = "#CD853F"
+
+    [<Literal>]
+    let chocolate = "#D2691E"
+
+    [<Literal>]
+    let saddleBrown = "#8B4513"
+
+    [<Literal>]
+    let sienna = "#A0522D"
+
+    [<Literal>]
+    let brown = "#A52A2A"
+
+    [<Literal>]
+    let maroon = "#A52A2A"
+
+    [<Literal>]
+    let white = "#FFFFFF"
+
+    [<Literal>]
+    let snow = "#FFFAFA"
+
+    [<Literal>]
+    let honeyDew = "#F0FFF0"
+
+    [<Literal>]
+    let mintCream = "#F5FFFA"
+
+    [<Literal>]
+    let azure = "#F0FFFF"
+
+    [<Literal>]
+    let aliceBlue = "#F0F8FF"
+
+    [<Literal>]
+    let ghostWhite = "#F8F8FF"
+
+    [<Literal>]
+    let whiteSmoke = "#F5F5F5"
+
+    [<Literal>]
+    let seaShell = "#FFF5EE"
+
+    [<Literal>]
+    let beige = "#F5F5DC"
+
+    [<Literal>]
+    let oldLace = "#FDF5E6"
+
+    [<Literal>]
+    let floralWhite = "#FFFAF0"
+
+    [<Literal>]
+    let ivory = "#FFFFF0"
+
+    [<Literal>]
+    let antiqueWhite = "#FAEBD7"
+
+    [<Literal>]
+    let linen = "#FAF0E6"
+
+    [<Literal>]
+    let lavenderBlush = "#FFF0F5"
+
+    [<Literal>]
+    let mistyRose = "#FFE4E1"
+
+    [<Literal>]
+    let gainsBoro = "#DCDCDC"
+
+    [<Literal>]
+    let lightGray = "#D3D3D3"
+
+    [<Literal>]
+    let silver = "#C0C0C0"
+
+    [<Literal>]
+    let darkGray = "#A9A9A9"
+
+    [<Literal>]
+    let gray = "#808080"
+
+    [<Literal>]
+    let dimGray = "#696969"
+
+    [<Literal>]
+    let lightSlateGray = "#778899"
+
+    [<Literal>]
+    let slateGray = "#708090"
+
+    [<Literal>]
+    let darkSlateGray = "#2F4F4F"
+
+    [<Literal>]
+    let black = "#000000"
+
+    [<Literal>]
+    let transparent = "transparent"

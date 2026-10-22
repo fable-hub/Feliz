@@ -7,7 +7,7 @@ open Fable.Core
 type Main =
 
     [<ReactComponent>]
-    static member private UseToken (failedCallback: unit -> unit) =
+    static member private UseToken(failedCallback: unit -> unit) =
         let token = React.useCancellationToken ()
 
         React.useEffect (fun () ->
@@ -15,12 +15,13 @@ type Main =
                 do! Async.Sleep 4000
                 failedCallback ()
             }
-            |> fun a -> Async.StartImmediate(a, token.current))
+            |> fun a -> Async.StartImmediate(a, token.current)
+        )
 
         Html.none
 
     [<ReactComponent(true)>]
-    static member Main () =
+    static member Main() =
         let renderChild, setRenderChild = React.useState true
         let resultText, setResultText = React.useState "Pending..."
 
@@ -41,7 +42,8 @@ type Main =
                         setResultText "Disposed"
                         setRenderChild false
                     }
-                    |> Async.StartImmediate)
+                    |> Async.StartImmediate
+                )
             ]
 
             Html.button [
@@ -52,6 +54,7 @@ type Main =
                         setResultText "Pending..."
                         setRenderChild true
                     }
-                    |> Async.StartImmediate)
+                    |> Async.StartImmediate
+                )
             ]
         ]

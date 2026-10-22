@@ -12,24 +12,22 @@ type Components =
     static member ComponentUseCallback(onCreate: (unit -> unit) -> unit) =
         let count, setCount = React.useState 0
 
-        let handleClick = React.useCallback(
-            (fun () ->
-                Browser.Dom.console.log("Clicked", count)
-            ),
-            [| box count |]
-        )
+        let handleClick =
+            React.useCallback ((fun () -> Browser.Dom.console.log ("Clicked", count)), [| box count |])
 
         onCreate handleClick
 
         Html.button [
-            prop.onClick (fun _ -> setCount(count + 1))
+            prop.onClick (fun _ -> setCount (count + 1))
             prop.testId "increment"
             prop.text $"Count: {count}"
         ]
 
-describe "useCallback" <| fun _ ->
+describe "useCallback"
+<| fun _ ->
 
-    test "should keep the same callback reference if dependencies don't change" <| fun _ ->
+    test "should keep the same callback reference if dependencies don't change"
+    <| fun _ ->
         let capturedFns = ResizeArray<unit -> unit>()
 
         let render =
@@ -39,7 +37,8 @@ describe "useCallback" <| fun _ ->
 
         expect(capturedFns.[0]).toBe capturedFns.[1]
 
-    testPromise "should update callback reference if dependency changes" <| fun _ -> promise {
+    testPromise "should update callback reference if dependency changes"
+    <| fun _ -> promise {
 
         let capturedFns = ResizeArray<unit -> unit>()
 

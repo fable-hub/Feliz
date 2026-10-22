@@ -6,13 +6,11 @@ open Feliz
 open Browser
 
 [<ReactComponent>]
-let Counter(props: {| initialCount: int |}) =
-    let (count, setCount) = React.useState(props.initialCount)
+let Counter (props: {| initialCount: int |}) =
+    let (count, setCount) = React.useState (props.initialCount)
+
     Html.div [
-        Html.h1 [
-            prop.testId "count"
-            prop.text count
-        ]
+        Html.h1 [ prop.testId "count"; prop.text count ]
 
         Html.button [
             prop.text "Increment"
@@ -22,14 +20,12 @@ let Counter(props: {| initialCount: int |}) =
     ]
 
 [<ReactComponent>]
-let CounterWithDebugValue() =
-    let (count, setCount) = React.useState(0)
-    React.useDebugValue(sprintf "Count is %d" count)
+let CounterWithDebugValue () =
+    let (count, setCount) = React.useState (0)
+    React.useDebugValue (sprintf "Count is %d" count)
+
     Html.div [
-        Html.h1 [
-            prop.testId "count"
-            prop.text count
-        ]
+        Html.h1 [ prop.testId "count"; prop.text count ]
 
         Html.button [
             prop.text "Increment"
@@ -40,18 +36,16 @@ let CounterWithDebugValue() =
 
 [<ReactComponent>]
 let Portal (props: {| child: ReactElement; id: string |}) =
-    let root = document.getElementById(props.id)
-    ReactDOM.createPortal(props.child, root)
+    let root = document.getElementById (props.id)
+    ReactDOM.createPortal (props.child, root)
 
 [<ReactComponent>]
 let EffectOnceComponent (props: {| effectTriggered: unit -> unit |}) =
-    let (count, setCount) = React.useState(0)
-    React.useEffectOnce(fun _ -> props.effectTriggered())
+    let (count, setCount) = React.useState (0)
+    React.useEffectOnce (fun _ -> props.effectTriggered ())
+
     Html.div [
-        Html.h1 [
-            prop.testId "count"
-            prop.text count
-        ]
+        Html.h1 [ prop.testId "count"; prop.text count ]
 
         Html.button [
             prop.text "Increment"
@@ -62,13 +56,11 @@ let EffectOnceComponent (props: {| effectTriggered: unit -> unit |}) =
 
 [<ReactComponent>]
 let UseEffectEveryRender (props: {| effectTriggered: unit -> unit |}) =
-    let (count, setCount) = React.useState(0)
-    React.useEffect(fun _ -> props.effectTriggered())
+    let (count, setCount) = React.useState (0)
+    React.useEffect (fun _ -> props.effectTriggered ())
+
     Html.div [
-        Html.h1 [
-            prop.testId "count"
-            prop.text count
-        ]
+        Html.h1 [ prop.testId "count"; prop.text count ]
 
         Html.button [
             prop.text "Increment"
@@ -79,8 +71,10 @@ let UseEffectEveryRender (props: {| effectTriggered: unit -> unit |}) =
 
 [<ReactComponent>]
 let FocusInputExample () =
-    let inputRef = React.useInputRef()
-    let focusTextInput() = inputRef.current |> Option.iter (fun el -> el.focus())
+    let inputRef = React.useInputRef ()
+
+    let focusTextInput () =
+        inputRef.current |> Option.iter (fun el -> el.focus ())
 
     Html.div [
         Html.input [
@@ -91,7 +85,7 @@ let FocusInputExample () =
 
         Html.button [
             prop.testId "focus-input"
-            prop.onClick (fun _ -> focusTextInput())
+            prop.onClick (fun _ -> focusTextInput ())
             prop.text "Focus Input"
         ]
     ]
@@ -102,7 +96,7 @@ let RenderCount (input: {| label: string |}) =
 
     let mutable currentCount = countRef.current
 
-    React.useEffect((fun () -> countRef.current <- currentCount), [||])
+    React.useEffect ((fun () -> countRef.current <- currentCount), [||])
 
     currentCount <- currentCount + 1
 
@@ -140,7 +134,7 @@ let RenderCount (input: {| label: string |}) =
 //         prop.testId "callbackRef"
 //         prop.text resultText
 //         prop.children [
-//             // React.memo (fun props -> RenderCount) {| label = "Main" |} 
+//             // React.memo (fun props -> RenderCount) {| label = "Main" |}
 //             CallbackRefButton {| onClick = showCount |}
 //         ]
 //     ]
@@ -252,7 +246,7 @@ let RenderCount (input: {| label: string |}) =
 //                     )
 //                 ) ()
 //             ]
-//         ], 
+//         ],
 //         codeSplittingLoading()
 //     )
 
@@ -344,7 +338,7 @@ let RenderCount (input: {| label: string |}) =
 //         Html.div [
 //             prop.text (string input.count)
 //         ]
-//     ], 
+//     ],
 //     arePropsEqual = memoCompareEqual
 // )
 
@@ -451,14 +445,14 @@ let RenderCount (input: {| label: string |}) =
 
 // module OptionalDispose =
 
-//     // let useEffectWithDis (setup: unit -> System.IDisposable) = 
+//     // let useEffectWithDis (setup: unit -> System.IDisposable) =
 //     //     useEffect(System.Func<_,_>(fun () ->
 //     //         let dispose = setup()
 //     //         fun () -> dispose.Dispose()
 //     //     ))
 
 //     // let useEffect (setup: System.Func<unit, (unit -> unit)>) = import "useEffect" "react"
-//     // let useEffectWithDisOpt (setup: unit -> System.IDisposable option) = 
+//     // let useEffectWithDisOpt (setup: unit -> System.IDisposable option) =
 //     //     useEffect(System.Func<_,_>(fun () ->
 //     //         let dispose = setup()
 //     //         match dispose with

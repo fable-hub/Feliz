@@ -146,4 +146,3 @@ describe "UseElmish subscription dependency swap"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
-

@@ -5,15 +5,32 @@ open Fable.Core
 
 [<Erase>]
 type polarRadiusAxis =
-    static member inline angle (value:int) = Interop.mkPolarRadiusAxisAttr "angle" value
-    static member inline allowDuplicatedCategory (value:bool) = Interop.mkPolarRadiusAxisAttr "allowDuplicatedCategory" value
-    static member inline domain (min: IAxisDomain, max: IAxisDomain) = Interop.mkPolarRadiusAxisAttr "domain" [| min; max |]
-    static member inline tick (value:bool) = Interop.mkPolarRadiusAxisAttr "tick" value
-    static member inline axisLine (value:bool) = Interop.mkPolarRadiusAxisAttr "axisLine" value
-    static member inline tickCount (value:int) = Interop.mkPolarRadiusAxisAttr "tickCount" value
-    static member inline cx(value: int) = Interop.mkPolarRadiusAxisAttr "cx" value
-    static member inline cy(value: int) = Interop.mkPolarRadiusAxisAttr "cy" value
-    static member inline tickFormatter (f: 'a -> int -> string) = Interop.mkPolarRadiusAxisAttr "tickFormatter" f
+    static member inline angle(value: int) =
+        Interop.mkPolarRadiusAxisAttr "angle" value
+
+    static member inline allowDuplicatedCategory(value: bool) =
+        Interop.mkPolarRadiusAxisAttr "allowDuplicatedCategory" value
+
+    static member inline domain(min: IAxisDomain, max: IAxisDomain) =
+        Interop.mkPolarRadiusAxisAttr "domain" [| min; max |]
+
+    static member inline tick(value: bool) =
+        Interop.mkPolarRadiusAxisAttr "tick" value
+
+    static member inline axisLine(value: bool) =
+        Interop.mkPolarRadiusAxisAttr "axisLine" value
+
+    static member inline tickCount(value: int) =
+        Interop.mkPolarRadiusAxisAttr "tickCount" value
+
+    static member inline cx(value: int) =
+        Interop.mkPolarRadiusAxisAttr "cx" value
+
+    static member inline cy(value: int) =
+        Interop.mkPolarRadiusAxisAttr "cy" value
+
+    static member inline tickFormatter(f: 'a -> int -> string) =
+        Interop.mkPolarRadiusAxisAttr "tickFormatter" f
 
 module polarRadiusAxis =
     [<Erase>]

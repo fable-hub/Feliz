@@ -9,25 +9,28 @@ type ISize =
     | Medium
     | Large
 
-type Button = 
+type Button =
 
     [<ReactComponent>]
     static member Example(text: string, onClick: Browser.Types.MouseEvent -> unit, ?size: ISize) =
         let size = defaultArg size Medium
+
         let sizeClass =
             match size with
             | Small -> "sm"
             | Medium -> ""
             | Large -> "lg"
+
         Html.button [
             prop.text text
             prop.onClick onClick
-            prop.className [ "fsharp-btn"; sizeClass]
+            prop.className [ "fsharp-btn"; sizeClass ]
         ]
 
     [<ReactComponent(true)>]
     static member Example() =
-        let fn = fun _ -> Browser.Dom.console.log("Button clicked!")
+        let fn = fun _ -> Browser.Dom.console.log ("Button clicked!")
+
         Html.div [
             prop.style [
                 style.display.flex

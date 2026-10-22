@@ -40,29 +40,32 @@ let private makeQueries breakpoints =
 
 [<AutoOpen>]
 module UseMediaQueryExtension =
-     [<Emit("($0).addListener($1)")>]
-     let private addListener mqList fn = jsNative
+    [<Emit("($0).addListener($1)")>]
+    let private addListener mqList fn = jsNative
 
-     [<Emit("($0).removeListener($1)")>]
-     let private removeListener mqList fn = jsNative
+    [<Emit("($0).removeListener($1)")>]
+    let private removeListener mqList fn = jsNative
 
-     type React with
+    type React with
         /// A hook for media queries, this hook will force a component
         /// to re-render when the specified media query changes.
         [<Hook>]
-        static member useMediaQuery (mediaQuery: string) =
-            let (mq: bool), setMq = React.useState(fun () -> window.matchMedia(mediaQuery).matches)
+        static member useMediaQuery(mediaQuery: string) =
+            let (mq: bool), setMq =
+                React.useState (fun () -> window.matchMedia(mediaQuery).matches)
 
-            React.useEffect(fun () ->
-                let mediaQueryList = window.matchMedia(mediaQuery)
-                let handler = fun () -> setMq mediaQueryList.matches
+            React.useEffect (
+                fun () ->
+                    let mediaQueryList = window.matchMedia (mediaQuery)
+                    let handler = fun () -> setMq mediaQueryList.matches
 
-                handler()
+                    handler ()
 
-                addListener mediaQueryList handler
+                    addListener mediaQueryList handler
 
-                FsReact.createDisposable(fun () -> removeListener mediaQueryList handler)
-            , [| mediaQuery :> obj |])
+                    FsReact.createDisposable (fun () -> removeListener mediaQueryList handler)
+                , [| mediaQuery :> obj |]
+            )
 
             mq
 

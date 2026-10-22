@@ -13,42 +13,51 @@ type IPopoverProperty = interface end
 [<Erase>]
 type popover =
     /// The popover content.
-    static member inline body (content: ReactElement list) =
+    static member inline body(content: ReactElement list) =
         unbox<IPopoverProperty> ("body", React.Fragment content)
+
     /// Determines Whether or not the popover is rendered.
     static member inline isOpen(value: bool) =
         unbox<IPopoverProperty> ("isOpen", value)
+
     /// A callback function executed every time the user does an action (mousedown or touchstart) outside the DOM tree of both Popover and Target. A canonical use-case is to automatically close the Popover on any external user action.
-    static member inline onOuterAction (handler: unit -> unit) =
-        unbox<IPopoverProperty> ("onOuterAction", fun _ -> handler())
+    static member inline onOuterAction(handler: unit -> unit) =
+        unbox<IPopoverProperty> ("onOuterAction", fun _ -> handler ())
+
     /// The polling speed (AKA time between each poll) in milliseconds for checking if a layout refresh is required. This polling is required because it is the only robust way to track the position of a target in the DOM. Defaults to 200. Set to a falsey value to disable.
-    static member inline refreshIntervalMs (value: int) =
+    static member inline refreshIntervalMs(value: int) =
         unbox<IPopoverProperty> ("refreshIntervalMs", value)
+
     /// The polling speed (AKA time between each poll) in milliseconds for checking if a layout refresh is required. This polling is required because it is the only robust way to track the position of a target in the DOM. Defaults to 200. Set to a falsey value to disable.
-    static member inline refreshIntervalMs (value: bool) =
+    static member inline refreshIntervalMs(value: bool) =
         unbox<IPopoverProperty> ("refreshIntervalMs", value)
+
     /// The amount of time in milliseconds that it takes to complete the enter and exit animation. Defaults to '500'.
-    static member inline enterExitTransitionDurationMs (value: int) =
+    static member inline enterExitTransitionDurationMs(value: int) =
         unbox<IPopoverProperty> ("enterExitTransitionDurationMs", value)
+
     /// The amount of time in milliseconds that it takes to complete the enter and exit animation. Defaults to '500'.
-    static member inline enterExitTransitionDurationMs (value: bool) =
+    static member inline enterExitTransitionDurationMs(value: bool) =
         unbox<IPopoverProperty> ("enterExitTransitionDurationMs", value)
+
     /// Defines the size of the tip pointer. Use .01 to disable tip. Defaults to '7'.
-    static member inline tipSize (value: float) =
+    static member inline tipSize(value: float) =
         unbox<IPopoverProperty> ("tipSize", value)
+
     /// Disables the tip of the popover. When this option is used, then `popover.tipSize` should be omitted.
-    static member inline disableTip =
-        unbox<IPopoverProperty> ("tipSize", 0.01)
+    static member inline disableTip = unbox<IPopoverProperty> ("tipSize", 0.01)
+
     /// The content that this popover will orient itself around.
-    static member inline children (children: ReactElement list) =
+    static member inline children(children: ReactElement list) =
         unbox<IPopoverProperty> ("children", React.KeyedFragment("popoverChildren", children))
 
 [<Erase>]
 type Popover =
-    static member inline popover (properties: IPopoverProperty list) =
+    static member inline popover(properties: IPopoverProperty list) =
         let defaults = createObj [ "body" ==> Html.none ]
-        ReactLegacy.createElement(
-            (importDefault "react-popover" |> unbox<ReactElement>), 
+
+        ReactLegacy.createElement (
+            (importDefault "react-popover" |> unbox<ReactElement>),
             props = Interop.objectAssign defaults (createObj !!properties)
         )
 

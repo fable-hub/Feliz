@@ -101,4 +101,3 @@ describe "UseElmish unmount in-flight perform"
 
         expect(render.getByTestId TestIds.SuccessCount).toHaveTextContent "0"
     }
-

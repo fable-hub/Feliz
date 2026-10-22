@@ -3,15 +3,14 @@ module Example.CodeSplitting
 open Fable.Core
 open Feliz
 
-let MyNonCodeSplitComponent() =
-    Html.div [
-        prop.text "I was loaded synchronously!"
-    ]
+let MyNonCodeSplitComponent () =
+    Html.div [ prop.text "I was loaded synchronously!" ]
 
-let asyncComponent : JS.Promise<unit -> ReactElement> = JsInterop.importDynamic "./Counter.fs"
+let asyncComponent: JS.Promise<unit -> ReactElement> =
+    JsInterop.importDynamic "./Counter.fs"
 
 [<ReactComponent(true)>]
-let CodeSplitting(delay: int option) =
+let CodeSplitting (delay: int option) =
 
     Html.div [
         prop.children [
@@ -20,21 +19,21 @@ let CodeSplitting(delay: int option) =
                 Html.div [
                     prop.text $"I will be loaded after {delay.Value} milliseconds!"
                 ]
-            React.suspense(
+            React.suspense (
                 [
                     Html.div [
-                        React.lazy'((fun () ->
-                            promise {
+                        React.lazy' (
+                            (fun () -> promise {
                                 if delay.IsSome then
                                     do! Promise.sleep (delay.Value)
+
                                 return! asyncComponent
-                            }
-                        ),())
+                            }),
+                            ()
+                        )
                     ]
-                ], 
-                Html.div [
-                    prop.text "Loading..."
-                ]
+                ],
+                Html.div [ prop.text "Loading..." ]
             )
         ]
     ]

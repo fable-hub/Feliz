@@ -1,4 +1,3 @@
-
 namespace Feliz
 
 open Browser.Types
@@ -50,6 +49,6 @@ module ReactTypes =
         /// Renders the provided React element into the DOM in the supplied container.
         abstract render: ReactElement -> unit
         /// Removes a mounted React component from the DOM and cleans up its event handlers and state.
-        abstract unmount : unit -> unit
+        abstract unmount: unit -> unit
 
     type ReactContext<'a> = interface end

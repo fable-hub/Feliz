@@ -10,10 +10,10 @@ module Constants =
     let TestRoot = "./tests"
 
     [<Literal>]
-    let MainSlnFile = "./Feliz.sln"
+    let MainSlnFile = "./Feliz.slnx"
 
     [<Literal>]
-    let PackSlnFile = "./Feliz.Pack.sln"
+    let PackSlnFile = "./Feliz.Pack.slnx"
 
     [<Literal>]
     let OutputDir = "./dist"
@@ -30,66 +30,59 @@ module Utility =
     open System
 
     let inline printGreenfn fmt =
-        Printf.kprintf (fun s ->
-            let oldColor = Console.ForegroundColor
-            Console.ForegroundColor <- ConsoleColor.Green
-            Console.WriteLine s
-            Console.ForegroundColor <- oldColor
-        ) fmt
+        Printf.kprintf
+            (fun s ->
+                let oldColor = Console.ForegroundColor
+                Console.ForegroundColor <- ConsoleColor.Green
+                Console.WriteLine s
+                Console.ForegroundColor <- oldColor
+            )
+            fmt
 
     let inline printRedfn fmt =
-        Printf.kprintf (fun s ->
-            let oldColor = Console.ForegroundColor
-            Console.ForegroundColor <- ConsoleColor.Red
-            Console.WriteLine s
-            Console.ForegroundColor <- oldColor
-        ) fmt
+        Printf.kprintf
+            (fun s ->
+                let oldColor = Console.ForegroundColor
+                Console.ForegroundColor <- ConsoleColor.Red
+                Console.WriteLine s
+                Console.ForegroundColor <- oldColor
+            )
+            fmt
 
 
-module Setup = 
+module Setup =
 
-    let dotnetToolRestore() =
+    let dotnetToolRestore () =
         let args =
             CmdLine.Empty
             |> CmdLine.append "tool"
             |> CmdLine.append "restore"
             |> CmdLine.toString
 
-        Command.Run(
-            "dotnet",
-            args
-        )
+        Command.Run("dotnet", args)
 
-    let npmInstall() =
-        let args =
-            CmdLine.Empty
-            |> CmdLine.append "ci"
-            |> CmdLine.toString
+    let npmInstall () =
+        let args = CmdLine.Empty |> CmdLine.append "ci" |> CmdLine.toString
 
-        Command.Run(
-            "npm",
-            args
-        )
+        Command.Run("npm", args)
 
-    let dotnetRestore() =
+    let dotnetRestore () =
         let args =
             CmdLine.Empty
             |> CmdLine.append "restore"
             |> CmdLine.append MainSlnFile
             |> CmdLine.toString
 
-        Command.Run(
-            "dotnet",
-            args
-        )
+        Command.Run("dotnet", args)
 
-    let all() =
+    let all () =
         printGreenfn "Restoring dotnet tools"
-        dotnetToolRestore()
+        dotnetToolRestore ()
         printGreenfn "Restoring npm packages"
-        npmInstall()
+        npmInstall ()
         printGreenfn "Restoring dotnet packages"
-        dotnetRestore()
+        dotnetRestore ()
+
 module Tests =
 
     open System
@@ -98,11 +91,13 @@ module Tests =
 
     let hasMatchingFsproj dir (filterOpt: string option) =
         let fsprojFiles = Directory.GetFiles(dir, "*.fsproj")
+
         match filterOpt with
         | Some substr ->
             fsprojFiles
             |> Array.exists (fun path ->
                 let projName = Path.GetFileNameWithoutExtension(path)
+
                 projName
                     .Replace(".tests", "", StringComparison.OrdinalIgnoreCase) // do this before ".test", or it will keep the "s".abs
                     .Replace(".test", "", StringComparison.OrdinalIgnoreCase)
@@ -112,15 +107,19 @@ module Tests =
 
     let hasTestScriptInPackageJson dir =
         let packageJsonPath = Path.Combine(dir, "package.json")
+
         if File.Exists(packageJsonPath) then
             try
                 let json = File.ReadAllText(packageJsonPath)
                 let doc = JsonDocument.Parse(json)
+
                 match doc.RootElement.TryGetProperty("scripts") with
                 | true, scripts when scripts.TryGetProperty("test") |> fst -> true
                 | _ -> false
-            with _ -> false
-        else false
+            with _ ->
+                false
+        else
+            false
 
     let findValidNPMTestFolders root filteropt =
         Directory.GetDirectories(root)
@@ -131,47 +130,37 @@ module Tests =
         |> Array.filter (fun dir -> hasMatchingFsproj dir filteropt)
 
     let runNpmTest (workingDir: string) =
-        let args =
-            CmdLine.Empty
-            |> CmdLine.append "test"
-            |> CmdLine.toString
+        let args = CmdLine.Empty |> CmdLine.append "test" |> CmdLine.toString
 
-        Command.Run(
-            "npm",
-            args,
-            workingDir
-        )
+        Command.Run("npm", args, workingDir)
 
     let runNETTest (workingDir: string) =
-        let args =
-            CmdLine.Empty
-            |> CmdLine.append "test"
-            |> CmdLine.toString
+        let args = CmdLine.Empty |> CmdLine.append "test" |> CmdLine.toString
 
-        Command.Run(
-            "dotnet",
-            args,
-            workingDir
-        )
+        Command.Run("dotnet", args, workingDir)
 
     let runAll (filteropt: string option) =
         match filteropt with
-        | Some filter ->
-            printGreenfn "Running tests in folder matching %s" filter
-        | None ->
-            printGreenfn "Running tests in all folders"
+        | Some filter -> printGreenfn "Running tests in folder matching %s" filter
+        | None -> printGreenfn "Running tests in all folders"
+
         let npmTestFolders = findValidNPMTestFolders TestRoot filteropt
+
         for folder in npmTestFolders do
             let folderName = Path.GetFileName(folder)
             printGreenfn "Running tests in %s" folderName
             runNpmTest folder
             printGreenfn "Finished running tests in %s" folderName
-        let netTestFolders = findValidNETTestFolders TestRoot filteropt |> Array.except npmTestFolders
+
+        let netTestFolders =
+            findValidNETTestFolders TestRoot filteropt |> Array.except npmTestFolders
+
         for folder in netTestFolders do
             let folderName = Path.GetFileName(folder)
             printGreenfn "Running tests in %s" folderName
             runNETTest folder
             printGreenfn "Finished running tests in %s" folderName
+
         if npmTestFolders.Length = 0 && netTestFolders.Length = 0 then
             printRedfn "No test projects found matching the given filter."
             failwith "No test projects found."
@@ -183,28 +172,29 @@ module Pack =
     open System.IO
     open System.Text.Json
 
-    
 
-    let cleanOutputDir(path: string) =
+
+    let cleanOutputDir (path: string) =
         if Directory.Exists(path) then
             printGreenfn "Cleaning output directory: %s" path
             Directory.Delete(path, true)
 
-    let checkPackedFiles() =
+    let checkPackedFiles () =
         let files = Directory.GetFiles(OutputDir, "*.nupkg")
+
         if files.Length = 0 then
             failwithf "No .nupkg files found in %s" OutputDir
         else
             printGreenfn "Found %d .nupkg files in %s" files.Length OutputDir
 
-    let pack() =
+    let pack () =
 
         let SlnFullPath = Path.GetFullPath PackSlnFile
         let OutputDirFullPath = Path.GetFullPath OutputDir
 
         printGreenfn "Packing solution: %s" SlnFullPath
 
-        cleanOutputDir(OutputDirFullPath)
+        cleanOutputDir (OutputDirFullPath)
 
         let args =
             CmdLine.Empty
@@ -213,10 +203,7 @@ module Pack =
             |> CmdLine.appendPrefix "-o" OutputDirFullPath
             |> CmdLine.toString
 
-        Command.Run(
-            "dotnet",
-            args
-        )
+        Command.Run("dotnet", args)
 
 
 module Release =
@@ -225,13 +212,14 @@ module Release =
     open System.IO
 
 
-    let release(apiKey: string) =
+    let release (apiKey: string) =
 
         if String.IsNullOrWhiteSpace(apiKey) then
             printRedfn "%s key not found in environment variables" NugetAPIKeyEnvVariable
             failwithf "%s key not found in environment variables" NugetAPIKeyEnvVariable
-    
+
         let files = Directory.GetFiles(OutputDir, "*.nupkg")
+
         if files.Length = 0 then
             printRedfn "No .nupkg files found in %s" OutputDir
             failwithf "No .nupkg files found in %s" OutputDir
@@ -247,48 +235,42 @@ module Release =
             |> CmdLine.appendPrefix "-s" NugetDefaultPushSource
             |> CmdLine.append "--skip-duplicate"
             |> CmdLine.toString
-        
-        Command.Run(
-            "dotnet",
-            args,
-            workingDirectory = Path.GetFullPath OutputDir
-        )
+
+        Command.Run("dotnet", args, workingDirectory = Path.GetFullPath OutputDir)
 
 [<EntryPoint>]
 let main args =
     let argv = args |> Array.map (fun x -> x.ToLower()) |> Array.toList
 
     match argv with
-    | "setup" :: _ ->
-        Setup.all()
+    | "setup" :: _ -> Setup.all ()
     | "test" :: a
     | "tests" :: a ->
         match a with
-        | filter :: _ ->
-            Tests.runAll (Some filter)
-        | [] ->
-            Tests.runAll None
-    | "pack" :: _ ->
-        Pack.pack()
+        | filter :: _ -> Tests.runAll (Some filter)
+        | [] -> Tests.runAll None
+    | "pack" :: _ -> Pack.pack ()
     | "release" :: a ->
         let apiKey =
-            match a with 
+            match a with
             | apiKey :: _ -> apiKey
             | [] -> System.Environment.GetEnvironmentVariable(NugetAPIKeyEnvVariable)
-        Release.release(apiKey)
+
+        Release.release (apiKey)
     | "release-pipeline" :: a ->
         let apiKey =
-            match a with 
+            match a with
             | apiKey :: _ -> apiKey
             | [] -> System.Environment.GetEnvironmentVariable(NugetAPIKeyEnvVariable)
-        Setup.all()
+
+        Setup.all ()
         Tests.runAll None
-        Pack.pack()
-        Release.release(apiKey)
+        Pack.pack ()
+        Release.release (apiKey)
 
     | "develop" :: _ ->
         // Placeholder for develop command
         printfn "Develop command is not implemented yet."
-    | _ -> 
-        printfn "Unknown command."
+    | _ -> printfn "Unknown command."
+
     0

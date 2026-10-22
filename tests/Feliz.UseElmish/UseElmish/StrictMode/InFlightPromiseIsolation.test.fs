@@ -92,4 +92,3 @@ describe "UseElmish strict mode in-flight promise isolation"
                 expect(render.getByTestId TestIds.EffectCount).toHaveTextContent "1"
             )
     }
-

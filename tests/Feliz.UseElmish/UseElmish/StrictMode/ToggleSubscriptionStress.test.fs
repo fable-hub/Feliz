@@ -148,4 +148,3 @@ describe "UseElmish strict mode toggle stress"
 
         do! RTL.waitFor (fun () -> expect(render.getByTestId TestIds.ParentCount).toHaveTextContent "3")
     }
-

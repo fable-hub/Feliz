@@ -7,9 +7,9 @@ open Fable.Core.JsInterop
 
 [<Erase>]
 type text =
-    static member inline scaleToFit (value: bool) = Interop.mkTextAttr "scaleToFit" value
-    static member inline angle (value: int) = Interop.mkTextAttr "angle" value
-    static member inline width (value: int) = Interop.mkTextAttr "width" value
+    static member inline scaleToFit(value: bool) = Interop.mkTextAttr "scaleToFit" value
+    static member inline angle(value: int) = Interop.mkTextAttr "angle" value
+    static member inline width(value: int) = Interop.mkTextAttr "width" value
 
 module text =
 

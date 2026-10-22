@@ -141,4 +141,3 @@ describe "UseElmish dynamic subscription diff"
         expect(render.getByTestId TestIds.CountA).toHaveTextContent "1"
         expect(render.getByTestId TestIds.CountB).toHaveTextContent "2"
     }
-

@@ -154,4 +154,3 @@ describe "UseElmish dependency reset promise isolation"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
-

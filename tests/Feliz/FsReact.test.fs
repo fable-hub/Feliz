@@ -14,26 +14,26 @@ module TokenCancellation =
     /// </summary>
     [<ReactComponent>]
     let private CancelAsyncWithUnmountElement (callback: unit -> unit) =
-        let token = FsReact.useCancellationToken()
+        let token = FsReact.useCancellationToken ()
 
-        React.useEffectOnce(fun () ->
+        React.useEffectOnce (fun () ->
             async {
                 do! Async.Sleep 500
-                callback()
+                callback ()
             }
-            |> fun a -> Async.StartImmediate(a,token.current)
+            |> fun a -> Async.StartImmediate(a, token.current)
         )
 
         Html.none
 
     [<ReactComponent>]
     let Main (unmount: bool) =
-        let renderChild,setRenderChild = React.useState true
-        let resultText,setResultText = React.useState "Initial"
+        let renderChild, setRenderChild = React.useState true
+        let resultText, setResultText = React.useState "Initial"
 
         let setTextCallback = React.useCallback <| fun () -> setResultText "Async Completed"
 
-        React.useLayoutEffectOnce(fun () ->
+        React.useLayoutEffectOnce (fun () ->
             async {
                 do! Async.Sleep 100
 
@@ -47,39 +47,49 @@ module TokenCancellation =
         Html.div [
             if renderChild then
                 CancelAsyncWithUnmountElement(setTextCallback)
-            Html.div [
-                prop.testId "result-text"
-                prop.text resultText
-            ]
+            Html.div [ prop.testId "result-text"; prop.text resultText ]
         ]
 
-describe "TokenCancellation" <| fun _ ->
-    testPromise "Do not cancel, let async complete" <| fun _ -> promise {
+describe "TokenCancellation"
+<| fun _ ->
+    testPromise "Do not cancel, let async complete"
+    <| fun _ -> promise {
         let render = RTL.render (TokenCancellation.Main(false))
         let resultText = RTL.screen.getByTestId "result-text"
 
         expect(resultText).toHaveTextContent "Initial"
-        do! RTL.waitFor((fun () ->
-            expect(resultText).toHaveTextContent "Async Completed"
-        ), RTLWaitForOptions(timeout=2000))
+
+        do!
+            RTL.waitFor (
+                (fun () -> expect(resultText).toHaveTextContent "Async Completed"),
+                RTLWaitForOptions(timeout = 2000)
+            )
     }
 
-    testPromise "Cancel, stop async complete" <| fun _ -> promise {
+    testPromise "Cancel, stop async complete"
+    <| fun _ -> promise {
         let render = RTL.render (TokenCancellation.Main(true))
         let resultText = RTL.screen.getByTestId "result-text"
 
         expect(resultText).toHaveTextContent "Initial"
-        do! RTL.waitFor((fun () ->
-            let resultText = RTL.screen.getByTestId "result-text"
-            expect(resultText).toHaveTextContent "Disposed"
-        ), RTLWaitForOptions(timeout=2000))
 
-        do! RTL.act(fun () ->
-            Promise.sleep 1000
-        )
+        do!
+            RTL.waitFor (
+                (fun () ->
+                    let resultText = RTL.screen.getByTestId "result-text"
+                    expect(resultText).toHaveTextContent "Disposed"
+                ),
+                RTLWaitForOptions(timeout = 2000)
+            )
 
-        do! RTL.waitFor((fun () ->
-            let resultText = RTL.screen.getByTestId "result-text"
-            expect(resultText).not.toHaveTextContent "Async Completed"
-        ), RTLWaitForOptions(timeout=2000))
+        do! RTL.act (fun () -> Promise.sleep 1000)
+
+        do!
+            RTL.waitFor (
+                (fun () ->
+                    let resultText = RTL.screen.getByTestId "result-text"
+                    expect(resultText).not.toHaveTextContent "Async Completed"
+                ),
+                RTLWaitForOptions(timeout = 2000)
+            )
     }

@@ -110,4 +110,3 @@ describe "UseElmish unmount in-flight either error"
 
         expect(render.getByTestId TestIds.ErrorCount).toHaveTextContent "0"
     }
-

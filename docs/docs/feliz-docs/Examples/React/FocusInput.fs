@@ -4,25 +4,22 @@ open Feliz
 open Browser.Types
 
 [<ReactComponent(true)>]
-let FullFocusInputExample() =
+let FullFocusInputExample () =
     // obtain a reference
-    let inputRef = React.useRef(None)
+    let inputRef = React.useRef (None)
 
-    let focusTextInput() =
+    let focusTextInput () =
         match inputRef.current with
         | None -> ()
         | Some element ->
             let inputElement = unbox<HTMLInputElement> element
-            inputElement.focus()
+            inputElement.focus ()
 
     Html.div [
-        Html.input [
-            prop.ref inputRef
-            prop.type'.text
-        ]
+        Html.input [ prop.ref inputRef; prop.type'.text ]
 
         Html.button [
-            prop.onClick (fun _ -> focusTextInput())
+            prop.onClick (fun _ -> focusTextInput ())
             prop.text "Focus Input"
         ]
     ]

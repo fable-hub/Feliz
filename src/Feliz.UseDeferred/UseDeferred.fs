@@ -11,17 +11,20 @@ type Deferred<'T> =
 [<RequireQualifiedAccess>]
 module Deferred =
     /// Returns whether the `Deferred<'T>` value has been started or not.
-    let hasNotStartedYet = function
+    let hasNotStartedYet =
+        function
         | Deferred.HasNotStartedYet -> true
         | _ -> false
 
     /// Returns whether the `Deferred<'T>` value has been resolved or not.
-    let resolved = function
+    let resolved =
+        function
         | Deferred.Resolved _ -> true
         | _ -> false
 
     /// Returns whether the `Deferred<'T>` value is in progress or not.
-    let inProgress = function
+    let inProgress =
+        function
         | Deferred.InProgress -> true
         | _ -> false
 
@@ -32,8 +35,10 @@ module Deferred =
         | Deferred.InProgress -> Deferred.InProgress
         | Deferred.Failed error -> Deferred.Failed error
         | Deferred.Resolved value ->
-            try Deferred.Resolved (transform value)
-            with error -> Deferred.Failed error
+            try
+                Deferred.Resolved(transform value)
+            with error ->
+                Deferred.Failed error
 
     let iter (perform: 'T -> unit) (deferred: Deferred<'T>) : unit =
         match deferred with
@@ -41,7 +46,8 @@ module Deferred =
         | _ -> ()
 
     /// Verifies that a `Deferred<'T>` value is resolved and the resolved data satisfies a given requirement.
-    let exists (predicate: 'T -> bool) = function
+    let exists (predicate: 'T -> bool) =
+        function
         | Deferred.Resolved value -> predicate value
         | _ -> false
 
@@ -52,8 +58,10 @@ module Deferred =
         | Deferred.InProgress -> Deferred.InProgress
         | Deferred.Failed error -> Deferred.Failed error
         | Deferred.Resolved value ->
-            try transform value
-            with error -> Deferred.Failed error
+            try
+                transform value
+            with error ->
+                Deferred.Failed error
 
 open Feliz
 
@@ -62,79 +70,91 @@ module ReactHookExtensions =
     type React with
         [<Hook>]
         static member useDeferred(operation: Async<'T>, dependencies: obj array) =
-            let (deferred, setDeferred) = React.useState(Deferred.HasNotStartedYet)
-            let token = FsReact.useCancellationToken()
+            let (deferred, setDeferred) = React.useState (Deferred.HasNotStartedYet)
+            let token = FsReact.useCancellationToken ()
+
             let executeOperation = async {
                 try
-                    do setDeferred(Deferred<'T>.InProgress)
+                    do setDeferred (Deferred<'T>.InProgress)
                     let! output = operation
-                    do setDeferred(Deferred<'T>.Resolved output)
+                    do setDeferred (Deferred<'T>.Resolved output)
                 with error ->
-                    #if DEBUG
-                    Browser.Dom.console.log(error)
-                    #endif
-                    do setDeferred(Deferred<'T>.Failed error)
+#if DEBUG
+                    Browser.Dom.console.log (error)
+#endif
+                    do setDeferred (Deferred<'T>.Failed error)
             }
 
-            React.useEffect((fun () -> Async.StartImmediate(executeOperation, token.current)), dependencies)
+            React.useEffect ((fun () -> Async.StartImmediate(executeOperation, token.current)), dependencies)
 
             deferred
 
         [<Hook>]
         static member useDeferredCallback(operation: 'TIn -> Async<'TOut>, setDeferred: Deferred<'TOut> -> unit) =
-            let cancellationToken = React.useRef(new System.Threading.CancellationTokenSource())
+            let cancellationToken =
+                React.useRef (new System.Threading.CancellationTokenSource())
+
             let executeOperation arg = async {
                 try
-                    do setDeferred(Deferred<'TOut>.InProgress)
+                    do setDeferred (Deferred<'TOut>.InProgress)
                     let! output = operation arg
-                    do setDeferred(Deferred<'TOut>.Resolved output)
+                    do setDeferred (Deferred<'TOut>.Resolved output)
                 with error ->
-                    #if DEBUG
-                    Browser.Dom.console.log(error)
-                    #endif
-                    do setDeferred(Deferred<'TOut>.Failed error)
+#if DEBUG
+                    Browser.Dom.console.log (error)
+#endif
+                    do setDeferred (Deferred<'TOut>.Failed error)
             }
 
-            React.useEffectOnce(fun () ->
-                FsReact.createDisposable(fun () -> cancellationToken.current.Cancel())
-            )
+            React.useEffectOnce (fun () -> FsReact.createDisposable (fun () -> cancellationToken.current.Cancel()))
 
-            let start = React.useCallback(fun arg ->
-                if not cancellationToken.current.IsCancellationRequested
-                then Async.StartImmediate(executeOperation arg, cancellationToken.current.Token)
-            )
+            let start =
+                React.useCallback (fun arg ->
+                    if not cancellationToken.current.IsCancellationRequested then
+                        Async.StartImmediate(executeOperation arg, cancellationToken.current.Token)
+                )
 
             start
 
         [<Hook>]
-        static member useDeferredParallel<'T, 'U, 'Key when 'Key : comparison>(deferred: Deferred<'T>, map: 'T -> ('Key * Async<'U>) list) =
-            let (data, setData) = React.useStateWithUpdater(Map.empty)
-            let addData = React.useCallback(fun (key, value) -> setData(fun prev -> Map.add key value prev))
-            let token = FsReact.useCancellationToken()
+        static member useDeferredParallel<'T, 'U, 'Key when 'Key: comparison>
+            (deferred: Deferred<'T>, map: 'T -> ('Key * Async<'U>) list)
+            =
+            let (data, setData) = React.useStateWithUpdater (Map.empty)
+
+            let addData =
+                React.useCallback (fun (key, value) -> setData (fun prev -> Map.add key value prev))
+
+            let token = FsReact.useCancellationToken ()
+
             let mapKeyedOperatons (operations: ('Key * Async<'U>) list) = [
                 for (key, operation) in operations do
                     async {
                         try
-                            do addData(key,  Deferred.InProgress)
+                            do addData (key, Deferred.InProgress)
                             let! output = operation
-                            do addData(key, Deferred.Resolved output)
+                            do addData (key, Deferred.Resolved output)
                         with error ->
-                            #if DEBUG
-                            Browser.Dom.console.log(error)
-                            #endif
-                            do addData(key, Deferred.Failed error)
+#if DEBUG
+                            Browser.Dom.console.log (error)
+#endif
+                            do addData (key, Deferred.Failed error)
                     }
             ]
 
-            let start = React.useCallback(fun operations ->
-                Fable.Core.JS.setTimeout(fun () ->
-                    Async.StartImmediate(Async.Parallel(mapKeyedOperatons operations) |> Async.Ignore, token.current)
-                ) 0 |> ignore
-            )
+            let start =
+                React.useCallback (fun operations ->
+                    Fable.Core.JS.setTimeout
+                        (fun () ->
+                            Async.StartImmediate(
+                                Async.Parallel(mapKeyedOperatons operations) |> Async.Ignore,
+                                token.current
+                            )
+                        )
+                        0
+                    |> ignore
+                )
 
-            React.useEffect(fun () ->
-                deferred
-                |> Deferred.iter (fun data -> start(map data))
-            , [| box deferred |])
+            React.useEffect ((fun () -> deferred |> Deferred.iter (fun data -> start (map data))), [| box deferred |])
 
             Map.toList data

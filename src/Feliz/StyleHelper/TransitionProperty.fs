@@ -14,12 +14,20 @@ type transitionProperty =
     static member inline border = unbox<ITransitionProperty> "border"
     static member inline borderBottom = unbox<ITransitionProperty> "border-bottom"
     static member inline borderBottomColor = unbox<ITransitionProperty> "border-bottom-color"
-    static member inline borderBottomLeftRadius = unbox<ITransitionProperty> "border-bottom-left-radius"
-    static member inline borderBottomRightRadius = unbox<ITransitionProperty> "border-bottom-right-radius"
+
+    static member inline borderBottomLeftRadius =
+        unbox<ITransitionProperty> "border-bottom-left-radius"
+
+    static member inline borderBottomRightRadius =
+        unbox<ITransitionProperty> "border-bottom-right-radius"
+
     static member inline borderBottomWidth = unbox<ITransitionProperty> "border-bottom-width"
     static member inline borderColor = unbox<ITransitionProperty> "border-color"
     static member inline borderEndEndRadius = unbox<ITransitionProperty> "border-end-end-radius"
-    static member inline borderEndStartRadius = unbox<ITransitionProperty> "border-end-start-radius"
+
+    static member inline borderEndStartRadius =
+        unbox<ITransitionProperty> "border-end-start-radius"
+
     static member inline borderLeft = unbox<ITransitionProperty> "border-left"
     static member inline borderLeftColor = unbox<ITransitionProperty> "border-left-color"
     static member inline borderLeftWidth = unbox<ITransitionProperty> "border-left-width"
@@ -27,12 +35,20 @@ type transitionProperty =
     static member inline borderRight = unbox<ITransitionProperty> "border-right"
     static member inline borderRightColor = unbox<ITransitionProperty> "border-right-color"
     static member inline borderRightWidth = unbox<ITransitionProperty> "border-right-width"
-    static member inline borderStartEndRadius = unbox<ITransitionProperty> "border-start-end-radius"
-    static member inline borderStartStartRadius = unbox<ITransitionProperty> "border-start-start-radius"
+
+    static member inline borderStartEndRadius =
+        unbox<ITransitionProperty> "border-start-end-radius"
+
+    static member inline borderStartStartRadius =
+        unbox<ITransitionProperty> "border-start-start-radius"
+
     static member inline borderTop = unbox<ITransitionProperty> "border-top"
     static member inline borderTopColor = unbox<ITransitionProperty> "border-top-color"
     static member inline borderTopLeftRadius = unbox<ITransitionProperty> "border-top-left-radius"
-    static member inline borderTopRightRadius = unbox<ITransitionProperty> "border-top-right-radius"
+
+    static member inline borderTopRightRadius =
+        unbox<ITransitionProperty> "border-top-right-radius"
+
     static member inline borderTopWidth = unbox<ITransitionProperty> "border-top-width"
     static member inline borderWidth = unbox<ITransitionProperty> "border-width"
     static member inline bottom = unbox<ITransitionProperty> "bottom"
@@ -57,7 +73,10 @@ type transitionProperty =
     static member inline fontSize = unbox<ITransitionProperty> "font-size"
     static member inline fontSizeAdjust = unbox<ITransitionProperty> "font-size-adjust"
     static member inline fontStretch = unbox<ITransitionProperty> "font-stretch"
-    static member inline fontVariationSettings = unbox<ITransitionProperty> "font-variation-settings"
+
+    static member inline fontVariationSettings =
+        unbox<ITransitionProperty> "font-variation-settings"
+
     static member inline fontWeight = unbox<ITransitionProperty> "font-weight"
     static member inline gap = unbox<ITransitionProperty> "gap"
     static member inline gridColumnGap = unbox<ITransitionProperty> "grid-column-gap"
@@ -117,28 +136,53 @@ type transitionProperty =
     static member inline scale = unbox<ITransitionProperty> "scale"
     static member inline scrollMargin = unbox<ITransitionProperty> "scroll-margin"
     static member inline scrollMarginBlock = unbox<ITransitionProperty> "scroll-margin-block"
-    static member inline scrollMarginBlockEnd = unbox<ITransitionProperty> "scroll-margin-block-end"
-    static member inline scrollMarginBlockStart = unbox<ITransitionProperty> "scroll-margin-block-start"
+
+    static member inline scrollMarginBlockEnd =
+        unbox<ITransitionProperty> "scroll-margin-block-end"
+
+    static member inline scrollMarginBlockStart =
+        unbox<ITransitionProperty> "scroll-margin-block-start"
+
     static member inline scrollMarginBottom = unbox<ITransitionProperty> "scroll-margin-bottom"
     static member inline scrollMarginInline = unbox<ITransitionProperty> "scroll-margin-inline"
-    static member inline scrollMarginInlineEnd = unbox<ITransitionProperty> "scroll-margin-inline-end"
-    static member inline scrollMarginInlineStart = unbox<ITransitionProperty> "scroll-margin-inline-start"
+
+    static member inline scrollMarginInlineEnd =
+        unbox<ITransitionProperty> "scroll-margin-inline-end"
+
+    static member inline scrollMarginInlineStart =
+        unbox<ITransitionProperty> "scroll-margin-inline-start"
+
     static member inline scrollMarginLeft = unbox<ITransitionProperty> "scroll-margin-left"
     static member inline scrollMarginRight = unbox<ITransitionProperty> "scroll-margin-right"
     static member inline scrollMarginTop = unbox<ITransitionProperty> "scroll-margin-top"
     static member inline scrollPadding = unbox<ITransitionProperty> "scroll-padding"
     static member inline scrollPaddingBlock = unbox<ITransitionProperty> "scroll-padding-block"
-    static member inline scrollPaddingBlockEnd = unbox<ITransitionProperty> "scroll-padding-block-end"
-    static member inline scrollPaddingBlockStart = unbox<ITransitionProperty> "scroll-padding-block-start"
+
+    static member inline scrollPaddingBlockEnd =
+        unbox<ITransitionProperty> "scroll-padding-block-end"
+
+    static member inline scrollPaddingBlockStart =
+        unbox<ITransitionProperty> "scroll-padding-block-start"
+
     static member inline scrollPaddingBottom = unbox<ITransitionProperty> "scroll-padding-bottom"
     static member inline scrollPaddingInline = unbox<ITransitionProperty> "scroll-padding-inline"
-    static member inline scrollPaddingInlineEnd = unbox<ITransitionProperty> "scroll-padding-inline-end"
-    static member inline scrollPaddingInlineStart = unbox<ITransitionProperty> "scroll-padding-inline-start"
+
+    static member inline scrollPaddingInlineEnd =
+        unbox<ITransitionProperty> "scroll-padding-inline-end"
+
+    static member inline scrollPaddingInlineStart =
+        unbox<ITransitionProperty> "scroll-padding-inline-start"
+
     static member inline scrollPaddingLeft = unbox<ITransitionProperty> "scroll-padding-left"
     static member inline scrollPaddingRight = unbox<ITransitionProperty> "scroll-padding-right"
     static member inline scrollPaddingTop = unbox<ITransitionProperty> "scroll-padding-top"
-    static member inline scrollSnapCoordinate = unbox<ITransitionProperty> "scroll-snap-coordinate"
-    static member inline scrollSnapDestination = unbox<ITransitionProperty> "scroll-snap-destination"
+
+    static member inline scrollSnapCoordinate =
+        unbox<ITransitionProperty> "scroll-snap-coordinate"
+
+    static member inline scrollSnapDestination =
+        unbox<ITransitionProperty> "scroll-snap-destination"
+
     static member inline scrollbarColor = unbox<ITransitionProperty> "scrollbar-color"
     static member inline shapeImageThreshold = unbox<ITransitionProperty> "shape-image-threshold"
     static member inline shapeMargin = unbox<ITransitionProperty> "shape-margin"

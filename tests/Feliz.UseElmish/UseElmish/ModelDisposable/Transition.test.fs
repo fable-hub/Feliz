@@ -112,4 +112,3 @@ describe "UseElmish disposable transition"
 
         expect(render.getByTestId TestIds.DisposeCount).toHaveTextContent "1"
     }
-

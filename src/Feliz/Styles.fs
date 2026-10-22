@@ -24,242 +24,335 @@ type style =
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(value: ICssUnit) = StyleHelper.mkStyle "margin" value
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(vertical: int, horizontal: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> vertical) + "px " +
-            (unbox<string> horizontal) + "px"
-        )
+        StyleHelper.mkStyle "margin" ((unbox<string> vertical) + "px " + (unbox<string> horizontal) + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(vertical: int, horizontal: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> vertical) + "px " +
-            (unbox<string> horizontal)
-        )
+        StyleHelper.mkStyle "margin" ((unbox<string> vertical) + "px " + (unbox<string> horizontal))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(vertical: ICssUnit, horizontal: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> vertical) + " " +
-            (unbox<string> horizontal) + "px"
-        )
+        StyleHelper.mkStyle "margin" ((unbox<string> vertical) + " " + (unbox<string> horizontal) + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(vertical: ICssUnit, horizontal: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> vertical) + " " +
-            (unbox<string> horizontal)
-        )
+        StyleHelper.mkStyle "margin" ((unbox<string> vertical) + " " + (unbox<string> horizontal))
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: int, horizontal: int, bottom: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: int, horizontal: int, bottom: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom))
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: int, horizontal: ICssUnit, bottom: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: int, horizontal: ICssUnit, bottom: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom))
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: ICssUnit, horizontal: int, bottom: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: ICssUnit, horizontal: int, bottom: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom))
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: ICssUnit, horizontal: ICssUnit, bottom: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the margin area on three sides of an element. It is a shorthand for margin-top, margin-right
     /// and margin-bottom.
     static member inline margin(top: ICssUnit, horizontal: ICssUnit, bottom: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: int, bottom: int, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: int, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: int, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: int, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: ICssUnit, bottom: int, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: ICssUnit, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: ICssUnit, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: int, right: ICssUnit, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: int, bottom: int, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: int, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: int, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: int, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: ICssUnit, bottom: int, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: ICssUnit, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: ICssUnit, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the margin area on all four sides of an element. It is a shorthand for margin-top, margin-right,
     /// margin-bottom, and margin-left.
     static member inline margin(top: ICssUnit, right: ICssUnit, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "margin" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "margin"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the margin area on the left side of an element. A positive value places it farther from its
     /// neighbors, while a negative value places it closer.
     static member inline marginLeft(value: int) = StyleHelper.mkStyle "marginLeft" value
@@ -278,12 +371,16 @@ type style =
     /// Sets the margin area on the top of an element. A positive value places it farther from its
     /// neighbors, while a negative value places it closer.
     static member inline marginTop(value: ICssUnit) = StyleHelper.mkStyle "marginTop" value
+
     /// Sets the margin area on the bottom of an element. A positive value places it farther from its
     /// neighbors, while a negative value places it closer.
-    static member inline marginBottom(value: int) = StyleHelper.mkStyle "marginBottom" value
+    static member inline marginBottom(value: int) =
+        StyleHelper.mkStyle "marginBottom" value
+
     /// Sets the margin area on the bottom of an element. A positive value places it farther from its
     /// neighbors, while a negative value places it closer.
-    static member inline marginBottom(value: ICssUnit) = StyleHelper.mkStyle "marginBottom" value
+    static member inline marginBottom(value: ICssUnit) =
+        StyleHelper.mkStyle "marginBottom" value
 
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
@@ -295,62 +392,56 @@ type style =
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlock(value: ICssUnit) = StyleHelper.mkStyle "marginBlock" value
+
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlock(blockStart: int, blockEnd: int) =
-        StyleHelper.mkStyle "marginBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "marginBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlock(blockStart: ICssUnit, blockEnd: int) =
-        StyleHelper.mkStyle "marginBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "marginBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlock(blockStart: int, blockEnd: ICssUnit) =
-        StyleHelper.mkStyle "marginBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "marginBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlock(blockStart: ICssUnit, blockEnd: ICssUnit) =
-        StyleHelper.mkStyle "marginBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
-    
+        StyleHelper.mkStyle "marginBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start margin of an element, which
     /// maps to a physical margin depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlockStart(value: int) =
         StyleHelper.mkStyle "marginBlockStart" value
+
     /// Defines the logical block start margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlockStart(value: ICssUnit) =
         StyleHelper.mkStyle "marginBlockStart" value
-    
+
     /// Defines the logical block end margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
     static member inline marginBlockEnd(value: int) =
         StyleHelper.mkStyle "marginBlockEnd" value
+
     /// Defines the logical block end margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
@@ -362,68 +453,65 @@ type style =
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
-    static member inline marginInline(value: int) = StyleHelper.mkStyle "marginInline" value
+    static member inline marginInline(value: int) =
+        StyleHelper.mkStyle "marginInline" value
+
     /// Defines the logical inline start and end margins of an element,
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
-    static member inline marginInline(value: ICssUnit) = StyleHelper.mkStyle "marginInline" value
+    static member inline marginInline(value: ICssUnit) =
+        StyleHelper.mkStyle "marginInline" value
+
     /// Defines the logical inline start and end margins of an element,
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
     static member inline marginInline(inlineStart: int, inlineEnd: int) =
-        StyleHelper.mkStyle "marginInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "marginInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end margins of an element,
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
     static member inline marginInline(inlineStart: ICssUnit, inlineEnd: int) =
-        StyleHelper.mkStyle "marginInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "marginInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end margins of an element,
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
     static member inline marginInline(inlineStart: int, inlineEnd: ICssUnit) =
-        StyleHelper.mkStyle "marginInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "marginInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end margins of an element,
     /// which maps to a physical margin depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
     static member inline marginInline(inlineStart: ICssUnit, inlineEnd: ICssUnit) =
-        StyleHelper.mkStyle "marginInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
-    
+        StyleHelper.mkStyle "marginInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start
     static member inline marginInlineStart(value: int) =
         StyleHelper.mkStyle "marginInlineStart" value
+
     /// Defines the logical inline start margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start
     static member inline marginInlineStart(value: ICssUnit) =
         StyleHelper.mkStyle "marginInlineStart" value
-    
+
     /// Defines the logical inline end margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end
     static member inline marginInlineEnd(value: int) =
         StyleHelper.mkStyle "marginInlineEnd" value
+
     /// Defines the logical inline end margin of an element, which maps
     /// to a physical margin depending on the element's writing mode,
     /// directionality, and text orientation.
@@ -437,254 +525,356 @@ type style =
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(value: ICssUnit) = StyleHelper.mkStyle "padding" value
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(vertical: int, horizontal: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> vertical) + "px " +
-            (unbox<string> horizontal) + "px"
-        )
+        StyleHelper.mkStyle "padding" ((unbox<string> vertical) + "px " + (unbox<string> horizontal) + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(vertical: int, horizontal: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> vertical) + "px " +
-            (unbox<string> horizontal)
-        )
+        StyleHelper.mkStyle "padding" ((unbox<string> vertical) + "px " + (unbox<string> horizontal))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(vertical: ICssUnit, horizontal: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> vertical) + " " +
-            (unbox<string> horizontal) + "px"
-        )
+        StyleHelper.mkStyle "padding" ((unbox<string> vertical) + " " + (unbox<string> horizontal) + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(vertical: ICssUnit, horizontal: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> vertical) + " " +
-            (unbox<string> horizontal)
-        )
+        StyleHelper.mkStyle "padding" ((unbox<string> vertical) + " " + (unbox<string> horizontal))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, horizontal: int, bottom: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, horizontal: int, bottom: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, horizontal: ICssUnit, bottom: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, horizontal: ICssUnit, bottom: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, horizontal: int, bottom: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, horizontal: int, bottom: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + "px " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + "px "
+             + (unbox<string> bottom))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, horizontal: ICssUnit, bottom: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, horizontal: ICssUnit, bottom: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> horizontal) + " " +
-            (unbox<string> bottom)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> horizontal)
+             + " "
+             + (unbox<string> bottom))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: int, bottom: int, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: int, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: int, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: int, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: ICssUnit, bottom: int, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: ICssUnit, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: ICssUnit, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: int, right: ICssUnit, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: int, bottom: int, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: int, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: int, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: int, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: ICssUnit, bottom: int, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: ICssUnit, bottom: int, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left))
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: ICssUnit, bottom: ICssUnit, left: int) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left) + "px"
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left)
+             + "px")
+
     /// Sets the padding area on all four sides of an element. It is a shorthand for padding-top,
     /// padding-right, padding-bottom, and padding-left.
     static member inline padding(top: ICssUnit, right: ICssUnit, bottom: ICssUnit, left: ICssUnit) =
-        StyleHelper.mkStyle "padding" (
-            (unbox<string> top) + " " +
-            (unbox<string> right) + " " +
-            (unbox<string> bottom) + " " +
-            (unbox<string> left)
-        )
+        StyleHelper.mkStyle
+            "padding"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the height of the padding area on the bottom of an element.
-    static member inline paddingBottom(value: int) = StyleHelper.mkStyle "paddingBottom" value
+    static member inline paddingBottom(value: int) =
+        StyleHelper.mkStyle "paddingBottom" value
+
     /// Sets the height of the padding area on the bottom of an element.
-    static member inline paddingBottom(value: ICssUnit) = StyleHelper.mkStyle "paddingBottom" value
+    static member inline paddingBottom(value: ICssUnit) =
+        StyleHelper.mkStyle "paddingBottom" value
+
     /// Sets the width of the padding area to the left of an element.
     static member inline paddingLeft(value: int) = StyleHelper.mkStyle "paddingLeft" value
     /// Sets the width of the padding area to the left of an element.
     static member inline paddingLeft(value: ICssUnit) = StyleHelper.mkStyle "paddingLeft" value
+
     /// Sets the width of the padding area on the right of an element.
-    static member inline paddingRight(value: int) = StyleHelper.mkStyle "paddingRight" value
+    static member inline paddingRight(value: int) =
+        StyleHelper.mkStyle "paddingRight" value
+
     /// Sets the width of the padding area on the right of an element.
-    static member inline paddingRight(value: ICssUnit) = StyleHelper.mkStyle "paddingRight" value
+    static member inline paddingRight(value: ICssUnit) =
+        StyleHelper.mkStyle "paddingRight" value
+
     /// Sets the height of the padding area on the top of an element.
     static member inline paddingTop(value: int) = StyleHelper.mkStyle "paddingTop" value
     /// Sets the height of the padding area on the top of an element.
@@ -699,62 +889,56 @@ type style =
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlock(value: ICssUnit) = StyleHelper.mkStyle "marginBlock" value
+
     /// Defines the logical block start padding of an element, which
     /// maps to a physical padding properties depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlock(blockStart: int, blockEnd: int) =
-        StyleHelper.mkStyle "paddingBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "paddingBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start padding of an element, which
     /// maps to a physical padding properties depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlock(blockStart: ICssUnit, blockEnd: int) =
-        StyleHelper.mkStyle "paddingBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "paddingBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start padding of an element, which
     /// maps to a physical padding properties depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlock(blockStart: int, blockEnd: ICssUnit) =
-        StyleHelper.mkStyle "paddingBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
+        StyleHelper.mkStyle "paddingBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start padding of an element, which
     /// maps to a physical padding properties depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlock(blockStart: ICssUnit, blockEnd: ICssUnit) =
-        StyleHelper.mkStyle "paddingBlock" (
-            unbox<string> blockStart + " " +
-            unbox<string> blockEnd
-        )
-    
+        StyleHelper.mkStyle "paddingBlock" (unbox<string> blockStart + " " + unbox<string> blockEnd)
+
     /// Defines the logical block start padding of an element, which
     /// maps to a physical padding properties depending on the element's writing
     /// mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlockStart(value: int) =
         StyleHelper.mkStyle "paddingBlockStart" value
+
     /// Defines the logical block start padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlockStart(value: ICssUnit) =
         StyleHelper.mkStyle "paddingBlockStart" value
-    
+
     /// Defines the logical block end padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
     static member inline paddingBlockEnd(value: int) =
         StyleHelper.mkStyle "paddingBlockEnd" value
+
     /// Defines the logical block end padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
@@ -766,68 +950,65 @@ type style =
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
-    static member inline paddingInline(value: int) = StyleHelper.mkStyle "paddingInline" value
+    static member inline paddingInline(value: int) =
+        StyleHelper.mkStyle "paddingInline" value
+
     /// Defines the logical inline start and end paddings of an element,
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
-    static member inline paddingInline(value: ICssUnit) = StyleHelper.mkStyle "paddingInline" value
+    static member inline paddingInline(value: ICssUnit) =
+        StyleHelper.mkStyle "paddingInline" value
+
     /// Defines the logical inline start and end paddings of an element,
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
     static member inline paddingInline(inlineStart: int, inlineEnd: int) =
-        StyleHelper.mkStyle "paddingInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "paddingInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end paddings of an element,
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
     static member inline paddingInline(inlineStart: ICssUnit, inlineEnd: int) =
-        StyleHelper.mkStyle "paddingInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "paddingInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end paddings of an element,
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
     static member inline paddingInline(inlineStart: int, inlineEnd: ICssUnit) =
-        StyleHelper.mkStyle "paddingInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
+        StyleHelper.mkStyle "paddingInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start and end paddings of an element,
     /// which maps to a physical padding properties depending on the element's
     /// writing mode, directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
     static member inline paddingInline(inlineStart: ICssUnit, inlineEnd: ICssUnit) =
-        StyleHelper.mkStyle "paddingInline" (
-            unbox<string> inlineStart + " " +
-            unbox<string> inlineEnd
-        )
-    
+        StyleHelper.mkStyle "paddingInline" (unbox<string> inlineStart + " " + unbox<string> inlineEnd)
+
     /// Defines the logical inline start padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start
     static member inline paddingInlineStart(value: int) =
         StyleHelper.mkStyle "paddingInlineStart" value
+
     /// Defines the logical inline start padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start
     static member inline paddingInlineStart(value: ICssUnit) =
         StyleHelper.mkStyle "paddingInlineStart" value
-    
+
     /// Defines the logical inline end padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end
     static member inline paddingInlineEnd(value: int) =
         StyleHelper.mkStyle "paddingInlineEnd" value
+
     /// Defines the logical inline end padding of an element, which maps
     /// to a physical padding properties depending on the element's writing mode,
     /// directionality, and text orientation.
@@ -840,16 +1021,17 @@ type style =
     static member inline flexShrink(value: int) = StyleHelper.mkStyle "flexShrink" value
     /// Sets the initial main size of a flex item. It sets the size of the content box unless
     /// otherwise set with box-sizing.
-    static member inline flexBasis (value: int) = StyleHelper.mkStyle "flexBasis" value
+    static member inline flexBasis(value: int) = StyleHelper.mkStyle "flexBasis" value
     /// Sets the initial main size of a flex item. It sets the size of the content box unless
     /// otherwise set with box-sizing.
-    static member inline flexBasis (value: float) = StyleHelper.mkStyle "flexBasis" value
+    static member inline flexBasis(value: float) = StyleHelper.mkStyle "flexBasis" value
     /// Sets the initial main size of a flex item. It sets the size of the content box unless
     /// otherwise set with box-sizing.
-    static member inline flexBasis (value: ICssUnit) = StyleHelper.mkStyle "flexBasis" value
+    static member inline flexBasis(value: ICssUnit) = StyleHelper.mkStyle "flexBasis" value
     /// Sets the flex grow factor of a flex item main size. It specifies how much of the remaining
     /// space in the flex container should be assigned to the item (the flex grow factor).
-    static member inline flexGrow (value: int) = StyleHelper.mkStyle "flexGrow" value
+    static member inline flexGrow(value: int) = StyleHelper.mkStyle "flexGrow" value
+
     /// Sets the width of each individual grid column in pixels.
     ///
     /// **CSS**
@@ -863,6 +1045,7 @@ type style =
     static member inline gridTemplateColumns(value: float list) =
         let addPixels = fun x -> x + "px"
         StyleHelper.mkStyle "gridTemplateColumns" ((List.map addPixels >> String.concat " ") (unbox<string list> value))
+
     /// Sets the width of each individual grid column in pixels.
     ///
     /// **CSS**
@@ -876,6 +1059,7 @@ type style =
     static member inline gridTemplateColumns(value: float[]) =
         let addPixels = fun x -> x + "px"
         StyleHelper.mkStyle "gridTemplateColumns" ((Array.map addPixels >> String.concat " ") (unbox<string[]> value))
+
     /// Sets the width of each individual grid column in pixels.
     ///
     /// **CSS**
@@ -889,6 +1073,7 @@ type style =
     static member inline gridTemplateColumns(value: int list) =
         let addPixels = fun x -> x + "px"
         StyleHelper.mkStyle "gridTemplateColumns" ((List.map addPixels >> String.concat " ") (unbox<string list> value))
+
     /// Sets the width of each individual grid column in pixels.
     ///
     /// **CSS**
@@ -902,6 +1087,7 @@ type style =
     static member inline gridTemplateColumns(value: int[]) =
         let addPixels = fun x -> x + "px"
         StyleHelper.mkStyle "gridTemplateColumns" ((Array.map addPixels >> String.concat " ") (unbox<string[]> value))
+
     /// Sets the width of each individual grid column.
     ///
     /// **CSS**
@@ -914,6 +1100,7 @@ type style =
     /// ```
     static member inline gridTemplateColumns(value: ICssUnit list) =
         StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string list> value))
+
     /// Sets the width of each individual grid column.
     ///
     /// **CSS**
@@ -926,6 +1113,7 @@ type style =
     /// ```
     static member inline gridTemplateColumns(value: ICssUnit[]) =
         StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string[]> value))
+
     /// Sets the width of each individual grid column. It can also name the lines between them
     /// There can be multiple names for the same line
     ///
@@ -944,7 +1132,8 @@ type style =
     /// ]
     /// ```
     static member inline gridTemplateColumns(value: IGridTemplateItem list) =
-        StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string list>value))
+        StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string list> value))
+
     /// Sets the width of each individual grid column. It can also name the lines between them
     /// There can be multiple names for the same line
     ///
@@ -963,7 +1152,8 @@ type style =
     /// |]
     /// ```
     static member inline gridTemplateColumns(value: IGridTemplateItem[]) =
-        StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string[]>value))
+        StyleHelper.mkStyle "gridTemplateColumns" (String.concat " " (unbox<string[]> value))
+
     /// Sets the width of a number of grid columns to the defined width in pixels
     ///
     /// **CSS**
@@ -975,11 +1165,10 @@ type style =
     /// style.gridTemplateColumns (3, 99.5)
     /// ```
     static member inline gridTemplateColumns(count: int, size: float) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px)"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + "px)")
+
     /// Sets the width of a number of grid columns to the defined width in pixels
     ///
     /// **CSS**
@@ -991,11 +1180,10 @@ type style =
     /// style.gridTemplateColumns (3, 100)
     /// ```
     static member inline gridTemplateColumns(count: int, size: int) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px)"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + "px)")
+
     /// Sets the width of a number of grid columns to the defined width
     ///
     /// **CSS**
@@ -1007,11 +1195,10 @@ type style =
     /// style.gridTemplateColumns (3, length.fr 1)
     /// ```
     static member inline gridTemplateColumns(count: int, size: ICssUnit) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + ")"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + ")")
+
     /// Sets the width of a number of grid columns to the defined width in pixels, as well as naming the lines between them
     ///
     /// **CSS**
@@ -1023,12 +1210,16 @@ type style =
     /// style.gridTemplateColumns (3, 1.5, "col-start")
     /// ```
     static member inline gridTemplateColumns(count: int, size: float, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + "px ["
+             + areaName
+             + "])")
+
     /// Sets the width of a number of grid columns to the defined width in pixels, as well as naming the lines between them
     ///
     /// **CSS**
@@ -1040,12 +1231,16 @@ type style =
     /// style.gridTemplateColumns (3, 10, "col-start")
     /// ```
     static member inline gridTemplateColumns(count: int, size: int, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + "px ["
+             + areaName
+             + "])")
+
     /// Sets the width of a number of grid columns to the defined width, as well as naming the lines between them
     ///
     /// **CSS**
@@ -1057,12 +1252,16 @@ type style =
     /// style.gridTemplateColumns (3, length.fr 1, "col-start")
     /// ```
     static member inline gridTemplateColumns(count: int, size: ICssUnit, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateColumns" (
-            "repeat(" +
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + " [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateColumns"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + " ["
+             + areaName
+             + "])")
+
     /// Sets the width of a number of grid rows to the defined width in pixels
     ///
     /// **CSS**
@@ -1076,6 +1275,7 @@ type style =
     static member inline gridTemplateRows(value: float list) =
         let addPixels = (fun x -> x + "px")
         StyleHelper.mkStyle "gridTemplateRows" ((List.map addPixels >> String.concat " ") (unbox<string list> value))
+
     /// Sets the width of a number of grid rows to the defined width in pixels
     ///
     /// **CSS**
@@ -1089,6 +1289,7 @@ type style =
     static member inline gridTemplateRows(value: float[]) =
         let addPixels = (fun x -> x + "px")
         StyleHelper.mkStyle "gridTemplateRows" ((Array.map addPixels >> String.concat " ") (unbox<string[]> value))
+
     /// Sets the width of a number of grid rows to the defined width
     ///
     /// **CSS**
@@ -1102,6 +1303,7 @@ type style =
     static member inline gridTemplateRows(value: int list) =
         let addPixels = (fun x -> x + "px")
         StyleHelper.mkStyle "gridTemplateRows" ((List.map addPixels >> String.concat " ") (unbox<string list> value))
+
     /// Sets the width of a number of grid rows to the defined width in pixels
     ///
     /// **CSS**
@@ -1115,6 +1317,7 @@ type style =
     static member inline gridTemplateRows(value: int[]) =
         let addPixels = (fun x -> x + "px")
         StyleHelper.mkStyle "gridTemplateRows" ((Array.map addPixels >> String.concat " ") (unbox<string[]> value))
+
     /// Sets the width of a number of grid rows to the defined width
     ///
     /// **CSS**
@@ -1127,6 +1330,7 @@ type style =
     /// ```
     static member inline gridTemplateRows(value: ICssUnit list) =
         StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string list> value))
+
     /// Sets the width of a number of grid rows to the defined width
     ///
     /// **CSS**
@@ -1139,6 +1343,7 @@ type style =
     /// ```
     static member inline gridTemplateRows(value: ICssUnit[]) =
         StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string[]> value))
+
     /// Sets the width of a number of grid rows to the defined width as well as naming the spaces between
     ///
     /// **CSS**
@@ -1156,7 +1361,8 @@ type style =
     /// ]
     /// ```
     static member inline gridTemplateRows(value: IGridTemplateItem list) =
-        StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string list>value))
+        StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string list> value))
+
     /// Sets the width of a number of grid rows to the defined width as well as naming the spaces between
     ///
     /// **CSS**
@@ -1174,7 +1380,8 @@ type style =
     /// |]
     /// ```
     static member inline gridTemplateRows(value: IGridTemplateItem[]) =
-        StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string[]>value))
+        StyleHelper.mkStyle "gridTemplateRows" (String.concat " " (unbox<string[]> value))
+
     /// Sets the width of a number of grid rows to the defined width in pixels
     ///
     /// **CSS**
@@ -1186,11 +1393,8 @@ type style =
     /// style.gridTemplateRows (3, 199.5)
     /// ```
     static member inline gridTemplateRows(count: int, size: float) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px)"
-        )
+        StyleHelper.mkStyle "gridTemplateRows" ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + "px)")
+
     /// Sets the width of a number of grid rows to the defined width in pixels
     ///
     /// **CSS**
@@ -1202,11 +1406,8 @@ type style =
     /// style.gridTemplateRows (3, 100)
     /// ```
     static member inline gridTemplateRows(count: int, size: int) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px)"
-        )
+        StyleHelper.mkStyle "gridTemplateRows" ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + "px)")
+
     /// Sets the width of a number of grid rows to the defined width
     ///
     /// **CSS**
@@ -1218,11 +1419,8 @@ type style =
     /// style.gridTemplateRows (3, length.percent 10)
     /// ```
     static member inline gridTemplateRows(count: int, size: ICssUnit) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + ")"
-        )
+        StyleHelper.mkStyle "gridTemplateRows" ("repeat(" + (unbox<string> count) + ", " + (unbox<string> size) + ")")
+
     /// Sets the width of a number of grid rows to the defined width in pixels as well as naming the spaces between
     ///
     /// **CSS**
@@ -1234,12 +1432,16 @@ type style =
     /// style.gridTemplateRows (3, 75.5, "row")
     /// ```
     static member inline gridTemplateRows(count: int, size: float, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateRows"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + "px ["
+             + areaName
+             + "])")
+
     /// Sets the width of a number of grid rows to the defined width in pixels as well as naming the spaces between
     ///
     /// **CSS**
@@ -1251,12 +1453,16 @@ type style =
     /// style.gridTemplateRows (3, 100, "row")
     /// ```
     static member inline gridTemplateRows(count: int, size: int, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + "px [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateRows"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + "px ["
+             + areaName
+             + "])")
+
     /// Sets the width of a number of grid rows to the defined width in pixels as well as naming the spaces between
     ///
     /// **CSS**
@@ -1268,12 +1474,16 @@ type style =
     /// style.gridTemplateRows (3, length.percent 10, "row")
     /// ```
     static member inline gridTemplateRows(count: int, size: ICssUnit, areaName: string) =
-        StyleHelper.mkStyle "gridTemplateRows" (
-            "repeat("+
-            (unbox<string>count) + ", " +
-            (unbox<string>size) + " [" +
-            areaName + "])"
-        )
+        StyleHelper.mkStyle
+            "gridTemplateRows"
+            ("repeat("
+             + (unbox<string> count)
+             + ", "
+             + (unbox<string> size)
+             + " ["
+             + areaName
+             + "])")
+
     /// 2D representation of grid layout as blocks with names
     ///
     /// **CSS**
@@ -1296,6 +1506,7 @@ type style =
         let lines = List.map (String.concat " " >> wrapLine) value
         let block = String.concat "\n" lines
         StyleHelper.mkStyle "gridTemplateAreas" block
+
     /// 2D representation of grid layout as blocks with names
     ///
     /// **CSS**
@@ -1318,6 +1529,7 @@ type style =
         let lines = Array.map (String.concat " " >> wrapLine) value
         let block = String.concat "\n" lines
         StyleHelper.mkStyle "gridTemplateAreas" block
+
     /// One-dimensional alternative to the nested list. For column-based layouts
     ///
     /// **CSS**
@@ -1331,6 +1543,7 @@ type style =
     static member inline gridTemplateAreas(value: string list) =
         let block = (String.concat " ") value
         StyleHelper.mkStyle "gridTemplateAreas" ("'" + block + "'")
+
     /// One-dimensional alternative to the nested list. For column-based layouts
     ///
     /// **CSS**
@@ -1344,6 +1557,7 @@ type style =
     static member inline gridTemplateAreas(value: string[]) =
         let block = (String.concat " ") value
         StyleHelper.mkStyle "gridTemplateAreas" ("'" + block + "'")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the columns.
     ///
@@ -1357,6 +1571,7 @@ type style =
     /// ```
     static member inline columnGap(value: float) =
         StyleHelper.mkStyle "columnGap" (unbox<string> value + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the columns.
     ///
@@ -1370,6 +1585,7 @@ type style =
     /// ```
     static member inline columnGap(value: int) =
         StyleHelper.mkStyle "columnGap" (unbox<string> value + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the columns.
     ///
@@ -1381,8 +1597,8 @@ type style =
     /// ```f#
     /// style.columnGap (length.em 1)
     /// ```
-    static member inline columnGap(value: ICssUnit) =
-        StyleHelper.mkStyle "columnGap" value
+    static member inline columnGap(value: ICssUnit) = StyleHelper.mkStyle "columnGap" value
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows.
     ///
@@ -1396,6 +1612,7 @@ type style =
     /// ```
     static member inline rowGap(value: float) =
         StyleHelper.mkStyle "rowGap" (unbox<string> value + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows.
     ///
@@ -1409,6 +1626,7 @@ type style =
     /// ```
     static member inline rowGap(value: int) =
         StyleHelper.mkStyle "rowGap" (unbox<string> value + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows.
     ///
@@ -1420,8 +1638,8 @@ type style =
     /// ```f#
     /// style.rowGap (length.em 1)
     /// ```
-    static member inline rowGap(value: ICssUnit) =
-        StyleHelper.mkStyle "rowGap" value
+    static member inline rowGap(value: ICssUnit) = StyleHelper.mkStyle "rowGap" value
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1437,6 +1655,7 @@ type style =
     /// ```
     static member inline gap(gap: int) =
         StyleHelper.mkStyle "gap" ((unbox<string> gap) + "px ")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1452,6 +1671,7 @@ type style =
     /// ```
     static member inline gap(gap: ICssUnit) =
         StyleHelper.mkStyle "gap" (unbox<string> gap)
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1466,10 +1686,8 @@ type style =
     /// style.gap (length.em 1, length.em 2)
     /// ```
     static member inline gap(rowGap: ICssUnit, columnGap: ICssUnit) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + " " +
-            (unbox<string> columnGap)
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + " " + (unbox<string> columnGap))
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1484,10 +1702,8 @@ type style =
     /// style.gap (length.em 1, 3.5)
     /// ```
     static member inline gap(rowGap: ICssUnit, columnGap: float) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + " " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + " " + (unbox<string> columnGap) + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1502,10 +1718,8 @@ type style =
     /// style.gap (length.em 1, 10)
     /// ```
     static member inline gap(rowGap: ICssUnit, columnGap: int) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + " " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + " " + (unbox<string> columnGap) + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1520,10 +1734,8 @@ type style =
     /// style.gap (10, length.em 1)
     /// ```
     static member inline gap(rowGap: int, columnGap: ICssUnit) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap)
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap))
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1538,10 +1750,8 @@ type style =
     /// style.gap (10, 1.5)
     /// ```
     static member inline gap(rowGap: int, columnGap: float) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap) + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1556,10 +1766,8 @@ type style =
     /// style.gap (10, 15)
     /// ```
     static member inline gap(rowGap: int, columnGap: int) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap) + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1574,10 +1782,8 @@ type style =
     /// style.gap (2.5, length.percent 15)
     /// ```
     static member inline gap(rowGap: float, columnGap: ICssUnit) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap)
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap))
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1592,10 +1798,8 @@ type style =
     /// style.gap (1.5, 1.5)
     /// ```
     static member inline gap(rowGap: float, columnGap: float) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap) + "px")
+
     /// Specifies the size of the grid lines. You can think of it like
     /// setting the width of the gutters between the rows/columns.
     ///
@@ -1610,10 +1814,8 @@ type style =
     /// style.gap (1.5, 10)
     /// ```
     static member inline gap(rowGap: float, columnGap: int) =
-        StyleHelper.mkStyle "gap" (
-            (unbox<string> rowGap) + "px " +
-            (unbox<string> columnGap) + "px"
-        )
+        StyleHelper.mkStyle "gap" ((unbox<string> rowGap) + "px " + (unbox<string> columnGap) + "px")
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1630,7 +1832,9 @@ type style =
     /// ```f#
     /// style.gridColumnStart "col2"
     /// ```
-    static member inline gridColumnStart(value: string) = StyleHelper.mkStyle "gridColumnStart" value
+    static member inline gridColumnStart(value: string) =
+        StyleHelper.mkStyle "gridColumnStart" value
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1650,7 +1854,8 @@ type style =
     /// style.gridColumnStart ("col", 2)
     /// ```
     static member inline gridColumnStart(value: string, count: int) =
-        StyleHelper.mkStyle "gridColumnStart" (value + " " + (unbox<string>count))
+        StyleHelper.mkStyle "gridColumnStart" (value + " " + (unbox<string> count))
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1667,7 +1872,9 @@ type style =
     /// ```f#
     /// style.gridColumnStart 2
     /// ```
-    static member inline gridColumnStart(value: int) = StyleHelper.mkStyle "gridColumnStart" value
+    static member inline gridColumnStart(value: int) =
+        StyleHelper.mkStyle "gridColumnStart" value
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1684,7 +1891,9 @@ type style =
     /// ```f#
     /// style.gridColumnStart (gridColumn.span "odd-col")
     /// ```
-    static member inline gridColumnStart(value: IGridSpan) = StyleHelper.mkStyle "gridColumnStart" value
+    static member inline gridColumnStart(value: IGridSpan) =
+        StyleHelper.mkStyle "gridColumnStart" value
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1701,7 +1910,9 @@ type style =
     /// ```f#
     /// style.gridColumnEnd "col-2"
     /// ```
-    static member inline gridColumnEnd(value: string) = StyleHelper.mkStyle "gridColumnEnd" value
+    static member inline gridColumnEnd(value: string) =
+        StyleHelper.mkStyle "gridColumnEnd" value
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1722,6 +1933,7 @@ type style =
     /// ```
     static member inline gridColumnEnd(value: string, count: int) =
         StyleHelper.mkStyle "gridColumnEnd" (value + " " + (unbox<string> count))
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1738,7 +1950,9 @@ type style =
     /// ```f#
     /// style.gridColumnEnd 2
     /// ```
-    static member inline gridColumnEnd(value: int) = StyleHelper.mkStyle "gridColumnEnd" value
+    static member inline gridColumnEnd(value: int) =
+        StyleHelper.mkStyle "gridColumnEnd" value
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1755,7 +1969,9 @@ type style =
     /// ```f#
     /// style.gridColumnEnd (gridColumn.span 2)
     /// ```
-    static member inline gridColumnEnd(value: IGridSpan) = StyleHelper.mkStyle "gridColumnEnd" value
+    static member inline gridColumnEnd(value: IGridSpan) =
+        StyleHelper.mkStyle "gridColumnEnd" value
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1772,7 +1988,9 @@ type style =
     /// ```f#
     /// style.gridRowStart "col2"
     /// ```
-    static member inline gridRowStart(value: string) = StyleHelper.mkStyle "gridRowStart" value
+    static member inline gridRowStart(value: string) =
+        StyleHelper.mkStyle "gridRowStart" value
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1790,7 +2008,8 @@ type style =
     /// style.gridRowStart ("col", 2)
     /// ```
     static member inline gridRowStart(value: string, count: int) =
-        StyleHelper.mkStyle "gridRowStart" (value + " " + (unbox<string>count))
+        StyleHelper.mkStyle "gridRowStart" (value + " " + (unbox<string> count))
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1807,7 +2026,9 @@ type style =
     /// ```f#
     /// style.gridRowStart 2
     /// ```
-    static member inline gridRowStart(value: int) = StyleHelper.mkStyle "gridRowStart" value
+    static member inline gridRowStart(value: int) =
+        StyleHelper.mkStyle "gridRowStart" value
+
     /// Sets where an item in the grid starts
     /// The value can be one of the following options:
     /// - a named line
@@ -1824,7 +2045,9 @@ type style =
     /// ```f#
     /// style.gridRowStart (gridRow.span "odd-col")
     /// ```
-    static member inline gridRowStart(value: IGridSpan) = StyleHelper.mkStyle "gridRowStart" value
+    static member inline gridRowStart(value: IGridSpan) =
+        StyleHelper.mkStyle "gridRowStart" value
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1842,6 +2065,7 @@ type style =
     /// style.gridRowEnd "col-2"
     /// ```
     static member inline gridRowEnd(value: string) = StyleHelper.mkStyle "gridRowEnd" value
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1862,6 +2086,7 @@ type style =
     /// ```
     static member inline gridRowEnd(value: string, count: int) =
         StyleHelper.mkStyle "gridRowEnd" (value + " " + (unbox<string> count))
+
     /// Sets where an item in the grid ends
     /// The value can be one of the following options:
     /// - a named line
@@ -1896,6 +2121,7 @@ type style =
     /// style.gridRowEnd (gridRow.span 2)
     /// ```
     static member inline gridRowEnd(value: IGridSpan) = StyleHelper.mkStyle "gridRowEnd" value
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -1917,6 +2143,7 @@ type style =
     /// ```
     static member inline gridColumn(start: string, end': string) =
         StyleHelper.mkStyle "gridColumn" (start + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -1937,7 +2164,8 @@ type style =
     /// style.gridColumn ("col-2", 4)
     /// ```
     static member inline gridColumn(start: string, end': int) =
-        StyleHelper.mkStyle "gridColumn" (start + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" (start + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -1958,7 +2186,8 @@ type style =
     /// style.gridColumn ("col-2", gridColumn.span 2)
     /// ```
     static member inline gridColumn(start: string, end': IGridSpan) =
-        StyleHelper.mkStyle "gridColumn" (start + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" (start + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -1979,7 +2208,8 @@ type style =
     /// style.gridColumn (1, "col-4")
     /// ```
     static member inline gridColumn(start: int, end': string) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + end')
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2000,7 +2230,8 @@ type style =
     /// style.gridColumn (1, 3)
     /// ```
     static member inline gridColumn(start: int, end': int) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2021,7 +2252,8 @@ type style =
     /// style.gridColumn (1, gridColumn.span 2)
     /// ```
     static member inline gridColumn(start: int, end': IGridSpan) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2042,7 +2274,8 @@ type style =
     /// style.gridColumn (gridColumn.span 2, "col-3")
     /// ```
     static member inline gridColumn(start: IGridSpan, end': string) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + end')
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2063,7 +2296,8 @@ type style =
     /// style.gridColumn (gridColumn.span 2, 4)
     /// ```
     static member inline gridColumn(start: IGridSpan, end': int) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2084,7 +2318,8 @@ type style =
     /// style.gridColumn (gridColumn.span 2, gridColumn.span 3)
     /// ```
     static member inline gridColumn(start: IGridSpan, end': IGridSpan) =
-        StyleHelper.mkStyle "gridColumn" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridColumn" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2106,6 +2341,7 @@ type style =
     /// ```
     static member inline gridRow(start: string, end': string) =
         StyleHelper.mkStyle "gridRow" (start + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2126,7 +2362,8 @@ type style =
     /// style.gridRow ("row-2", 4)
     /// ```
     static member inline gridRow(start: string, end': int) =
-        StyleHelper.mkStyle "gridRow" (start + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" (start + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2147,7 +2384,8 @@ type style =
     /// style.gridRow ("row-2", gridRow.span 2)
     /// ```
     static member inline gridRow(start: string, end': IGridSpan) =
-        StyleHelper.mkStyle "gridRow" (start + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" (start + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2168,7 +2406,8 @@ type style =
     /// style.gridRow (2, "row-3")
     /// ```
     static member inline gridRow(start: int, end': string) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + end')
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2189,7 +2428,8 @@ type style =
     /// style.gridRow (2, 4)
     /// ```
     static member inline gridRow(start: int, end': int) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2210,7 +2450,8 @@ type style =
     /// style.gridRow (2, gridRow.span 3)
     /// ```
     static member inline gridRow(start: int, end': IGridSpan) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2231,7 +2472,8 @@ type style =
     /// style.gridRow (gridRow.span 2, "row-4")
     /// ```
     static member inline gridRow(start: IGridSpan, end': string) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + end')
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + end')
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2252,7 +2494,8 @@ type style =
     /// style.gridRow (gridRow.span 2, 3)
     /// ```
     static member inline gridRow(start: IGridSpan, end': int) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Determines a grid item’s location within the grid by referring to specific grid lines.
     /// start is the line where the item begins, end' is the line where it ends.
     /// They can be one of the following options:
@@ -2273,7 +2516,8 @@ type style =
     /// style.gridRow (gridRow.span 2, gridRow.span 3)
     /// ```
     static member inline gridRow(start: IGridSpan, end': IGridSpan) =
-        StyleHelper.mkStyle "gridRow" ((unbox<string>start) + " / " + (unbox<string>end'))
+        StyleHelper.mkStyle "gridRow" ((unbox<string> start) + " / " + (unbox<string> end'))
+
     /// Specifies the size of an implicitly-created grid row track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows
@@ -2288,6 +2532,7 @@ type style =
     /// ```
     static member inline gridAutoRows(value: ICssUnit) =
         StyleHelper.mkStyle "gridAutoRows" (unbox<string> value)
+
     /// Specifies the size of an implicitly-created grid row track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows
@@ -2302,6 +2547,7 @@ type style =
     /// ```
     static member inline gridAutoRows(value: int) =
         StyleHelper.mkStyle "gridAutoRows" (unbox<string> value)
+
     /// Specifies the size of an implicitly-created grid row track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows
@@ -2316,6 +2562,7 @@ type style =
     /// ```
     static member inline gridAutoRows(value: float) =
         StyleHelper.mkStyle "gridAutoRows" (unbox<string> value)
+
     /// Specifies the size of an implicitly-created grid column track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-columns
@@ -2330,6 +2577,7 @@ type style =
     /// ```
     static member inline gridAutoColumns(value: ICssUnit) =
         StyleHelper.mkStyle "gridAutoColumns" (unbox<string> value)
+
     /// Specifies the size of an implicitly-created grid column track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-columns
@@ -2344,6 +2592,7 @@ type style =
     /// ```
     static member inline gridAutoColumns(value: int) =
         StyleHelper.mkStyle "gridAutoColumns" (unbox<string> value)
+
     /// Specifies the size of an implicitly-created grid column track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-columns
@@ -2358,6 +2607,7 @@ type style =
     /// ```
     static member inline gridAutoColumns(value: float) =
         StyleHelper.mkStyle "gridAutoColumns" (unbox<string> value)
+
     /// Sets the named grid area the item is placed in
     ///
     /// **CSS**
@@ -2368,8 +2618,8 @@ type style =
     /// ```f#
     /// style.gridArea "header"
     /// ```
-    static member inline gridArea(value: string) =
-        StyleHelper.mkStyle "gridArea" value
+    static member inline gridArea(value: string) = StyleHelper.mkStyle "gridArea" value
+
     /// Shorthand for `grid-template-areas`, `grid-template-columns` and `grid-template-rows`.
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template
@@ -2388,193 +2638,256 @@ type style =
     /// ```
     static member inline gridTemplate(value: string) =
         StyleHelper.mkStyle "gridTemplate" value
+
     /// Sets the length of time a transition animation should take to complete. By default, the
     /// value is 0s, meaning that no animation will occur.
     static member inline transitionDuration(timespan: TimeSpan) =
         StyleHelper.mkStyle "transitionDuration" (unbox<string> timespan.TotalMilliseconds + "ms")
+
     /// Sets the length of time a transition animation should take to complete. By default, the
     /// value is 0s, meaning that no animation will occur.
     static member inline transitionDurationSeconds(n: float) =
         StyleHelper.mkStyle "transitionDuration" ((unbox<string> n) + "s")
+
     /// Sets the length of time a transition animation should take to complete. By default, the
     /// value is 0s, meaning that no animation will occur.
     static member inline transitionDurationMilliseconds(n: float) =
         StyleHelper.mkStyle "transitionDuration" ((unbox<string> n) + "ms")
+
     /// Sets the length of time a transition animation should take to complete. By default, the
     /// value is 0s, meaning that no animation will occur.
     static member inline transitionDurationSeconds(n: int) =
         StyleHelper.mkStyle "transitionDuration" ((unbox<string> n) + "s")
+
     /// Sets the length of time a transition animation should take to complete. By default, the
     /// value is 0s, meaning that no animation will occur.
     static member inline transitionDurationMilliseconds(n: int) =
         StyleHelper.mkStyle "transitionDuration" ((unbox<string> n) + "ms")
+
     /// Specifies the duration to wait before starting a property's transition effect when its value changes.
     static member inline transitionDelay(timespan: TimeSpan) =
         StyleHelper.mkStyle "transitionDelay" (unbox<string> timespan.TotalMilliseconds + "ms")
+
     /// Specifies the duration to wait before starting a property's transition effect when its value changes.
     static member inline transitionDelaySeconds(n: float) =
         StyleHelper.mkStyle "transitionDelay" ((unbox<string> n) + "s")
+
     /// Specifies the duration to wait before starting a property's transition effect when its value changes.
     static member inline transitionDelayMilliseconds(n: float) =
         StyleHelper.mkStyle "transitionDelay" ((unbox<string> n) + "ms")
+
     /// Specifies the duration to wait before starting a property's transition effect when its value changes.
     static member inline transitionDelaySeconds(n: int) =
         StyleHelper.mkStyle "transitionDelay" ((unbox<string> n) + "s")
+
     /// Specifies the duration to wait before starting a property's transition effect when its value changes.
     static member inline transitionDelayMilliseconds(n: int) =
         StyleHelper.mkStyle "transitionDelay" ((unbox<string> n) + "ms")
+
     /// Sets the CSS properties to which a transition effect should be applied.
-    static member inline transitionProperty ([<ParamArray>] properties: ITransitionProperty[]) =
+    static member inline transitionProperty([<ParamArray>] properties: ITransitionProperty[]) =
         StyleHelper.mkStyle "transitionProperty" (String.concat "," (unbox<string[]> properties))
+
     /// Sets the CSS properties to which a transition effect should be applied.
-    static member inline transitionProperty (properties: ITransitionProperty list) =
+    static member inline transitionProperty(properties: ITransitionProperty list) =
         StyleHelper.mkStyle "transitionProperty" (String.concat "," (unbox<string list> properties))
+
     /// Sets the CSS properties to which a transition effect should be applied.
-    static member inline transitionProperty (property: ITransitionProperty) =
+    static member inline transitionProperty(property: ITransitionProperty) =
         StyleHelper.mkStyle "transitionProperty" property
+
     /// Sets the CSS properties to which a transition effect should be applied.
-    static member inline transitionProperty (property: string) =
+    static member inline transitionProperty(property: string) =
         StyleHelper.mkStyle "transitionProperty" property
-    
+
     /// Sets how intermediate values are calculated for CSS properties being affected by a transition effect.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
-    static member inline transitionTimingFunction (timingFunction: ITransitionTimingFunction) =
+    static member inline transitionTimingFunction(timingFunction: ITransitionTimingFunction) =
         StyleHelper.mkStyle "transitionTimingFunction" timingFunction
-    
+
     /// Sets how intermediate values are calculated for CSS properties being affected by a transition effect.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
-    static member inline transitionTimingFunction (timingFunction: string) =
+    static member inline transitionTimingFunction(timingFunction: string) =
         StyleHelper.mkStyle "transitionTimingFunction" timingFunction
 
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, duration: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms "
-        )
+    static member inline transition(property: ITransitionProperty, duration: TimeSpan) =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property + " " + unbox<string> duration.TotalMilliseconds + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, duration: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms "
-        )
+    static member inline transition(property: string, duration: TimeSpan) =
+        StyleHelper.mkStyle "transition" (property + " " + unbox<string> duration.TotalMilliseconds + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, duration: TimeSpan, timingFunction: ITransitionTimingFunction) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> timingFunction
-        )
+    static member inline transition
+        (property: ITransitionProperty, duration: TimeSpan, timingFunction: ITransitionTimingFunction)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> timingFunction)
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, duration: TimeSpan, timingFunction: ITransitionTimingFunction) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> timingFunction
-        )
+    static member inline transition(property: string, duration: TimeSpan, timingFunction: ITransitionTimingFunction) =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> timingFunction)
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, durationInMs: int, timingFunction: ITransitionTimingFunction) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> timingFunction
-        )
+    static member inline transition
+        (property: ITransitionProperty, durationInMs: int, timingFunction: ITransitionTimingFunction)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> timingFunction)
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, durationInMs: int, timingFunction: ITransitionTimingFunction) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> timingFunction
-        )
+    static member inline transition(property: string, durationInMs: int, timingFunction: ITransitionTimingFunction) =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> timingFunction)
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, duration: TimeSpan, delay: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> delay.TotalMilliseconds + "ms "
-        )
+    static member inline transition(property: ITransitionProperty, duration: TimeSpan, delay: TimeSpan) =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> delay.TotalMilliseconds
+             + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, duration: TimeSpan, delay: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> delay.TotalMilliseconds + "ms "
-        )
+    static member inline transition(property: string, duration: TimeSpan, delay: TimeSpan) =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> delay.TotalMilliseconds
+             + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, durationInMs: int, delayInMs: int) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> delayInMs + "ms "
-        )
+    static member inline transition(property: ITransitionProperty, durationInMs: int, delayInMs: int) =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> delayInMs
+             + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, durationInMs: int, delayInMs: int) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> delayInMs + "ms "
-        )
+    static member inline transition(property: string, durationInMs: int, delayInMs: int) =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> delayInMs
+             + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, duration: TimeSpan, timingFunction: ITransitionTimingFunction, delay: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> timingFunction,
-            unbox<string> delay.TotalMilliseconds + "ms "
-        )
+    static member inline transition
+        (property: ITransitionProperty, duration: TimeSpan, timingFunction: ITransitionTimingFunction, delay: TimeSpan)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> timingFunction,
+             unbox<string> delay.TotalMilliseconds + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, duration: TimeSpan, timingFunction: ITransitionTimingFunction, delay: TimeSpan) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> duration.TotalMilliseconds + "ms " +
-            unbox<string> timingFunction,
-            unbox<string> delay.TotalMilliseconds + "ms "
-        )
+    static member inline transition
+        (property: string, duration: TimeSpan, timingFunction: ITransitionTimingFunction, delay: TimeSpan)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> duration.TotalMilliseconds
+             + "ms "
+             + unbox<string> timingFunction,
+             unbox<string> delay.TotalMilliseconds + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: ITransitionProperty, durationInMs: int, timingFunction: ITransitionTimingFunction, delayInMs: int) =
-        StyleHelper.mkStyle "transition" (
-            unbox<string> property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> timingFunction,
-            unbox<string> delayInMs + "ms "
-        )
+    static member inline transition
+        (property: ITransitionProperty, durationInMs: int, timingFunction: ITransitionTimingFunction, delayInMs: int)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (unbox<string> property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> timingFunction,
+             unbox<string> delayInMs + "ms ")
+
     /// The transition property is a shorthand property for transition-property, transition-duration,
     /// transition-timing-function, transition-delay, and transition-behavior.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/transition
-    static member inline transition (property: string, durationInMs: int, timingFunction: ITransitionTimingFunction, delayInMs: int) =
-        StyleHelper.mkStyle "transition" (
-            property + " " +
-            unbox<string> durationInMs + "ms " +
-            unbox<string> timingFunction,
-            unbox<string> delayInMs + "ms "
-        )
-    
+    static member inline transition
+        (property: string, durationInMs: int, timingFunction: ITransitionTimingFunction, delayInMs: int)
+        =
+        StyleHelper.mkStyle
+            "transition"
+            (property
+             + " "
+             + unbox<string> durationInMs
+             + "ms "
+             + unbox<string> timingFunction,
+             unbox<string> delayInMs + "ms ")
+
     static member inline transform(transformation: ITransformProperty) =
         StyleHelper.mkStyle "transform" transformation
 
@@ -2584,11 +2897,15 @@ type style =
     /// Sets the size of the font.
     ///
     /// This property is also used to compute the size of em, ex, and other relative <length> units.
-    static member inline fontSize(size: int) = StyleHelper.mkStyle "fontSize" (unbox<string> size + "px")
+    static member inline fontSize(size: int) =
+        StyleHelper.mkStyle "fontSize" (unbox<string> size + "px")
+
     /// Sets the size of the font.
     ///
     /// This property is also used to compute the size of em, ex, and other relative <length> units.
-    static member inline fontSize(size: float) = StyleHelper.mkStyle "fontSize" (unbox<string> size + "px")
+    static member inline fontSize(size: float) =
+        StyleHelper.mkStyle "fontSize" (unbox<string> size + "px")
+
     /// Sets the size of the font.
     ///
     /// This property is also used to compute the size of em, ex, and other relative <length> units.
@@ -2597,7 +2914,7 @@ type style =
     /// On block-level elements, it specifies the minimum height of line boxes within the element.
     /// On non-replaced inline elements, it specifies the height that is used to calculate line box height.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/line-height
-    /// 
+    ///
     /// The used value is this unitless number multiplied by the element's own font size. The computed
     /// value is the same as the specified number. In most cases, this is the preferred way to set
     /// line-height and avoid unexpected results due to inheritance.
@@ -2630,17 +2947,19 @@ type style =
     static member inline lineHeight(size: ICssUnit) = StyleHelper.mkStyle "lineHeight" size
 
     /// Sets the background color of an element.
-    static member inline backgroundColor (color: string) = StyleHelper.mkStyle "backgroundColor" color
+    static member inline backgroundColor(color: string) =
+        StyleHelper.mkStyle "backgroundColor" color
+
     /// Sets the color of the insertion caret, the visible marker where the next character typed will be inserted.
     ///
     /// This is sometimes referred to as the text input cursor. The caret appears in elements such as <input> or
     /// those with the contenteditable attribute. The caret is typically a thin vertical line that flashes to
     /// help make it more noticeable. By default, it is black, but its color can be altered with this property.
-    static member inline caretColor (color: string) = StyleHelper.mkStyle "caretColor" color
+    static member inline caretColor(color: string) = StyleHelper.mkStyle "caretColor" color
     /// Sets the foreground color value of an element's text and text decorations, and sets the
     /// `currentcolor` value. `currentcolor` may be used as an indirect value on other properties
     /// and is the default for other color properties, such as border-color.
-    static member inline color (color: string) = StyleHelper.mkStyle "color" color
+    static member inline color(color: string) = StyleHelper.mkStyle "color" color
     /// Specifies the vertical position of a positioned element. It has no effect on non-positioned elements.
     static member inline top(value: int) = StyleHelper.mkStyle "top" value
     /// Specifies the vertical position of a positioned element. It has no effect on non-positioned elements.
@@ -2659,22 +2978,16 @@ type style =
     static member inline right(value: ICssUnit) = StyleHelper.mkStyle "right" value
     /// Define a custom attribute of via key value pair
     static member inline custom(key: string, value: 't) = StyleHelper.mkStyle key value
+
     /// Sets an element's bottom border. It sets the values of border-bottom-width,
     /// border-bottom-style and border-bottom-color.
     static member inline borderBottom(width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderBottom" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderBottom" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// Sets an element's bottom border. It sets the values of border-bottom-width,
     /// border-bottom-style and border-bottom-color.
     static member inline borderBottom(width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderBottom" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderBottom" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
 
     /// An outline is a line around an element.
     /// It is displayed around the margin of the element. However, it is different from the border property.
@@ -2698,7 +3011,7 @@ type style =
     ///  - An outline does not take up space
     ///  - An outline may be non-rectangular
     ///
-    static member inline outlineOffset (offset:int) =
+    static member inline outlineOffset(offset: int) =
         StyleHelper.mkStyle "outlineOffset" ((unbox<string> offset) + "px")
 
     /// The outline-offset property adds space between an outline and the edge or border of an element.
@@ -2711,277 +3024,349 @@ type style =
     ///  - An outline does not take up space
     ///  - An outline may be non-rectangular
     ///
-    static member inline outlineOffset (offset:ICssUnit) =
+    static member inline outlineOffset(offset: ICssUnit) =
         StyleHelper.mkStyle "outlineOffset" offset
 
     /// An outline is a line that is drawn around elements (outside the borders) to make the element "stand out".
     ///
     /// The `outline-color` property specifies the color of an outline.
-    /// 
+    ///
     /// **Note**: Always declare the outline-style property before the outline-color property. An element must have an outline before you change the color of it.
-    static member inline outlineColor (color: string) =
+    static member inline outlineColor(color: string) =
         StyleHelper.mkStyle "outlineColor" color
-    
+
     /// An outline is a line that is drawn around elements (outside the borders) to make the element "stand out".
     /// The outline shorthand property sets most of the outline properties in a single declaration.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/outline
-    static member inline outline (width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "outline" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+    static member inline outline(width: int, style: IBorderStyle, color: string) =
+        StyleHelper.mkStyle "outline" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// An outline is a line that is drawn around elements (outside the borders) to make the element "stand out".
     /// The outline shorthand property sets most of the outline properties in a single declaration.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/outline
-    static member inline outline (width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "outline" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
-    
+    static member inline outline(width: ICssUnit, style: IBorderStyle, color: string) =
+        StyleHelper.mkStyle "outline" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Set an element's left border.
     static member inline borderLeft(width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderLeft" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderLeft" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// Set an element's left border.
     static member inline borderLeft(width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderLeft" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderLeft" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Set an element's right border.
     static member inline borderRight(width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderRight" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderRight" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// Set an element's right border.
     static member inline borderRight(width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderRight" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderRight" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Set an element's top border.
     static member inline borderTop(width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderTop" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderTop" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// Set an element's top border.
     static member inline borderTop(width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "borderTop" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "borderTop" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Sets the line style of an element's bottom border.
-    static member inline borderBottomStyle(style: IBorderStyle) = StyleHelper.mkStyle "borderBottomStyle" (unbox<string> style)
+    static member inline borderBottomStyle(style: IBorderStyle) =
+        StyleHelper.mkStyle "borderBottomStyle" (unbox<string> style)
+
     /// Sets the width of the bottom border of an element.
-    static member inline borderBottomWidth (width: int) = StyleHelper.mkStyle "borderBottomWidth" (unbox<string> width + "px")
+    static member inline borderBottomWidth(width: int) =
+        StyleHelper.mkStyle "borderBottomWidth" (unbox<string> width + "px")
+
     /// Sets the width of the bottom border of an element.
-    static member inline borderBottomWidth (width: ICssUnit) = StyleHelper.mkStyle "borderBottomWidth" (unbox<string> width)
+    static member inline borderBottomWidth(width: ICssUnit) =
+        StyleHelper.mkStyle "borderBottomWidth" (unbox<string> width)
+
     /// Sets the color of an element's bottom border.
     ///
     /// It can also be set with the shorthand CSS properties border-color or border-bottom.
-    static member inline borderBottomColor (color: string) = StyleHelper.mkStyle "borderBottomColor" color
+    static member inline borderBottomColor(color: string) =
+        StyleHelper.mkStyle "borderBottomColor" color
+
     /// Sets the line style of an element's top border.
-    static member inline borderTopStyle(style: IBorderStyle) = StyleHelper.mkStyle "borderTopStyle" (unbox<string> style)
+    static member inline borderTopStyle(style: IBorderStyle) =
+        StyleHelper.mkStyle "borderTopStyle" (unbox<string> style)
+
     /// Sets the width of the top border of an element.
-    static member inline borderTopWidth (width: int) = StyleHelper.mkStyle "borderTopWidth" (unbox<string> width + "px")
+    static member inline borderTopWidth(width: int) =
+        StyleHelper.mkStyle "borderTopWidth" (unbox<string> width + "px")
+
     /// Sets the width of the top border of an element.
-    static member inline borderTopWidth (width: ICssUnit) = StyleHelper.mkStyle "borderTopWidth" (unbox<string> width)
+    static member inline borderTopWidth(width: ICssUnit) =
+        StyleHelper.mkStyle "borderTopWidth" (unbox<string> width)
+
     /// Sets the color of an element's top border.
     ///
     /// It can also be set with the shorthand CSS properties border-color or border-bottom.
-    static member inline borderTopColor (color: string) = StyleHelper.mkStyle "borderTopColor" color
+    static member inline borderTopColor(color: string) =
+        StyleHelper.mkStyle "borderTopColor" color
+
     /// /// Sets the line style of an element's right border.
-    static member inline borderRightStyle(style: IBorderStyle) = StyleHelper.mkStyle "borderRightStyle" (unbox<string> style)
+    static member inline borderRightStyle(style: IBorderStyle) =
+        StyleHelper.mkStyle "borderRightStyle" (unbox<string> style)
+
     /// Sets the width of the right border of an element.
-    static member inline borderRightWidth (width: int) = StyleHelper.mkStyle "borderRightWidth" (unbox<string> width + "px")
+    static member inline borderRightWidth(width: int) =
+        StyleHelper.mkStyle "borderRightWidth" (unbox<string> width + "px")
+
     /// Sets the width of the right border of an element.
-    static member inline borderRightWidth (width: ICssUnit) = StyleHelper.mkStyle "borderRightWidth" (unbox<string> width)
+    static member inline borderRightWidth(width: ICssUnit) =
+        StyleHelper.mkStyle "borderRightWidth" (unbox<string> width)
+
     /// Sets the color of an element's right border.
     ///
     /// It can also be set with the shorthand CSS properties border-color or border-bottom.
-    static member inline borderRightColor (color: string) = StyleHelper.mkStyle "borderRightColor" color
+    static member inline borderRightColor(color: string) =
+        StyleHelper.mkStyle "borderRightColor" color
+
     /// Sets the line style of an element's left border.
-    static member inline borderLeftStyle(style: IBorderStyle) = StyleHelper.mkStyle "borderLeftStyle" (unbox<string> style)
+    static member inline borderLeftStyle(style: IBorderStyle) =
+        StyleHelper.mkStyle "borderLeftStyle" (unbox<string> style)
+
     /// Sets the width of the left border of an element.
-    static member inline borderLeftWidth (width: int) = StyleHelper.mkStyle "borderLeftWidth" (unbox<string> width + "px")
+    static member inline borderLeftWidth(width: int) =
+        StyleHelper.mkStyle "borderLeftWidth" (unbox<string> width + "px")
+
     /// Sets the width of the left border of an element.
-    static member inline borderLeftWidth (width: ICssUnit) = StyleHelper.mkStyle "borderLeftWidth" (unbox<string> width)
+    static member inline borderLeftWidth(width: ICssUnit) =
+        StyleHelper.mkStyle "borderLeftWidth" (unbox<string> width)
+
     /// Sets the color of an element's left border.
     ///
     /// It can also be set with the shorthand CSS properties border-color or border-bottom.
-    static member inline borderLeftColor (color: string) = StyleHelper.mkStyle "borderLeftColor" color
+    static member inline borderLeftColor(color: string) =
+        StyleHelper.mkStyle "borderLeftColor" color
+
     /// Sets an element's border.
     ///
     /// It sets the values of border-width, border-style, and border-color.
     static member inline border(width: int, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "border" (
-            (unbox<string> width) + "px " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "border" ((unbox<string> width) + "px " + (unbox<string> style) + " " + color)
+
     /// Sets an element's border.
     ///
     /// It sets the values of border-width, border-style, and border-color.
     static member inline border(width: ICssUnit, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "border" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "border" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Sets an element's border.
     ///
     /// It sets the values of border-width, border-style, and border-color.
     static member inline border(width: string, style: IBorderStyle, color: string) =
-        StyleHelper.mkStyle "border" (
-            (unbox<string> width) + " " +
-            (unbox<string> style) + " " +
-            color
-        )
+        StyleHelper.mkStyle "border" ((unbox<string> width) + " " + (unbox<string> style) + " " + color)
+
     /// Sets the line style for all four sides of an element's border.
-    static member inline borderStyle (style: IBorderStyle) = StyleHelper.mkStyle "borderStyle" style
+    static member inline borderStyle(style: IBorderStyle) = StyleHelper.mkStyle "borderStyle" style
+
     /// Sets the line style for all four sides of an element's border.
-    static member inline borderStyle(top: IBorderStyle, right: IBorderStyle)  =
+    static member inline borderStyle(top: IBorderStyle, right: IBorderStyle) =
         StyleHelper.mkStyle "borderStyle" ((unbox<string> top) + " " + (unbox<string> right))
+
     /// Sets the line style for all four sides of an element's border.
     static member inline borderStyle(top: IBorderStyle, right: IBorderStyle, bottom: IBorderStyle) =
-        StyleHelper.mkStyle "borderStyle" ((unbox<string> top) + " " + (unbox<string> right) + " " +  (unbox<string> bottom))
+        StyleHelper.mkStyle
+            "borderStyle"
+            ((unbox<string> top) + " " + (unbox<string> right) + " " + (unbox<string> bottom))
+
     /// Sets the line style for all four sides of an element's border.
     static member inline borderStyle(top: IBorderStyle, right: IBorderStyle, bottom: IBorderStyle, left: IBorderStyle) =
-        StyleHelper.mkStyle "borderStyle" ((unbox<string> top) + " " + (unbox<string> right) + " " + (unbox<string> bottom) + " " +  (unbox<string> left))
+        StyleHelper.mkStyle
+            "borderStyle"
+            ((unbox<string> top)
+             + " "
+             + (unbox<string> right)
+             + " "
+             + (unbox<string> bottom)
+             + " "
+             + (unbox<string> left))
+
     /// Sets the color of an element's border.
-    static member inline borderColor (color: string) = StyleHelper.mkStyle "borderColor" color
+    static member inline borderColor(color: string) = StyleHelper.mkStyle "borderColor" color
+
     /// Rounds the corners of an element's outer border edge. You can set a single radius to make
     /// circular corners, or two radii to make elliptical corners.
-    static member inline borderRadius (radius: int) = StyleHelper.mkStyle "borderRadius" radius
+    static member inline borderRadius(radius: int) =
+        StyleHelper.mkStyle "borderRadius" radius
+
     /// Rounds the corners of an element's outer border edge. You can set a single radius to make
     /// circular corners, or two radii to make elliptical corners.
-    static member inline borderRadius (radius: ICssUnit) = StyleHelper.mkStyle "borderRadius" radius
+    static member inline borderRadius(radius: ICssUnit) =
+        StyleHelper.mkStyle "borderRadius" radius
+
     /// top-left-and-bottom-right | top-right-and-bottom-left
-    static member inline borderRadius (topLeftAndBottomRight: int, topRightAndBottomLeft: int) =
-        StyleHelper.mkStyle "borderRadius" (
-            (unbox<string> topLeftAndBottomRight) + "px " +
-            (unbox<string> topRightAndBottomLeft) + "px"
-        )
+    static member inline borderRadius(topLeftAndBottomRight: int, topRightAndBottomLeft: int) =
+        StyleHelper.mkStyle
+            "borderRadius"
+            ((unbox<string> topLeftAndBottomRight)
+             + "px "
+             + (unbox<string> topRightAndBottomLeft)
+             + "px")
 
     /// top-left | top-right-and-bottom-left | bottom-right
-    static member inline borderRadius (topLeft: int, topRightAndBottomLeft: int, bottomRight: int) =
-        StyleHelper.mkStyle "borderRadius" (
-            (unbox<string> topLeft) + "px " +
-            (unbox<string> topRightAndBottomLeft) + "px " +
-            (unbox<string> bottomRight) + "px"
-        )
+    static member inline borderRadius(topLeft: int, topRightAndBottomLeft: int, bottomRight: int) =
+        StyleHelper.mkStyle
+            "borderRadius"
+            ((unbox<string> topLeft)
+             + "px "
+             + (unbox<string> topRightAndBottomLeft)
+             + "px "
+             + (unbox<string> bottomRight)
+             + "px")
 
     /// top-left | top-right | bottom-right | bottom-left
-    static member inline borderRadius (topLeft: int, topRight: int, bottomRight: int, bottomLeft: int) =
-        StyleHelper.mkStyle "borderRadius" (
-            (unbox<string> topLeft) + "px " +
-            (unbox<string> topRight) + "px " +
-            (unbox<string> bottomRight) + "px " +
-            (unbox<string> bottomLeft) + "px"
-        )
+    static member inline borderRadius(topLeft: int, topRight: int, bottomRight: int, bottomLeft: int) =
+        StyleHelper.mkStyle
+            "borderRadius"
+            ((unbox<string> topLeft)
+             + "px "
+             + (unbox<string> topRight)
+             + "px "
+             + (unbox<string> bottomRight)
+             + "px "
+             + (unbox<string> bottomLeft)
+             + "px")
+
     /// Sets the width of an element's border.
-    static member inline borderWidth (top: int, right: int) =
-        StyleHelper.mkStyle "borderWidth" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px"
-        )
+    static member inline borderWidth(top: int, right: int) =
+        StyleHelper.mkStyle "borderWidth" ((unbox<string> top) + "px " + (unbox<string> right) + "px")
+
     /// Sets the width of an element's border.
-    static member inline borderWidth (width: int) = StyleHelper.mkStyle "borderWidth" width
+    static member inline borderWidth(width: int) = StyleHelper.mkStyle "borderWidth" width
+
     /// Sets the width of an element's border.
-    static member inline borderWidth (top: int, right: int, bottom: int) =
-        StyleHelper.mkStyle "borderWidth" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px"
-        )
+    static member inline borderWidth(top: int, right: int, bottom: int) =
+        StyleHelper.mkStyle
+            "borderWidth"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px")
+
     /// Sets the width of an element's border.
-    static member inline borderWidth (top: int, right: int, bottom: int, left: int) =
-        StyleHelper.mkStyle "borderWidth" (
-            (unbox<string> top) + "px " +
-            (unbox<string> right) + "px " +
-            (unbox<string> bottom) + "px " +
-            (unbox<string> left) + "px"
-        )
+    static member inline borderWidth(top: int, right: int, bottom: int, left: int) =
+        StyleHelper.mkStyle
+            "borderWidth"
+            ((unbox<string> top)
+             + "px "
+             + (unbox<string> right)
+             + "px "
+             + (unbox<string> bottom)
+             + "px "
+             + (unbox<string> left)
+             + "px")
 
     /// Sets the distance between the borders of adjacent table cells
-    static member inline borderSpacing (spacing: int) = StyleHelper.mkStyle "borderSpacing" spacing
+    static member inline borderSpacing(spacing: int) =
+        StyleHelper.mkStyle "borderSpacing" spacing
+
     /// Sets the distance between the borders of adjacent table cells
-    static member inline borderSpacing (spacing: ICssUnit) = StyleHelper.mkStyle "borderSpacing" spacing
+    static member inline borderSpacing(spacing: ICssUnit) =
+        StyleHelper.mkStyle "borderSpacing" spacing
+
     /// Sets the distance between the borders of adjacent table cells
-    static member inline borderSpacing (horizontalSpacing: int, verticalSpacing: int) =
-        StyleHelper.mkStyle "borderSpacing" (
-            (unbox<string> horizontalSpacing) + "px " +
-            (unbox<string> verticalSpacing) + "px"
-        )
+    static member inline borderSpacing(horizontalSpacing: int, verticalSpacing: int) =
+        StyleHelper.mkStyle
+            "borderSpacing"
+            ((unbox<string> horizontalSpacing)
+             + "px "
+             + (unbox<string> verticalSpacing)
+             + "px")
+
     /// Sets the distance between the borders of adjacent table cells
-    static member inline borderSpacing (horizontalSpacing: ICssUnit, verticalSpacing: ICssUnit) =
-        StyleHelper.mkStyle "borderSpacing" (
-            (unbox<string> horizontalSpacing) + " " +
-            (unbox<string> verticalSpacing)
-        )
+    static member inline borderSpacing(horizontalSpacing: ICssUnit, verticalSpacing: ICssUnit) =
+        StyleHelper.mkStyle "borderSpacing" ((unbox<string> horizontalSpacing) + " " + (unbox<string> verticalSpacing))
 
     /// Sets one or more animations to apply to an element. Each name is an @keyframes at-rule that
     /// sets the property values for the animation sequence.
-    static member inline animationName(keyframeName: string) = StyleHelper.mkStyle "animationName" keyframeName
+    static member inline animationName(keyframeName: string) =
+        StyleHelper.mkStyle "animationName" keyframeName
+
     /// Sets the length of time that an animation takes to complete one cycle.
-    static member inline animationDuration(timespan: TimeSpan) = StyleHelper.mkStyle "animationDuration" ((unbox<string> timespan.TotalMilliseconds) + "ms")
+    static member inline animationDuration(timespan: TimeSpan) =
+        StyleHelper.mkStyle "animationDuration" ((unbox<string> timespan.TotalMilliseconds) + "ms")
+
     /// Sets the length of time that an animation takes to complete one cycle.
-    static member inline animationDuration(seconds: int) = StyleHelper.mkStyle "animationDuration" ((unbox<string> seconds) + "s")
+    static member inline animationDuration(seconds: int) =
+        StyleHelper.mkStyle "animationDuration" ((unbox<string> seconds) + "s")
+
     /// Sets when an animation starts.
     ///
     /// The animation can start later, immediately from its beginning, or immediately and partway through the animation.
-    static member inline animationDelay(timespan: TimeSpan) = StyleHelper.mkStyle "animationDelay" ((unbox<string> timespan.TotalMilliseconds) + "ms")
+    static member inline animationDelay(timespan: TimeSpan) =
+        StyleHelper.mkStyle "animationDelay" ((unbox<string> timespan.TotalMilliseconds) + "ms")
+
     /// Sets when an animation starts.
     ///
     /// The animation can start later, immediately from its beginning, or immediately and partway through the animation.
-    static member inline animationDelay(seconds: int) = StyleHelper.mkStyle "animationDelay" ((unbox<string> seconds) + "s")
+    static member inline animationDelay(seconds: int) =
+        StyleHelper.mkStyle "animationDelay" ((unbox<string> seconds) + "s")
+
     /// The number of times the animation runs.
-    static member inline animationDurationCount(count: int) = StyleHelper.mkStyle "animationDurationCount" count
+    static member inline animationDurationCount(count: int) =
+        StyleHelper.mkStyle "animationDurationCount" count
+
     /// Sets the font family for the font specified in a @font-face rule.
-    static member inline fontFamily (family: string) = StyleHelper.mkStyle "fontFamily" family
+    static member inline fontFamily(family: string) = StyleHelper.mkStyle "fontFamily" family
     /// Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold.
     /// Possible values are [100, 200, 300, 400, 500, 600, 700, 800, 900]
-    static member inline fontWeight (weight: int) = StyleHelper.mkStyle "fontWeight" weight
+    static member inline fontWeight(weight: int) = StyleHelper.mkStyle "fontWeight" weight
+
     /// Sets the color of decorations added to text by text-decoration-line.
-    static member inline textDecorationColor(color: string) = StyleHelper.mkStyle "textDecorationColor" color
+    static member inline textDecorationColor(color: string) =
+        StyleHelper.mkStyle "textDecorationColor" color
+
     /// Sets the kind of decoration that is used on text in an element, such as an underline or overline.
-    static member inline textDecorationLine(line: ITextDecorationLine) = StyleHelper.mkStyle "textDecorationLine" line
+    static member inline textDecorationLine(line: ITextDecorationLine) =
+        StyleHelper.mkStyle "textDecorationLine" line
+
     /// Sets the appearance of decorative lines on text.
     ///
     /// It is a shorthand for text-decoration-line, text-decoration-color, text-decoration-style,
     /// and the newer text-decoration-thickness property.
-    static member inline textDecoration(line: ITextDecorationLine) = StyleHelper.mkStyle "textDecoration" line
+    static member inline textDecoration(line: ITextDecorationLine) =
+        StyleHelper.mkStyle "textDecoration" line
+
     /// Sets the appearance of decorative lines on text.
     ///
     /// It is a shorthand for text-decoration-line, text-decoration-color, text-decoration-style,
     /// and the newer text-decoration-thickness property.
     static member inline textDecoration(bottom: ITextDecorationLine, top: ITextDecorationLine) =
         StyleHelper.mkStyle "textDecoration" ((unbox<string> bottom) + " " + (unbox<string> top))
+
     /// Sets the appearance of decorative lines on text.
     ///
     /// It is a shorthand for text-decoration-line, text-decoration-color, text-decoration-style,
     /// and the newer text-decoration-thickness property.
     static member inline textDecoration(bottom: ITextDecorationLine, top: ITextDecorationLine, style: ITextDecoration) =
-        StyleHelper.mkStyle "textDecoration" ((unbox<string> bottom) + " " + (unbox<string> top) + " " + (unbox<string> style))
+        StyleHelper.mkStyle
+            "textDecoration"
+            ((unbox<string> bottom) + " " + (unbox<string> top) + " " + (unbox<string> style))
+
     /// Sets the appearance of decorative lines on text.
     ///
     /// It is a shorthand for text-decoration-line, text-decoration-color, text-decoration-style,
     /// and the newer text-decoration-thickness property.
-    static member inline textDecoration(bottom: ITextDecorationLine, top: ITextDecorationLine, style: ITextDecoration, color: string) =
-        StyleHelper.mkStyle "textDecoration" ((unbox<string> bottom) + " " + (unbox<string> top) + " " + (unbox<string> style) + " " + color)
+    static member inline textDecoration
+        (bottom: ITextDecorationLine, top: ITextDecorationLine, style: ITextDecoration, color: string)
+        =
+        StyleHelper.mkStyle
+            "textDecoration"
+            ((unbox<string> bottom)
+             + " "
+             + (unbox<string> top)
+             + " "
+             + (unbox<string> style)
+             + " "
+             + color)
+
     /// Sets the length of empty space (indentation) that is put before lines of text in a block.
     static member inline textIndent(value: int) = StyleHelper.mkStyle "textIndent" value
     /// Sets the length of empty space (indentation) that is put before lines of text in a block.
@@ -2993,161 +3378,188 @@ type style =
     /// Sets the minimum width of an element.
     ///
     /// It prevents the used value of the width property from becoming smaller than the value specified for min-width.
-    static member inline minWidth (value: int) = StyleHelper.mkStyle "minWidth" value
+    static member inline minWidth(value: int) = StyleHelper.mkStyle "minWidth" value
     /// Sets the minimum width of an element.
     ///
     /// It prevents the used value of the width property from becoming smaller than the value specified for min-width.
-    static member inline minWidth (value: ICssUnit) = StyleHelper.mkStyle "minWidth" value
+    static member inline minWidth(value: ICssUnit) = StyleHelper.mkStyle "minWidth" value
     /// Sets the minimum width of an element.
     ///
     /// It prevents the used value of the width property from becoming smaller than the value specified for min-width.
-    static member inline minWidth (value: string) = StyleHelper.mkStyle "minWidth" value
+    static member inline minWidth(value: string) = StyleHelper.mkStyle "minWidth" value
+
     /// Sets the initial position for each background image.
     ///
     /// The position is relative to the position layer set by background-origin.
-    static member inline backgroundPosition  (position: string) = StyleHelper.mkStyle "backgroundPosition" position
+    static member inline backgroundPosition(position: string) =
+        StyleHelper.mkStyle "backgroundPosition" position
+
     /// Sets the type of cursor, if any, to show when the mouse pointer is over an element.
-    static member inline cursor (value: string) = StyleHelper.mkStyle "cursor" value
+    static member inline cursor(value: string) = StyleHelper.mkStyle "cursor" value
     /// Sets the minimum height of an element.
     ///
     /// It prevents the used value of the height property from becoming smaller than the value specified for min-height.
-    static member inline minHeight (value: int) = StyleHelper.mkStyle "minHeight" value
+    static member inline minHeight(value: int) = StyleHelper.mkStyle "minHeight" value
     /// Sets the minimum height of an element.
     ///
     /// It prevents the used value of the height property from becoming smaller than the value specified for min-height.
-    static member inline minHeight (value: ICssUnit) = StyleHelper.mkStyle "minHeight" value
+    static member inline minHeight(value: ICssUnit) = StyleHelper.mkStyle "minHeight" value
     /// Sets the maximum width of an element.
     ///
     /// It prevents the used value of the width property from becoming larger than the value specified by max-width.
-    static member inline maxWidth (value: int) = StyleHelper.mkStyle "maxWidth" value
+    static member inline maxWidth(value: int) = StyleHelper.mkStyle "maxWidth" value
     /// Sets the maximum width of an element.
     ///
     /// It prevents the used value of the width property from becoming larger than the value specified by max-width.
-    static member inline maxWidth (value: ICssUnit) = StyleHelper.mkStyle "maxWidth" value
+    static member inline maxWidth(value: ICssUnit) = StyleHelper.mkStyle "maxWidth" value
     /// Sets the maximum height of an element.
     ///
     /// It prevents the used value of the height property from becoming larger than the value specified for max-height.
-    static member inline maxHeight (value: int) = StyleHelper.mkStyle "maxHeight" value
+    static member inline maxHeight(value: int) = StyleHelper.mkStyle "maxHeight" value
     /// Sets the maximum height of an element.
     ///
     /// It prevents the used value of the height property from becoming larger than the value specified for max-height.
-    static member inline maxHeight (value: ICssUnit) = StyleHelper.mkStyle "maxHeight" value
+    static member inline maxHeight(value: ICssUnit) = StyleHelper.mkStyle "maxHeight" value
     /// Set the height of an element.
     ///
     /// By default, the property defines the height of the content area.
-    static member inline height (value: int) = StyleHelper.mkStyle "height" value
+    static member inline height(value: int) = StyleHelper.mkStyle "height" value
     /// Set the height of an element.
     ///
     /// By default, the property defines the height of the content area.
-    static member inline height (value: ICssUnit) = StyleHelper.mkStyle "height" value
+    static member inline height(value: ICssUnit) = StyleHelper.mkStyle "height" value
     /// Sets the width of an element.
     ///
     /// By default, the property defines the width of the content area.
-    static member inline width (value: int) = StyleHelper.mkStyle "width" value
+    static member inline width(value: int) = StyleHelper.mkStyle "width" value
     /// Sets the width of an element.
     ///
     /// By default, the property defines the width of the content area.
-    static member inline width (value: ICssUnit) = StyleHelper.mkStyle "width" value
+    static member inline width(value: ICssUnit) = StyleHelper.mkStyle "width" value
+
     /// Sets the size of the element's background image.
     ///
     /// The image can be left to its natural size, stretched, or constrained to fit the available space.
-    static member inline backgroundSize (value: string) = StyleHelper.mkStyle "backgroundSize" value
+    static member inline backgroundSize(value: string) =
+        StyleHelper.mkStyle "backgroundSize" value
+
     /// Sets the size of the element's background image.
     ///
     /// The image can be left to its natural size, stretched, or constrained to fit the available space.
-    static member inline backgroundSize (value: ICssUnit) = StyleHelper.mkStyle "backgroundSize" value
+    static member inline backgroundSize(value: ICssUnit) =
+        StyleHelper.mkStyle "backgroundSize" value
+
     /// Sets the size of the element's background image.
     ///
     /// The image can be left to its natural size, stretched, or constrained to fit the available space.
-    static member inline backgroundSize (width: ICssUnit, height: ICssUnit) =
-        StyleHelper.mkStyle "backgroundSize" (
-            unbox<string> width
-            + " " +
-            unbox<string> height
-        )
+    static member inline backgroundSize(width: ICssUnit, height: ICssUnit) =
+        StyleHelper.mkStyle "backgroundSize" (unbox<string> width + " " + unbox<string> height)
 
     /// Sets one or more background images on an element.
-    static member inline backgroundImage (value: string) = StyleHelper.mkStyle "backgroundImage" value
+    static member inline backgroundImage(value: string) =
+        StyleHelper.mkStyle "backgroundImage" value
+
     /// Short-hand for `style.backgroundImage(sprintf "url('%s')" value)` to set the backround image using a url.
-    static member inline backgroundImageUrl (value: string) = StyleHelper.mkStyle "backgroundImage" ("url('" + value + "')")
+    static member inline backgroundImageUrl(value: string) =
+        StyleHelper.mkStyle "backgroundImage" ("url('" + value + "')")
+
     /// Sets how background images are repeated.
     ///
     /// A background image can be repeated along the horizontal and vertical axes, or not repeated at all.
-    static member inline backgroundRepeat (repeat: IBackgroundRepeat) = StyleHelper.mkStyle "backgroundRepeat" repeat
+    static member inline backgroundRepeat(repeat: IBackgroundRepeat) =
+        StyleHelper.mkStyle "backgroundRepeat" repeat
+
     /// Adds shadow effects around an element's frame.
     ///
     /// A box shadow is described by X and Y offsets relative to the element, blur and spread radii, and color.
     static member inline boxShadow(horizontalOffset: int, verticalOffset: int, color: string) =
-        StyleHelper.mkStyle "boxShadow" (
-            (unbox<string> horizontalOffset) + "px " +
-            (unbox<string> verticalOffset) + "px " +
-            color
-        )
+        StyleHelper.mkStyle
+            "boxShadow"
+            ((unbox<string> horizontalOffset)
+             + "px "
+             + (unbox<string> verticalOffset)
+             + "px "
+             + color)
+
     /// Adds shadow effects around an element's frame.
     ///
     /// A box shadow is described by X and Y offsets relative to the element, blur and spread radii, and color.
     static member inline boxShadow(horizontalOffset: int, verticalOffset: int, blur: int, color: string) =
-        StyleHelper.mkStyle "boxShadow" (
-            (unbox<string> horizontalOffset) + "px " +
-            (unbox<string> verticalOffset) + "px " +
-            (unbox<string> blur) + "px " +
-            color
-        )
+        StyleHelper.mkStyle
+            "boxShadow"
+            ((unbox<string> horizontalOffset)
+             + "px "
+             + (unbox<string> verticalOffset)
+             + "px "
+             + (unbox<string> blur)
+             + "px "
+             + color)
+
     /// Adds shadow effects around an element's frame.
     ///
     /// A box shadow is described by X and Y offsets relative to the element, blur and spread radii, and color.
     static member inline boxShadow(horizontalOffset: int, verticalOffset: int, blur: int, spread: int, color: string) =
-        StyleHelper.mkStyle "boxShadow" (
-            (unbox<string> horizontalOffset) + "px " +
-            (unbox<string> verticalOffset) + "px " +
-            (unbox<string> blur) + "px " +
-            (unbox<string> spread) + "px " +
-            color
-        )
+        StyleHelper.mkStyle
+            "boxShadow"
+            ((unbox<string> horizontalOffset)
+             + "px "
+             + (unbox<string> verticalOffset)
+             + "px "
+             + (unbox<string> blur)
+             + "px "
+             + (unbox<string> spread)
+             + "px "
+             + color)
 
     /// Sets the color of an SVG shape.
-    static member inline fill (color: string) = StyleHelper.mkStyle "fill" color
+    static member inline fill(color: string) = StyleHelper.mkStyle "fill" color
 
     /// Specifies extra inter-character space in addition to the default space between characters.
-    static member inline letterSpacing (value: int) = StyleHelper.mkStyle "letterSpacing" value
+    static member inline letterSpacing(value: int) =
+        StyleHelper.mkStyle "letterSpacing" value
+
     /// Specifies extra inter-character space in addition to the default space between characters.
-    static member inline letterSpacing (value: ICssUnit) = StyleHelper.mkStyle "letterSpacing" value
-    
+    static member inline letterSpacing(value: ICssUnit) =
+        StyleHelper.mkStyle "letterSpacing" value
+
     /// Sets the origin for an element's transformations.
     /// The transform origin is the point around which a transformation is applied.
-    static member inline transformOrigin (xOffset: ITransformOrigin) =
+    static member inline transformOrigin(xOffset: ITransformOrigin) =
         StyleHelper.mkStyle "transformOrigin" (unbox<string> xOffset)
+
     /// Sets the origin for an element's transformations.
     /// The transform origin is the point around which a transformation is applied.
-    static member inline transformOrigin (xOffset: ITransformOrigin, yOffset: ITransformOrigin) =
-        StyleHelper.mkStyle "transformOrigin" (
-            unbox<string> xOffset + " " +
-            unbox<string> yOffset
-        ) 
+    static member inline transformOrigin(xOffset: ITransformOrigin, yOffset: ITransformOrigin) =
+        StyleHelper.mkStyle "transformOrigin" (unbox<string> xOffset + " " + unbox<string> yOffset)
+
     /// Sets the origin for an element's transformations.
     /// The transform origin is the point around which a transformation is applied.
-    static member inline transformOrigin (xOffset: ITransformOrigin, yOffset: ITransformOrigin, zOffset: ITransformOrigin) =
-        StyleHelper.mkStyle "transformOrigin" (
-            unbox<string> xOffset + " " +
-            unbox<string> yOffset + " " +
-            unbox<string> zOffset
-        )
-    
+    static member inline transformOrigin
+        (xOffset: ITransformOrigin, yOffset: ITransformOrigin, zOffset: ITransformOrigin)
+        =
+        StyleHelper.mkStyle
+            "transformOrigin"
+            (unbox<string> xOffset
+             + " "
+             + unbox<string> yOffset
+             + " "
+             + unbox<string> zOffset)
+
     /// Sets the color of the scrollbar track and thumb.
     /// The track refers to the background of the scrollbar, which
     /// is generally fixed regardless of the scrolling position.
     /// The thumb refers to the moving part of the scrollbar, which
     /// usually floats on top of the track.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color
-    static member inline scrollbarColor (thumbColor: string, trackColor: string) =
+    static member inline scrollbarColor(thumbColor: string, trackColor: string) =
         StyleHelper.mkStyle "scrollbarColor" (thumbColor + " " + trackColor)
 
     /// Sets the order to lay out an item in a flex or grid container.
     /// Items in a container are sorted by ascending order value and then by their source code order.
     /// Items not given an explicit order value are assigned the default value of 0.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/order
-    static member inline order (value: int) = StyleHelper.mkStyle "order" value
-    
+    static member inline order(value: int) = StyleHelper.mkStyle "order" value
+
 [<Erase>]
 module style =
 
@@ -3193,7 +3605,7 @@ module style =
         /// The intrinsic minimum width.
         static member inline minContent = StyleHelper.mkStyle "minWidth" "min-content"
 
-     [<Erase>]
+    [<Erase>]
     type maxWidth =
         /// Inherits this property from its parent element.
         static member inline inheritFromParent = StyleHelper.mkStyle "maxWidth" "inherit"
@@ -3345,17 +3757,17 @@ module style =
         /// (potentially snapping to different elements in each axis).
         static member inline both = StyleHelper.mkStyle "scrollSnapType" "both"
         /// The scroll container snaps to snap positions in its horizontal axis only.
-        /// 
+        ///
         /// The visual viewport of this scroll container must snap to a snap position if it isn't currently scrolled.
         static member inline xMandatory = StyleHelper.mkStyle "scrollSnapType" "x mandatory"
         /// The scroll container snaps to snap positions in its horizontal axis only.
-        /// 
+        ///
         /// The visual viewport of this scroll container may snap to a snap position if it isn't currently scrolled.
         /// The user agent decides if it snaps or not based on scroll parameters. This is the default snap strictness
         /// if any snap axis is specified.
         static member inline xProximity = StyleHelper.mkStyle "scrollSnapType" "x proximity"
         /// The scroll container snaps to snap positions in its vertical axis only.
-        /// 
+        ///
         /// The visual viewport of this scroll container must snap to a snap position if it isn't currently scrolled.
         static member inline yMandatory = StyleHelper.mkStyle "scrollSnapType" "y mandatory"
         /// The scroll container snaps to snap positions in its vertical axis only.
@@ -3365,7 +3777,7 @@ module style =
         /// if any snap axis is specified.
         static member inline yProximity = StyleHelper.mkStyle "scrollSnapType" "y proximity"
         /// The scroll container snaps to snap positions in its block axis only.
-        /// 
+        ///
         /// The visual viewport of this scroll container must snap to a snap position if it isn't currently scrolled.
         static member inline blockMandatory = StyleHelper.mkStyle "scrollSnapType" "block mandatory"
         /// The scroll container snaps to snap positions in its block axis only.
@@ -3375,7 +3787,7 @@ module style =
         /// if any snap axis is specified.
         static member inline blockProximity = StyleHelper.mkStyle "scrollSnapType" "block proximity"
         /// The scroll container snaps to snap positions in its inline axis only.
-        /// 
+        ///
         /// The visual viewport of this scroll container must snap to a snap position if it isn't currently scrolled.
         static member inline inlineMandatory = StyleHelper.mkStyle "scrollSnapType" "inline mandatory"
         /// The scroll container snaps to snap positions in its inline axis only.
@@ -3386,7 +3798,7 @@ module style =
         static member inline inlineProximity = StyleHelper.mkStyle "scrollSnapType" "inline proximity"
         /// The scroll container snaps to snap positions in both of its axes independently
         /// (potentially snapping to different elements in each axis).
-        /// 
+        ///
         /// The visual viewport of this scroll container must snap to a snap position if it isn't currently scrolled.
         static member inline bothMandatory = StyleHelper.mkStyle "scrollSnapType" "both mandatory"
         /// The scroll container snaps to snap positions in both of its axes independently
@@ -3402,32 +3814,32 @@ module style =
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align
     [<Erase>]
     type scrollSnapAlign =
-        /// This box does not define a snap position in the specified axis. 
+        /// This box does not define a snap position in the specified axis.
         static member inline none = StyleHelper.mkStyle "scrollSnapAlign" "none"
         /// Start alignment of this box’s scroll snap area within the scroll
-        /// container’s snapport is a snap position in the specified axis. 
+        /// container’s snapport is a snap position in the specified axis.
         static member inline start = StyleHelper.mkStyle "scrollSnapAlign" "start"
         /// Center alignment of this box’s scroll snap area within the scroll
-        /// container’s snapport is a snap position in the specified axis. 
+        /// container’s snapport is a snap position in the specified axis.
         static member inline center = StyleHelper.mkStyle "scrollSnapAlign" "center"
         /// End alignment of this box’s scroll snap area within the scroll
-        /// container’s snapport is a snap position in the specified axis. 
+        /// container’s snapport is a snap position in the specified axis.
         static member inline end' = StyleHelper.mkStyle "scrollSnapAlign" "end"
         static member inline noneStart = StyleHelper.mkStyle "scrollSnapAlign" "none start"
         static member inline noneCenter = StyleHelper.mkStyle "scrollSnapAlign" "none center"
-        static member inline noneEnd =  StyleHelper.mkStyle "scrollSnapAlign" "none end"
+        static member inline noneEnd = StyleHelper.mkStyle "scrollSnapAlign" "none end"
         static member inline startNone = StyleHelper.mkStyle "scrollSnapAlign" "start none"
         static member inline startCenter = StyleHelper.mkStyle "scrollSnapAlign" "start center"
-        static member inline startEnd =  StyleHelper.mkStyle "scrollSnapAlign" "start end"
+        static member inline startEnd = StyleHelper.mkStyle "scrollSnapAlign" "start end"
         static member inline centerNone = StyleHelper.mkStyle "scrollSnapAlign" "center none"
         static member inline centerStart = StyleHelper.mkStyle "scrollSnapAlign" "center start"
-        static member inline centerEnd =  StyleHelper.mkStyle "scrollSnapAlign" "center end"
+        static member inline centerEnd = StyleHelper.mkStyle "scrollSnapAlign" "center end"
         static member inline endNone = StyleHelper.mkStyle "scrollSnapAlign" "end none"
         static member inline endStart = StyleHelper.mkStyle "scrollSnapAlign" "end start"
-        static member inline endCenter =  StyleHelper.mkStyle "scrollSnapAlign" "end center"
-    
-    
-    
+        static member inline endCenter = StyleHelper.mkStyle "scrollSnapAlign" "end center"
+
+
+
     /// Sets the maximum thickness of an element's scrollbars when they are shown.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width
     [<Erase>]
@@ -3435,11 +3847,11 @@ module style =
         /// The default scrollbar width for the platform.
         static member inline auto = StyleHelper.mkStyle "scrollbarWidth" "auto"
         /// A thin scrollbar width variant on platforms that provide that option,
-        /// or a thinner scrollbar than the default platform scrollbar width. 
+        /// or a thinner scrollbar than the default platform scrollbar width.
         static member inline thin = StyleHelper.mkStyle "scrollbarWidth" "thin"
         /// No scrollbar shown, however the element will still be scrollable.
         static member inline none = StyleHelper.mkStyle "scrollbarWidth" "none"
-    
+
     /// Reserves space for the scrollbar, preventing unwanted layout changes as
     /// the content grows while also avoiding unnecessary visuals when scrolling
     /// isn't needed.
@@ -3454,13 +3866,15 @@ module style =
         /// is auto, scroll, or hidden even if the box is not overflowing.
         /// When using overlay scrollbars, the gutter will not be present.
         static member inline stable = StyleHelper.mkStyle "scrollbarGutter" "stable"
+
         /// When using classic scrollbars, the gutter will be present if overflow
         /// is auto, scroll, or hidden even if the box is not overflowing.
         /// When using overlay scrollbars, the gutter will not be present.
-        /// 
+        ///
         /// If a gutter would be present on one of the inline start/end edges
         /// of the box, another will be present on the opposite edge as well.
-        static member inline stableBothEdges = StyleHelper.mkStyle "scrollbarGutter" "stable both-edges"
+        static member inline stableBothEdges =
+            StyleHelper.mkStyle "scrollbarGutter" "stable both-edges"
 
     /// sets the color of the scrollbar track and thumb.
     /// https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color
@@ -3511,7 +3925,7 @@ module style =
         /// The characters are rotated 90° clockwise. This is the default value of this property.
         static member inline mixed = StyleHelper.mkStyle "textOrientation" "mixed"
         /// The characters of horizontal scripts are laid out naturally (upright), as
-        /// well as the glyphs for vertical scripts. This property makes all the 
+        /// well as the glyphs for vertical scripts. This property makes all the
         /// characters to be considered as left-to-right: the used value of direction is forced to be ltr.
         static member inline upright = StyleHelper.mkStyle "textOrientation" "upright"
         /// The characters are laid out as they would be horizontally, but with the whole
@@ -3523,6 +3937,7 @@ module style =
         static member inline initial = StyleHelper.mkStyle "textOrientation" "initial"
         /// It inherits the property from its parents element.
         static member inline inheritFromParent = StyleHelper.mkStyle "textOrientation" "inherit"
+
     [<Erase>]
     type visibility =
         /// The element is hidden (but still takes up space).
@@ -3725,7 +4140,7 @@ module style =
         static member inline initial = StyleHelper.mkStyle "letterSpacing" "initial"
         /// Inherits this property from its parent element.
         static member inline inheritFromParent = StyleHelper.mkStyle "letterSpacing" "inherit"
-    
+
     /// Sets the distance between the borders of adjacent table cells.
     [<Erase>]
     type borderSpacing =
@@ -3750,14 +4165,14 @@ module style =
         /// - For grid items, this keyword leads to a behavior similar to the one of stretch, except for boxes with an aspect ratio or an intrinsic sizes where it behaves like start.
         /// - The property doesn't apply to block-level boxes, and to table cells.
         static member inline normal = StyleHelper.mkStyle "alignSelf" "normal"
-        
+
         /// The flex item's margin box is centered within the line on the cross-axis.
         /// If the cross-size of the item is larger than the flex container, it will overflow equally in both directions.
         static member inline center = StyleHelper.mkStyle "alignSelf" "center"
         /// Put the item at the start
         static member inline start = StyleHelper.mkStyle "alignSelf" "start"
         /// Put the item at the end
-        static member inline end' = StyleHelper.mkStyle "alignSelf" "end"        
+        static member inline end' = StyleHelper.mkStyle "alignSelf" "end"
         /// Aligns the items to be flush with the edge of the alignment container corresponding to the item's start side in the cross axis.
         static member inline selfStart = StyleHelper.mkStyle "alignSelf" "self-start"
         /// Aligns the items to be flush with the edge of the alignment container corresponding to the item's end side in the cross axis.
@@ -3766,7 +4181,7 @@ module style =
         static member inline flexStart = StyleHelper.mkStyle "alignSelf" "flex-start"
         /// The cross-end margin edge of the flex item is flushed with the cross-end edge of the line.
         static member inline flexEnd = StyleHelper.mkStyle "alignSelf" "flex-end"
-        
+
         /// Specifies participation in first- or last-baseline alignment:
         /// aligns the alignment baseline of the box's first or last baseline set with the corresponding baseline
         /// in the shared first or last baseline set of all the boxes in its baseline-sharing group.
@@ -3774,13 +4189,13 @@ module style =
         /// Specifies participation in first- or last-baseline alignment:
         /// aligns the alignment baseline of the box's first or last baseline set with the corresponding baseline
         /// in the shared first or last baseline set of all the boxes in its baseline-sharing group.
-        /// 
+        ///
         /// The fallback alignment for first baseline is start
         static member inline firstBaseline = StyleHelper.mkStyle "alignSelf" "first baseline"
         /// Specifies participation in first- or last-baseline alignment:
         /// aligns the alignment baseline of the box's first or last baseline set with the corresponding baseline
         /// in the shared first or last baseline set of all the boxes in its baseline-sharing group.
-        /// 
+        ///
         /// The fallback alignment for last baseline is end
         static member inline lastBaseline = StyleHelper.mkStyle "alignSelf" "last baseline"
         /// If the combined size of the items along the cross axis is less than the size of the alignment container
@@ -3788,7 +4203,7 @@ module style =
         /// while still respecting the constraints imposed by `max-height`/`max-width` (or equivalent functionality),
         /// so that the combined size of all auto-sized items exactly fills the alignment container along the cross axis.
         static member inline stretch = StyleHelper.mkStyle "alignSelf" "stretch"
-        
+
         /// Sets this property to its default value
         static member inline initial = StyleHelper.mkStyle "alignSelf" "initial"
         /// Inherits this property from its parent element
@@ -3814,7 +4229,7 @@ module style =
 
         /// The flex items' margin boxes are centered within the line on the cross-axis.
         /// If the cross-size of an item is larger than the flex container, it will overflow equally in both directions.
-        static member inline center = StyleHelper.mkStyle "alignItems"  "center"
+        static member inline center = StyleHelper.mkStyle "alignItems" "center"
         /// The items are packed flush to each other toward the start edge of the alignment container in the appropriate axis.
         static member inline start = StyleHelper.mkStyle "alignItems" "start"
         /// The items are packed flush to each other toward the end edge of the alignment container in the appropriate axis.
@@ -3838,11 +4253,11 @@ module style =
         static member inline lastBaseline = StyleHelper.mkStyle "alignItems" "last baseline"
 
         /// Sets this property to its default value
-        static member inline initial = StyleHelper.mkStyle "alignItems"  "initial"
+        static member inline initial = StyleHelper.mkStyle "alignItems" "initial"
         /// Inherits this property from its parent element
-        static member inline inheritFromParent = StyleHelper.mkStyle "alignItems"  "inherit"
-        static member inline revert = StyleHelper.mkStyle "alignItems"  "revert"
-        static member inline unset = StyleHelper.mkStyle "alignItems"  "unset"
+        static member inline inheritFromParent = StyleHelper.mkStyle "alignItems" "inherit"
+        static member inline revert = StyleHelper.mkStyle "alignItems" "revert"
+        static member inline unset = StyleHelper.mkStyle "alignItems" "unset"
 
     /// The CSS `align-content` property sets the distribution of space between and around content items
     /// along a flexbox's cross-axis or a grid's block axis.
@@ -3854,7 +4269,7 @@ module style =
     type alignContent =
         /// Default value. The items are packed in their default position as if no `align-content` value was set.
         static member inline normal = StyleHelper.mkStyle "alignContent" "normal"
-        
+
         /// The items are packed flush to each other in the center of the alignment container along the cross axis.
         static member inline center = StyleHelper.mkStyle "alignContent" "center"
         /// The items are packed flush to each other against the start edge of the alignment container in the cross axis.
@@ -3917,9 +4332,9 @@ module style =
     /// - In table cell layouts, this property is ignored
     /// - In grid layouts, it aligns an item inside its grid area on the inline axis
     /// - In flexbox layouts, this property is ignored
-    /// 
+    ///
     /// **Reference**: https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
-    /// 
+    ///
     /// **Tip**: Use the align-items property to align the items vertically.
     [<Erase>]
     type justifySelf =
@@ -4147,8 +4562,11 @@ module style =
         static member inline cjkIdeographic = StyleHelper.mkStyle "listStyleType" "cjk-ideographic"
         /// The marker is a number
         static member inline decimal = StyleHelper.mkStyle "listStyleType" "decimal"
+
         /// The marker is a number with leading zeros (01, 02, 03, etc.)
-        static member inline decimalLeadingZero = StyleHelper.mkStyle "listStyleType" "decimal-leading-zero"
+        static member inline decimalLeadingZero =
+            StyleHelper.mkStyle "listStyleType" "decimal-leading-zero"
+
         /// The marker is traditional Georgian numbering
         static member inline georgian = StyleHelper.mkStyle "listStyleType" "georgian"
         /// The marker is traditional Hebrew numbering
@@ -4194,8 +4612,11 @@ module style =
     type listStyleImage =
         /// No image will be displayed. Instead, the list-style-type property will define what type of list marker will be rendered. This is default
         static member inline none = StyleHelper.mkStyle "listStyleImage" "none"
+
         /// The path to the image to be used as a list-item marker
-        static member inline url (path: string) = StyleHelper.mkStyle "listStyleImage" ("url('" + path + "')")
+        static member inline url(path: string) =
+            StyleHelper.mkStyle "listStyleImage" ("url('" + path + "')")
+
         /// Sets this property to its default value.
         ///
         /// See example https://www.w3schools.com/cssref/playit.asp?filename=playcss_text-align&preval=initial
@@ -4298,8 +4719,11 @@ module style =
         static member inline clip = StyleHelper.mkStyle "textOverflow" "clip"
         /// Render an ellipsis ("...") to represent the clipped text.
         static member inline ellipsis = StyleHelper.mkStyle "textOverflow" "ellipsis"
+
         /// Render the given string to represent the clipped text.
-        static member inline custom(value: string) = StyleHelper.mkStyle "textOverflow" value
+        static member inline custom(value: string) =
+            StyleHelper.mkStyle "textOverflow" value
+
         static member inline initial = StyleHelper.mkStyle "textOverflow" "initial"
         /// Inherits this property from its parent element.
         static member inline inheritFromParent = StyleHelper.mkStyle "textOverflow" "inherit"
@@ -4307,113 +4731,159 @@ module style =
     /// Defines visual effects like blur and saturation to an element.
     [<Erase>]
     type filters =
-        static member inline private mkFilter value : IFilter = unbox value 
+        static member inline private mkFilter value : IFilter = unbox value
         /// Default value. Specifies no effects.
         static member inline none = filters.mkFilter "none"
+
         /// Applies a blur effect to the element. A larger value will create more blur.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline blur(value: int) = filters.mkFilter ("blur(" + (unbox<string> value) + "%)")
+        static member inline blur(value: int) =
+            filters.mkFilter ("blur(" + (unbox<string> value) + "%)")
+
         /// Applies a blur effect to the element. A larger value will create more blur.
         ///
         /// This overload takes a floating number that goes from 0 to 1,
-        static member inline blur(value: double) = filters.mkFilter ("blur(" + (unbox<string> value) + ")")
+        static member inline blur(value: double) =
+            filters.mkFilter ("blur(" + (unbox<string> value) + ")")
+
         /// Adjusts the brightness of the element
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
         ///
         /// Values over 100% will provide brighter results.
-        static member inline brightness(value: int) = filters.mkFilter ("brightness(" + (unbox<string> value) + "%)")
+        static member inline brightness(value: int) =
+            filters.mkFilter ("brightness(" + (unbox<string> value) + "%)")
+
         /// Adjusts the brightness of the element. A larger value will create more blur.
         ///
         /// This overload takes a floating number that goes from 0 to 1,
-        static member inline brightness(value: double) = filters.mkFilter ("brightness(" + (unbox<string> value) + ")")
+        static member inline brightness(value: double) =
+            filters.mkFilter ("brightness(" + (unbox<string> value) + ")")
+
         /// Adjusts the contrast of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline contrast(value: int) = filters.mkFilter ("contrast(" + (unbox<string> value) + "%)")
+        static member inline contrast(value: int) =
+            filters.mkFilter ("contrast(" + (unbox<string> value) + "%)")
+
         /// Adjusts the contrast of the element. A larger value will create more contrast.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline contrast(value: double) = filters.mkFilter ("contrast(" + (unbox<string> value) + ")")
+        static member inline contrast(value: double) =
+            filters.mkFilter ("contrast(" + (unbox<string> value) + ")")
+
         /// Applies a drop shadow effect.
-        static member inline dropShadow(horizontalOffset: int, verticalOffset: int, blur: int, spread: int,  color: string) =
+        static member inline dropShadow
+            (horizontalOffset: int, verticalOffset: int, blur: int, spread: int, color: string)
+            =
             filters.mkFilter (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                (unbox<string> blur) + "px " +
-                (unbox<string> spread) + "px " +
-                color +
-                ")"
+                "drop-shadow("
+                + (unbox<string> horizontalOffset)
+                + "px "
+                + (unbox<string> verticalOffset)
+                + "px "
+                + (unbox<string> blur)
+                + "px "
+                + (unbox<string> spread)
+                + "px "
+                + color
+                + ")"
             )
 
         /// Applies a drop shadow effect.
         static member inline dropShadow(horizontalOffset: int, verticalOffset: int, blur: int, color: string) =
             filters.mkFilter (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                (unbox<string> blur) + "px " +
-                color +
-                ")"
+                "drop-shadow("
+                + (unbox<string> horizontalOffset)
+                + "px "
+                + (unbox<string> verticalOffset)
+                + "px "
+                + (unbox<string> blur)
+                + "px "
+                + color
+                + ")"
             )
 
         /// Applies a drop shadow effect.
         static member inline dropShadow(horizontalOffset: int, verticalOffset: int, color: string) =
             filters.mkFilter (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                color +
-                ")"
+                "drop-shadow("
+                + (unbox<string> horizontalOffset)
+                + "px "
+                + (unbox<string> verticalOffset)
+                + "px "
+                + color
+                + ")"
             )
 
         /// Converts the image to grayscale
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline grayscale(value: int) = filters.mkFilter ("grayscale(" + (unbox<string> value) + "%)")
+        static member inline grayscale(value: int) =
+            filters.mkFilter ("grayscale(" + (unbox<string> value) + "%)")
+
         /// Converts the image to grayscale
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline grayscale(value: double) = filters.mkFilter ("grayscale(" + (unbox<string> value) + ")")
+        static member inline grayscale(value: double) =
+            filters.mkFilter ("grayscale(" + (unbox<string> value) + ")")
+
         /// Applies a hue rotation on the image. The value defines the number of degrees around the color circle the image
         /// samples will be adjusted. 0deg is default, and represents the original image.
         ///
         /// **Note**: Maximum value is 360
-        static member inline hueRotate(degrees: int) = filters.mkFilter ("hue-rotate(" + (unbox<string> degrees) + "deg)")
+        static member inline hueRotate(degrees: int) =
+            filters.mkFilter ("hue-rotate(" + (unbox<string> degrees) + "deg)")
+
         /// Inverts the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline invert(value: int) = filters.mkFilter ("invert(" + (unbox<string> value) + "%)")
+        static member inline invert(value: int) =
+            filters.mkFilter ("invert(" + (unbox<string> value) + "%)")
+
         /// Inverts the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline invert(value: double) = filters.mkFilter ("invert(" + (unbox<string> value) + ")")
+        static member inline invert(value: double) =
+            filters.mkFilter ("invert(" + (unbox<string> value) + ")")
+
         /// Sets the opacity of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline opacity(value: int) = filters.mkFilter ("opacity(" + (unbox<string> value) + "%)")
+        static member inline opacity(value: int) =
+            filters.mkFilter ("opacity(" + (unbox<string> value) + "%)")
+
         /// Sets the opacity of the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline opacity(value: double) = filters.mkFilter ("opacity(" + (unbox<string> value) + ")")
+        static member inline opacity(value: double) =
+            filters.mkFilter ("opacity(" + (unbox<string> value) + ")")
+
         /// Sets the saturation of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline saturate(value: int) = filters.mkFilter ("saturate(" + (unbox<string> value) + "%)")
+        static member inline saturate(value: int) =
+            filters.mkFilter ("saturate(" + (unbox<string> value) + "%)")
+
         /// Sets the saturation of the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline saturate(value: double) = filters.mkFilter ("saturate(" + (unbox<string> value) + ")")
+        static member inline saturate(value: double) =
+            filters.mkFilter ("saturate(" + (unbox<string> value) + ")")
+
         /// Applies Sepia filter to the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline sepia(value: int) = filters.mkFilter ("sepia(" + (unbox<string> value) + "%)")
+        static member inline sepia(value: int) =
+            filters.mkFilter ("sepia(" + (unbox<string> value) + "%)")
+
         /// Applies Sepia filter to the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline sepia(value: double) = filters.mkFilter ("sepia(" + (unbox<string> value) + ")")
+        static member inline sepia(value: double) =
+            filters.mkFilter ("sepia(" + (unbox<string> value) + ")")
+
         /// The url() function takes the location of an XML file that specifies an SVG filter, and may include an anchor to a specific filter element.
         ///
         /// Example: `filter: url(svg-url#element-id)`
@@ -4428,118 +4898,167 @@ module style =
     type filter =
         /// Default value. Specifies no effects.
         static member inline none = StyleHelper.mkStyle "filter" "none"
+
         /// Applies a blur effect to the element. A larger value will create more blur.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline blur(value: int) = StyleHelper.mkStyle "filter" ("blur(" + (unbox<string> value) + "%)")
+        static member inline blur(value: int) =
+            StyleHelper.mkStyle "filter" ("blur(" + (unbox<string> value) + "%)")
+
         /// Applies a blur effect to the element. A larger value will create more blur.
         ///
         /// This overload takes a floating number that goes from 0 to 1,
-        static member inline blur(value: double) = StyleHelper.mkStyle "filter" ("blur(" + (unbox<string> value) + ")")
+        static member inline blur(value: double) =
+            StyleHelper.mkStyle "filter" ("blur(" + (unbox<string> value) + ")")
+
         /// Adjusts the brightness of the element
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
         ///
         /// Values over 100% will provide brighter results.
-        static member inline brightness(value: int) = StyleHelper.mkStyle "filter" ("brightness(" + (unbox<string> value) + "%)")
+        static member inline brightness(value: int) =
+            StyleHelper.mkStyle "filter" ("brightness(" + (unbox<string> value) + "%)")
+
         /// Adjusts the brightness of the element. A larger value will create more blur.
         ///
         /// This overload takes a floating number that goes from 0 to 1,
-        static member inline brightness(value: double) = StyleHelper.mkStyle "filter" ("brightness(" + (unbox<string> value) + ")")
+        static member inline brightness(value: double) =
+            StyleHelper.mkStyle "filter" ("brightness(" + (unbox<string> value) + ")")
+
         /// Adjusts the contrast of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline contrast(value: int) = StyleHelper.mkStyle "filter" ("contrast(" + (unbox<string> value) + "%)")
+        static member inline contrast(value: int) =
+            StyleHelper.mkStyle "filter" ("contrast(" + (unbox<string> value) + "%)")
+
         /// Adjusts the contrast of the element. A larger value will create more contrast.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline contrast(value: double) = StyleHelper.mkStyle "filter" ("contrast(" + (unbox<string> value) + ")")
+        static member inline contrast(value: double) =
+            StyleHelper.mkStyle "filter" ("contrast(" + (unbox<string> value) + ")")
+
         /// Applies a drop shadow effect.
-        static member inline dropShadow(horizontalOffset: int, verticalOffset: int, blur: int, spread: int, color: string) =
-            StyleHelper.mkStyle "filter" (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                (unbox<string> blur) + "px " +
-                (unbox<string> spread) + "px " +
-                color +
-                ")"
-            )
+        static member inline dropShadow
+            (horizontalOffset: int, verticalOffset: int, blur: int, spread: int, color: string)
+            =
+            StyleHelper.mkStyle
+                "filter"
+                ("drop-shadow("
+                 + (unbox<string> horizontalOffset)
+                 + "px "
+                 + (unbox<string> verticalOffset)
+                 + "px "
+                 + (unbox<string> blur)
+                 + "px "
+                 + (unbox<string> spread)
+                 + "px "
+                 + color
+                 + ")")
 
         /// Applies a drop shadow effect.
         static member inline dropShadow(horizontalOffset: int, verticalOffset: int, blur: int, color: string) =
-            StyleHelper.mkStyle "filter" (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                (unbox<string> blur) + "px " +
-                color +
-                ")"
-            )
+            StyleHelper.mkStyle
+                "filter"
+                ("drop-shadow("
+                 + (unbox<string> horizontalOffset)
+                 + "px "
+                 + (unbox<string> verticalOffset)
+                 + "px "
+                 + (unbox<string> blur)
+                 + "px "
+                 + color
+                 + ")")
 
         /// Applies a drop shadow effect.
         static member inline dropShadow(horizontalOffset: int, verticalOffset: int, color: string) =
-            StyleHelper.mkStyle "filter" (
-                "drop-shadow(" +
-                (unbox<string> horizontalOffset) + "px " +
-                (unbox<string> verticalOffset) + "px " +
-                color +
-                ")"
-            )
+            StyleHelper.mkStyle
+                "filter"
+                ("drop-shadow("
+                 + (unbox<string> horizontalOffset)
+                 + "px "
+                 + (unbox<string> verticalOffset)
+                 + "px "
+                 + color
+                 + ")")
 
         /// Converts the image to grayscale
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline grayscale(value: int) = StyleHelper.mkStyle "filter" ("grayscale(" + (unbox<string> value) + "%)")
+        static member inline grayscale(value: int) =
+            StyleHelper.mkStyle "filter" ("grayscale(" + (unbox<string> value) + "%)")
+
         /// Converts the image to grayscale
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline grayscale(value: double) = StyleHelper.mkStyle "filter" ("grayscale(" + (unbox<string> value) + ")")
+        static member inline grayscale(value: double) =
+            StyleHelper.mkStyle "filter" ("grayscale(" + (unbox<string> value) + ")")
+
         /// Applies a hue rotation on the image. The value defines the number of degrees around the color circle the image
         /// samples will be adjusted. 0deg is default, and represents the original image.
         ///
         /// **Note**: Maximum value is 360
-        static member inline hueRotate(degrees: int) = StyleHelper.mkStyle "filter" ("hue-rotate(" + (unbox<string> degrees) + "deg)")
+        static member inline hueRotate(degrees: int) =
+            StyleHelper.mkStyle "filter" ("hue-rotate(" + (unbox<string> degrees) + "deg)")
+
         /// Inverts the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline invert(value: int) = StyleHelper.mkStyle "filter" ("invert(" + (unbox<string> value) + "%)")
+        static member inline invert(value: int) =
+            StyleHelper.mkStyle "filter" ("invert(" + (unbox<string> value) + "%)")
+
         /// Inverts the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline invert(value: double) = StyleHelper.mkStyle "filter" ("invert(" + (unbox<string> value) + ")")
+        static member inline invert(value: double) =
+            StyleHelper.mkStyle "filter" ("invert(" + (unbox<string> value) + ")")
+
         /// Sets the opacity of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline opacity(value: int) = StyleHelper.mkStyle "filter" ("opacity(" + (unbox<string> value) + "%)")
+        static member inline opacity(value: int) =
+            StyleHelper.mkStyle "filter" ("opacity(" + (unbox<string> value) + "%)")
+
         /// Sets the opacity of the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline opacity(value: double) = StyleHelper.mkStyle "filter" ("opacity(" + (unbox<string> value) + ")")
+        static member inline opacity(value: double) =
+            StyleHelper.mkStyle "filter" ("opacity(" + (unbox<string> value) + ")")
+
         /// Sets the saturation of the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline saturate(value: int) = StyleHelper.mkStyle "filter" ("saturate(" + (unbox<string> value) + "%)")
+        static member inline saturate(value: int) =
+            StyleHelper.mkStyle "filter" ("saturate(" + (unbox<string> value) + "%)")
+
         /// Sets the saturation of the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline saturate(value: double) = StyleHelper.mkStyle "filter" ("saturate(" + (unbox<string> value) + ")")
+        static member inline saturate(value: double) =
+            StyleHelper.mkStyle "filter" ("saturate(" + (unbox<string> value) + ")")
+
         /// Applies Sepia filter to the element.
         ///
         /// This overload takes an integer that represents a percentage from 0 to 100.
-        static member inline sepia(value: int) = StyleHelper.mkStyle "filter" ("sepia(" + (unbox<string> value) + "%)")
+        static member inline sepia(value: int) =
+            StyleHelper.mkStyle "filter" ("sepia(" + (unbox<string> value) + "%)")
+
         /// Applies Sepia filter to the element.
         ///
         /// This overload takes a floating number that goes from 0 to 1
-        static member inline sepia(value: double) = StyleHelper.mkStyle "filter" ("sepia(" + (unbox<string> value) + ")")
+        static member inline sepia(value: double) =
+            StyleHelper.mkStyle "filter" ("sepia(" + (unbox<string> value) + ")")
+
         /// The url() function takes the location of an XML file that specifies an SVG filter, and may include an anchor to a specific filter element.
         ///
         /// Example: `filter: url(svg-url#element-id)`
-        static member inline url(value: string) = StyleHelper.mkStyle "filter" ("url(" + value + ")")
+        static member inline url(value: string) =
+            StyleHelper.mkStyle "filter" ("url(" + value + ")")
+
         /// Sets this property to its default value.
         static member inline initial = StyleHelper.mkStyle "filter" "initial"
         /// Inherits this property from its parent element.
         static member inline inheritFromParent = StyleHelper.mkStyle "filter" "inherit"
+
         /// Applies zero or more filters to the same element
         static member inline multiple(filters: seq<IFilter>) =
             let filters = Seq.map unbox<string> filters |> String.concat " "
@@ -4694,18 +5213,27 @@ module style =
         static member inline easeOut = StyleHelper.mkStyle "animationTimingFunction" "ease-out"
         /// Specifies a animation effect with a slow start and end (equivalent to cubic-bezier(0.42,0,0.58,1))
         static member inline easeInOut = StyleHelper.mkStyle "animationTimingFunction" "ease-in-out"
+
         /// Define your own values in the cubic-bezier function. Possible values are numeric values from 0 to 1
         static member inline cubicBezier(n1: float, n2: float, n3: float, n4: float) =
-            StyleHelper.mkStyle "animationTimingFunction" (
-                "cubic-bezier(" + (unbox<string> n1) + "," +
-                (unbox<string> n2) + "," +
-                (unbox<string> n3) + "," +
-                (unbox<string> n4) + ")"
-            )
+            StyleHelper.mkStyle
+                "animationTimingFunction"
+                ("cubic-bezier("
+                 + (unbox<string> n1)
+                 + ","
+                 + (unbox<string> n2)
+                 + ","
+                 + (unbox<string> n3)
+                 + ","
+                 + (unbox<string> n4)
+                 + ")")
+
         /// Sets this property to its default value
         static member inline initial = StyleHelper.mkStyle "animationTimingFunction" "initial"
+
         /// Inherits this property from its parent element.
-        static member inline inheritFromParent = StyleHelper.mkStyle "animationTimingFunction" "inherit"
+        static member inline inheritFromParent =
+            StyleHelper.mkStyle "animationTimingFunction" "inherit"
 
     [<Erase>]
     type transitionTimingFunction =
@@ -4723,22 +5251,33 @@ module style =
         static member inline stepStart = StyleHelper.mkStyle "transitionTimingFunction" "step-start"
         /// Equivalent to steps(1, end)
         static member inline stepEnd = StyleHelper.mkStyle "transitionTimingFunction" "step-end"
+
         static member inline stepsToEnd(steps: int) =
             StyleHelper.mkStyle "transitionTimingFunction" ("steps(" + (unbox<string> steps) + ", end)")
+
         static member inline stepsToStart(steps: int) =
             StyleHelper.mkStyle "transitionTimingFunction" ("steps(" + (unbox<string> steps) + ", start)")
+
         /// Define your own values in the cubic-bezier function. Possible values are numeric values from 0 to 1
         static member inline cubicBezier(n1: float, n2: float, n3: float, n4: float) =
-            StyleHelper.mkStyle "transitionTimingFunction" (
-                "cubic-bezier(" + (unbox<string> n1) + "," +
-                (unbox<string> n2) + "," +
-                (unbox<string> n3) + "," +
-                (unbox<string> n4) + ")"
-            )
+            StyleHelper.mkStyle
+                "transitionTimingFunction"
+                ("cubic-bezier("
+                 + (unbox<string> n1)
+                 + ","
+                 + (unbox<string> n2)
+                 + ","
+                 + (unbox<string> n3)
+                 + ","
+                 + (unbox<string> n4)
+                 + ")")
+
         /// Sets this property to its default value
         static member inline initial = StyleHelper.mkStyle "transitionTimingFunction" "initial"
+
         /// Inherits this property from its parent element.
-        static member inline inheritFromParent = StyleHelper.mkStyle "transitionTimingFunction" "inherit"
+        static member inline inheritFromParent =
+            StyleHelper.mkStyle "transitionTimingFunction" "inherit"
 
     [<Erase>]
     type userSelect =
@@ -5013,7 +5552,7 @@ module style =
         static member inline none = StyleHelper.mkStyle "objectFit" "none"
         /// The content is sized as if none or contain were specified, whichever would result in a smaller concrete object size.
         static member inline scaleDown = StyleHelper.mkStyle "objectFit" "scale-down"
-    
+
     [<Erase>]
     type backgroundPosition =
         /// The background image will scroll with the page. This is default.
@@ -5067,81 +5606,104 @@ module style =
     type transform =
         /// Defines that there should be no transformation.
         static member inline none = StyleHelper.mkStyle "transform" "none"
+
         /// Defines a 2D transformation, using a matrix of six values.
         static member inline matrix(x1: int, y1: int, z1: int, x2: int, y2: int, z2: int) =
-            StyleHelper.mkStyle "transform" (
-                "matrix(" +
-                (unbox<string> x1) + "," +
-                (unbox<string> y1) + "," +
-                (unbox<string> z1) + "," +
-                (unbox<string> x2) + "," +
-                (unbox<string> y2) + "," +
-                (unbox<string> z2) + ")"
-            )
+            StyleHelper.mkStyle
+                "transform"
+                ("matrix("
+                 + (unbox<string> x1)
+                 + ","
+                 + (unbox<string> y1)
+                 + ","
+                 + (unbox<string> z1)
+                 + ","
+                 + (unbox<string> x2)
+                 + ","
+                 + (unbox<string> y2)
+                 + ","
+                 + (unbox<string> z2)
+                 + ")")
 
         /// Defines a 2D translation.
         static member inline translate(x: int, y: int) =
-            StyleHelper.mkStyle "transform" (
-                "translate(" + (unbox<string> x) + "px," + (unbox<string> y) + "px)"
-            )
+            StyleHelper.mkStyle "transform" ("translate(" + (unbox<string> x) + "px," + (unbox<string> y) + "px)")
+
         /// Defines a 2D translation.
         static member inline translate(x: ICssUnit, y: ICssUnit) =
-            StyleHelper.mkStyle "transform" (
-                "translate(" + (unbox<string> x) + "," + (unbox<string> y) + ")"
-            )
+            StyleHelper.mkStyle "transform" ("translate(" + (unbox<string> x) + "," + (unbox<string> y) + ")")
 
         /// Defines a 3D translation.
         static member inline translate3D(x: int, y: int, z: int) =
-            StyleHelper.mkStyle "transform" (
-                "translate3d(" + (unbox<string> x) + "px," + (unbox<string> y) + "px," + (unbox<string> z) + "px)"
-            )
+            StyleHelper.mkStyle
+                "transform"
+                ("translate3d("
+                 + (unbox<string> x)
+                 + "px,"
+                 + (unbox<string> y)
+                 + "px,"
+                 + (unbox<string> z)
+                 + "px)")
+
         /// Defines a 3D translation.
         static member inline translate3D(x: ICssUnit, y: ICssUnit, z: ICssUnit) =
-            StyleHelper.mkStyle "transform" (
-                "translate3d(" + (unbox<string> x) + "," + (unbox<string> y) + "," + (unbox<string> z) + ")"
-            )
+            StyleHelper.mkStyle
+                "transform"
+                ("translate3d("
+                 + (unbox<string> x)
+                 + ","
+                 + (unbox<string> y)
+                 + ","
+                 + (unbox<string> z)
+                 + ")")
 
         /// Defines a translation, using only the value for the X-axis.
         static member inline translateX(x: int) =
             StyleHelper.mkStyle "transform" ("translateX(" + (unbox<string> x) + "px)")
+
         /// Defines a translation, using only the value for the X-axis.
         static member inline translateX(x: ICssUnit) =
             StyleHelper.mkStyle "transform" ("translateX(" + (unbox<string> x) + ")")
+
         /// Defines a translation, using only the value for the Y-axis
         static member inline translateY(y: int) =
             StyleHelper.mkStyle "transform" ("translateY(" + (unbox<string> y) + "px)")
+
         /// Defines a translation, using only the value for the Y-axis
         static member inline translateY(y: ICssUnit) =
             StyleHelper.mkStyle "transform" ("translateY(" + (unbox<string> y) + ")")
+
         /// Defines a 3D translation, using only the value for the Z-axis
         static member inline translateZ(z: int) =
             StyleHelper.mkStyle "transform" ("translateZ(" + (unbox<string> z) + "px)")
+
         /// Defines a 3D translation, using only the value for the Z-axis
         static member inline translateZ(z: ICssUnit) =
             StyleHelper.mkStyle "transform" ("translateZ(" + (unbox<string> z) + ")")
 
         /// Defines a 2D scale transformation.
         static member inline scale(x: int, y: int) =
-            StyleHelper.mkStyle "transform" (
-                "scale(" + (unbox<string> x) + "," + (unbox<string> y) + ")"
-            )
+            StyleHelper.mkStyle "transform" ("scale(" + (unbox<string> x) + "," + (unbox<string> y) + ")")
+
         /// Defines a scale transformation.
         static member inline scale(n: int) =
-            StyleHelper.mkStyle "transform" (
-                "scale(" + (unbox<string> n) + ")"
-            )
+            StyleHelper.mkStyle "transform" ("scale(" + (unbox<string> n) + ")")
 
         /// Defines a scale transformation.
         static member inline scale(n: float) =
-            StyleHelper.mkStyle "transform" (
-                "scale(" + (unbox<string> n) + ")"
-            )
+            StyleHelper.mkStyle "transform" ("scale(" + (unbox<string> n) + ")")
 
         /// Defines a 3D scale transformation
         static member inline scale3D(x: int, y: int, z: int) =
-            StyleHelper.mkStyle "transform" (
-                "scale3d(" + (unbox<string> x) + "," + (unbox<string> y) + "," + (unbox<string> z) + ")"
-            )
+            StyleHelper.mkStyle
+                "transform"
+                ("scale3d("
+                 + (unbox<string> x)
+                 + ","
+                 + (unbox<string> y)
+                 + ","
+                 + (unbox<string> z)
+                 + ")")
 
         /// Defines a scale transformation by giving a value for the X-axis.
         static member inline scaleX(x: int) =
@@ -5150,54 +5712,75 @@ module style =
         /// Defines a scale transformation by giving a value for the Y-axis.
         static member inline scaleY(y: int) =
             StyleHelper.mkStyle "transform" ("scaleY(" + (unbox<string> y) + ")")
+
         /// Defines a 3D translation, using only the value for the Z-axis
         static member inline scaleZ(z: int) =
             StyleHelper.mkStyle "transform" ("scaleZ(" + (unbox<string> z) + ")")
+
         /// Defines a 2D rotation, the angle is specified in the parameter.
         static member inline rotate(deg: int) =
             StyleHelper.mkStyle "transform" ("rotate(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 2D rotation, the angle is specified in the parameter.
         static member inline rotate(deg: float) =
             StyleHelper.mkStyle "transform" ("rotate(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the X-axis.
         static member inline rotateX(deg: float) =
             StyleHelper.mkStyle "transform" ("rotateX(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the X-axis.
         static member inline rotateX(deg: int) =
             StyleHelper.mkStyle "transform" ("rotateX(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the Y-axis
         static member inline rotateY(deg: float) =
             StyleHelper.mkStyle "transform" ("rotateY(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the Y-axis
         static member inline rotateY(deg: int) =
             StyleHelper.mkStyle "transform" ("rotateY(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the Z-axis
         static member inline rotateZ(deg: float) =
             StyleHelper.mkStyle "transform" ("rotateZ(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 3D rotation along the Z-axis
         static member inline rotateZ(deg: int) =
             StyleHelper.mkStyle "transform" ("rotateZ(" + (unbox<string> deg) + "deg)")
+
         /// Defines a 2D skew transformation along the X- and the Y-axis.
         static member inline skew(xAngle: int, yAngle: int) =
-            StyleHelper.mkStyle "transform" ("skew(" + (unbox<string> xAngle) + "deg," + (unbox<string> yAngle) + "deg)")
+            StyleHelper.mkStyle
+                "transform"
+                ("skew(" + (unbox<string> xAngle) + "deg," + (unbox<string> yAngle) + "deg)")
+
         /// Defines a 2D skew transformation along the X- and the Y-axis.
         static member inline skew(xAngle: float, yAngle: float) =
-            StyleHelper.mkStyle "transform" ("skew(" + (unbox<string> xAngle) + "deg," + (unbox<string> yAngle) + "deg)")
+            StyleHelper.mkStyle
+                "transform"
+                ("skew(" + (unbox<string> xAngle) + "deg," + (unbox<string> yAngle) + "deg)")
+
         /// Defines a 2D skew transformation along the X-axis
         static member inline skewX(xAngle: int) =
             StyleHelper.mkStyle "transform" ("skewX(" + (unbox<string> xAngle) + "deg)")
+
         /// Defines a 2D skew transformation along the X-axis
         static member inline skewX(xAngle: float) =
             StyleHelper.mkStyle "transform" ("skewX(" + (unbox<string> xAngle) + "deg)")
+
         /// Defines a 2D skew transformation along the Y-axis
         static member inline skewY(xAngle: int) =
             StyleHelper.mkStyle "transform" ("skewY(" + (unbox<string> xAngle) + "deg)")
+
         /// Defines a 2D skew transformation along the Y-axis
         static member inline skewY(xAngle: float) =
             StyleHelper.mkStyle "transform" ("skewY(" + (unbox<string> xAngle) + "deg)")
+
         /// Defines a perspective view for a 3D transformed element
         static member inline perspective(n: int) =
             StyleHelper.mkStyle "transform" ("perspective(" + (unbox<string> n) + ")")
+
         /// Sets this property to its default value.
         static member inline initial = StyleHelper.mkStyle "transform" "initial"
         /// Inherits this property from its parent element.
@@ -5241,8 +5824,11 @@ module style =
         static member inline reverse = StyleHelper.mkStyle "animationDirection" "reverse"
         /// The animation will be played as normal every odd time (1, 3, 5, etc..) and in reverse direction every even time (2, 4, 6, etc...).
         static member inline alternate = StyleHelper.mkStyle "animationDirection" "alternate"
+
         /// The animation will be played in reverse direction every odd time (1, 3, 5, etc..) and in a normal direction every even time (2,4,6,etc...)
-        static member inline alternateReverse = StyleHelper.mkStyle "animationDirection" "alternate-reverse"
+        static member inline alternateReverse =
+            StyleHelper.mkStyle "animationDirection" "alternate-reverse"
+
         /// Sets this property to its default value
         static member inline initial = StyleHelper.mkStyle "animationDirection" "initial"
         /// Inherits this property from its parent element.
@@ -5265,8 +5851,10 @@ module style =
         static member inline infinite = StyleHelper.mkStyle "animationIterationCount" "infinite"
         /// Sets this property to its default value
         static member inline initial = StyleHelper.mkStyle "animationIterationCount" "initial"
+
         /// Inherits this property from its parent element.
-        static member inline inheritFromParent = StyleHelper.mkStyle "animationIterationCount" "inherit"
+        static member inline inheritFromParent =
+            StyleHelper.mkStyle "animationIterationCount" "inherit"
 
     /// Specifies a style for the element when the animation is not playing (before it starts, after it ends, or both).
     [<Erase>]
@@ -5453,7 +6041,7 @@ module style =
         /// Resets to its inherited value if the property naturally inherits from its parent,
         /// and to its initial value if not.
         static member inline unset = StyleHelper.mkStyle "breakAfter" "unset"
-    
+
     /// Sets the break-inside property of an element.
     ///
     /// The break-inside CSS property sets how page, column, or region breaks should behave inside a generated box. If there is no generated box, the property is ignored.
@@ -5476,11 +6064,11 @@ module style =
         /// Resets to its inherited value if the property naturally inherits from its parent,
         /// and to its initial value if not.
         static member inline unset = StyleHelper.mkStyle "breakInside" "unset"
-    
+
     /// Sets the origin for an element's transformations.
     /// The transform origin is the point around which a transformation is applied.
     [<Erase>]
-    type transformOrigin =        
+    type transformOrigin =
         static member inline initial = StyleHelper.mkStyle "transformOrigin" "initial"
         static member inline inheritFromParent = StyleHelper.mkStyle "transformOrigin" "inherit"
         static member inline revert = StyleHelper.mkStyle "transformOrigin" "revert"
@@ -6118,7 +6706,10 @@ module style =
         static member inline yellow = StyleHelper.mkStyle "textDecorationColor" "#FFFF00"
         static member inline lightYellow = StyleHelper.mkStyle "textDecorationColor" "#FFFFE0"
         static member inline limonChiffon = StyleHelper.mkStyle "textDecorationColor" "#FFFACD"
-        static member inline lightGoldenRodYellow = StyleHelper.mkStyle "textDecorationColor" "#FAFAD2"
+
+        static member inline lightGoldenRodYellow =
+            StyleHelper.mkStyle "textDecorationColor" "#FAFAD2"
+
         static member inline papayaWhip = StyleHelper.mkStyle "textDecorationColor" "#FFEFD5"
         static member inline moccasin = StyleHelper.mkStyle "textDecorationColor" "#FFE4B5"
         static member inline peachPuff = StyleHelper.mkStyle "textDecorationColor" "#FFDAB9"
@@ -6355,7 +6946,7 @@ module style =
         /// style.gridAutoColumns.maxContent
         /// ```
         static member inline maxContent = StyleHelper.mkStyle "gridAutoColumns" "max-content"
-    
+
     /// Specifies the size of an implicitly-created grid row track
     ///
     /// Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows

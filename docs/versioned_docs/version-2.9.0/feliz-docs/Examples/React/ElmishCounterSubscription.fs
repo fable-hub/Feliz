@@ -11,9 +11,9 @@ type Msg =
     | Increment
     | Decrement
 
-type State = { Count : int }
+type State = { Count: int }
 
-let init() = { Count = 0 }, Cmd.none
+let init () = { Count = 0 }, Cmd.none
 
 let update msg state =
     match msg with
@@ -25,26 +25,29 @@ type Main =
 
     [<ReactComponent(true)>]
     static member Main() =
-    
-        let localCount, setLocalCount = React.useState(0)
-        let state, dispatch = React.useElmish(init, update, [| |])
-        let subscriptionId = React.useRef(0)
 
-        let subscribeToTimer() =
+        let localCount, setLocalCount = React.useState (0)
+        let state, dispatch = React.useElmish (init, update, [||])
+        let subscriptionId = React.useRef (0)
+
+        let subscribeToTimer () =
 
             // start the ticking
-            let rec loop = fun () ->
-                // dispatch Increment every second
-                dispatch Increment
-                console.log("Incremented count")
-                let id = setTimeout loop 1000
-                subscriptionId.current <- id
+            let rec loop =
+                fun () ->
+                    // dispatch Increment every second
+                    dispatch Increment
+                    console.log ("Incremented count")
+                    let id = setTimeout loop 1000
+                    subscriptionId.current <- id
 
-            loop()
+            loop ()
             // return IDisposable with cleanup code
-            { new IDisposable with member this.Dispose() = clearTimeout(subscriptionId.current) }
+            { new IDisposable with
+                member this.Dispose() = clearTimeout (subscriptionId.current)
+            }
 
-        React.useEffect(subscribeToTimer, [| |])
+        React.useEffect (subscribeToTimer, [||])
 
         Html.div [
             Html.h1 (state.Count + localCount)
@@ -60,6 +63,6 @@ type Main =
 
             Html.button [
                 prop.text "Increment local state"
-                prop.onClick (fun _ -> setLocalCount(localCount + 1))
+                prop.onClick (fun _ -> setLocalCount (localCount + 1))
             ]
         ]

@@ -13,6 +13,7 @@ module PropHelper =
 
     [<Emit "Object.entries($0)">]
     let inline objectEntries (value: obj) : (string * obj)[] = jsNative
+
 [<StringEnum; RequireQualifiedAccess>]
 type AriaDropEffect =
     /// A duplicate of the source object will be dropped into the target.
@@ -50,28 +51,30 @@ type AriaRelevant =
 module PropHelpers =
     let createClockValue (duration: System.TimeSpan) =
         let inline emptyZero i =
-            if i < 10 then "0" + (unbox<string> i)
-            else unbox<string> i
+            if i < 10 then "0" + (unbox<string> i) else unbox<string> i
 
-        [ duration.Hours
-          duration.Minutes
-          duration.Seconds ]
+        [ duration.Hours; duration.Minutes; duration.Seconds ]
         |> List.map emptyZero
         |> String.concat ":"
         |> fun res -> res + "." + (emptyZero duration.Milliseconds)
 
     let createKeySplines (values: seq<float * float * float * float>) =
         values
-        |> Seq.map (fun (x1,y1,x2,y2) ->
-            (unbox<string> x1) + " " +
-            (unbox<string> y1) + " " +
-            (unbox<string> x2) + " " +
-            (unbox<string> y2))
+        |> Seq.map (fun (x1, y1, x2, y2) ->
+            (unbox<string> x1)
+            + " "
+            + (unbox<string> y1)
+            + " "
+            + (unbox<string> x2)
+            + " "
+            + (unbox<string> y2)
+        )
         |> String.concat "; "
 
     let createOnKey (key: IKeyboardKey, handler: KeyboardEvent -> unit) =
         fun (ev: KeyboardEvent) ->
             let (pressedKey: string, ctrl: bool, shift: bool) = unbox key
+
             match ctrl, shift with
             | true, true when pressedKey.ToLower() = ev.key.ToLower() && ev.ctrlKey && ev.shiftKey -> handler ev
             | true, false when pressedKey.ToLower() = ev.key.ToLower() && ev.ctrlKey -> handler ev
@@ -81,104 +84,112 @@ module PropHelpers =
 
     let createPointsFloat (coordinates: seq<float * float>) =
         coordinates
-        |> Seq.map (fun (x,y) -> (unbox<string> x) + "," + (unbox<string> y))
+        |> Seq.map (fun (x, y) -> (unbox<string> x) + "," + (unbox<string> y))
         |> String.concat " "
 
     let createPointsInt (coordinates: seq<int * int>) =
         coordinates
-        |> Seq.map (fun (x,y) -> (unbox<string> x) + "," + (unbox<string> y))
+        |> Seq.map (fun (x, y) -> (unbox<string> x) + "," + (unbox<string> y))
         |> String.concat " "
 
     let createSvgPathFloat (path: seq<char * (float list list)>) =
         path
         |> Seq.map (fun (cmdType, cmds) ->
-            if cmds.Length = 0 then unbox<string> cmdType
+            if cmds.Length = 0 then
+                unbox<string> cmdType
             else
                 cmds
                 |> Seq.map (unbox<seq<string>> >> String.concat ",")
                 |> String.concat " "
-                |> fun res -> (unbox<string> cmdType) + " " + res)
+                |> fun res -> (unbox<string> cmdType) + " " + res
+        )
         |> String.concat System.Environment.NewLine
 
     let createSvgPathInt (path: seq<char * (int list list)>) =
         path
         |> Seq.map (fun (cmdType, cmds) ->
-            if cmds.Length = 0 then unbox<string> cmdType
+            if cmds.Length = 0 then
+                unbox<string> cmdType
             else
                 cmds
                 |> Seq.map (unbox<seq<string>> >> String.concat ",")
                 |> String.concat " "
-                |> fun res -> (unbox<string> cmdType) + " " + res)
+                |> fun res -> (unbox<string> cmdType) + " " + res
+        )
         |> String.concat System.Environment.NewLine
 
     let dateTimeValueFunc (value: System.DateTime option) (includeTime: bool) =
         match value with
         | None -> ""
         | Some date ->
-            if includeTime
-            then (date.ToString("yyyy-MM-ddThh:mm"))
-            else (date.ToString("yyyy-MM-dd"))
+            if includeTime then
+                (date.ToString("yyyy-MM-ddThh:mm"))
+            else
+                (date.ToString("yyyy-MM-dd"))
 
 /// Represents the native Html properties.
 [<Erase>]
 type prop =
     /// List of types the server accepts, typically a file type.
-    static member inline accept (value: string) = PropHelper.mkAttr "accept" value
+    static member inline accept(value: string) = PropHelper.mkAttr "accept" value
 
     /// List of supported charsets.
-    static member inline acceptCharset (value: string) = PropHelper.mkAttr "acceptCharset" value
+    static member inline acceptCharset(value: string) = PropHelper.mkAttr "acceptCharset" value
 
     /// Defines a keyboard shortcut to activate or add focus to the element.
-    static member inline accessKey (value: string) = PropHelper.mkAttr "accessKey" value
+    static member inline accessKey(value: string) = PropHelper.mkAttr "accessKey" value
 
     /// The URI of a program that processes the information submitted via the form.
-    static member inline action (value: string) = PropHelper.mkAttr "action" value
+    static member inline action(value: string) = PropHelper.mkAttr "action" value
 
     /// Alternative text in case an image can't be displayed.
-    static member inline alt (value: string) = PropHelper.mkAttr "alt" value
+    static member inline alt(value: string) = PropHelper.mkAttr "alt" value
 
     /// Controls the amplitude of the gamma function of a component transfer element when
     /// its type attribute is gamma.
-    static member inline amplitude (value: float) = PropHelper.mkAttr "amplitude" value
+    static member inline amplitude(value: float) = PropHelper.mkAttr "amplitude" value
     /// Controls the amplitude of the gamma function of a component transfer element when
     /// its type attribute is gamma.
-    static member inline amplitude (value: int) = PropHelper.mkAttr "amplitude" value
+    static member inline amplitude(value: int) = PropHelper.mkAttr "amplitude" value
 
     /// Identifies the currently active descendant of a `composite` widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-activedescendant
-    static member inline ariaActiveDescendant (id: string) = PropHelper.mkAttr "aria-activedescendant" id
+    static member inline ariaActiveDescendant(id: string) =
+        PropHelper.mkAttr "aria-activedescendant" id
 
     /// Indicates whether assistive technologies will present all, or only parts
     /// of, the changed region based on the change notifications defined by the
     /// `aria-relevant` attribute.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-atomic
-    static member inline ariaAtomic (value: bool) = PropHelper.mkAttr "aria-atomic" value
+    static member inline ariaAtomic(value: bool) = PropHelper.mkAttr "aria-atomic" value
 
     /// Indicates whether an element, and its subtree, are currently being
     /// updated.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-busy
-    static member inline ariaBusy (value: bool) = PropHelper.mkAttr "aria-busy" value
+    static member inline ariaBusy(value: bool) = PropHelper.mkAttr "aria-busy" value
 
     /// Indicates the current "checked" state of checkboxes, radio buttons, and
     /// other widgets. See related `aria-pressed` and `aria-selected`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-checked
-    static member inline ariaChecked (value: bool) = PropHelper.mkAttr "aria-checked" value
+    static member inline ariaChecked(value: bool) = PropHelper.mkAttr "aria-checked" value
 
     /// Identifies the element (or elements) whose contents or presence are
     /// controlled by the current element. See related `aria-owns`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-controls
-    static member inline ariaControls ([<System.ParamArray>] ids: string []) = PropHelper.mkAttr "aria-controls" (String.concat " " ids)
+    static member inline ariaControls([<System.ParamArray>] ids: string[]) =
+        PropHelper.mkAttr "aria-controls" (String.concat " " ids)
 
     /// Specifies a URI referencing content that describes the object. See
     /// related `aria-describedby`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-describedat
-    static member inline ariaDescribedAt (uri: string) = PropHelper.mkAttr "aria-describedat" uri
+    static member inline ariaDescribedAt(uri: string) =
+        PropHelper.mkAttr "aria-describedat" uri
 
     /// Identifies the element (or elements) that describes the object. See
     /// related `aria-describedat` and `aria-labelledby`.
@@ -189,14 +200,15 @@ type prop =
     /// verbose information.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-describedby
-    static member inline ariaDescribedBy ([<System.ParamArray>] ids: string []) = PropHelper.mkAttr "aria-describedby" (String.concat " " ids)
+    static member inline ariaDescribedBy([<System.ParamArray>] ids: string[]) =
+        PropHelper.mkAttr "aria-describedby" (String.concat " " ids)
 
     /// Indicates that the element is perceivable but disabled, so it is not
     /// editable or otherwise operable. See related `aria-hidden` and
     /// `aria-readonly`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-disabled
-    static member inline ariaDisabled (value: bool) = PropHelper.mkAttr "aria-disabled" value
+    static member inline ariaDisabled(value: bool) = PropHelper.mkAttr "aria-disabled" value
 
     /// Indicates what functions can be performed when the dragged object is
     /// released on the drop target. This allows assistive technologies to
@@ -207,20 +219,22 @@ type prop =
     /// dependent on the object being dragged.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-dropeffect
-    static member inline ariaDropEffect ([<System.ParamArray>] values: AriaDropEffect []) = PropHelper.mkAttr "aria-dropeffect" (values |> unbox<string []> |> String.concat " ")
+    static member inline ariaDropEffect([<System.ParamArray>] values: AriaDropEffect[]) =
+        PropHelper.mkAttr "aria-dropeffect" (values |> unbox<string[]> |> String.concat " ")
 
     /// Indicates whether the element, or another grouping element it controls,
     /// is currently expanded or collapsed.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-expanded
-    static member inline ariaExpanded (value: bool) = PropHelper.mkAttr "aria-expanded" value
+    static member inline ariaExpanded(value: bool) = PropHelper.mkAttr "aria-expanded" value
 
     /// Identifies the next element (or elements) in an alternate reading order
     /// of content which, at the user's discretion, allows assistive technology
     /// to override the general default of reading in document source order.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-flowto
-    static member inline ariaFlowTo ([<System.ParamArray>] ids: string []) = PropHelper.mkAttr "aria-flowto" (String.concat " " ids)
+    static member inline ariaFlowTo([<System.ParamArray>] ids: string[]) =
+        PropHelper.mkAttr "aria-flowto" (String.concat " " ids)
 
     /// Indicates an element's "grabbed" state in a drag-and-drop operation.
     ///
@@ -230,31 +244,31 @@ type prop =
     /// element cannot be grabbed (default).
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-grabbed
-    static member inline ariaGrabbed (value: bool) = PropHelper.mkAttr "aria-grabbed" value
+    static member inline ariaGrabbed(value: bool) = PropHelper.mkAttr "aria-grabbed" value
 
     /// Indicates that the element has a popup context menu or sub-level menu.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-haspopup
-    static member inline ariaHasPopup (value: bool) = PropHelper.mkAttr "aria-haspopup" value
+    static member inline ariaHasPopup(value: bool) = PropHelper.mkAttr "aria-haspopup" value
 
     /// Indicates that the element and all of its descendants are not visible or
     /// perceivable to any user as implemented by the author. See related
     /// `aria-disabled`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-hidden
-    static member inline ariaHidden (value: bool) = PropHelper.mkAttr "aria-hidden" value
+    static member inline ariaHidden(value: bool) = PropHelper.mkAttr "aria-hidden" value
 
     /// Indicates the entered value does not conform to the format expected by
     /// the application.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-invalid
-    static member inline ariaInvalid (value: bool) = PropHelper.mkAttr "aria-invalid" value
+    static member inline ariaInvalid(value: bool) = PropHelper.mkAttr "aria-invalid" value
 
     /// Defines a string value that labels the current element. See related
     /// `aria-labelledby`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-label
-    static member inline ariaLabel (value: string) = PropHelper.mkAttr "aria-label" value
+    static member inline ariaLabel(value: string) = PropHelper.mkAttr "aria-label" value
 
     /// Defines the hierarchical level of an element within a structure.
     ///
@@ -265,25 +279,28 @@ type prop =
     /// equal to 1.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-level
-    static member inline ariaLevel (value: int) = PropHelper.mkAttr "aria-level" value
+    static member inline ariaLevel(value: int) = PropHelper.mkAttr "aria-level" value
 
     /// Identifies the element (or elements) that labels the current element.
     /// See related `aria-label` and `aria-describedby`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-labelledby
-    static member inline ariaLabelledBy ([<System.ParamArray>] ids: string []) = PropHelper.mkAttr "aria-labelledby" (String.concat " " ids)
+    static member inline ariaLabelledBy([<System.ParamArray>] ids: string[]) =
+        PropHelper.mkAttr "aria-labelledby" (String.concat " " ids)
 
     /// Indicates whether a text box accepts multiple lines of input or only a
     /// single line.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-multiline
-    static member inline ariaMultiLine (value: bool) = PropHelper.mkAttr "aria-multiline" value
+    static member inline ariaMultiLine(value: bool) =
+        PropHelper.mkAttr "aria-multiline" value
 
     /// Indicates that the user may select more than one item from the current
     /// selectable descendants.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-multiselectable
-    static member inline ariaMultiSelectable (value: bool) = PropHelper.mkAttr "aria-multiselectable" value
+    static member inline ariaMultiSelectable(value: bool) =
+        PropHelper.mkAttr "aria-multiselectable" value
 
     /// Identifies an element (or elements) in order to define a visual,
     /// functional, or contextual parent/child relationship between DOM elements
@@ -291,173 +308,186 @@ type prop =
     /// See related `aria-controls`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-owns
-    static member inline ariaOwns ([<System.ParamArray>] ids: string []) = PropHelper.mkAttr "aria-owns" (String.concat " " ids)
+    static member inline ariaOwns([<System.ParamArray>] ids: string[]) =
+        PropHelper.mkAttr "aria-owns" (String.concat " " ids)
 
     /// Indicates the current "pressed" state of toggle buttons. See related
     /// `aria-checked` and `aria-selected`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-pressed
-    static member inline ariaPressed (value: bool) = PropHelper.mkAttr "aria-pressed" value
+    static member inline ariaPressed(value: bool) = PropHelper.mkAttr "aria-pressed" value
 
     /// Defines an element's number or position in the current set of listitems
     /// or treeitems. Not required if all elements in the set are present in the
     /// DOM. See related `aria-setsize`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-posinset
-    static member inline ariaPosInSet (value: int) = PropHelper.mkAttr "aria-posinset" value
+    static member inline ariaPosInSet(value: int) = PropHelper.mkAttr "aria-posinset" value
 
     /// Indicates that the element is not editable, but is otherwise operable.
     /// See related `aria-disabled`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-readonly
-    static member inline ariaReadOnly (value: bool) = PropHelper.mkAttr "aria-readonly" value
+    static member inline ariaReadOnly(value: bool) = PropHelper.mkAttr "aria-readonly" value
 
     /// Indicates what user agent change notifications (additions, removals,
     /// etc.) assistive technologies will receive within a live region. See
     /// related `aria-atomic`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-relevant
-    static member inline ariaRelevant ([<System.ParamArray>] values: AriaRelevant []) = PropHelper.mkAttr "aria-relevant" (values |> unbox<string []> |> String.concat " ")
+    static member inline ariaRelevant([<System.ParamArray>] values: AriaRelevant[]) =
+        PropHelper.mkAttr "aria-relevant" (values |> unbox<string[]> |> String.concat " ")
 
     /// Indicates that user input is required on the element before a form may
     /// be submitted.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-required
-    static member inline ariaRequired (value: bool) = PropHelper.mkAttr "aria-required" value
+    static member inline ariaRequired(value: bool) = PropHelper.mkAttr "aria-required" value
 
     /// Defines a human-readable, author-localized description for the role of an element.
     ///
     /// https://www.w3.org/WAI/PF/wai-aria-1.1/states_and_properties#aria-roledescription
-    static member inline ariaRoleDescription (value: string) = PropHelper.mkAttr "aria-roledescription" value
+    static member inline ariaRoleDescription(value: string) =
+        PropHelper.mkAttr "aria-roledescription" value
 
     /// Indicates the current "selected" state of various widgets. See related
     /// `aria-checked` and `aria-pressed`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-selected
-    static member inline ariaSelected (value: bool) = PropHelper.mkAttr "aria-selected" value
+    static member inline ariaSelected(value: bool) = PropHelper.mkAttr "aria-selected" value
 
     /// Defines the maximum allowed value for a range widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuemax
-    static member inline ariaValueMax (value: float) = PropHelper.mkAttr "aria-valuemax" value
+    static member inline ariaValueMax(value: float) = PropHelper.mkAttr "aria-valuemax" value
     /// Defines the maximum allowed value for a range widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuemax
-    static member inline ariaValueMax (value: int) = PropHelper.mkAttr "aria-valuemax" value
+    static member inline ariaValueMax(value: int) = PropHelper.mkAttr "aria-valuemax" value
 
     /// Defines the minimum allowed value for a range widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuemin
-    static member inline ariaValueMin (value: float) = PropHelper.mkAttr "aria-valuemin" value
+    static member inline ariaValueMin(value: float) = PropHelper.mkAttr "aria-valuemin" value
     /// Defines the minimum allowed value for a range widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuemin
-    static member inline ariaValueMin (value: int) = PropHelper.mkAttr "aria-valuemin" value
+    static member inline ariaValueMin(value: int) = PropHelper.mkAttr "aria-valuemin" value
 
     /// Defines the current value for a range widget. See related
     /// `aria-valuetext`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuenow
-    static member inline ariaValueNow (value: float) = PropHelper.mkAttr "aria-valuenow" value
+    static member inline ariaValueNow(value: float) = PropHelper.mkAttr "aria-valuenow" value
     /// Defines the current value for a range widget. See related
     /// `aria-valuetext`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuenow
-    static member inline ariaValueNow (value: int) = PropHelper.mkAttr "aria-valuenow" value
+    static member inline ariaValueNow(value: int) = PropHelper.mkAttr "aria-valuenow" value
 
     /// Defines the human readable text alternative of `aria-valuenow` for a
     /// range widget.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-valuetext
-    static member inline ariaValueText (value: string) = PropHelper.mkAttr "aria-valuetext" value
+    static member inline ariaValueText(value: string) =
+        PropHelper.mkAttr "aria-valuetext" value
 
     /// Defines the number of items in the current set of listitems or
     /// treeitems. Not required if all elements in the set are present in the
     /// DOM. See related `aria-posinset`.
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-setsize
-    static member inline ariaSetSize (value: int) = PropHelper.mkAttr "aria-setsize" value
+    static member inline ariaSetSize(value: int) = PropHelper.mkAttr "aria-setsize" value
 
     /// Indicates that the script should be executed asynchronously.
-    static member inline async (value: bool) = PropHelper.mkAttr "async" value
+    static member inline async(value: bool) = PropHelper.mkAttr "async" value
 
     /// Indicates the name of the CSS property or attribute of the target element
     /// that is going to be changed during an animation.
-    static member inline attributeName (value: string) = PropHelper.mkAttr "attributeName" value
+    static member inline attributeName(value: string) = PropHelper.mkAttr "attributeName" value
 
     /// Indicates whether controls in this form can by default have their values
     /// automatically completed by the browser.
-    static member inline autoComplete (value: string) = PropHelper.mkAttr "autoComplete" value
+    static member inline autoComplete(value: string) = PropHelper.mkAttr "autoComplete" value
 
     /// The element should be automatically focused after the page loaded.
-    static member inline autoFocus (value: bool) = PropHelper.mkAttr "autoFocus" value
+    static member inline autoFocus(value: bool) = PropHelper.mkAttr "autoFocus" value
 
     /// The audio or video should play as soon as possible.
-    static member inline autoPlay (value: bool) = PropHelper.mkAttr "autoPlay" value
+    static member inline autoPlay(value: bool) = PropHelper.mkAttr "autoPlay" value
 
     /// Specifies the direction angle for the light source on the XY plane (clockwise),
     /// in degrees from the x axis.
-    static member inline azimuth (value: float) = PropHelper.mkAttr "azimuth" value
+    static member inline azimuth(value: float) = PropHelper.mkAttr "azimuth" value
     /// Specifies the direction angle for the light source on the XY plane (clockwise),
     /// in degrees from the x axis.
-    static member inline azimuth (value: int) = PropHelper.mkAttr "azimuth" value
+    static member inline azimuth(value: int) = PropHelper.mkAttr "azimuth" value
 
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (value: float) = PropHelper.mkAttr "baseFrequency" value
+    static member inline baseFrequency(value: float) = PropHelper.mkAttr "baseFrequency" value
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (value: int) = PropHelper.mkAttr "baseFrequency" value
+    static member inline baseFrequency(value: int) = PropHelper.mkAttr "baseFrequency" value
+
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (horizontal: float, vertical: float) = PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal  + "," + unbox<string> vertical)
+    static member inline baseFrequency(horizontal: float, vertical: float) =
+        PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal + "," + unbox<string> vertical)
+
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (horizontal: float, vertical: int) = PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal  + "," + unbox<string> vertical)
+    static member inline baseFrequency(horizontal: float, vertical: int) =
+        PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal + "," + unbox<string> vertical)
+
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (horizontal: int, vertical: float) = PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal  + "," + unbox<string> vertical)
+    static member inline baseFrequency(horizontal: int, vertical: float) =
+        PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal + "," + unbox<string> vertical)
+
     /// Represents the base frequency parameter for the noise function of the
     /// <feTurbulence> filter primitive.
-    static member inline baseFrequency (horizontal: int, vertical: int) = PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal  + "," + unbox<string> vertical)
+    static member inline baseFrequency(horizontal: int, vertical: int) =
+        PropHelper.mkAttr "baseFrequency" (unbox<string> horizontal + "," + unbox<string> vertical)
 
     /// Defines when an animation should begin or when an element should be discarded.
-    static member inline begin' (value: string) = PropHelper.mkAttr "begin" value
+    static member inline begin'(value: string) = PropHelper.mkAttr "begin" value
 
     /// Shifts the range of the filter. After applying the kernelMatrix of the <feConvolveMatrix>
     /// element to the input image to yield a number and applied the divisor attribute, the bias
     /// attribute is added to each component. This allows representation of values that would
     /// otherwise be clamped to 0 or 1.
-    static member inline bias (value: float) = PropHelper.mkAttr "bias" value
+    static member inline bias(value: float) = PropHelper.mkAttr "bias" value
     /// Shifts the range of the filter. After applying the kernelMatrix of the <feConvolveMatrix>
     /// element to the input image to yield a number and applied the divisor attribute, the bias
     /// attribute is added to each component. This allows representation of values that would
     /// otherwise be clamped to 0 or 1.
-    static member inline bias (value: int) = PropHelper.mkAttr "bias" value
+    static member inline bias(value: int) = PropHelper.mkAttr "bias" value
 
     /// Specifies a relative offset value for an attribute that will be modified during an animation.
-    static member inline by (value: float) = PropHelper.mkAttr "by" value
+    static member inline by(value: float) = PropHelper.mkAttr "by" value
     /// Specifies a relative offset value for an attribute that will be modified during an animation.
-    static member inline by (value: int) = PropHelper.mkAttr "by" value
+    static member inline by(value: int) = PropHelper.mkAttr "by" value
     /// Specifies a relative offset value for an attribute that will be modified during an animation.
-    static member inline by (value: string) = PropHelper.mkAttr "by" value
+    static member inline by(value: string) = PropHelper.mkAttr "by" value
 
-    static member inline capture (value: bool) = PropHelper.mkAttr "capture" value
+    static member inline capture(value: bool) = PropHelper.mkAttr "capture" value
 
     /// This attribute declares the document's character encoding. Must be used in the meta tag.
-    static member inline charset (value: string) = PropHelper.mkAttr "charSet" value
+    static member inline charset(value: string) = PropHelper.mkAttr "charSet" value
 
     /// Children of this React element.
-    static member inline children (value: ReactElement) = PropHelper.mkAttr "children" [value]
+    static member inline children(value: ReactElement) = PropHelper.mkAttr "children" [ value ]
     /// Children of this React element.
-    static member inline children (elems: ReactElement seq) = PropHelper.mkAttr "children" elems
+    static member inline children(elems: ReactElement seq) = PropHelper.mkAttr "children" elems
 
     /// A URL that designates a source document or message for the information quoted. This attribute is intended to
     /// point to information explaining the context or the reference for the quote.
-    static member inline cite (value: string) = PropHelper.mkAttr "cite" value
+    static member inline cite(value: string) = PropHelper.mkAttr "cite" value
 
     /// Specifies a CSS class for this element.
-    static member inline className (value: string) = PropHelper.mkAttr "className" value
+    static member inline className(value: string) = PropHelper.mkAttr "className" value
+
     /// Takes a `seq<string>` and joins them using a space to combine the classes into a single class property.
     ///
     /// `prop.className [ "one"; "two" ]`
@@ -465,110 +495,121 @@ type prop =
     /// is the same as
     ///
     /// `prop.className "one two"`
-    static member inline className (names: seq<string>) = PropHelper.mkAttr "className" (String.concat " " names)
+    static member inline className(names: seq<string>) =
+        PropHelper.mkAttr "className" (String.concat " " names)
 
     /// Takes a `seq<string>` and joins them using a space to combine the classes into a single class property.
     ///
     /// `prop.classes [ "one"; "two" ]` => `prop.className "one two"`
-    static member inline classes (names: seq<string>) = PropHelper.mkAttr "className" (String.concat " " names)
+    static member inline classes(names: seq<string>) =
+        PropHelper.mkAttr "className" (String.concat " " names)
 
     /// Defines the number of columns in a textarea.
-    static member inline cols (value: int) = PropHelper.mkAttr "cols" value
+    static member inline cols(value: int) = PropHelper.mkAttr "cols" value
 
     /// Defines the number of columns a cell should span.
-    static member inline colSpan (value: int) = PropHelper.mkAttr "colSpan" value
+    static member inline colSpan(value: int) = PropHelper.mkAttr "colSpan" value
 
     /// A value associated with http-equiv or name depending on the context.
-    static member inline content (value: string) = PropHelper.mkAttr "content" value
+    static member inline content(value: string) = PropHelper.mkAttr "content" value
 
     /// Indicates whether the element's content is editable.
-    static member inline contentEditable (value: bool) = PropHelper.mkAttr "contentEditable" value
+    static member inline contentEditable(value: bool) =
+        PropHelper.mkAttr "contentEditable" value
 
     /// If true, the browser will offer controls to allow the user to control video playback,
     /// including volume, seeking, and pause/resume playback.
-    static member inline controls (value: bool) = PropHelper.mkAttr "controls" value
+    static member inline controls(value: bool) = PropHelper.mkAttr "controls" value
 
     /// Create a custom prop
     ///
     /// You generally shouldn't need to use this, if you notice a core React/Html attribute missing please submit an issue.
-    static member inline custom (key: string, value: 't) = PropHelper.mkAttr key value
+    static member inline custom(key: string, value: 't) = PropHelper.mkAttr key value
 
     /// The SVG cx attribute define the x-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cx (value: float) = PropHelper.mkAttr "cx" value
+    static member inline cx(value: float) = PropHelper.mkAttr "cx" value
     /// The SVG cx attribute define the x-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cx (value: ICssUnit) = PropHelper.mkAttr "cx" value
+    static member inline cx(value: ICssUnit) = PropHelper.mkAttr "cx" value
     /// The SVG cx attribute define the x-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cx (value: int) = PropHelper.mkAttr "cx" value
+    static member inline cx(value: int) = PropHelper.mkAttr "cx" value
 
     /// The SVG cy attribute define the y-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cy (value: float) = PropHelper.mkAttr "cy" value
+    static member inline cy(value: float) = PropHelper.mkAttr "cy" value
     /// The SVG cy attribute define the y-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cy (value: ICssUnit) = PropHelper.mkAttr "cy" value
+    static member inline cy(value: ICssUnit) = PropHelper.mkAttr "cy" value
     /// The SVG cy attribute define the y-axis coordinate of a center point.
     ///
     /// Three elements are using this attribute: <circle>, <ellipse>, and <radialGradient>
-    static member inline cy (value: int) = PropHelper.mkAttr "cy" value
+    static member inline cy(value: int) = PropHelper.mkAttr "cy" value
 
     /// Defines a SVG path to be drawn.
-    static member inline d (path: seq<char * (float list list)>) =
-        PropHelpers.createSvgPathFloat path
-        |> PropHelper.mkAttr "d"
+    static member inline d(path: seq<char * (float list list)>) =
+        PropHelpers.createSvgPathFloat path |> PropHelper.mkAttr "d"
+
     /// Defines a SVG path to be drawn.
-    static member inline d (path: seq<char * (int list list)>) =
-        PropHelpers.createSvgPathInt path
-        |> PropHelper.mkAttr "d"
+    static member inline d(path: seq<char * (int list list)>) =
+        PropHelpers.createSvgPathInt path |> PropHelper.mkAttr "d"
+
     /// Defines a SVG path to be drawn.
-    static member inline d (path: string) = PropHelper.mkAttr "d" path
+    static member inline d(path: string) = PropHelper.mkAttr "d" path
 
     /// Sets the inner Html content of the element.
-    static member inline dangerouslySetInnerHTML (content: string) = PropHelper.mkAttr "dangerouslySetInnerHTML" (createObj [ "__html" ==> content ])
+    static member inline dangerouslySetInnerHTML(content: string) =
+        PropHelper.mkAttr "dangerouslySetInnerHTML" (createObj [ "__html" ==> content ])
 
     /// This attribute indicates the time and/or date of the element.
-    static member inline dateTime (value: string) = PropHelper.mkAttr "dateTime" value
+    static member inline dateTime(value: string) = PropHelper.mkAttr "dateTime" value
 
     /// Sets the DOM defaultChecked value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultChecked (value: bool) = PropHelper.mkAttr "defaultChecked" value
+    static member inline defaultChecked(value: bool) =
+        PropHelper.mkAttr "defaultChecked" value
 
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: bool) = PropHelper.mkAttr "defaultValue" value
+    static member inline defaultValue(value: bool) = PropHelper.mkAttr "defaultValue" value
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: float) = PropHelper.mkAttr "defaultValue" value
+    static member inline defaultValue(value: float) = PropHelper.mkAttr "defaultValue" value
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: int) = PropHelper.mkAttr "defaultValue" value
+    static member inline defaultValue(value: int) = PropHelper.mkAttr "defaultValue" value
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: string) = PropHelper.mkAttr "defaultValue" value
+    static member inline defaultValue(value: string) = PropHelper.mkAttr "defaultValue" value
+
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: seq<float>) = PropHelper.mkAttr "defaultValue" (ResizeArray value)
+    static member inline defaultValue(value: seq<float>) =
+        PropHelper.mkAttr "defaultValue" (ResizeArray value)
+
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: seq<int>) = PropHelper.mkAttr "defaultValue" (ResizeArray value)
+    static member inline defaultValue(value: seq<int>) =
+        PropHelper.mkAttr "defaultValue" (ResizeArray value)
+
     /// Sets the DOM defaultValue value when initially rendered.
     ///
     /// Typically only used with uncontrolled components.
-    static member inline defaultValue (value: seq<string>) = PropHelper.mkAttr "defaultValue" (ResizeArray value)
+    static member inline defaultValue(value: seq<string>) =
+        PropHelper.mkAttr "defaultValue" (ResizeArray value)
 
     /// Indicates to a browser that the script is meant to be executed after the document
     /// has been parsed, but before firing DOMContentLoaded.
@@ -578,22 +619,25 @@ type prop =
     ///
     /// This attribute must not be used if the src attribute is absent (i.e. for inline scripts),
     /// in this case it would have no effect.
-    static member inline defer (value: bool) = PropHelper.mkAttr "defer" value
+    static member inline defer(value: bool) = PropHelper.mkAttr "defer" value
 
     /// Represents the kd value in the Phong lighting model.
     ///
     /// In SVG, this can be any non-negative number.
-    static member inline diffuseConstant (value: float) = PropHelper.mkAttr "diffuseConstant" value
+    static member inline diffuseConstant(value: float) =
+        PropHelper.mkAttr "diffuseConstant" value
+
     /// Represents the kd value in the Phong lighting model.
     ///
     /// In SVG, this can be any non-negative number.
-    static member inline diffuseConstant (value: int) = PropHelper.mkAttr "diffuseConstant" value
+    static member inline diffuseConstant(value: int) =
+        PropHelper.mkAttr "diffuseConstant" value
 
     /// Sets the directionality of the element.
-    static member inline dirName (value: string) = PropHelper.mkAttr "dirName" value
+    static member inline dirName(value: string) = PropHelper.mkAttr "dirName" value
 
     /// Indicates whether the user can interact with the element.
-    static member inline disabled (value: bool) = PropHelper.mkAttr "disabled" value
+    static member inline disabled(value: bool) = PropHelper.mkAttr "disabled" value
 
     /// Specifies the value by which the resulting number of applying the kernelMatrix
     /// of a <feConvolveMatrix> element to the input image color value is divided to
@@ -601,84 +645,88 @@ type prop =
     ///
     /// A divisor that is the sum of all the matrix values tends to have an evening
     /// effect on the overall color intensity of the result.
-    static member inline divisor (value: float) = PropHelper.mkAttr "divisor" value
+    static member inline divisor(value: float) = PropHelper.mkAttr "divisor" value
     /// Specifies the value by which the resulting number of applying the kernelMatrix
     /// of a <feConvolveMatrix> element to the input image color value is divided to
     /// yield the destination color value.
     ///
     /// A divisor that is the sum of all the matrix values tends to have an evening
     /// effect on the overall color intensity of the result.
-    static member inline divisor (value: int) = PropHelper.mkAttr "divisor" value
+    static member inline divisor(value: int) = PropHelper.mkAttr "divisor" value
 
     /// This attribute, if present, indicates that the author intends the hyperlink to be used for downloading a resource.
-    static member inline download (value: bool) = PropHelper.mkAttr "download" value
+    static member inline download(value: bool) = PropHelper.mkAttr "download" value
 
     /// This attribute, if present, indicates that the author intends the hyperlink to be used for downloading a resource.
     /// The value specifies the default file name for use in labeling the resource in a local file system.
-    static member inline download (value: string) = PropHelper.mkAttr "download" value
+    static member inline download(value: string) = PropHelper.mkAttr "download" value
 
     /// Indicates whether the the element can be dragged.
-    static member inline draggable (value: bool) = PropHelper.mkAttr "draggable" value
+    static member inline draggable(value: bool) = PropHelper.mkAttr "draggable" value
 
     /// SVG attribute to indicate a shift along the x-axis on the position of an element or its content.
-    static member inline dx (value: float) = PropHelper.mkAttr "dx" value
+    static member inline dx(value: float) = PropHelper.mkAttr "dx" value
     /// SVG attribute to indicate a shift along the x-axis on the position of an element or its content.
-    static member inline dx (value: int) = PropHelper.mkAttr "dx" value
+    static member inline dx(value: int) = PropHelper.mkAttr "dx" value
 
     /// SVG attribute to indicate a shift along the y-axis on the position of an element or its content.
-    static member inline dy (value: float) = PropHelper.mkAttr "dy" value
+    static member inline dy(value: float) = PropHelper.mkAttr "dy" value
     /// SVG attribute to indicate a shift along the y-axis on the position of an element or its content.
-    static member inline dy (value: int) = PropHelper.mkAttr "dy" value
+    static member inline dy(value: int) = PropHelper.mkAttr "dy" value
 
     /// SVG attribute that specifies the direction angle for the light source from the XY plane towards
     /// the Z-axis, in degrees.
     ///
     /// Note that the positive Z-axis points towards the viewer of the content.
-    static member inline elevation (value: float) = PropHelper.mkAttr "elevation" value
+    static member inline elevation(value: float) = PropHelper.mkAttr "elevation" value
     /// SVG attribute that specifies the direction angle for the light source from the XY plane towards
     /// the Z-axis, in degrees.
     ///
     /// Note that the positive Z-axis points towards the viewer of the content.
-    static member inline elevation (value: int) = PropHelper.mkAttr "elevation" value
+    static member inline elevation(value: int) = PropHelper.mkAttr "elevation" value
 
     /// Defines an end value for the animation that can constrain the active duration.
-    static member inline end' (value: string) = PropHelper.mkAttr "end" value
+    static member inline end'(value: string) = PropHelper.mkAttr "end" value
+
     /// Defines an end value for the animation that can constrain the active duration.
-    static member inline end' (values: seq<string>) = PropHelper.mkAttr "end" (String.concat ";" values)
+    static member inline end'(values: seq<string>) =
+        PropHelper.mkAttr "end" (String.concat ";" values)
 
     /// Defines the exponent of the gamma function.
-    static member inline exponent (value: float) = PropHelper.mkAttr "exponent" value
+    static member inline exponent(value: float) = PropHelper.mkAttr "exponent" value
     /// Defines the exponent of the gamma function.
-    static member inline exponent (value: int) = PropHelper.mkAttr "exponent" value
+    static member inline exponent(value: int) = PropHelper.mkAttr "exponent" value
 
     /// Defines the files that will be uploaded when using an input element of the file type.
-    static member inline files (value: FileList) = PropHelper.mkAttr "files" value
+    static member inline files(value: FileList) = PropHelper.mkAttr "files" value
 
     /// SVG attribute to define the opacity of the paint server (color, gradient, pattern, etc) applied to a shape.
-    static member inline fillOpacity (value: float) = PropHelper.mkAttr "fillOpacity" value
+    static member inline fillOpacity(value: float) = PropHelper.mkAttr "fillOpacity" value
     /// SVG attribute to define the opacity of the paint server (color, gradient, pattern, etc) applied to a shape.
-    static member inline fillOpacity (value: int) = PropHelper.mkAttr "fillOpacity" value
+    static member inline fillOpacity(value: int) = PropHelper.mkAttr "fillOpacity" value
 
     /// SVG attribute to define the size of the font from baseline to baseline when multiple
     /// lines of text are set solid in a multiline layout environment.
-    static member inline fontSize (value: float) = PropHelper.mkAttr "fontSize" value
+    static member inline fontSize(value: float) = PropHelper.mkAttr "fontSize" value
     /// SVG attribute to define the size of the font from baseline to baseline when multiple
     /// lines of text are set solid in a multiline layout environment.
-    static member inline fontSize (value: int) = PropHelper.mkAttr "fontSize" value
+    static member inline fontSize(value: int) = PropHelper.mkAttr "fontSize" value
 
     /// A space-separated list of other elements’ ids, indicating that those elements contributed input
     /// values to (or otherwise affected) the calculation.
-    static member inline for' (value: string) = PropHelper.mkAttr "for" value
+    static member inline for'(value: string) = PropHelper.mkAttr "for" value
+
     /// A space-separated list of other elements’ ids, indicating that those elements contributed input
     /// values to (or otherwise affected) the calculation.
-    static member inline for' (ids: #seq<string>) = PropHelper.mkAttr "for" (ids |> String.concat " ")
+    static member inline for'(ids: #seq<string>) =
+        PropHelper.mkAttr "for" (ids |> String.concat " ")
 
     /// The <form> element to associate the <meter> element with (its form owner). The value of this
     /// attribute must be the id of a <form> in the same document. If this attribute is not set, the
     /// <button> is associated with its ancestor <form> element, if any. This attribute is only used
     /// if the <meter> element is being used as a form-associated element, such as one displaying a
     /// range corresponding to an <input type="number">.
-    static member inline form (value: string) = PropHelper.mkAttr "form" value
+    static member inline form(value: string) = PropHelper.mkAttr "form" value
 
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
@@ -687,7 +735,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (value: float) = PropHelper.mkAttr "from" value
+    static member inline from(value: float) = PropHelper.mkAttr "from" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -695,7 +744,9 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (values: seq<float>) = PropHelper.mkAttr "from" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline from(values: seq<float>) =
+        PropHelper.mkAttr "from" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -703,7 +754,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (value: int) = PropHelper.mkAttr "from" value
+    static member inline from(value: int) = PropHelper.mkAttr "from" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -711,7 +763,9 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (values: seq<int>) = PropHelper.mkAttr "from" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline from(values: seq<int>) =
+        PropHelper.mkAttr "from" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -719,7 +773,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (value: string) = PropHelper.mkAttr "from" value
+    static member inline from(value: string) = PropHelper.mkAttr "from" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -727,28 +782,29 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline from (values: seq<string>) = PropHelper.mkAttr "from" (values |> String.concat " ")
+    static member inline from(values: seq<string>) =
+        PropHelper.mkAttr "from" (values |> String.concat " ")
 
     /// Defines the radius of the focal point for the radial gradient.
-    static member inline fr (value: float) = PropHelper.mkAttr "fr" value
+    static member inline fr(value: float) = PropHelper.mkAttr "fr" value
     /// Defines the radius of the focal point for the radial gradient.
-    static member inline fr (value: int) = PropHelper.mkAttr "fr" value
+    static member inline fr(value: int) = PropHelper.mkAttr "fr" value
     /// Defines the radius of the focal point for the radial gradient.
-    static member inline fr (value: ICssUnit) = PropHelper.mkAttr "fr" value
+    static member inline fr(value: ICssUnit) = PropHelper.mkAttr "fr" value
 
     /// Defines the x-axis coordinate of the focal point for a radial gradient.
-    static member inline fx (value: float) = PropHelper.mkAttr "fx" value
+    static member inline fx(value: float) = PropHelper.mkAttr "fx" value
     /// Defines the x-axis coordinate of the focal point for a radial gradient.
-    static member inline fx (value: int) = PropHelper.mkAttr "fx" value
+    static member inline fx(value: int) = PropHelper.mkAttr "fx" value
     /// Defines the x-axis coordinate of the focal point for a radial gradient.
-    static member inline fx (value: ICssUnit) = PropHelper.mkAttr "fx" value
+    static member inline fx(value: ICssUnit) = PropHelper.mkAttr "fx" value
 
     /// Defines the y-axis coordinate of the focal point for a radial gradient.
-    static member inline fy (value: float) = PropHelper.mkAttr "fy" value
+    static member inline fy(value: float) = PropHelper.mkAttr "fy" value
     /// Defines the y-axis coordinate of the focal point for a radial gradient.
-    static member inline fy (value: int) = PropHelper.mkAttr "fy" value
+    static member inline fy(value: int) = PropHelper.mkAttr "fy" value
     /// Defines the y-axis coordinate of the focal point for a radial gradient.
-    static member inline fy (value: ICssUnit) = PropHelper.mkAttr "fy" value
+    static member inline fy(value: ICssUnit) = PropHelper.mkAttr "fy" value
 
     /// Defines an optional additional transformation from the gradient coordinate system
     /// onto the target coordinate system (i.e., userSpaceOnUse or objectBoundingBox).
@@ -757,8 +813,9 @@ type prop =
     /// matrix is post-multiplied to (i.e., inserted to the right of) any previously defined
     /// transformations, including the implicit transformation necessary to convert from object
     /// bounding box units to user space.
-    static member inline gradientTransform (transform: ITransformProperty) =
+    static member inline gradientTransform(transform: ITransformProperty) =
         PropHelper.mkAttr "gradientTransform" (unbox<string> transform)
+
     /// Defines optional additional transformation(s) from the gradient coordinate system
     /// onto the target coordinate system (i.e., userSpaceOnUse or objectBoundingBox).
     ///
@@ -766,11 +823,11 @@ type prop =
     /// matrix is post-multiplied to (i.e., inserted to the right of) any previously defined
     /// transformations, including the implicit transformation necessary to convert from object
     /// bounding box units to user space.
-    static member inline gradientTransform (transforms: seq<ITransformProperty>) =
+    static member inline gradientTransform(transforms: seq<ITransformProperty>) =
         PropHelper.mkAttr "gradientTransform" (unbox<seq<string>> transforms |> String.concat " ")
 
     /// Prevents rendering of given element, while keeping child elements, e.g. script elements, active.
-    static member inline hidden (value: bool) = PropHelper.mkAttr "hidden" value
+    static member inline hidden(value: bool) = PropHelper.mkAttr "hidden" value
 
     /// Specifies the height of elements listed here. For all other elements, use the CSS height property.
     ///
@@ -780,7 +837,7 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline height (value: float) = PropHelper.mkAttr "height" value
+    static member inline height(value: float) = PropHelper.mkAttr "height" value
     /// Specifies the height of elements listed here. For all other elements, use the CSS height property.
     ///
     /// HTML: <canvas>, <embed>, <iframe>, <img>, <input>, <object>, <video>
@@ -789,7 +846,7 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline height (value: ICssUnit) = PropHelper.mkAttr "height" value
+    static member inline height(value: ICssUnit) = PropHelper.mkAttr "height" value
     /// Specifies the height of elements listed here. For all other elements, use the CSS height property.
     ///
     /// HTML: <canvas>, <embed>, <iframe>, <img>, <input>, <object>, <video>
@@ -798,88 +855,94 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline height (value: int) = PropHelper.mkAttr "height" value
+    static member inline height(value: int) = PropHelper.mkAttr "height" value
 
     /// The lower numeric bound of the high end of the measured range. This must be less than the
     /// maximum value (max attribute), and it also must be greater than the low value and minimum
     /// value (low attribute and min attribute, respectively), if any are specified. If unspecified,
     /// or if greater than the maximum value, the high value is equal to the maximum value.
-    static member inline high (value: float) = PropHelper.mkAttr "high" value
+    static member inline high(value: float) = PropHelper.mkAttr "high" value
     /// The lower numeric bound of the high end of the measured range. This must be less than the
     /// maximum value (max attribute), and it also must be greater than the low value and minimum
     /// value (low attribute and min attribute, respectively), if any are specified. If unspecified,
     /// or if greater than the maximum value, the high value is equal to the maximum value.
-    static member inline high (value: int) = PropHelper.mkAttr "high" value
+    static member inline high(value: int) = PropHelper.mkAttr "high" value
 
     /// The URL of a linked resource.
-    static member inline href (value: string) = PropHelper.mkAttr "href" value
+    static member inline href(value: string) = PropHelper.mkAttr "href" value
 
     /// Indicates the language of the linked resource. Allowed values are determined by BCP47.
     ///
     /// Use this attribute only if the href attribute is present.
-    static member inline hrefLang (value: string) = PropHelper.mkAttr "hreflang" value
+    static member inline hrefLang(value: string) = PropHelper.mkAttr "hreflang" value
 
-    static member inline htmlFor (value: string) = PropHelper.mkAttr "htmlFor" value
+    static member inline htmlFor(value: string) = PropHelper.mkAttr "htmlFor" value
 
     /// Often used with CSS to style a specific element. The value of this attribute must be unique.
-    static member inline id (value: int) = PropHelper.mkAttr "id" (unbox<string> value)
+    static member inline id(value: int) =
+        PropHelper.mkAttr "id" (unbox<string> value)
+
     /// Often used with CSS to style a specific element. The value of this attribute must be unique.
-    static member inline id (value: string) = PropHelper.mkAttr "id" value
+    static member inline id(value: string) = PropHelper.mkAttr "id" value
 
     /// Alias for `dangerouslySetInnerHTML`, sets the inner Html content of the element.
-    static member inline innerHtml (content: string) = PropHelper.mkAttr "dangerouslySetInnerHTML" (createObj [ "__html" ==> content ])
+    static member inline innerHtml(content: string) =
+        PropHelper.mkAttr "dangerouslySetInnerHTML" (createObj [ "__html" ==> content ])
 
     /// Contains inline metadata that a user agent can use to verify that a fetched resource
     /// has been delivered free of unexpected manipulation.
-    static member inline integrity (value: string) = PropHelper.mkAttr "integrity" value
+    static member inline integrity(value: string) = PropHelper.mkAttr "integrity" value
 
     /// Defines the intercept of the linear function of color component transfers when the type
     /// attribute is set to linear.
-    static member inline intercept (value: float) = PropHelper.mkAttr "intercept" value
+    static member inline intercept(value: float) = PropHelper.mkAttr "intercept" value
     /// Defines the intercept of the linear function of color component transfers when the type
     /// attribute is set to linear.
-    static member inline intercept (value: int) = PropHelper.mkAttr "intercept" value
+    static member inline intercept(value: int) = PropHelper.mkAttr "intercept" value
 
     /// Sets the checked attribute for an element.
-    static member inline isChecked (value: bool) = PropHelper.mkAttr "checked" value
+    static member inline isChecked(value: bool) = PropHelper.mkAttr "checked" value
 
     /// Sets the open attribute for an element.
-    static member inline isOpen (value: bool) = PropHelper.mkAttr "open" value
+    static member inline isOpen(value: bool) = PropHelper.mkAttr "open" value
 
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k1 (value: float) = PropHelper.mkAttr "k1" value
+    static member inline k1(value: float) = PropHelper.mkAttr "k1" value
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k1 (value: int) = PropHelper.mkAttr "k1" value
+    static member inline k1(value: int) = PropHelper.mkAttr "k1" value
 
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k2 (value: float) = PropHelper.mkAttr "k2" value
+    static member inline k2(value: float) = PropHelper.mkAttr "k2" value
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k2 (value: int) = PropHelper.mkAttr "k2" value
+    static member inline k2(value: int) = PropHelper.mkAttr "k2" value
 
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k3 (value: float) = PropHelper.mkAttr "k3" value
+    static member inline k3(value: float) = PropHelper.mkAttr "k3" value
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k3 (value: int) = PropHelper.mkAttr "k3" value
+    static member inline k3(value: int) = PropHelper.mkAttr "k3" value
 
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k4 (value: float) = PropHelper.mkAttr "k4" value
+    static member inline k4(value: float) = PropHelper.mkAttr "k4" value
     /// Defines one of the values to be used within the the arithmetic operation of the
     /// <feComposite> filter primitive.
-    static member inline k4 (value: int) = PropHelper.mkAttr "k4" value
+    static member inline k4(value: int) = PropHelper.mkAttr "k4" value
 
     /// Defines the list of numbers that make up the kernel matrix for the
     /// <feConvolveMatrix> element.
-    static member inline kernelMatrix (values: seq<float>) = PropHelper.mkAttr "kernelMatrix" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline kernelMatrix(values: seq<float>) =
+        PropHelper.mkAttr "kernelMatrix" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// Defines the list of numbers that make up the kernel matrix for the
     /// <feConvolveMatrix> element.
-    static member inline kernelMatrix (values: seq<int>) = PropHelper.mkAttr "kernelMatrix" (values |> unbox<seq<string>>  |> String.concat " ")
+    static member inline kernelMatrix(values: seq<int>) =
+        PropHelper.mkAttr "kernelMatrix" (values |> unbox<seq<string>> |> String.concat " ")
 
     /// A special string attribute you need to include when creating arrays of elements.
     /// Keys help React identify which items have changed, are added, or are removed.
@@ -887,14 +950,16 @@ type prop =
     ///
     /// Keys only need to be unique among sibling elements in the same array. They don’t need to
     /// be unique across the whole application or even a single component.
-    static member inline key (value: System.Guid) = PropHelper.mkAttr "key" (unbox<string> value)
+    static member inline key(value: System.Guid) =
+        PropHelper.mkAttr "key" (unbox<string> value)
+
     /// A special string attribute you need to include when creating arrays of elements. Keys help
     /// React identify which items have changed, are added, or are removed. Keys should be given
     /// to the elements inside an array to give the elements a stable identity.
     ///
     /// Keys only need to be unique among sibling elements in the same array. They don’t need to
     /// be unique across the whole application or even a single component.
-    static member inline key (value: int) = PropHelper.mkAttr "key" value
+    static member inline key(value: int) = PropHelper.mkAttr "key" value
     /// A special string attribute you need to include when creating arrays of elements. Keys
     /// help React identify which
     /// items have changed, are added, or are removed. Keys should be given to the elements
@@ -902,11 +967,11 @@ type prop =
     ///
     /// Keys only need to be unique among sibling elements in the same array. They don’t need to
     /// be unique across the whole application or even a single component.
-    static member inline key (value: string) = PropHelper.mkAttr "key" value
+    static member inline key(value: string) = PropHelper.mkAttr "key" value
 
     /// Indicates the simple duration of an animation.
-    static member inline keyPoints (values: seq<float>) =
-        PropHelper.mkAttr "keyPoints" (values |> unbox<seq<string>>  |> String.concat ";")
+    static member inline keyPoints(values: seq<float>) =
+        PropHelper.mkAttr "keyPoints" (values |> unbox<seq<string>> |> String.concat ";")
 
     /// Indicates the simple duration of an animation.
     ///
@@ -918,60 +983,66 @@ type prop =
     /// control points than there are keyTimes.
     ///
     /// The values of x1 y1 x2 y2 must all be in the range 0 to 1.
-    static member inline keySplines (values: seq<float * float * float * float>) =
-        PropHelpers.createKeySplines(values)
-        |> PropHelper.mkAttr "keySplines"
+    static member inline keySplines(values: seq<float * float * float * float>) =
+        PropHelpers.createKeySplines (values) |> PropHelper.mkAttr "keySplines"
 
     /// Indicates the simple duration of an animation.
-    static member inline keyTimes (values: seq<float>) =
+    static member inline keyTimes(values: seq<float>) =
         PropHelper.mkAttr "keyTimes" (values |> unbox<seq<string>> |> String.concat ";")
 
     /// Helps define the language of an element: the language that non-editable elements are
     /// written in, or the language that the editable elements should be written in by the user.
-    static member inline lang (value: string) = PropHelper.mkAttr "lang" value
+    static member inline lang(value: string) = PropHelper.mkAttr "lang" value
     /// Specifies a user-readable title of the element.
-    static member inline label (value: string) = PropHelper.mkAttr "label" value
+    static member inline label(value: string) = PropHelper.mkAttr "label" value
+
     /// Defines the color of the light source for lighting filter primitives.
-    static member inline lightingColor (value: string) = PropHelper.mkAttr "lighting-color" value
+    static member inline lightingColor(value: string) =
+        PropHelper.mkAttr "lighting-color" value
 
     /// Represents the angle in degrees between the spot light axis (i.e. the axis between the
     /// light source and the point to which it is pointing at) and the spot light cone. So it
     /// defines a limiting cone which restricts the region where the light is projected.
     ///
     /// No light is projected outside the cone.
-    static member inline limitingConeAngle (value: float) = PropHelper.mkAttr "limitingConeAngle" value
+    static member inline limitingConeAngle(value: float) =
+        PropHelper.mkAttr "limitingConeAngle" value
+
     /// Represents the angle in degrees between the spot light axis (i.e. the axis between the
     /// light source and the point to which it is pointing at) and the spot light cone. So it
     /// defines a limiting cone which restricts the region where the light is projected.
     ///
     /// No light is projected outside the cone.
-    static member inline limitingConeAngle (value: int) = PropHelper.mkAttr "limitingConeAngle" value
+    static member inline limitingConeAngle(value: int) =
+        PropHelper.mkAttr "limitingConeAngle" value
 
     /// Value of the id attribute of the <c>datalist</c> of autocomplete options
-    static member inline list (value : string) = PropHelper.mkAttr "list" value
+    static member inline list(value: string) = PropHelper.mkAttr "list" value
 
     /// If true, the browser will automatically seek back to the start upon reaching the end of the video.
-    static member inline loop (value: bool) = PropHelper.mkAttr "loop" value
+    static member inline loop(value: bool) = PropHelper.mkAttr "loop" value
 
     /// The upper numeric bound of the low end of the measured range. This must be greater than
     /// the minimum value (min attribute), and it also must be less than the high value and
     /// maximum value (high attribute and max attribute, respectively), if any are specified.
     /// If unspecified, or if less than the minimum value, the low value is equal to the minimum value.
-    static member inline low (value: float) = PropHelper.mkAttr "low" value
+    static member inline low(value: float) = PropHelper.mkAttr "low" value
     /// The upper numeric bound of the low end of the measured range. This must be greater than
     /// the minimum value (min attribute), and it also must be less than the high value and
     /// maximum value (high attribute and max attribute, respectively), if any are specified.
     /// If unspecified, or if less than the minimum value, the low value is equal to the minimum value.
-    static member inline low (value: int) = PropHelper.mkAttr "low" value
+    static member inline low(value: int) = PropHelper.mkAttr "low" value
     /// Indicates the maximum value allowed.
-    static member inline max (value: float) = PropHelper.mkAttr "max" value
+    static member inline max(value: float) = PropHelper.mkAttr "max" value
     /// Indicates the maximum value allowed.
-    static member inline max (value: int) = PropHelper.mkAttr "max" value
+    static member inline max(value: int) = PropHelper.mkAttr "max" value
+
     /// Indicates the maximum value allowed.
-    static member inline max (value: DateTime) = PropHelper.mkAttr "max" (value.ToString("yyyy-MM-dd"))
+    static member inline max(value: DateTime) =
+        PropHelper.mkAttr "max" (value.ToString("yyyy-MM-dd"))
 
     /// Defines the maximum number of characters allowed in the element.
-    static member inline maxLength (value: int) = PropHelper.mkAttr "maxLength" value
+    static member inline maxLength(value: int) = PropHelper.mkAttr "maxLength" value
 
     /// This attribute specifies the media that the linked resource applies to.
     /// Its value must be a media type / media query. This attribute is mainly useful
@@ -987,428 +1058,493 @@ type prop =
     /// Browsers not supporting CSS3 Media Queries won't necessarily recognize the adequate
     /// link; do not forget to set fallback links, the restricted set of media queries
     /// defined in HTML 4.
-    static member inline media (value: string) = PropHelper.mkAttr "media" value
+    static member inline media(value: string) = PropHelper.mkAttr "media" value
 
     /// Defines which HTTP method to use when submitting the form. Can be GET (default) or POST.
-    static member inline method (value: string) = PropHelper.mkAttr "method" value
+    static member inline method(value: string) = PropHelper.mkAttr "method" value
 
     /// Indicates the minimum value allowed.
-    static member inline min (value: float) = PropHelper.mkAttr "min" value
+    static member inline min(value: float) = PropHelper.mkAttr "min" value
     /// Indicates the minimum value allowed.
-    static member inline min (value: int) = PropHelper.mkAttr "min" value
+    static member inline min(value: int) = PropHelper.mkAttr "min" value
+
     /// Indicates the minimum value allowed.
-    static member inline min (value: DateTime) = PropHelper.mkAttr "min" (value.ToString("yyyy-MM-dd"))
+    static member inline min(value: DateTime) =
+        PropHelper.mkAttr "min" (value.ToString("yyyy-MM-dd"))
 
     /// Defines the minimum number of characters allowed in the element.
-    static member inline minLength (value: int) = PropHelper.mkAttr "minLength" value
+    static member inline minLength(value: int) = PropHelper.mkAttr "minLength" value
 
     /// Indicates whether multiple values can be entered in an input of the type email or file.
-    static member inline multiple (value: bool) = PropHelper.mkAttr "multiple" value
+    static member inline multiple(value: bool) = PropHelper.mkAttr "multiple" value
 
     /// Indicates whether the audio will be initially silenced on page load.
-    static member inline muted (value: bool) = PropHelper.mkAttr "muted" value
+    static member inline muted(value: bool) = PropHelper.mkAttr "muted" value
 
     /// Name of the element.
     ///
     /// For example used by the server to identify the fields in form submits.
-    static member inline name (value: string) = PropHelper.mkAttr "name" value
+    static member inline name(value: string) = PropHelper.mkAttr "name" value
 
     /// This Boolean attribute is set to indicate that the script should not be executed in
     /// browsers that support ES2015 modules — in effect, this can be used to serve fallback
     /// scripts to older browsers that do not support modular JavaScript code.
-    static member inline nomodule (value: bool) = PropHelper.mkAttr "nomodule" value
+    static member inline nomodule(value: bool) = PropHelper.mkAttr "nomodule" value
 
     /// A cryptographic nonce (number used once) to whitelist scripts in a script-src
     /// Content-Security-Policy. The server must generate a unique nonce value each time
     /// it transmits a policy. It is critical to provide a nonce that cannot be guessed
     /// as bypassing a resource's policy is otherwise trivial.
-    static member inline nonce (value: string) = PropHelper.mkAttr "nonce" value
+    static member inline nonce(value: string) = PropHelper.mkAttr "nonce" value
 
     /// Defines the number of octaves for the noise function of the <feTurbulence> primitive.
-    static member inline numOctaves (value: int) = PropHelper.mkAttr "numOctaves" value
+    static member inline numOctaves(value: int) = PropHelper.mkAttr "numOctaves" value
 
     /// SVG attribute to define where the gradient color will begin or end.
-    static member inline offset (value: float) = PropHelper.mkAttr "offset" value
+    static member inline offset(value: float) = PropHelper.mkAttr "offset" value
     /// SVG attribute to define where the gradient color will begin or end.
-    static member inline offset (value: ICssUnit) = PropHelper.mkAttr "offset" value
+    static member inline offset(value: ICssUnit) = PropHelper.mkAttr "offset" value
     /// SVG attribute to define where the gradient color will begin or end.
-    static member inline offset (value: int) = PropHelper.mkAttr "offset" value
+    static member inline offset(value: int) = PropHelper.mkAttr "offset" value
 
     /// Fires when a media event is aborted.
-    static member inline onAbort (handler: Event -> unit) = PropHelper.mkAttr "onAbort" handler
+    static member inline onAbort(handler: Event -> unit) = PropHelper.mkAttr "onAbort" handler
 
     /// Fires when animation is aborted.
-    static member inline onAnimationCancel (handler: AnimationEvent -> unit) = PropHelper.mkAttr "onAnimationCancel" handler
+    static member inline onAnimationCancel(handler: AnimationEvent -> unit) =
+        PropHelper.mkAttr "onAnimationCancel" handler
 
     /// Fires when animation ends.
-    static member inline onAnimationEnd (handler: AnimationEvent -> unit) = PropHelper.mkAttr "onAnimationEnd" handler
+    static member inline onAnimationEnd(handler: AnimationEvent -> unit) =
+        PropHelper.mkAttr "onAnimationEnd" handler
 
     /// Fires when animation iterates.
-    static member inline onAnimationIteration (handler: AnimationEvent -> unit) = PropHelper.mkAttr "onAnimationIteration" handler
+    static member inline onAnimationIteration(handler: AnimationEvent -> unit) =
+        PropHelper.mkAttr "onAnimationIteration" handler
 
     /// Fires when animation starts.
-    static member inline onAnimationStart (handler: AnimationEvent -> unit) = PropHelper.mkAttr "onAnimationStart" handler
+    static member inline onAnimationStart(handler: AnimationEvent -> unit) =
+        PropHelper.mkAttr "onAnimationStart" handler
 
     /// Fires the moment that the element loses focus.
-    static member inline onBlur (handler: FocusEvent -> unit) = PropHelper.mkAttr "onBlur" handler
+    static member inline onBlur(handler: FocusEvent -> unit) = PropHelper.mkAttr "onBlur" handler
 
     /// Fires when a user dismisses the current open dialog
-    static member inline onCancel (handler: Event -> unit) = PropHelper.mkAttr "onCancel" handler
+    static member inline onCancel(handler: Event -> unit) = PropHelper.mkAttr "onCancel" handler
 
     /// Fires when a file is ready to start playing (when it has buffered enough to begin).
-    static member inline onCanPlay (handler: Event -> unit) = PropHelper.mkAttr "onCanPlay" handler
+    static member inline onCanPlay(handler: Event -> unit) = PropHelper.mkAttr "onCanPlay" handler
 
     /// Fires when a file can be played all the way to the end without pausing for buffering
-    static member inline onCanPlayThrough (handler: Event -> unit) = PropHelper.mkAttr "onCanPlayThrough" handler
+    static member inline onCanPlayThrough(handler: Event -> unit) =
+        PropHelper.mkAttr "onCanPlayThrough" handler
 
     /// Same as `onChange` that takes an event as input but instead let's you deal with the `checked` value changed from the `input` element
     /// directly when it is defined as a checkbox with `prop.inputType.checkbox`.
-    static member inline onChange (handler: bool -> unit) = PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?``checked``))
+    static member inline onChange(handler: bool -> unit) =
+        PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?``checked``))
+
     /// Fires the moment when the value of the element is changed
-    static member inline onChange (handler: Event -> unit) = PropHelper.mkAttr "onChange" handler
+    static member inline onChange(handler: Event -> unit) = PropHelper.mkAttr "onChange" handler
+
     /// Same as `onChange` that takes an event as input but instead lets you deal with the selected file directly from the `input` element when it is defined as a checkbox with `prop.type'.file`.
-    static member inline onChange (handler: File -> unit) =
+    static member inline onChange(handler: File -> unit) =
         let fileHandler (ev: Event) : unit =
-            let files : FileList = ev?target?files
-            if not (isNullOrUndefined files) && files.length > 0 then handler (files.item 0)
+            let files: FileList = ev?target?files
+
+            if not (isNullOrUndefined files) && files.length > 0 then
+                handler (files.item 0)
+
         PropHelper.mkAttr "onChange" fileHandler
+
     /// Same as `onChange` that takes an event as input but instead lets you deal with the selected files directly from the `input` element when it is defined as a checkbox with `prop.type'.file` and `prop.multiple true`.
-    static member inline onChange (handler: File list -> unit) =
+    static member inline onChange(handler: File list -> unit) =
         let fileHandler (ev: Event) : unit =
-            let fileList : FileList = ev?target?files
-            if not (isNullOrUndefined fileList) then handler [ for i in 0 .. fileList.length - 1 -> fileList.item i ]
+            let fileList: FileList = ev?target?files
+
+            if not (isNullOrUndefined fileList) then
+                handler [ for i in 0 .. fileList.length - 1 -> fileList.item i ]
+
         PropHelper.mkAttr "onChange" fileHandler
+
     /// Same as `onChange` that takes an event as input but instead let's you deal with the text changed from the `input` element directly
     /// instead of extracting it from the event arguments.
-    static member inline onChange (handler: string -> unit) = PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?value))
+    static member inline onChange(handler: string -> unit) =
+        PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?value))
+
     /// Same as `onChange` that takes an event as input but instead lets you deal with the DateTime changed from the `input` element as if it was a DateTime instance when using input.type.date since the used format either be yyyy-MM-dd or yyyy-MM-ddTHH:mm
-    static member inline onChange (handler: DateTime -> unit) =
-        PropHelper.mkAttr "onChange" (fun (ev: Event) ->
-            let value : string = !!ev.target?value
-            DateParsing.parse value
-            |> Option.iter handler
-        )
+    static member inline onChange(handler: DateTime -> unit) =
+        PropHelper.mkAttr
+            "onChange"
+            (fun (ev: Event) ->
+                let value: string = !!ev.target?value
+                DateParsing.parse value |> Option.iter handler
+            )
 
     /// Same as `onChange` that takes an event as input but instead lets you deal with the int changed from the `input` element directly when the type of the input is number
     /// instead of extracting it from the event arguments. Fractional numbers are rounded to the nearest integral value.
-    static member inline onChange (handler: int -> unit) =
-        PropHelper.mkAttr "onChange" (fun (ev: Event) ->
-            // round the value to get only integers
-            let value : double = !!ev.target?valueAsNumber
-            if not (isNullOrUndefined value) && not(Double.IsNaN value) then
-                handler (unbox<int> (Math.Round value))
-        )
+    static member inline onChange(handler: int -> unit) =
+        PropHelper.mkAttr
+            "onChange"
+            (fun (ev: Event) ->
+                // round the value to get only integers
+                let value: double = !!ev.target?valueAsNumber
+
+                if not (isNullOrUndefined value) && not (Double.IsNaN value) then
+                    handler (unbox<int> (Math.Round value))
+            )
+
     /// Same as `onChange` that takes an event as input but instead lets you deal with the float changed from the `input` element directly when the input type is a number
     /// instead of extracting it from the event arguments.
-    static member inline onChange (handler: float -> unit) =
-        PropHelper.mkAttr "onChange" (fun (ev: Event) ->
-            let value : double = !!ev.target?valueAsNumber
-            if not (isNullOrUndefined value) && not(Double.IsNaN value) then
-                handler (value)
-        )
+    static member inline onChange(handler: float -> unit) =
+        PropHelper.mkAttr
+            "onChange"
+            (fun (ev: Event) ->
+                let value: double = !!ev.target?valueAsNumber
+
+                if not (isNullOrUndefined value) && not (Double.IsNaN value) then
+                    handler (value)
+            )
 
     /// Same as `onChange` but let's you deal with the `checked` value that has changed from the `input` element directly instead of extracting it from the event arguments.
-    static member inline onCheckedChange (handler: bool -> unit) = PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?``checked``))
+    static member inline onCheckedChange(handler: bool -> unit) =
+        PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?``checked``))
 
     /// Fires on a mouse click on the element.
-    static member inline onClick (handler: MouseEvent -> unit) = PropHelper.mkAttr "onClick" handler
+    static member inline onClick(handler: MouseEvent -> unit) = PropHelper.mkAttr "onClick" handler
 
     /// Fires when composition ends.
-    static member inline onCompositionEnd (handler: CompositionEvent -> unit) = PropHelper.mkAttr "onCompositionEnd" handler
+    static member inline onCompositionEnd(handler: CompositionEvent -> unit) =
+        PropHelper.mkAttr "onCompositionEnd" handler
 
     /// Fires when composition starts.
-    static member inline onCompositionStart (handler: CompositionEvent -> unit) = PropHelper.mkAttr "onCompositionStart" handler
+    static member inline onCompositionStart(handler: CompositionEvent -> unit) =
+        PropHelper.mkAttr "onCompositionStart" handler
 
     /// Fires when composition changes.
-    static member inline onCompositionUpdate (handler: CompositionEvent -> unit) = PropHelper.mkAttr "onCompositionUpdate" handler
+    static member inline onCompositionUpdate(handler: CompositionEvent -> unit) =
+        PropHelper.mkAttr "onCompositionUpdate" handler
 
     /// Fires when a context menu is triggered.
-    static member inline onContextMenu (handler: MouseEvent -> unit) = PropHelper.mkAttr "onContextMenu" handler
+    static member inline onContextMenu(handler: MouseEvent -> unit) =
+        PropHelper.mkAttr "onContextMenu" handler
 
     /// Fires when a TextTrack has changed the currently displaying cues.
-    static member inline onCueChange (handler: Event -> unit) = PropHelper.mkAttr "onCueChange" handler
+    static member inline onCueChange(handler: Event -> unit) = PropHelper.mkAttr "onCueChange" handler
 
-        /// Fires when the user copies the content of an element.
-    static member inline onCopy (handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onCopy" handler
+    /// Fires when the user copies the content of an element.
+    static member inline onCopy(handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onCopy" handler
 
     /// Fires when the user cuts the content of an element.
-    static member inline onCut (handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onCut" handler
+    static member inline onCut(handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onCut" handler
 
     /// Fires when a mouse is double clicked on the element.
     [<Obsolete "Use prop.onDoubleClick instead">]
-    static member inline onDblClick (handler: MouseEvent -> unit) = PropHelper.mkAttr "onDoubleClick" handler
+    static member inline onDblClick(handler: MouseEvent -> unit) =
+        PropHelper.mkAttr "onDoubleClick" handler
 
     /// Fires when a mouse is double clicked on the element.
-    static member inline onDoubleClick (handler: MouseEvent -> unit) = PropHelper.mkAttr "onDoubleClick" handler
+    static member inline onDoubleClick(handler: MouseEvent -> unit) =
+        PropHelper.mkAttr "onDoubleClick" handler
 
     /// Fires when an element is dragged.
-    static member inline onDrag (handler: DragEvent -> unit) = PropHelper.mkAttr "onDrag" handler
+    static member inline onDrag(handler: DragEvent -> unit) = PropHelper.mkAttr "onDrag" handler
 
     /// Fires when the a drag operation has ended.
-    static member inline onDragEnd (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragEnd" handler
+    static member inline onDragEnd(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragEnd" handler
 
     /// Fires when an element has been dragged to a valid drop target.
-    static member inline onDragEnter (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragEnter" handler
+    static member inline onDragEnter(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragEnter" handler
 
-    static member inline onDragExit (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragExit" handler
+    static member inline onDragExit(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragExit" handler
 
     /// Fires when an element leaves a valid drop target.
-    static member inline onDragLeave (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragLeave" handler
+    static member inline onDragLeave(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragLeave" handler
 
     /// Fires when an element is being dragged over a valid drop target.
-    static member inline onDragOver (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragOver" handler
+    static member inline onDragOver(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragOver" handler
 
     /// Fires when the a drag operation has begun.
-    static member inline onDragStart (handler: DragEvent -> unit) = PropHelper.mkAttr "onDragStart" handler
+    static member inline onDragStart(handler: DragEvent -> unit) = PropHelper.mkAttr "onDragStart" handler
 
     /// Fires when dragged element is being dropped.
-    static member inline onDrop (handler: DragEvent -> unit) = PropHelper.mkAttr "onDrop" handler
+    static member inline onDrop(handler: DragEvent -> unit) = PropHelper.mkAttr "onDrop" handler
 
     /// Fires when the length of the media changes.
-    static member inline onDurationChange (handler: Event -> unit) = PropHelper.mkAttr "onDurationChange" handler
+    static member inline onDurationChange(handler: Event -> unit) =
+        PropHelper.mkAttr "onDurationChange" handler
 
     /// Fires when something bad happens and the file is suddenly unavailable (like unexpectedly disconnects).
-    static member inline onEmptied (handler: Event -> unit) = PropHelper.mkAttr "onEmptied" handler
+    static member inline onEmptied(handler: Event -> unit) = PropHelper.mkAttr "onEmptied" handler
 
-    static member inline onEncrypted (handler: Event -> unit) = PropHelper.mkAttr "onEncrypted" handler
+    static member inline onEncrypted(handler: Event -> unit) = PropHelper.mkAttr "onEncrypted" handler
 
     /// Fires when the media has reached the end (a useful event for messages like "thanks for listening").
-    static member inline onEnded (handler: Event -> unit) = PropHelper.mkAttr "onEnded" handler
+    static member inline onEnded(handler: Event -> unit) = PropHelper.mkAttr "onEnded" handler
 
     /// Fires when an error occurs.
-    static member inline onError (handler: Event -> unit) = PropHelper.mkAttr "onError" handler
+    static member inline onError(handler: Event -> unit) = PropHelper.mkAttr "onError" handler
 
     /// Fires when an error occurs.
-    static member inline onError (handler: UIEvent -> unit) = PropHelper.mkAttr "onError" handler
+    static member inline onError(handler: UIEvent -> unit) = PropHelper.mkAttr "onError" handler
 
     /// Fires the moment when the element gets focus.
-    static member inline onFocus (handler: FocusEvent -> unit) = PropHelper.mkAttr "onFocus" handler
+    static member inline onFocus(handler: FocusEvent -> unit) = PropHelper.mkAttr "onFocus" handler
 
     /// Fires when an element captures a pointer.
-    static member inline onGotPointerCapture (handler: PointerEvent -> unit) = PropHelper.mkAttr "onGotPointerCapture" handler
+    static member inline onGotPointerCapture(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onGotPointerCapture" handler
 
     /// Fires when an element gets user input.
-    static member inline onInput (handler: Event -> unit) = PropHelper.mkAttr "onInput" handler
+    static member inline onInput(handler: Event -> unit) = PropHelper.mkAttr "onInput" handler
 
     /// Fires when a submittable element has been checked for validaty and doesn't satisfy its constraints.
-    static member inline onInvalid (handler: Event -> unit) = PropHelper.mkAttr "onInvalid" handler
+    static member inline onInvalid(handler: Event -> unit) = PropHelper.mkAttr "onInvalid" handler
 
     /// Fires when a user presses a key.
-    static member inline onKeyDown (handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyDown" handler
+    static member inline onKeyDown(handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyDown" handler
 
     /// Fires when a user presses a key.
-    static member inline onKeyDown (key: IKeyboardKey, handler: KeyboardEvent -> unit) =
-        PropHelpers.createOnKey(key, handler)
-        |> PropHelper.mkAttr "onKeyDown"
+    static member inline onKeyDown(key: IKeyboardKey, handler: KeyboardEvent -> unit) =
+        PropHelpers.createOnKey (key, handler) |> PropHelper.mkAttr "onKeyDown"
 
     /// Fires when a user presses a key.
-    static member inline onKeyPress (handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyPress" handler
+    static member inline onKeyPress(handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyPress" handler
 
     /// Fires when a user presses a key.
-    static member inline onKeyPress (key: IKeyboardKey, handler: KeyboardEvent -> unit) =
-        PropHelpers.createOnKey(key, handler)
-        |> PropHelper.mkAttr "onKeyPress"
+    static member inline onKeyPress(key: IKeyboardKey, handler: KeyboardEvent -> unit) =
+        PropHelpers.createOnKey (key, handler) |> PropHelper.mkAttr "onKeyPress"
 
     /// Fires when a user releases a key.
-    static member inline onKeyUp (handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyUp" handler
+    static member inline onKeyUp(handler: KeyboardEvent -> unit) = PropHelper.mkAttr "onKeyUp" handler
 
     /// Fires when a user releases a key.
-    static member inline onKeyUp (key: IKeyboardKey, handler: KeyboardEvent -> unit) =
-        PropHelpers.createOnKey(key, handler)
-        |> PropHelper.mkAttr "onKeyUp"
+    static member inline onKeyUp(key: IKeyboardKey, handler: KeyboardEvent -> unit) =
+        PropHelpers.createOnKey (key, handler) |> PropHelper.mkAttr "onKeyUp"
 
     /// Fires after the page is finished loading.
-    static member inline onLoad (handler: Event -> unit) = PropHelper.mkAttr "onLoad" handler
+    static member inline onLoad(handler: Event -> unit) = PropHelper.mkAttr "onLoad" handler
 
     /// Fires when media data is loaded.
-    static member inline onLoadedData (handler: Event -> unit) = PropHelper.mkAttr "onLoadedData" handler
+    static member inline onLoadedData(handler: Event -> unit) =
+        PropHelper.mkAttr "onLoadedData" handler
 
     /// Fires when meta data (like dimensions and duration) are loaded.
-    static member inline onLoadedMetadata (handler: Event -> unit) = PropHelper.mkAttr "onLoadedMetadata" handler
+    static member inline onLoadedMetadata(handler: Event -> unit) =
+        PropHelper.mkAttr "onLoadedMetadata" handler
 
     /// Fires when a request has completed, irrespective of its success.
-    static member inline onLoadEnd (handler: Event -> unit) = PropHelper.mkAttr "onLoadEnd" handler
+    static member inline onLoadEnd(handler: Event -> unit) = PropHelper.mkAttr "onLoadEnd" handler
 
     /// Fires when the file begins to load before anything is actually loaded.
-    static member inline onLoadStart (handler: Event -> unit) = PropHelper.mkAttr "onLoadStart" handler
+    static member inline onLoadStart(handler: Event -> unit) = PropHelper.mkAttr "onLoadStart" handler
 
     /// Fires when a captured pointer is released.
-    static member inline onLostPointerCapture (handler: PointerEvent -> unit) = PropHelper.mkAttr "onLostPointerCapture" handler
+    static member inline onLostPointerCapture(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onLostPointerCapture" handler
 
     /// Fires when a mouse button is pressed down on an element.
-    static member inline onMouseDown (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseDown" handler
+    static member inline onMouseDown(handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseDown" handler
 
     /// Fires when a pointer enters an element.
-    static member inline onMouseEnter (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseEnter" handler
+    static member inline onMouseEnter(handler: MouseEvent -> unit) =
+        PropHelper.mkAttr "onMouseEnter" handler
 
     /// Fires when a pointer leaves an element.
-    static member inline onMouseLeave (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseLeave" handler
+    static member inline onMouseLeave(handler: MouseEvent -> unit) =
+        PropHelper.mkAttr "onMouseLeave" handler
 
     /// Fires when the mouse pointer is moving while it is over an element.
-    static member inline onMouseMove (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseMove" handler
+    static member inline onMouseMove(handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseMove" handler
 
     /// Fires when the mouse pointer moves out of an element.
-    static member inline onMouseOut (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseOut" handler
+    static member inline onMouseOut(handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseOut" handler
 
     /// Fires when the mouse pointer moves over an element.
-    static member inline onMouseOver (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseOver" handler
+    static member inline onMouseOver(handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseOver" handler
 
     /// Fires when a mouse button is released while it is over an element.
-    static member inline onMouseUp (handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseUp" handler
+    static member inline onMouseUp(handler: MouseEvent -> unit) = PropHelper.mkAttr "onMouseUp" handler
 
     /// Fires when the user pastes some content in an element.
-    static member inline onPaste (handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onPaste" handler
+    static member inline onPaste(handler: ClipboardEvent -> unit) = PropHelper.mkAttr "onPaste" handler
 
     /// Fires when the media is paused either by the user or programmatically.
-    static member inline onPause (handler: Event -> unit) = PropHelper.mkAttr "onPause" handler
+    static member inline onPause(handler: Event -> unit) = PropHelper.mkAttr "onPause" handler
 
     /// Fires when the media is ready to start playing.
-    static member inline onPlay (handler: Event -> unit) = PropHelper.mkAttr "onPlay" handler
+    static member inline onPlay(handler: Event -> unit) = PropHelper.mkAttr "onPlay" handler
 
     /// Fires when the media actually has started playing
-    static member inline onPlaying (handler: Event -> unit) = PropHelper.mkAttr "onPlaying" handler
+    static member inline onPlaying(handler: Event -> unit) = PropHelper.mkAttr "onPlaying" handler
 
     /// Fires when there are no more pointer events.
-    static member inline onPointerCancel (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerCancel" handler
+    static member inline onPointerCancel(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerCancel" handler
 
     /// Fires when a pointer becomes active.
-    static member inline onPointerDown (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerDown" handler
+    static member inline onPointerDown(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerDown" handler
 
     /// Fires when a pointer is moved into an elements boundaries or one of its descendants.
-    static member inline onPointerEnter (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerEnter" handler
+    static member inline onPointerEnter(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerEnter" handler
 
     /// Fires when a pointer is moved out of an elements boundaries.
-    static member inline onPointerLeave (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerLeave" handler
+    static member inline onPointerLeave(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerLeave" handler
 
     /// Fires when a pointer moves.
-    static member inline onPointerMove (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerMove" handler
+    static member inline onPointerMove(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerMove" handler
 
     /// Fires when a pointer is no longer in an elements boundaries, such as moving it, or after a `pointerUp` or `pointerCancel` event.
-    static member inline onPointerOut (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerOut" handler
+    static member inline onPointerOut(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerOut" handler
 
     /// Fires when a pointer is moved into an elements boundaries.
-    static member inline onPointerOver (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerOver" handler
+    static member inline onPointerOver(handler: PointerEvent -> unit) =
+        PropHelper.mkAttr "onPointerOver" handler
 
     /// Fires when a pointer is no longer active.
-    static member inline onPointerUp (handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerUp" handler
+    static member inline onPointerUp(handler: PointerEvent -> unit) = PropHelper.mkAttr "onPointerUp" handler
 
     /// Fires when the browser is in the process of getting the media data.
-    static member inline onProgress (handler: Event -> unit) = PropHelper.mkAttr "onProgress" handler
+    static member inline onProgress(handler: Event -> unit) = PropHelper.mkAttr "onProgress" handler
 
     /// Fires when the playback rate changes (like when a user switches to a slow motion or fast forward mode).
-    static member inline onRateChange (handler: Event -> unit) = PropHelper.mkAttr "onRateChange" handler
+    static member inline onRateChange(handler: Event -> unit) =
+        PropHelper.mkAttr "onRateChange" handler
 
     /// Fires when the Reset button in a form is clicked.
-    static member inline onReset (handler: Event -> unit) = PropHelper.mkAttr "onReset" handler
+    static member inline onReset(handler: Event -> unit) = PropHelper.mkAttr "onReset" handler
 
     /// Fires when the window has been resized.
-    static member inline onResize (handler: UIEvent -> unit) = PropHelper.mkAttr "onResize" handler
+    static member inline onResize(handler: UIEvent -> unit) = PropHelper.mkAttr "onResize" handler
 
     /// Fires when an element's scrollbar is being scrolled.
-    static member inline onScroll (handler: Event -> unit) = PropHelper.mkAttr "onScroll" handler
+    static member inline onScroll(handler: Event -> unit) = PropHelper.mkAttr "onScroll" handler
 
     /// Fires when the seeking attribute is set to false indicating that seeking has ended.
-    static member inline onSeeked (handler: Event -> unit) = PropHelper.mkAttr "onSeeked" handler
+    static member inline onSeeked(handler: Event -> unit) = PropHelper.mkAttr "onSeeked" handler
 
     /// Fires when the seeking attribute is set to true indicating that seeking is active.
-    static member inline onSeeking (handler: Event -> unit) = PropHelper.mkAttr "onSeeking" handler
+    static member inline onSeeking(handler: Event -> unit) = PropHelper.mkAttr "onSeeking" handler
 
     /// Fires after some text has been selected in an element.
-    static member inline onSelect (handler: Event -> unit) = PropHelper.mkAttr "onSelect" handler
+    static member inline onSelect(handler: Event -> unit) = PropHelper.mkAttr "onSelect" handler
 
     /// Fires after some text has been selected in the user interface.
-    static member inline onSelect (handler: UIEvent -> unit) = PropHelper.mkAttr "onSelect" handler
+    static member inline onSelect(handler: UIEvent -> unit) = PropHelper.mkAttr "onSelect" handler
 
     /// Fires when the browser is unable to fetch the media data for whatever reason.
-    static member inline onStalled (handler: Event -> unit) = PropHelper.mkAttr "onStalled" handler
+    static member inline onStalled(handler: Event -> unit) = PropHelper.mkAttr "onStalled" handler
 
     /// Fires when fetching the media data is stopped before it is completely loaded for whatever reason.
-    static member inline onSuspend (handler: Event -> unit) = PropHelper.mkAttr "onSuspend" handler
+    static member inline onSuspend(handler: Event -> unit) = PropHelper.mkAttr "onSuspend" handler
 
     /// Fires when a form is submitted.
-    static member inline onSubmit (handler: Event -> unit) = PropHelper.mkAttr "onSubmit" handler
+    static member inline onSubmit(handler: Event -> unit) = PropHelper.mkAttr "onSubmit" handler
 
     /// Same as `onChange` but let's you deal with the text changed from the `input` element directly
     /// instead of extracting it from the event arguments.
-    static member inline onTextChange (handler: string -> unit) = PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?value))
+    static member inline onTextChange(handler: string -> unit) =
+        PropHelper.mkAttr "onChange" (fun (ev: Event) -> handler (!!ev.target?value))
 
     /// Fires when the playing position has changed (like when the user fast forwards to a different point in the media).
-    static member inline onTimeUpdate (handler: Event -> unit) = PropHelper.mkAttr "onTimeUpdate" handler
+    static member inline onTimeUpdate(handler: Event -> unit) =
+        PropHelper.mkAttr "onTimeUpdate" handler
 
-    static member inline onTouchCancel (handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchCancel" handler
+    static member inline onTouchCancel(handler: TouchEvent -> unit) =
+        PropHelper.mkAttr "onTouchCancel" handler
 
-    static member inline onTouchEnd (handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchEnd" handler
+    static member inline onTouchEnd(handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchEnd" handler
 
-    static member inline onTouchMove (handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchMove" handler
+    static member inline onTouchMove(handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchMove" handler
 
-    static member inline onTouchStart (handler: TouchEvent -> unit) = PropHelper.mkAttr "onTouchStart" handler
+    static member inline onTouchStart(handler: TouchEvent -> unit) =
+        PropHelper.mkAttr "onTouchStart" handler
 
-    static member inline onTransitionEnd (handler: TransitionEvent -> unit) = PropHelper.mkAttr "onTransitionEnd" handler
+    static member inline onTransitionEnd(handler: TransitionEvent -> unit) =
+        PropHelper.mkAttr "onTransitionEnd" handler
 
-    static member inline onTransitionStart (handler: TransitionEvent -> unit) = PropHelper.mkAttr "onTransitionStart" handler
+    static member inline onTransitionStart(handler: TransitionEvent -> unit) =
+        PropHelper.mkAttr "onTransitionStart" handler
 
     /// Fires when the volume is changed which (includes setting the volume to "mute").
-    static member inline onVolumeChange (handler: Event -> unit) = PropHelper.mkAttr "onVolumeChange" handler
+    static member inline onVolumeChange(handler: Event -> unit) =
+        PropHelper.mkAttr "onVolumeChange" handler
 
     /// Fires when the media has paused but is expected to resume (like when the media pauses to buffer more data).
-    static member inline onWaiting (handler: Event -> unit) = PropHelper.mkAttr "onWaiting" handler
+    static member inline onWaiting(handler: Event -> unit) = PropHelper.mkAttr "onWaiting" handler
 
     /// Fires when the mouse wheel rolls up or down over an element.
-    static member inline onWheel (handler: WheelEvent -> unit) = PropHelper.mkAttr "onWheel" handler
+    static member inline onWheel(handler: WheelEvent -> unit) = PropHelper.mkAttr "onWheel" handler
 
     /// This attribute indicates the optimal numeric value. It must be within the range (as defined by the min
     /// attribute and max attribute). When used with the low attribute and high attribute, it gives an indication
     /// where along the range is considered preferable. For example, if it is between the min attribute and the
     /// low attribute, then the lower range is considered preferred.
-    static member inline optimum (value: float) = PropHelper.mkAttr "optimum" value
+    static member inline optimum(value: float) = PropHelper.mkAttr "optimum" value
     /// This attribute indicates the optimal numeric value. It must be within the range (as defined by the min
     /// attribute and max attribute). When used with the low attribute and high attribute, it gives an indication
     /// where along the range is considered preferable. For example, if it is between the min attribute and the
     /// low attribute, then the lower range is considered preferred.
-    static member inline optimum (value: int) = PropHelper.mkAttr "optimum" value
+    static member inline optimum(value: int) = PropHelper.mkAttr "optimum" value
 
     /// Indicates the minimum value allowed.
-    static member inline order (value: int) = PropHelper.mkAttr "order" value
+    static member inline order(value: int) = PropHelper.mkAttr "order" value
+
     /// Indicates the minimum value allowed.
-    static member inline order (values: seq<int>) = PropHelper.mkAttr "order" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline order(values: seq<int>) =
+        PropHelper.mkAttr "order" (values |> unbox<seq<string>> |> String.concat " ")
 
     /// Represents the ideal vertical position of the overline.
     ///
     /// The overline position is expressed in the font's coordinate system.
-    static member inline overlinePosition (value: float) = PropHelper.mkAttr "overline-position" value
+    static member inline overlinePosition(value: float) =
+        PropHelper.mkAttr "overline-position" value
+
     /// Represents the ideal vertical position of the overline.
     ///
     /// The overline position is expressed in the font's coordinate system.
-    static member inline overlinePosition (value: int) = PropHelper.mkAttr "overline-position" value
+    static member inline overlinePosition(value: int) =
+        PropHelper.mkAttr "overline-position" value
 
     /// Represents the ideal thickness of the overline.
     ///
     /// The overline thickness is expressed in the font's coordinate system.
-    static member inline overlineThickness (value: float) = PropHelper.mkAttr "overline-thickness" value
+    static member inline overlineThickness(value: float) =
+        PropHelper.mkAttr "overline-thickness" value
+
     /// Represents the ideal thickness of the overline.
     ///
     /// The overline thickness is expressed in the font's coordinate system.
-    static member inline overlineThickness (value: int) = PropHelper.mkAttr "overline-thickness" value
+    static member inline overlineThickness(value: int) =
+        PropHelper.mkAttr "overline-thickness" value
 
     /// It either defines a text path along which the characters of a text are rendered, or a motion
     /// path along which a referenced element is animated.
-    static member inline path (path: seq<char * (float list list)>) =
-        PropHelpers.createSvgPathFloat path
-        |> PropHelper.mkAttr "path"
+    static member inline path(path: seq<char * (float list list)>) =
+        PropHelpers.createSvgPathFloat path |> PropHelper.mkAttr "path"
+
     /// It either defines a text path along which the characters of a text are rendered, or a motion
     /// path along which a referenced element is animated.
-    static member inline path (path: seq<char * (int list list)>) =
-        PropHelpers.createSvgPathInt path
-        |> PropHelper.mkAttr "path"
+    static member inline path(path: seq<char * (int list list)>) =
+        PropHelpers.createSvgPathInt path |> PropHelper.mkAttr "path"
+
     /// It either defines a text path along which the characters of a text are rendered, or a motion
     /// path along which a referenced element is animated.
-    static member inline path (path: string) = PropHelper.mkAttr "path" path
+    static member inline path(path: string) = PropHelper.mkAttr "path" path
     /// The part global attribute contains a space-separated list of the part names of the element.
     /// Part names allows CSS to select and style specific elements in a shadow tree
     static member inline part(value: string) = PropHelper.mkAttr "part" value
+
     /// The part global attribute contains a space-separated list of the part names of the element.
     /// Part names allows CSS to select and style specific elements in a shadow tree
-    static member inline part(values: #seq<string>) = PropHelper.mkAttr "part" (String.concat " " values)
+    static member inline part(values: #seq<string>) =
+        PropHelper.mkAttr "part" (String.concat " " values)
+
     /// Specifies a total length for the path, in user units.
     ///
     /// This value is then used to calibrate the browser's distance calculations with those of the
@@ -1417,127 +1553,138 @@ type prop =
     ///
     /// This can affect the actual rendered lengths of paths; including text paths, animation paths,
     /// and various stroke operations. Basically, all computations that require the length of the path.
-    static member inline pathLength (value: int) = PropHelper.mkAttr "pathLength" value
+    static member inline pathLength(value: int) = PropHelper.mkAttr "pathLength" value
 
     /// Sets the input field allowed input.
     ///
     /// This attribute only applies when the value of the type attribute is text, search, tel, url or email.
-    static member inline pattern (value: System.Text.RegularExpressions.Regex) = PropHelper.mkAttr "pattern" value
+    static member inline pattern(value: System.Text.RegularExpressions.Regex) = PropHelper.mkAttr "pattern" value
 
     /// Sets the input field allowed input.
     ///
     /// This attribute only applies when the value of the type attribute is text, search, tel, url or email.
-    static member inline pattern (value: string) = PropHelper.mkAttr "pattern" value
+    static member inline pattern(value: string) = PropHelper.mkAttr "pattern" value
 
     /// Defines a list of transform definitions that are applied to a pattern tile.
-    static member inline patternTransform (transform: ITransformProperty) =
+    static member inline patternTransform(transform: ITransformProperty) =
         PropHelper.mkAttr "patternTransform" (unbox<string> transform)
+
     /// Defines a list of transform definitions that are applied to a pattern tile.
-    static member inline patternTransform (transforms: seq<ITransformProperty>) =
+    static member inline patternTransform(transforms: seq<ITransformProperty>) =
         PropHelper.mkAttr "patternTransform" (unbox<seq<string>> transforms |> String.concat " ")
 
     /// Provides a hint to the user of what can be entered in the field.
-    static member inline placeholder (value: string) = PropHelper.mkAttr "placeholder" value
+    static member inline placeholder(value: string) = PropHelper.mkAttr "placeholder" value
 
     /// Indicating that the video is to be played "inline", that is within the element's playback area.
     ///
     /// Note that the absence of this attribute does not imply that the video will always be played in fullscreen.
-    static member inline playsInline (value: bool) = PropHelper.mkAttr "playsInline" value
+    static member inline playsInline(value: bool) = PropHelper.mkAttr "playsInline" value
 
     /// Contains a space-separated list of URLs to which, when the hyperlink is followed,
     /// POST requests with the body PING will be sent by the browser (in the background).
     ///
     /// Typically used for tracking.
-    static member inline ping (value: string) = PropHelper.mkAttr "ping" value
+    static member inline ping(value: string) = PropHelper.mkAttr "ping" value
+
     /// Contains a space-separated list of URLs to which, when the hyperlink is followed,
     /// POST requests with the body PING will be sent by the browser (in the background).
     ///
     /// Typically used for tracking.
-    static member inline ping (urls: #seq<string>) = PropHelper.mkAttr "ping" (urls |> String.concat " ")
+    static member inline ping(urls: #seq<string>) =
+        PropHelper.mkAttr "ping" (urls |> String.concat " ")
 
     /// Defines a list of points.
     ///
     /// Each point is defined by a pair of numbers representing a X and a Y coordinate in
     /// the user coordinate system.
-    static member inline points (coordinates: seq<float * float>) =
-        PropHelpers.createPointsFloat(coordinates)
-        |> PropHelper.mkAttr "points"
+    static member inline points(coordinates: seq<float * float>) =
+        PropHelpers.createPointsFloat (coordinates) |> PropHelper.mkAttr "points"
+
     /// Defines a list of points.
     ///
     /// Each point is defined by a pair of numbers representing a X and a Y coordinate in
     /// the user coordinate system.
-    static member inline points (coordinates: seq<int * int>) =
-        PropHelpers.createPointsInt(coordinates)
-        |> PropHelper.mkAttr "points"
+    static member inline points(coordinates: seq<int * int>) =
+        PropHelpers.createPointsInt (coordinates) |> PropHelper.mkAttr "points"
+
     /// Defines a list of points.
     ///
     /// Each point is defined by a pair of numbers representing a X and a Y coordinate in
     /// the user coordinate system.
-    static member inline points (coordinates: string) = PropHelper.mkAttr "points" coordinates
+    static member inline points(coordinates: string) = PropHelper.mkAttr "points" coordinates
 
     /// Represents the x location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing.
-    static member inline pointsAtX (value: float) = PropHelper.mkAttr "pointsAtX" value
+    static member inline pointsAtX(value: float) = PropHelper.mkAttr "pointsAtX" value
     /// Represents the x location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing.
-    static member inline pointsAtX (value: int) = PropHelper.mkAttr "pointsAtX" value
+    static member inline pointsAtX(value: int) = PropHelper.mkAttr "pointsAtX" value
 
     /// Represents the y location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing.
-    static member inline pointsAtY (value: float) = PropHelper.mkAttr "pointsAtY" value
+    static member inline pointsAtY(value: float) = PropHelper.mkAttr "pointsAtY" value
     /// Represents the y location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing.
-    static member inline pointsAtY (value: int) = PropHelper.mkAttr "pointsAtY" value
+    static member inline pointsAtY(value: int) = PropHelper.mkAttr "pointsAtY" value
 
     /// Represents the y location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing, assuming that,
     /// in the initial local coordinate system, the positive z-axis comes out towards the person
     /// viewing the content and assuming that one unit along the z-axis equals one unit in x and y.
-    static member inline pointsAtZ (value: float) = PropHelper.mkAttr "pointsAtZ" value
+    static member inline pointsAtZ(value: float) = PropHelper.mkAttr "pointsAtZ" value
     /// Represents the y location in the coordinate system established by attribute primitiveUnits
     /// on the <filter> element of the point at which the light source is pointing, assuming that,
     /// in the initial local coordinate system, the positive z-axis comes out towards the person
     /// viewing the content and assuming that one unit along the z-axis equals one unit in x and y.
-    static member inline pointsAtZ (value: int) = PropHelper.mkAttr "pointsAtZ" value
+    static member inline pointsAtZ(value: int) = PropHelper.mkAttr "pointsAtZ" value
 
     /// Turns a <button> or <input> element into a popover control button.
     /// Takes the ID of the popover element to control as its value.
     static member inline popoverTarget(value: string) = PropHelper.mkAttr "popovertarget" value
 
     /// Indicates how a <feConvolveMatrix> element handles alpha transparency.
-    static member inline preserveAlpha (value: bool) = PropHelper.mkAttr "preserveAlpha" value
+    static member inline preserveAlpha(value: bool) = PropHelper.mkAttr "preserveAlpha" value
 
     /// A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing
     /// is displayed until the first frame is available, then the first frame is shown as the poster frame.
-    static member inline poster (value: string) = PropHelper.mkAttr "poster" value
+    static member inline poster(value: string) = PropHelper.mkAttr "poster" value
 
     /// SVG attribute to define the radius of a circle.
-    static member inline r (value: float) = PropHelper.mkAttr "r" value
+    static member inline r(value: float) = PropHelper.mkAttr "r" value
     /// SVG attribute to define the radius of a circle.
-    static member inline r (value: ICssUnit) = PropHelper.mkAttr "r" value
+    static member inline r(value: ICssUnit) = PropHelper.mkAttr "r" value
     /// SVG attribute to define the radius of a circle.
-    static member inline r (value: int) = PropHelper.mkAttr "r" value
+    static member inline r(value: int) = PropHelper.mkAttr "r" value
 
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (value: float) = PropHelper.mkAttr "radius" value
+    static member inline radius(value: float) = PropHelper.mkAttr "radius" value
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (value: int) = PropHelper.mkAttr "radius" value
+    static member inline radius(value: int) = PropHelper.mkAttr "radius" value
+
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (xRadius: float, yRadius: float) = PropHelper.mkAttr "radius" (unbox<string> xRadius  + "," + unbox<string> yRadius)
+    static member inline radius(xRadius: float, yRadius: float) =
+        PropHelper.mkAttr "radius" (unbox<string> xRadius + "," + unbox<string> yRadius)
+
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (xRadius: float, yRadius: int) = PropHelper.mkAttr "radius" (unbox<string> xRadius  + "," + unbox<string> yRadius)
+    static member inline radius(xRadius: float, yRadius: int) =
+        PropHelper.mkAttr "radius" (unbox<string> xRadius + "," + unbox<string> yRadius)
+
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (xRadius: int, yRadius: float) = PropHelper.mkAttr "radius" (unbox<string> xRadius  + "," + unbox<string> yRadius)
+    static member inline radius(xRadius: int, yRadius: float) =
+        PropHelper.mkAttr "radius" (unbox<string> xRadius + "," + unbox<string> yRadius)
+
     /// Represents the radius (or radii) for the operation on a given <feMorphology> filter primitive.
-    static member inline radius (xRadius: int, yRadius: int) = PropHelper.mkAttr "radius" (unbox<string> xRadius  + "," + unbox<string> yRadius)
+    static member inline radius(xRadius: int, yRadius: int) =
+        PropHelper.mkAttr "radius" (unbox<string> xRadius + "," + unbox<string> yRadius)
 
     /// Indicates whether the element can be edited.
-    static member inline readOnly (value: bool) = PropHelper.mkAttr "readOnly" value
+    static member inline readOnly(value: bool) = PropHelper.mkAttr "readOnly" value
 
     /// Used to reference a DOM element or class component from within a parent component.
-    static member inline ref (handler: Element -> unit) = PropHelper.mkAttr "ref" handler
+    static member inline ref(handler: Element -> unit) = PropHelper.mkAttr "ref" handler
     /// Used to reference a DOM element or class component from within a parent component.
-    static member inline ref (ref: IRefValue<#HTMLElement option>) = PropHelper.mkAttr "ref" ref
+    static member inline ref(ref: IRefValue<#HTMLElement option>) = PropHelper.mkAttr "ref" ref
 
     /// For anchors containing the href attribute, this attribute specifies the relationship
     /// of the target object to the link object. The value is a space-separated list of link
@@ -1546,10 +1693,10 @@ type prop =
     /// given, is void.
     ///
     /// Use this attribute only if the href attribute is present.
-    static member inline rel (value: string) = PropHelper.mkAttr "rel" value
+    static member inline rel(value: string) = PropHelper.mkAttr "rel" value
 
     /// Indicates whether this element is required to fill out or not.
-    static member inline required (value: bool) = PropHelper.mkAttr "required" value
+    static member inline required(value: bool) = PropHelper.mkAttr "required" value
 
     /// Defines the assigned name for this filter primitive.
     ///
@@ -1560,61 +1707,63 @@ type prop =
     /// If no value is provided, the output will only be available for re-use as the implicit
     /// input into the next filter primitive if that filter primitive provides no value for
     /// its in attribute.
-    static member inline result (value: string) = PropHelper.mkAttr "result" value
+    static member inline result(value: string) = PropHelper.mkAttr "result" value
 
     /// Sets the aria role
     ///
     /// https://www.w3.org/WAI/PF/aria-1.1/roles
-    static member inline role ([<System.ParamArray>] roles: string []) = PropHelper.mkAttr "role" (String.concat " " roles)
+    static member inline role([<System.ParamArray>] roles: string[]) =
+        PropHelper.mkAttr "role" (String.concat " " roles)
 
     /// Defines the number of rows in a text area.
-    static member inline rows (value: int) = PropHelper.mkAttr "rows" value
+    static member inline rows(value: int) = PropHelper.mkAttr "rows" value
 
     /// Defines the number of rows a table cell should span over.
-    static member inline rowSpan (value: int) = PropHelper.mkAttr "rowSpan" value
+    static member inline rowSpan(value: int) = PropHelper.mkAttr "rowSpan" value
 
     /// The SVG rx attribute defines a radius on the x-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline rx (value: float) = PropHelper.mkAttr "rx" value
+    static member inline rx(value: float) = PropHelper.mkAttr "rx" value
     /// The SVG rx attribute defines a radius on the x-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline rx (value: ICssUnit) = PropHelper.mkAttr "rx" value
+    static member inline rx(value: ICssUnit) = PropHelper.mkAttr "rx" value
     /// The SVG rx attribute defines a radius on the x-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline rx (value: int) = PropHelper.mkAttr "rx" value
+    static member inline rx(value: int) = PropHelper.mkAttr "rx" value
 
     /// The SVG ry attribute defines a radius on the y-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline ry (value: float) = PropHelper.mkAttr "ry" value
+    static member inline ry(value: float) = PropHelper.mkAttr "ry" value
     /// The SVG ry attribute defines a radius on the y-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline ry (value: ICssUnit) = PropHelper.mkAttr "ry" value
+    static member inline ry(value: ICssUnit) = PropHelper.mkAttr "ry" value
     /// The SVG ry attribute defines a radius on the y-axis.
     ///
     /// Two elements are using this attribute: <ellipse>, and <rect>
-    static member inline ry (value: int) = PropHelper.mkAttr "ry" value
+    static member inline ry(value: int) = PropHelper.mkAttr "ry" value
 
     /// Applies extra restrictions to the content in the frame.
     ///
     /// The value of the attribute can either be empty to apply all restrictions,
     /// or space-separated tokens to lift particular restrictions
-    static member inline sandbox (values: #seq<string>) = PropHelper.mkAttr "sandbox" (values |> String.concat " ")
+    static member inline sandbox(values: #seq<string>) =
+        PropHelper.mkAttr "sandbox" (values |> String.concat " ")
 
     /// Defines the displacement scale factor to be used on a <feDisplacementMap> filter primitive.
     ///
     /// The amount is expressed in the coordinate system established by the primitiveUnits attribute
     /// on the <filter> element.
-    static member inline scale (value: float) = PropHelper.mkAttr "scale" value
+    static member inline scale(value: float) = PropHelper.mkAttr "scale" value
     /// Defines the displacement scale factor to be used on a <feDisplacementMap> filter primitive.
     ///
     /// The amount is expressed in the coordinate system established by the primitiveUnits attribute
     /// on the <filter> element.
-    static member inline scale (value: int) = PropHelper.mkAttr "scale" value
+    static member inline scale(value: int) = PropHelper.mkAttr "scale" value
 
     /// Defines the cells that the header (defined in the <th>) element relates to. It may have the following values:
     ///
@@ -1623,34 +1772,35 @@ type prop =
     ///  - rowgroup: The header belongs to a rowgroup and relates to all of its cells. These cells can be placed to the right or the left of the header, depending on the value of the dir attribute in the <table> element.
     ///  - colgroup: The header belongs to a colgroup and relates to all of its cells.
     /// If the scope attribute is not specified, or its value is not row, col, or rowgroup, or colgroup, then browsers automatically select the set of cells to which the header cell applies.
-    static member inline scope (value: string) = PropHelper.mkAttr "scope" value
+    static member inline scope(value: string) = PropHelper.mkAttr "scope" value
 
     /// Represents the starting number for the pseudo random number generator of the <feTurbulence>
     /// filter primitive.
-    static member inline seed (value: float) = PropHelper.mkAttr "seed" value
+    static member inline seed(value: float) = PropHelper.mkAttr "seed" value
     /// Represents the starting number for the pseudo random number generator of the <feTurbulence>
     /// filter primitive.
-    static member inline seed (value: int) = PropHelper.mkAttr "seed" value
+    static member inline seed(value: int) = PropHelper.mkAttr "seed" value
 
     /// Defines a value which will be selected on page load.
-    static member inline selected (value: bool) = PropHelper.mkAttr "selected" value
+    static member inline selected(value: bool) = PropHelper.mkAttr "selected" value
 
     /// Sets the beginning index of the selected text.
     ///
     /// When nothing is selected, this returns the position of the text input cursor (caret) inside of the <input> element.
-    static member inline selectionStart (value: int) = PropHelper.mkAttr "selectionStart" value
+    static member inline selectionStart(value: int) =
+        PropHelper.mkAttr "selectionStart" value
 
     /// Sets the end index of the selected text.
     ///
     /// When there's no selection, this returns the offset of the character immediately following the current text input cursor position.
-    static member inline selectionEnd (value: int) = PropHelper.mkAttr "selectionEnd" value
+    static member inline selectionEnd(value: int) = PropHelper.mkAttr "selectionEnd" value
 
     /// Sets the *visual* size of the control.
     ///
     /// The value is in pixels unless the value of type is text or password, in which case, it is the number of characters.
     ///
     /// This attribute only applies when type is set to text, search, tel, url, email, or password.
-    static member inline size (value: int) = PropHelper.mkAttr "size" value
+    static member inline size(value: int) = PropHelper.mkAttr "size" value
 
     /// Defines the sizes of the icons for visual media contained in the resource.
     /// It must be present only if the rel contains a value of icon or a non-standard
@@ -1663,46 +1813,53 @@ type prop =
     ///
     /// A white-space separated list of sizes, each in the format `<width in pixels>x<height in pixels>`
     /// or `<width in pixels>X<height in pixels>`. Each of these sizes must be contained in the resource.
-    static member inline sizes (value: string) = PropHelper.mkAttr "sizes" value
+    static member inline sizes(value: string) = PropHelper.mkAttr "sizes" value
 
     /// This attribute contains a positive integer indicating the number of consecutive
     /// columns the <col> element spans. If not present, its default value is 1.
-    static member inline span (value: int) = PropHelper.mkAttr "span" value
+    static member inline span(value: int) = PropHelper.mkAttr "span" value
 
     /// Defines whether the element may be checked for spelling errors.
-    static member inline spellCheck (value: bool) = PropHelper.mkAttr "spellCheck" (string value)
+    static member inline spellCheck(value: bool) =
+        PropHelper.mkAttr "spellCheck" (string value)
 
     /// Controls the ratio of reflection of the specular lighting.
     ///
     /// It represents the ks value in the Phong lighting model. The bigger the value the stronger the reflection.
-    static member inline specularConstant (value: float) = PropHelper.mkAttr "specularConstant" value
+    static member inline specularConstant(value: float) =
+        PropHelper.mkAttr "specularConstant" value
+
     /// Controls the ratio of reflection of the specular lighting.
     ///
     /// It represents the ks value in the Phong lighting model. The bigger the value the stronger the reflection.
-    static member inline specularConstant (value: int) = PropHelper.mkAttr "specularConstant" value
+    static member inline specularConstant(value: int) =
+        PropHelper.mkAttr "specularConstant" value
 
     /// For <feSpecularLighting>, specularExponent defines the exponent value for the specular term.
     ///
     /// For <feSpotLight>, specularExponent defines the exponent value controlling the focus for the light source.
-    static member inline specularExponent (value: float) = PropHelper.mkAttr "specularExponent" value
+    static member inline specularExponent(value: float) =
+        PropHelper.mkAttr "specularExponent" value
+
     /// For <feSpecularLighting>, specularExponent defines the exponent value for the specular term.
     ///
     /// For <feSpotLight>, specularExponent defines the exponent value controlling the focus for the light source.
-    static member inline specularExponent (value: int) = PropHelper.mkAttr "specularExponent" value
+    static member inline specularExponent(value: int) =
+        PropHelper.mkAttr "specularExponent" value
 
     /// The URL of the embeddable content.
-    static member inline src (value: string) = PropHelper.mkAttr "src" value
+    static member inline src(value: string) = PropHelper.mkAttr "src" value
 
     /// Language of the track text data. It must be a valid BCP 47 language tag.
     ///
     /// If the kind attribute is set to subtitles, then srclang must be defined.
-    static member inline srcLang (value: string) = PropHelper.mkAttr "srclang" value
+    static member inline srcLang(value: string) = PropHelper.mkAttr "srclang" value
 
     /// One or more responsive image candidates.
-    static member inline srcset (value: string) = PropHelper.mkAttr "srcset" value
+    static member inline srcset(value: string) = PropHelper.mkAttr "srcset" value
 
     /// Defines the first number if other than 1.
-    static member inline start (value: string) = PropHelper.mkAttr "start" value
+    static member inline start(value: string) = PropHelper.mkAttr "start" value
 
     /// Spreads a JavaScript object as React props.
     ///
@@ -1728,78 +1885,94 @@ type prop =
         |> Array.map (fun (key, value) -> PropHelper.mkAttr key value)
 
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (value: float) = PropHelper.mkAttr "stdDeviation" value
+    static member inline stdDeviation(value: float) = PropHelper.mkAttr "stdDeviation" value
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (value: int) = PropHelper.mkAttr "stdDeviation" value
+    static member inline stdDeviation(value: int) = PropHelper.mkAttr "stdDeviation" value
+
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (xAxis: float, yAxis: float) = PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis  + "," + unbox<string> yAxis)
+    static member inline stdDeviation(xAxis: float, yAxis: float) =
+        PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis + "," + unbox<string> yAxis)
+
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (xAxis: float, yAxis: int) = PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis  + "," + unbox<string> yAxis)
+    static member inline stdDeviation(xAxis: float, yAxis: int) =
+        PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis + "," + unbox<string> yAxis)
+
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (xAxis: int, yAxis: float) = PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis  + "," + unbox<string> yAxis)
+    static member inline stdDeviation(xAxis: int, yAxis: float) =
+        PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis + "," + unbox<string> yAxis)
+
     /// Defines the standard deviation for the blur operation.
-    static member inline stdDeviation (xAxis: int, yAxis: int) = PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis  + "," + unbox<string> yAxis)
+    static member inline stdDeviation(xAxis: int, yAxis: int) =
+        PropHelper.mkAttr "stdDeviation" (unbox<string> xAxis + "," + unbox<string> yAxis)
 
     /// Indicates the stepping interval.
-    static member inline step (value: float) = PropHelper.mkAttr "step" value
+    static member inline step(value: float) = PropHelper.mkAttr "step" value
     /// Indicates the stepping interval.
-    static member inline step (value: int) = PropHelper.mkAttr "step" value
+    static member inline step(value: int) = PropHelper.mkAttr "step" value
     /// The slot global attribute assigns a slot in a shadow DOM shadow tree to an element: An element with a slot attribute is assigned to the slot created by the slot element whose name attribute's value matches that slot attribute's value.
     static member inline slot(value: string) = PropHelper.mkAttr "slot" value
     /// SVG attribute to indicate what color to use at a gradient stop.
-    static member inline stopColor (value: string) = PropHelper.mkAttr "stopColor" value
+    static member inline stopColor(value: string) = PropHelper.mkAttr "stopColor" value
 
     /// SVG attribute to define the opacity of a given color gradient stop.
-    static member inline stopOpacity (value: float) = PropHelper.mkAttr "stopOpacity" value
+    static member inline stopOpacity(value: float) = PropHelper.mkAttr "stopOpacity" value
     /// SVG attribute to define the opacity of a given color gradient stop.
-    static member inline stopOpacity (value: int) = PropHelper.mkAttr "stopOpacity" value
+    static member inline stopOpacity(value: int) = PropHelper.mkAttr "stopOpacity" value
 
     /// Represents the ideal vertical position of the strikethrough.
     ///
     /// The strikethrough position is expressed in the font's coordinate system.
-    static member inline strikethroughPosition (value: float) = PropHelper.mkAttr "strikethrough-position" value
-    /// Represents the ideal vertical position of the strikethrough.
-    ///
-    /// The strikethrough position is expressed in the font's coordinate system.
-    static member inline strikethroughPosition (value: int) = PropHelper.mkAttr "strikethrough-position" value
+    static member inline strikethroughPosition(value: float) =
+        PropHelper.mkAttr "strikethrough-position" value
 
     /// Represents the ideal vertical position of the strikethrough.
     ///
     /// The strikethrough position is expressed in the font's coordinate system.
-    static member inline strikethroughThickness (value: float) = PropHelper.mkAttr "strikethrough-thickness" value
+    static member inline strikethroughPosition(value: int) =
+        PropHelper.mkAttr "strikethrough-position" value
+
+    /// Represents the ideal vertical position of the strikethrough.
+    ///
+    /// The strikethrough position is expressed in the font's coordinate system.
+    static member inline strikethroughThickness(value: float) =
+        PropHelper.mkAttr "strikethrough-thickness" value
+
     /// Represents the ideal thickness of the strikethrough.
     ///
     /// The strikethrough thickness is expressed in the font's coordinate system.
-    static member inline strikethroughThickness (value: int) = PropHelper.mkAttr "strikethrough-thickness" value
+    static member inline strikethroughThickness(value: int) =
+        PropHelper.mkAttr "strikethrough-thickness" value
 
     /// SVG attribute to define the color (or any SVG paint servers like gradients or patterns) used to paint the outline of the shape.
-    static member inline stroke (color: string) = PropHelper.mkAttr "stroke" color
+    static member inline stroke(color: string) = PropHelper.mkAttr "stroke" color
 
     /// SVG attribute to define the width of the stroke to be applied to the shape.
-    static member inline strokeWidth (value: float) = PropHelper.mkAttr "strokeWidth" value
+    static member inline strokeWidth(value: float) = PropHelper.mkAttr "strokeWidth" value
     /// SVG attribute to define the width of the stroke to be applied to the shape.
-    static member inline strokeWidth (value: ICssUnit) = PropHelper.mkAttr "strokeWidth" value
+    static member inline strokeWidth(value: ICssUnit) = PropHelper.mkAttr "strokeWidth" value
     /// SVG attribute to define the width of the stroke to be applied to the shape.
-    static member inline strokeWidth (value: int) = PropHelper.mkAttr "strokeWidth" value
+    static member inline strokeWidth(value: int) = PropHelper.mkAttr "strokeWidth" value
 
-    static member inline style (properties: #IStyleAttribute list) = PropHelper.mkAttr "style" (createObj !!properties)
+    static member inline style(properties: #IStyleAttribute list) =
+        PropHelper.mkAttr "style" (createObj !!properties)
 
     /// Represents the height of the surface for a light filter primitive.
-    static member inline surfaceScale (value: float) = PropHelper.mkAttr "surfaceScale" value
+    static member inline surfaceScale(value: float) = PropHelper.mkAttr "surfaceScale" value
     /// Represents the height of the surface for a light filter primitive.
-    static member inline surfaceScale (value: int) = PropHelper.mkAttr "surfaceScale" value
+    static member inline surfaceScale(value: int) = PropHelper.mkAttr "surfaceScale" value
 
     /// Represents a list of supported language tags.
     ///
     /// This list is matched against the language defined in the user preferences.
-    static member inline systemLanguage (value: string) = PropHelper.mkAttr "systemLanguage" value
+    static member inline systemLanguage(value: string) =
+        PropHelper.mkAttr "systemLanguage" value
 
     /// The `tabindex` global attribute indicates that its element can be focused,
     /// and where it participates in sequential keyboard navigation (usually with the Tab key, hence the name).
-    static member inline tabIndex (index: int) = PropHelper.mkAttr "tabIndex" index
+    static member inline tabIndex(index: int) = PropHelper.mkAttr "tabIndex" index
 
     /// Controls browser behavior when opening a link.
-    static member inline target (frameName: string) = PropHelper.mkAttr "target" frameName
+    static member inline target(frameName: string) = PropHelper.mkAttr "target" frameName
 
     /// Determines the positioning in horizontal direction of the convolution matrix relative to a
     /// given target pixel in the input image.
@@ -1809,7 +1982,7 @@ type prop =
     /// The value must be such that:
     ///
     /// 0 <= targetX < orderX.
-    static member inline targetX (index: int) = PropHelper.mkAttr "targetX" index
+    static member inline targetX(index: int) = PropHelper.mkAttr "targetX" index
 
     /// Determines the positioning in vertical direction of the convolution matrix relative to a
     /// given target pixel in the input image.
@@ -1819,20 +1992,21 @@ type prop =
     /// The value must be such that:
     ///
     /// 0 <= targetY < orderY.
-    static member inline targetY (index: int) = PropHelper.mkAttr "targetY" index
+    static member inline targetY(index: int) = PropHelper.mkAttr "targetY" index
 
     /// A shorthand for using prop.custom("data-testid", value). Useful for referencing elements when testing React code.
     static member inline testId(value: string) = PropHelper.mkAttr "data-testid" value
 
     /// Defines the text content of the element. Alias for `children [ Html.text value ]`
-    static member inline text (value: float) = PropHelper.mkAttr "children" [value]
+    static member inline text(value: float) = PropHelper.mkAttr "children" [ value ]
     /// Defines the text content of the element. Alias for `children [ Html.text value ]`
-    static member inline text (value: int) = PropHelper.mkAttr "children" [value]
+    static member inline text(value: int) = PropHelper.mkAttr "children" [ value ]
     /// Defines the text content of the element. Alias for `children [ Html.text value ]`
-    static member inline text (value: string) = PropHelper.mkAttr "children" [value]
+    static member inline text(value: string) = PropHelper.mkAttr "children" [ value ]
 
     /// Defines the text content of the element. Alias for `children [ Html.text value ]`
-    static member inline text (value: System.Guid) = PropHelper.mkAttr "children" [value.ToString()]
+    static member inline text(value: System.Guid) =
+        PropHelper.mkAttr "children" [ value.ToString() ]
 
     /// Defines the text content of the element. Alias for `children [ Html.text (sprintf ...) ]`
     static member inline textf fmt = Printf.kprintf prop.text fmt
@@ -1841,20 +2015,20 @@ type prop =
     ///
     /// The user agent will ensure that the text does not extend farther than that distance, using the method or methods
     /// specified by the lengthAdjust attribute.
-    static member inline textLength (value: float) = PropHelper.mkAttr "textLength" value
+    static member inline textLength(value: float) = PropHelper.mkAttr "textLength" value
     /// Specifies the width of the space into which the text will draw.
     ///
     /// The user agent will ensure that the text does not extend farther than that distance, using the method or methods
     /// specified by the lengthAdjust attribute.
-    static member inline textLength (value: ICssUnit) = PropHelper.mkAttr "textLength" value
+    static member inline textLength(value: ICssUnit) = PropHelper.mkAttr "textLength" value
     /// Specifies the width of the space into which the text will draw.
     ///
     /// The user agent will ensure that the text does not extend farther than that distance, using the method or methods
     /// specified by the lengthAdjust attribute.
-    static member inline textLength (value: int) = PropHelper.mkAttr "textLength" value
+    static member inline textLength(value: int) = PropHelper.mkAttr "textLength" value
 
     /// The title global attribute contains text representing advisory information related to the element it belongs to.
-    static member inline title (value: string) = PropHelper.mkAttr "title" value
+    static member inline title(value: string) = PropHelper.mkAttr "title" value
 
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
@@ -1863,7 +2037,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (value: float) = PropHelper.mkAttr "to" value
+    static member inline to'(value: float) = PropHelper.mkAttr "to" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -1871,7 +2046,9 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (values: seq<float>) = PropHelper.mkAttr "to" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline to'(values: seq<float>) =
+        PropHelper.mkAttr "to" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -1879,7 +2056,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (value: int) = PropHelper.mkAttr "to" value
+    static member inline to'(value: int) = PropHelper.mkAttr "to" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -1887,7 +2065,9 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (values: seq<int>) = PropHelper.mkAttr "to" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline to'(values: seq<int>) =
+        PropHelper.mkAttr "to" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -1895,7 +2075,8 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (value: string) = PropHelper.mkAttr "to" value
+    static member inline to'(value: string) = PropHelper.mkAttr "to" value
+
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
     /// When used with the `to` attribute, the animation will change the modified attribute from
@@ -1903,130 +2084,191 @@ type prop =
     ///
     /// When used with the `by` attribute, the animation will change the attribute relatively
     /// from the from value by the value specified in by.
-    static member inline to' (values: seq<string>) = PropHelper.mkAttr "to" (values |> String.concat " ")
+    static member inline to'(values: seq<string>) =
+        PropHelper.mkAttr "to" (values |> String.concat " ")
 
     /// Defines a list of transform definitions that are applied to an element and the element's children.
-    static member inline transform (transform: ITransformProperty) =
+    static member inline transform(transform: ITransformProperty) =
         PropHelper.mkAttr "transform" (unbox<string> transform)
+
     /// Defines a list of transform definitions that are applied to an element and the element's children.
-    static member inline transform (transforms: seq<ITransformProperty>) =
-        let unitList = [ "px" ; "deg" ]
-        let removeUnits (s : string) =
-            List.fold (fun (ins:string) toReplace -> ins.Replace(toReplace,"")) s unitList
+    static member inline transform(transforms: seq<ITransformProperty>) =
+        let unitList = [ "px"; "deg" ]
+
+        let removeUnits (s: string) =
+            List.fold (fun (ins: string) toReplace -> ins.Replace(toReplace, "")) s unitList
+
         PropHelper.mkAttr "transform" (unbox<seq<string>> transforms |> Seq.map removeUnits |> String.concat " ")
 
     /// Sets the `type` attribute for the element.
-    static member inline type' (value: string) = PropHelper.mkAttr "type" value
+    static member inline type'(value: string) = PropHelper.mkAttr "type" value
 
     /// Represents the ideal vertical position of the underline.
     ///
     /// The underline position is expressed in the font's coordinate system.
-    static member inline underlinePosition (value: float) = PropHelper.mkAttr "underline-position" value
+    static member inline underlinePosition(value: float) =
+        PropHelper.mkAttr "underline-position" value
+
     /// Represents the ideal vertical position of the underline.
     ///
     /// The underline position is expressed in the font's coordinate system.
-    static member inline underlinePosition (value: int) = PropHelper.mkAttr "underline-position" value
+    static member inline underlinePosition(value: int) =
+        PropHelper.mkAttr "underline-position" value
 
     /// Represents the ideal thickness of the underline.
     ///
     /// The underline thickness is expressed in the font's coordinate system.
-    static member inline underlineThickness (value: float) = PropHelper.mkAttr "underline-thickness" value
+    static member inline underlineThickness(value: float) =
+        PropHelper.mkAttr "underline-thickness" value
+
     /// Represents the ideal thickness of the underline.
     ///
     /// The underline thickness is expressed in the font's coordinate system.
-    static member inline underlineThickness (value: int) = PropHelper.mkAttr "underline-thickness" value
+    static member inline underlineThickness(value: int) =
+        PropHelper.mkAttr "underline-thickness" value
 
     /// A hash-name reference to a <map> element; that is a '#' followed by the value of a name of a map element.
-    static member inline usemap (value: string) = PropHelper.mkAttr "usemap" value
+    static member inline usemap(value: string) = PropHelper.mkAttr "usemap" value
 
     /// Sets the value of a React controlled component.
-    static member inline value (value: bool) = PropHelper.mkAttr "value" value
+    static member inline value(value: bool) = PropHelper.mkAttr "value" value
     /// Sets the value of a React controlled component.
-    static member inline value (value: float) = PropHelper.mkAttr "value" value
+    static member inline value(value: float) = PropHelper.mkAttr "value" value
+
     /// Sets the value of a React controlled component.
-    static member inline value (value: System.Guid) = PropHelper.mkAttr "value" (unbox<string> value)
+    static member inline value(value: System.Guid) =
+        PropHelper.mkAttr "value" (unbox<string> value)
+
     /// Sets the value of a React controlled component.
-    static member inline value (value: int) = PropHelper.mkAttr "value" value
+    static member inline value(value: int) = PropHelper.mkAttr "value" value
     /// Sets the value of a React controlled component.
-    static member inline value (value: string) = PropHelper.mkAttr "value" value
+    static member inline value(value: string) = PropHelper.mkAttr "value" value
+
     /// Sets the value of a React controlled component.
-    static member inline value (value: seq<float>) = PropHelper.mkAttr "value" (ResizeArray value)
+    static member inline value(value: seq<float>) =
+        PropHelper.mkAttr "value" (ResizeArray value)
+
     /// Sets the value of a React controlled component.
-    static member inline value (value: seq<int>) = PropHelper.mkAttr "value" (ResizeArray value)
+    static member inline value(value: seq<int>) =
+        PropHelper.mkAttr "value" (ResizeArray value)
+
     /// Sets the value of a React controlled component.
-    static member inline value (value: seq<string>) = PropHelper.mkAttr "value" (ResizeArray value)
+    static member inline value(value: seq<string>) =
+        PropHelper.mkAttr "value" (ResizeArray value)
+
     /// The value of the element, interpreted as a date
-    static member inline value (value: System.DateTime, includeTime: bool) =
+    static member inline value(value: System.DateTime, includeTime: bool) =
         PropHelper.mkAttr "value" (PropHelpers.dateTimeValueFunc (Some value) includeTime)
+
     /// The value of the element, interpreted as a date
-    static member inline value (value: System.DateTime) = prop.value(value, includeTime=false)
+    static member inline value(value: System.DateTime) = prop.value (value, includeTime = false)
+
     /// The value of the element, interpreted as a date, or empty if there is no value.
-    static member inline value (value: System.DateTime option, includeTime: bool) =
+    static member inline value(value: System.DateTime option, includeTime: bool) =
         PropHelper.mkAttr "value" (PropHelpers.dateTimeValueFunc value includeTime)
 
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: bool) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!value)
+    static member inline valueOrDefault(value: bool) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!value
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: float) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!value)
+    static member inline valueOrDefault(value: float) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!value
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: System.Guid) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!value)
+    static member inline valueOrDefault(value: System.Guid) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!value
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: int) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!value)
+    static member inline valueOrDefault(value: int) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!value
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input box value.
-    static member inline valueOrDefault (value: string) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!value)
+    static member inline valueOrDefault(value: string) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!value
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: seq<float>) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!(ResizeArray value))
+    static member inline valueOrDefault(value: seq<float>) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!(ResizeArray value)
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
-    static member inline valueOrDefault (value: seq<int>) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!(ResizeArray value))
+    static member inline valueOrDefault(value: seq<int>) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!(ResizeArray value)
+        )
+
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input box value.
-    static member inline valueOrDefault (value: seq<string>) =
-        prop.ref (fun e -> if e |> isNull |> not && !!e?value <> !!value then e?value <- !!(ResizeArray value))
+    static member inline valueOrDefault(value: seq<string>) =
+        prop.ref (fun e ->
+            if e |> isNull |> not && !!e?value <> !!value then
+                e?value <- !!(ResizeArray value)
+        )
 
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (value: float) = PropHelper.mkAttr "values" value
+    static member inline values(value: float) = PropHelper.mkAttr "values" value
+
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (values: seq<float>) = PropHelper.mkAttr "values" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline values(values: seq<float>) =
+        PropHelper.mkAttr "values" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (value: int) = PropHelper.mkAttr "values" value
+    static member inline values(value: int) = PropHelper.mkAttr "values" value
+
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (values: seq<int>) = PropHelper.mkAttr "values" (values |> unbox<seq<string>> |> String.concat " ")
+    static member inline values(values: seq<int>) =
+        PropHelper.mkAttr "values" (values |> unbox<seq<string>> |> String.concat " ")
+
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (value: string) = PropHelper.mkAttr "values" value
+    static member inline values(value: string) = PropHelper.mkAttr "values" value
+
     /// The values attribute has different meanings, depending upon the context where itʼs used,
     /// either it defines a sequence of values used over the course of an animation, or itʼs a
     /// list of numbers for a color matrix, which is interpreted differently depending on the
     /// type of color change to be performed.
-    static member inline values (values: seq<string>) = PropHelper.mkAttr "values" (values |> String.concat " ")
+    static member inline values(values: seq<string>) =
+        PropHelper.mkAttr "values" (values |> String.concat " ")
 
     /// Specifies the width of elements listed here. For all other elements, use the CSS height property.
     ///
@@ -2036,7 +2278,7 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline width (value: float) = PropHelper.mkAttr "width" value
+    static member inline width(value: float) = PropHelper.mkAttr "width" value
     /// Specifies the width of elements listed here. For all other elements, use the CSS height property.
     ///
     /// HTML: <canvas>, <embed>, <iframe>, <img>, <input>, <object>, <video>
@@ -2045,7 +2287,7 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline width (value: ICssUnit) = PropHelper.mkAttr "width" value
+    static member inline width(value: ICssUnit) = PropHelper.mkAttr "width" value
     /// Specifies the width of elements listed here. For all other elements, use the CSS height property.
     ///
     /// HTML: <canvas>, <embed>, <iframe>, <img>, <input>, <object>, <video>
@@ -2054,108 +2296,108 @@ type prop =
     /// <feDiffuseLighting>, <feDisplacementMap>, <feDropShadow>, <feFlood>, <feGaussianBlur>, <feImage>,
     /// <feMerge>, <feMorphology>, <feOffset>, <feSpecularLighting>, <feTile>, <feTurbulence>, <filter>,
     /// <mask>, <pattern>
-    static member inline width (value: int) = PropHelper.mkAttr "width" value
+    static member inline width(value: int) = PropHelper.mkAttr "width" value
 
     /// SVG attribute to define a x-axis coordinate in the user coordinate system.
-    static member inline x (value: float) = PropHelper.mkAttr "x" value
+    static member inline x(value: float) = PropHelper.mkAttr "x" value
     /// SVG attribute to define a x-axis coordinate in the user coordinate system.
-    static member inline x (value: ICssUnit) = PropHelper.mkAttr "x" value
+    static member inline x(value: ICssUnit) = PropHelper.mkAttr "x" value
     /// SVG attribute to define a x-axis coordinate in the user coordinate system.
-    static member inline x (value: int) = PropHelper.mkAttr "x" value
+    static member inline x(value: int) = PropHelper.mkAttr "x" value
 
     /// The x1 attribute is used to specify the first x-coordinate for drawing an SVG element that
     /// requires more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x1 (value: float) = PropHelper.mkAttr "x1" value
+    static member inline x1(value: float) = PropHelper.mkAttr "x1" value
     /// The x1 attribute is used to specify the first x-coordinate for drawing an SVG element that
     /// requires more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x1 (value: ICssUnit) = PropHelper.mkAttr "x1" value
+    static member inline x1(value: ICssUnit) = PropHelper.mkAttr "x1" value
     /// The x1 attribute is used to specify the first x-coordinate for drawing an SVG element that
     /// requires more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x1 (value: int) = PropHelper.mkAttr "x1" value
+    static member inline x1(value: int) = PropHelper.mkAttr "x1" value
 
     /// The x2 attribute is used to specify the second x-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x2 (value: float) = PropHelper.mkAttr "x2" value
+    static member inline x2(value: float) = PropHelper.mkAttr "x2" value
     /// The x2 attribute is used to specify the second x-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x2 (value: ICssUnit) = PropHelper.mkAttr "x2" value
+    static member inline x2(value: ICssUnit) = PropHelper.mkAttr "x2" value
     /// The x2 attribute is used to specify the second x-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the x attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline x2 (value: int) = PropHelper.mkAttr "x2" value
+    static member inline x2(value: int) = PropHelper.mkAttr "x2" value
 
     /// Specifies the XML Namespace of the document.
     ///
     /// Default value is "http://www.w3.org/1999/xhtml".
     ///
     /// This is required in documents parsed with XML parsers, and optional in text/html documents.
-    static member inline xmlns (value: string) = PropHelper.mkAttr "xmlns" value
+    static member inline xmlns(value: string) = PropHelper.mkAttr "xmlns" value
 
     /// SVG attribute to define a y-axis coordinate in the user coordinate system.
-    static member inline y (value: float) = PropHelper.mkAttr "y" value
+    static member inline y(value: float) = PropHelper.mkAttr "y" value
     /// SVG attribute to define a y-axis coordinate in the user coordinate system.
-    static member inline y (value: ICssUnit) = PropHelper.mkAttr "y" value
+    static member inline y(value: ICssUnit) = PropHelper.mkAttr "y" value
     /// SVG attribute to define a y-axis coordinate in the user coordinate system.
-    static member inline y (value: int) = PropHelper.mkAttr "y" value
+    static member inline y(value: int) = PropHelper.mkAttr "y" value
 
     /// The y1 attribute is used to specify the first y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y1 (value: float) = PropHelper.mkAttr "y1" value
+    static member inline y1(value: float) = PropHelper.mkAttr "y1" value
     /// The y1 attribute is used to specify the first y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y1 (value: ICssUnit) = PropHelper.mkAttr "y1" value
+    static member inline y1(value: ICssUnit) = PropHelper.mkAttr "y1" value
     /// The y1 attribute is used to specify the first y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y1 (value: int) = PropHelper.mkAttr "y1" value
+    static member inline y1(value: int) = PropHelper.mkAttr "y1" value
 
     /// The y2 attribute is used to specify the second y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y2 (value: float) = PropHelper.mkAttr "y2" value
+    static member inline y2(value: float) = PropHelper.mkAttr "y2" value
     /// The y2 attribute is used to specify the second y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y2 (value: ICssUnit) = PropHelper.mkAttr "y2" value
+    static member inline y2(value: ICssUnit) = PropHelper.mkAttr "y2" value
     /// The y2 attribute is used to specify the second y-coordinate for drawing an SVG element that requires
     /// more than one coordinate. Elements that only need one coordinate use the y attribute instead.
     ///
     /// Two elements are using this attribute: <line>, and <linearGradient>
-    static member inline y2 (value: int) = PropHelper.mkAttr "y2" value
+    static member inline y2(value: int) = PropHelper.mkAttr "y2" value
 
     /// Defines the location along the z-axis for a light source in the coordinate system established by the
     /// primitiveUnits attribute on the <filter> element, assuming that, in the initial coordinate system,
     /// the positive z-axis comes out towards the person viewing the content and assuming that one unit along
     /// the z-axis equals one unit in x and y.
-    static member inline z (value: float) = PropHelper.mkAttr "z" value
+    static member inline z(value: float) = PropHelper.mkAttr "z" value
     /// Defines the location along the z-axis for a light source in the coordinate system established by the
     /// primitiveUnits attribute on the <filter> element, assuming that, in the initial coordinate system,
     /// the positive z-axis comes out towards the person viewing the content and assuming that one unit along
     /// the z-axis equals one unit in x and y.
-    static member inline z (value: ICssUnit) = PropHelper.mkAttr "z" value
+    static member inline z(value: ICssUnit) = PropHelper.mkAttr "z" value
     /// Defines the location along the z-axis for a light source in the coordinate system established by the
     /// primitiveUnits attribute on the <filter> element, assuming that, in the initial coordinate system,
     /// the positive z-axis comes out towards the person viewing the content and assuming that one unit along
     /// the z-axis equals one unit in x and y.
-    static member inline z (value: int) = PropHelper.mkAttr "z" value
+    static member inline z(value: int) = PropHelper.mkAttr "z" value
 
 module prop =
     /// Controls whether or not an animation is cumulative.
@@ -2210,9 +2452,12 @@ module prop =
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
         static member inline textAfterEdge = PropHelper.mkAttr "alignment-baseline" "text-after-edge"
+
         /// Uses the dominant baseline choice of the parent. Matches the box’s
         /// corresponding baseline to that of its parent.
-        static member inline textBeforeEdge = PropHelper.mkAttr "alignment-baseline" "text-before-edge"
+        static member inline textBeforeEdge =
+            PropHelper.mkAttr "alignment-baseline" "text-before-edge"
+
         /// Specifies that the animation will add to the underlying value of
         /// the attribute and other lower priority animations.
         static member inline textBottom = PropHelper.mkAttr "alignment-baseline" "text-bottom"
@@ -2265,11 +2510,16 @@ module prop =
         /// When this policy is disabled, the Promise returned by Navigator.requestMediaKeySystemAccess() will
         /// reject with a DOMException.
         static member inline encryptedMedia = PropHelper.mkAttr "allow" "encrypted-media"
+
         /// Controls whether tasks should execute in frames while they're not being rendered (e.g. if an iframe
         /// is hidden or display: none).
-        static member inline executionWhileNotRendered = PropHelper.mkAttr "allow" "execution-while-not-rendered"
+        static member inline executionWhileNotRendered =
+            PropHelper.mkAttr "allow" "execution-while-not-rendered"
+
         /// Controls whether tasks should execute in frames while they're outside of the visible viewport.
-        static member inline executionWhileOutOfViewport = PropHelper.mkAttr "allow" "execution-while-out-of-viewport"
+        static member inline executionWhileOutOfViewport =
+            PropHelper.mkAttr "allow" "execution-while-out-of-viewport"
+
         /// Controls whether the current document is allowed to use Element.requestFullScreen().
         ///
         /// When this policy is disabled, the returned Promise rejects with a TypeError DOMException.
@@ -2617,25 +2867,34 @@ module prop =
     /// The number and meaning of the values depend upon the value specified for the shape attribute
     [<Erase>]
     type coords =
-        static member inline rect (left: int, top: int, right: int, bottom: int) =
-            PropHelper.mkAttr "coords"
-                ((unbox<string> left) + "," +
-                 (unbox<string> top) + "," +
-                 (unbox<string> right) + "," +
-                 (unbox<string> bottom))
-        static member inline circle (x: int, y: int, r: int) =
-            PropHelper.mkAttr "coords"
-                ((unbox<string> x) + "," +
-                 (unbox<string> y) + "," +
-                 (unbox<string> r))
-        static member inline poly (x1: int, y1: int, x2: int, y2: int, x3: int, y3: int) =
-            PropHelper.mkAttr "coords"
-                ((unbox<string> x1) + "," +
-                 (unbox<string> y1) + "," +
-                 (unbox<string> x2) + "," +
-                 (unbox<string> y2) + "," +
-                 (unbox<string> x3) + "," +
-                 (unbox<string> y3))
+        static member inline rect(left: int, top: int, right: int, bottom: int) =
+            PropHelper.mkAttr
+                "coords"
+                ((unbox<string> left)
+                 + ","
+                 + (unbox<string> top)
+                 + ","
+                 + (unbox<string> right)
+                 + ","
+                 + (unbox<string> bottom))
+
+        static member inline circle(x: int, y: int, r: int) =
+            PropHelper.mkAttr "coords" ((unbox<string> x) + "," + (unbox<string> y) + "," + (unbox<string> r))
+
+        static member inline poly(x1: int, y1: int, x2: int, y2: int, x3: int, y3: int) =
+            PropHelper.mkAttr
+                "coords"
+                ((unbox<string> x1)
+                 + ","
+                 + (unbox<string> y1)
+                 + ","
+                 + (unbox<string> x2)
+                 + ","
+                 + (unbox<string> y2)
+                 + ","
+                 + (unbox<string> x3)
+                 + ","
+                 + (unbox<string> y3))
 
     /// Indicates whether CORS must be used when fetching the resource.
     [<Erase>]
@@ -2730,9 +2989,9 @@ module prop =
     [<Erase>]
     type dur =
         /// This value specifies the length of the simple duration.
-        static member inline clockValue (duration: System.TimeSpan) =
-            PropHelpers.createClockValue(duration)
-            |> PropHelper.mkAttr "dur"
+        static member inline clockValue(duration: System.TimeSpan) =
+            PropHelpers.createClockValue (duration) |> PropHelper.mkAttr "dur"
+
         /// This value specifies the simple duration as indefinite.
         static member inline indefinite = PropHelper.mkAttr "dur" "indefinite"
         /// This value specifies the simple duration as the intrinsic media duration.
@@ -2800,7 +3059,9 @@ module prop =
         ///
         /// Content policies mostly specify allowed server origins and script endpoints which help guard against cross-site
         /// scripting attacks.
-        static member inline contentSecurityPolicy = PropHelper.mkAttr "httpEquiv" "content-security-policy"
+        static member inline contentSecurityPolicy =
+            PropHelper.mkAttr "httpEquiv" "content-security-policy"
+
         /// If specified, the content attribute must have the value "text/html; charset=utf-8".
         ///
         /// Note: Can only be used in documents served with a text/html MIME type — not in documents served with an XML MIME type.
@@ -2829,7 +3090,7 @@ module prop =
         ///
         /// If supplied, then graphics that result from processing this filter primitive can be referenced
         /// by an in attribute on a subsequent filter primitive within the same filter element.
-        static member inline custom (name: string) = PropHelper.mkAttr "in" name
+        static member inline custom(name: string) = PropHelper.mkAttr "in" name
         /// Represents the value of the fill property on the target element for the filter effect.
         ///
         /// In many cases, the FillPaint is opaque everywhere, but that might not be the case if a shape is
@@ -2861,7 +3122,7 @@ module prop =
         ///
         /// If supplied, then graphics that result from processing this filter primitive can be referenced
         /// by an in attribute on a subsequent filter primitive within the same filter element.
-        static member inline custom (name: string) = PropHelper.mkAttr "in2" name
+        static member inline custom(name: string) = PropHelper.mkAttr "in2" name
         /// Represents the value of the fill property on the target element for the filter effect.
         ///
         /// In many cases, the FillPaint is opaque everywhere, but that might not be the case if a shape is
@@ -3112,7 +3373,9 @@ module prop =
         ///
         /// A bounding box could be considered the same as if the content of the <pattern> were bound to a "0 0 1 1"
         /// viewbox for a pattern tile of width and height of 100%.
-        static member inline objectBoundingBox = PropHelper.mkAttr "patternContentUnits" "objectBoundingBox"
+        static member inline objectBoundingBox =
+            PropHelper.mkAttr "patternContentUnits" "objectBoundingBox"
+
         /// Indicates that all coordinates inside the <pattern> element refer to the user coordinate system as defined
         /// when the pattern tile was created.
         static member inline userSpaceOnUse = PropHelper.mkAttr "patternContentUnits" "userSpaceOnUse"
@@ -3169,7 +3432,7 @@ module prop =
         /// <meetOrSlice> value is ignored.
         static member inline none = PropHelper.mkAttr "preserveAspectRatio" "none"
 
-    [<Erase;RequireQualifiedAccess>]
+    [<Erase; RequireQualifiedAccess>]
     module preserveAspectRatio =
         /// Force uniform scaling.
         ///
@@ -3465,7 +3728,9 @@ module prop =
     type primitiveUnits =
         /// Indicates that any length values within the filter definitions represent fractions or
         /// percentages of the bounding box on the referencing element.
-        static member inline objectBoundingBox = PropHelper.mkAttr "primitiveUnits" "objectBoundingBox"
+        static member inline objectBoundingBox =
+            PropHelper.mkAttr "primitiveUnits" "objectBoundingBox"
+
         /// Indicates that any length values within the filter definitions represent values in the current user coordinate
         /// system in place at the time when the <filter> element is referenced (i.e., the user coordinate system for the
         /// element referencing the <filter> element via a filter attribute).
@@ -3476,21 +3741,30 @@ module prop =
     type referrerPolicy =
         /// The Referer header will not be sent.
         static member inline noReferrer = PropHelper.mkAttr "referrerPolicy" "no-referrer"
+
         /// The Referer header will not be sent to origins without TLS (HTTPS).
-        static member inline noReferrerWhenDowngrade = PropHelper.mkAttr "referrerPolicy" "no-referrer-when-downgrade"
+        static member inline noReferrerWhenDowngrade =
+            PropHelper.mkAttr "referrerPolicy" "no-referrer-when-downgrade"
+
         /// The sent referrer will be limited to the origin of the referring page: its scheme, host, and port.
         static member inline origin = PropHelper.mkAttr "referrerPolicy" "origin"
+
         /// The referrer sent to other origins will be limited to the scheme, the host, and the port.
         /// Navigations on the same origin will still include the path.
-        static member inline originWhenCrossOrigin = PropHelper.mkAttr "referrerPolicy" "origin-when-cross-origin"
+        static member inline originWhenCrossOrigin =
+            PropHelper.mkAttr "referrerPolicy" "origin-when-cross-origin"
+
         /// A referrer will be sent for same origin, but cross-origin requests will contain no referrer information.
         static member inline sameOrigin = PropHelper.mkAttr "referrerPolicy" "same-origin"
         /// Only send the origin of the document as the referrer when the protocol security level stays the same
         /// (e.g. HTTPS→HTTPS), but don't send it to a less secure destination (e.g. HTTPS→HTTP).
         static member inline strictOrigin = PropHelper.mkAttr "referrerPolicy" "strict-origin"
+
         /// Send a full URL when performing a same-origin request, but only send the origin when the protocol security
         /// level stays the same (e.g.HTTPS→HTTPS), and send no header to a less secure destination (e.g. HTTPS→HTTP).
-        static member inline strictOriginWhenCrossOrigin = PropHelper.mkAttr "referrerPolicy" "strict-origin-when-cross-origin"
+        static member inline strictOriginWhenCrossOrigin =
+            PropHelper.mkAttr "referrerPolicy" "strict-origin-when-cross-origin"
+
         /// The referrer will include the origin and the path (but not the fragment, password, or username). This value is unsafe,
         /// because it leaks origins and paths from TLS-protected resources to insecure origins.
         static member inline unsafeUrl = PropHelper.mkAttr "referrerPolicy" "unsafe-url"
@@ -3500,13 +3774,13 @@ module prop =
     type refX =
         /// Numbers are interpreted as being in the coordinate system of the marker contents, after application of the
         /// viewBox and preserveAspectRatio attributes.
-        static member inline length (value: float) = PropHelper.mkAttr "refX" value
+        static member inline length(value: float) = PropHelper.mkAttr "refX" value
         /// Lengths are interpreted as being in the coordinate system of the marker contents, after application
         /// of the viewBox and preserveAspectRatio attributes.
-        static member inline length (value: ICssUnit) = PropHelper.mkAttr "refX" value
+        static member inline length(value: ICssUnit) = PropHelper.mkAttr "refX" value
         /// Numbers are interpreted as being in the coordinate system of the marker contents, after application of the
         /// viewBox and preserveAspectRatio attributes.
-        static member inline length (value: int) = PropHelper.mkAttr "refX" value
+        static member inline length(value: int) = PropHelper.mkAttr "refX" value
         /// The reference point of the marker is placed at the left edge of the shape.
         static member inline left = PropHelper.mkAttr "refX" "left"
         /// The reference point of the marker is placed at the horizontal center of the shape.
@@ -3519,15 +3793,15 @@ module prop =
     type refY =
         /// Numbers are interpreted as being in the coordinate system of the marker contents, after application of the
         /// viewBox and preserveAspectRatio attributes.
-        static member inline length (value: float) = PropHelper.mkAttr "refY" value
+        static member inline length(value: float) = PropHelper.mkAttr "refY" value
         /// Lengths are interpreted as being in the coordinate system of the marker contents, after application of the
         /// viewBox and preserveAspectRatio attributes.
         ///
         /// Percentage values are interpreted as being a percentage of the viewBox height.
-        static member inline length (value: ICssUnit) = PropHelper.mkAttr "refY" value
+        static member inline length(value: ICssUnit) = PropHelper.mkAttr "refY" value
         /// Numbers are interpreted as being in the coordinate system of the marker contents, after application of the
         /// viewBox and preserveAspectRatio attributes.
-        static member inline length (value: int) = PropHelper.mkAttr "refY" value
+        static member inline length(value: int) = PropHelper.mkAttr "refY" value
         /// The reference point of the marker is placed at the top edge of the shape.
         static member inline top = PropHelper.mkAttr "refY" "top"
         /// The reference point of the marker is placed at the vertical center of the shape.
@@ -3615,7 +3889,7 @@ module prop =
         /// A fractional value describes a portion of the simple duration.
         ///
         /// Values must be greater than 0.
-        static member inline iterations (value: float) = PropHelper.mkAttr "repeatCount" value
+        static member inline iterations(value: float) = PropHelper.mkAttr "repeatCount" value
         /// Specifies the number of iterations.
         ///
         /// It can include partial iterations expressed as fraction values.
@@ -3623,7 +3897,7 @@ module prop =
         /// A fractional value describes a portion of the simple duration.
         ///
         /// Values must be greater than 0.
-        static member inline iterations (value: int) = PropHelper.mkAttr "repeatCount" value
+        static member inline iterations(value: int) = PropHelper.mkAttr "repeatCount" value
         /// Indicates that the animation will be repeated indefinitely (i.e. until the document ends).
         static member inline indefinite = PropHelper.mkAttr "repeatCount" "indefinite"
 
@@ -3631,9 +3905,9 @@ module prop =
     [<Erase>]
     type repeatDur =
         /// This value specifies the duration in presentation time to repeat the animation.
-        static member inline clockValue (duration: System.TimeSpan) =
-            PropHelpers.createClockValue(duration)
-            |> PropHelper.mkAttr "repeatDur"
+        static member inline clockValue(duration: System.TimeSpan) =
+            PropHelpers.createClockValue (duration) |> PropHelper.mkAttr "repeatDur"
+
         /// Indicates that the animation will be repeated indefinitely (i.e. until the document ends).
         static member inline indefinite = PropHelper.mkAttr "repeatDur" "indefinite"
 

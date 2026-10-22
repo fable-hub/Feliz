@@ -81,4 +81,3 @@ describe "UseElmish stable dependency parent rerender"
         expect(render.getByTestId TestIds.ParentTicks).toHaveTextContent "2"
         expect(render.getByTestId TestIds.InitRuns).toHaveTextContent "1"
     }
-
