@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "transpile": "node -e \"require('fs').rmSync('./fableoutput', { recursive: true, force: true })\" && dotnet fable -o ./fableoutput --exclude Feliz.CompilerPlugins --noCache -e .jsx",
-    "test": "npm run transpile && vitest --run",
-    "test:watch": "npm run transpile -- --watch --run vitest"
+    "test": "npm run transpile && vitest --run --config ../vitest.config.ts",
+    "test:watch": "npm run transpile -- --watch --run vitest --config ../vitest.config.ts"
   }
 }

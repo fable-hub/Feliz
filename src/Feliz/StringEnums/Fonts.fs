@@ -2,239 +2,710 @@ namespace Feliz
 
 /// Contains a list of CSS Fonts from https://www.tutorialbrain.com/css_tutorial/css_font_family_list/
 module font =
-    let [<Literal>] abadiMTCondensedLight = "Abadi MT Condensed Light"
-    let [<Literal>] aharoni = "Aharoni"
-    let [<Literal>] aharoniBold = "Aharoni Bold"
-    let [<Literal>] aldhabi = "Aldhabi"
-    let [<Literal>] alternateGothic2BT = "AlternateGothic2 BT"
-    let [<Literal>] andaleMono = "Andale Mono"
-    let [<Literal>] andalus = "Andalus"
-    let [<Literal>] angsanaNew = "Angsana New"
-    let [<Literal>] angsanaUPC = "AngsanaUPC"
-    let [<Literal>] aparajita = "Aparajita"
-    let [<Literal>] appleChancery = "Apple Chancery"
-    let [<Literal>] arabicTypesetting = "Arabic Typesetting"
-    let [<Literal>] arial = "Arial"
-    let [<Literal>] arialBlack = "Arial Black"
-    let [<Literal>] arialNarrow = "Arial narrow"
-    let [<Literal>] arialNova = "Arial Nova"
-    let [<Literal>] arialRoundedMTBold = "Arial Rounded MT Bold"
-    let [<Literal>] arnoldboecklin = "Arnoldboecklin"
-    let [<Literal>] avantaGarde = "Avanta Garde"
-    let [<Literal>] bahnschrift = "Bahnschrift"
-    let [<Literal>] bahnschriftLight = "Bahnschrift Light"
-    let [<Literal>] bahnschriftSemiBold = "Bahnschrift SemiBold"
-    let [<Literal>] bahnschriftSemiLight = "Bahnschrift SemiLight"
-    let [<Literal>] baskerville = "Baskerville"
-    let [<Literal>] batang = "Batang"
-    let [<Literal>] batangChe = "BatangChe"
-    let [<Literal>] bigCaslon = "Big Caslon"
-    let [<Literal>] bizUDGothic = "BIZ UDGothic"
-    let [<Literal>] bizUDMinchoMedium = "BIZ UDMincho Medium"
-    let [<Literal>] blippo = "Blippo"
-    let [<Literal>] bodoniMT = "Bodoni MT"
-    let [<Literal>] bookAntiqua = "Book Antiqua"
-    let [<Literal>] Bookman = "Bookman"
-    let [<Literal>] bradlyHand = "Bradley Hand"
-    let [<Literal>] browalliaNew = "Browallia New"
-    let [<Literal>] browalliaUPC = "BrowalliaUPC"
-    let [<Literal>] brushScriptMT = "Brush Script MT"
-    let [<Literal>] brushScriptStd = "Brush Script Std"
-    let [<Literal>] brushStroke = "Brushstroke"
-    let [<Literal>] calibri = "Calibri"
-    let [<Literal>] calibriLight = "Calibri Light"
-    let [<Literal>] calistoMT = "Calisto MT"
-    let [<Literal>] cambodian = "Cambodian"
-    let [<Literal>] cambria = "Cambria"
-    let [<Literal>] cambriaMath = "Cambria Math"
-    let [<Literal>] candara = "Candara"
-    let [<Literal>] centuryGothic = "Century Gothic"
-    let [<Literal>] chalkDuster = "Chalkduster"
-    let [<Literal>] cherokee = "Cherokee"
-    let [<Literal>] comicSans = "Comic Sans"
-    let [<Literal>] comicSansMS = "Comic Sans MS"
-    let [<Literal>] consolas = "Consolas"
-    let [<Literal>] constantia = "Constantia"
-    let [<Literal>] copperPlate = "Copperplate"
-    let [<Literal>] copperPlateGothicLight = "Copperplate Gothic Light"
-    let [<Literal>] copperPlateGothicBold = "Copperplate Gothic Bold"
-    let [<Literal>] corbel = "Corbel"
-    let [<Literal>] cordiaNew = "Cordia New"
-    let [<Literal>] cordiaUPC = "CordiaUPC"
-    let [<Literal>] coronetScript = "Coronet script"
-    let [<Literal>] courier = "Courier"
-    let [<Literal>] courierNew = "Courier New"
-    let [<Literal>] daunPenh = "DaunPenh"
-    let [<Literal>] david = "David"
-    let [<Literal>] dengXian = "DengXian"
-    let [<Literal>] dfKaiSB = "DFKai-SB"
-    let [<Literal>] didot = "Didot"
-    let [<Literal>] dilleniaUPC = "DilleniaUPC"
-    let [<Literal>] dokChampa = "DokChampa"
-    let [<Literal>] dotum = "Dotum"
-    let [<Literal>] dotumChe = "DotumChe"
-    let [<Literal>] ebrima = "Ebrima"
-    let [<Literal>] estrangeloEdessa = "Estrangelo Edessa"
-    let [<Literal>] eucrosiaUPC = "EucrosiaUPC"
-    let [<Literal>] euphemia = "Euphemia"
-    let [<Literal>] fangSong = "FangSong"
-    let [<Literal>] florence = "Florence"
-    let [<Literal>] franklinGothicMedium = "Franklin Gothic Medium"
-    let [<Literal>] frankRuehl = "FrankRuehl"
-    let [<Literal>] fressiaUPC = "FressiaUPC"
-    let [<Literal>] futara = "Futara"
-    let [<Literal>] gabriola = "Gabriola"
-    let [<Literal>] garamond = "Garamond"
-    let [<Literal>] gautami = "Gautami"
-    let [<Literal>] geneva = "Geneva"
-    let [<Literal>] georgia = "Georgia"
-    let [<Literal>] georgiaPro = "Georgia Pro"
-    let [<Literal>] gillSans = "Gill Sans"
-    let [<Literal>] gillSansNova = "Gill Sans Nova"
-    let [<Literal>] gisha = "Gisha"
-    let [<Literal>] goudyOldStyle = "Goudy Old Style"
-    let [<Literal>] gulim = "Gulim"
-    let [<Literal>] gulimChe = "GulimChe"
-    let [<Literal>] gungsuh = "Gungsuh"
-    let [<Literal>] gungsuhChe = "GungsuhChe"
-    let [<Literal>] hebrew = "Hebrew"
-    let [<Literal>] helvetica = "Helvetica"
-    let [<Literal>] hoeflerText = "Hoefler Text"
-    let [<Literal>] holoLensMDL2Assets = "HoloLens MDL2 Assets"
-    let [<Literal>] impact = "Impact"
-    let [<Literal>] inkFree = "Ink Free"
-    let [<Literal>] irisUPC = "IrisUPC"
-    let [<Literal>] iskoolaPota = "Iskoola Pota"
-    let [<Literal>] japanese = "Japanese"
-    let [<Literal>] jasmineUPC = "JasmineUPC"
-    let [<Literal>] javaneseText = "Javanese Text"
-    let [<Literal>] jazzLET = "Jazz LET"
-    let [<Literal>] kaiTi = "KaiTi"
-    let [<Literal>] kalinga = "Kalinga"
-    let [<Literal>] kartika = "Kartika"
-    let [<Literal>] khmerUI = "Khmer UI"
-    let [<Literal>] kodchiangUPC = "KodchiangUPC"
-    let [<Literal>] kokila = "Kokila"
-    let [<Literal>] korean = "Korean"
-    let [<Literal>] lao = "Lao"
-    let [<Literal>] laoUI = "Lao UI"
-    let [<Literal>] latha = "Latha"
-    let [<Literal>] leelawadee = "Leelawadee"
-    let [<Literal>] leelawadeeUI = "Leelawadee UI"
-    let [<Literal>] leelawadeeUISemilight = "Leelawadee UI Semilight"
-    let [<Literal>] levenimMT = "Levenim MT"
-    let [<Literal>] lilyUPC = "LilyUPC"
-    let [<Literal>] lucidaBright = "Lucida Bright"
-    let [<Literal>] lucidaConsole = "Lucida Console"
-    let [<Literal>] lucidaHandwriting = "Lucida Handwriting"
-    let [<Literal>] lucidaSans = "Lucida Sans"
-    let [<Literal>] lucidaSansTypewriter = "Lucida Sans Typewriter"
-    let [<Literal>] lucidaSansUnicode = "Lucida Sans Unicode"
-    let [<Literal>] lucidaTypewriter = "Lucidatypewriter"
-    let [<Literal>] luminari = "Luminari"
-    let [<Literal>] malgunGothic = "Malgun Gothic"
-    let [<Literal>] malgunGothicSemilight = "Malgun Gothic Semilight"
-    let [<Literal>] mangal = "Mangal"
-    let [<Literal>] markerFelt = "Marker Felt"
-    let [<Literal>] marlett = "Marlett"
-    let [<Literal>] meiryo = "Meiryo"
-    let [<Literal>] meiryoUI = "Meiryo UI"
-    let [<Literal>] microsoftHimalaya = "Microsoft Himalaya"
-    let [<Literal>] microsoftJhengHei = "Microsoft JhengHei"
-    let [<Literal>] microsoftJhengHeiUI = "Microsoft JhengHei UI"
-    let [<Literal>] microsoftNewTaiLue = "Microsoft New Tai Lue"
-    let [<Literal>] microsoftPhagsPa = "Microsoft PhagsPa"
-    let [<Literal>] microsoftSansSerif = "Microsoft Sans Serif"
-    let [<Literal>] microsoftTaiLe = "Microsoft Tai Le"
-    let [<Literal>] microsoftUighur = "Microsoft Uighur"
-    let [<Literal>] microsoftYaHei = "Microsoft YaHei"
-    let [<Literal>] microsoftYaHeiUI = "Microsoft YaHei UI"
-    let [<Literal>] microsoftYiBaiti = "Microsoft Yi Baiti"
-    let [<Literal>] mingLiU = "MingLiU"
-    let [<Literal>] mingLiUHKSCS = "MingLiU_HKSCS"
-    let [<Literal>] mingLiUHKSCSExtB = "MingLiU_HKSCS-ExtB"
-    let [<Literal>] mingLiUExtB = "MingLiU-ExtB"
-    let [<Literal>] miriam = "Miriam"
-    let [<Literal>] monaco = "Monaco"
-    let [<Literal>] mongolianBaiti = "Mongolian Baiti"
-    let [<Literal>] moolBoran = "MoolBoran"
-    let [<Literal>] msGothic = "MS Gothic"
-    let [<Literal>] msMincho = "MS Mincho"
-    let [<Literal>] msPGothic = "MS PGothic"
-    let [<Literal>] msPMincho = "MS PMincho"
-    let [<Literal>] msUIGothic = "MS UI Gothic"
-    let [<Literal>] mvBoli = "MV Boli"
-    let [<Literal>] myanmarText = "Myanmar Text"
-    let [<Literal>] narkisim = "Narkisim"
-    let [<Literal>] neueHaasGroteskTextPro = "Neue Haas Grotesk Text Pro"
-    let [<Literal>] newCenturySchoolbook = "New Century Schoolbook"
-    let [<Literal>] newsGothicMT = "News Gothic MT"
-    let [<Literal>] nirmalaUI = "Nirmala UI"
-    let [<Literal>] noAutoLanguageAssoc = "No automatic language associations"
-    let [<Literal>] noto = "Noto"
-    let [<Literal>] nSimSun = "NSimSun"
-    let [<Literal>] nyala = "Nyala"
-    let [<Literal>] oldTown = "Oldtown"
-    let [<Literal>] optima = "Optima"
-    let [<Literal>] palatino = "Palatino"
-    let [<Literal>] palatinoLinotype = "Palatino Linotype"
-    let [<Literal>] papyrus = "papyrus"
-    let [<Literal>] parkAvenue = "Parkavenue"
-    let [<Literal>] perpetua = "Perpetua"
-    let [<Literal>] plantagenetCherokee = "Plantagenet Cherokee"
-    let [<Literal>] PMingLiU = "PMingLiU"
-    let [<Literal>] raavi = "Raavi"
-    let [<Literal>] rockwell = "Rockwell"
-    let [<Literal>] rockwellExtraBold = "Rockwell Extra Bold"
-    let [<Literal>] rockwellNova = "Rockwell Nova"
-    let [<Literal>] rockwellNovaCond = "Rockwell Nova Cond"
-    let [<Literal>] rockwellNovaExtraBold = "Rockwell Nova Extra Bold"
-    let [<Literal>] rod = "Rod"
-    let [<Literal>] sakkalMajalla = "Sakkal Majalla"
-    let [<Literal>] sanskritText = "Sanskrit Text"
-    let [<Literal>] segoeMDL2Assets = "segoeMDL2Assets"
-    let [<Literal>] segoePrint = "Segoe Print"
-    let [<Literal>] segoeScript = "Segoe Script"
-    let [<Literal>] segoeUI = "Segoe UI"
-    let [<Literal>] segoeUIEmoji = "Segoe UI Emoji"
-    let [<Literal>] segoeUIHistoric = "Segoe UI Historic"
-    let [<Literal>] segoeUISymbol = "Segoe UI Symbol"
-    let [<Literal>] shonarBangla = "Shonar Bangla"
-    let [<Literal>] shruti = "Shruti"
-    let [<Literal>] simHei = "SimHei"
-    let [<Literal>] simKai = "SimKai"
-    let [<Literal>] simplifiedArabic = "Simplified Arabic"
-    let [<Literal>] simplifiedChinese = "Simplified Chinese"
-    let [<Literal>] simSun = "SimSun"
-    let [<Literal>] simSunExtB = "SimSun-ExtB"
-    let [<Literal>] sitka = "Sitka"
-    let [<Literal>] snellRoundhan = "Snell Roundhan"
-    let [<Literal>] stencilStd = "Stencil Std"
-    let [<Literal>] sylfaen = "Sylfaen"
-    let [<Literal>] symbol = "Symbol"
-    let [<Literal>] tahoma = "Tahoma"
-    let [<Literal>] thai = "Thai"
-    let [<Literal>] timesNewRoman = "Times New Roman"
-    let [<Literal>] traditionalArabic = "Traditional Arabic"
-    let [<Literal>] traditionalChinese = "Traditional Chinese"
-    let [<Literal>] trattatello = "Trattatello"
-    let [<Literal>] trebuchetMS = "Trebuchet MS"
-    let [<Literal>] udDigiKyokasho = "UD Digi Kyokasho"
-    let [<Literal>] udDigiKyokashoNKR = "UD Digi Kyokasho NK-R"
-    let [<Literal>] udDigiKyokashoNPR = "UD Digi Kyokasho NP-R"
-    let [<Literal>] udDigiKyokashoNR = "UD Digi Kyokasho N-R"
-    let [<Literal>] urduTypesetting = "Urdu Typesetting"
-    let [<Literal>] urwChancery = "URW Chancery"
-    let [<Literal>] utsaah = "Utsaah"
-    let [<Literal>] vani = "Vani"
-    let [<Literal>] verdana = "Verdana"
-    let [<Literal>] verdanaPro = "Verdana Pro"
-    let [<Literal>] vijaya = "Vijaya"
-    let [<Literal>] vrinda = "Vrinda"
-    let [<Literal>] Webdings = "Webdings"
-    let [<Literal>] westminster = "Westminster"
-    let [<Literal>] wingdings = "Wingdings"
-    let [<Literal>] yuGothic = "Yu Gothic"
-    let [<Literal>] yuGothicUI = "Yu Gothic UI"
-    let [<Literal>] yuMincho = "Yu Mincho"
-    let [<Literal>] zapfChancery = "Zapf Chancery"
+    [<Literal>]
+    let abadiMTCondensedLight = "Abadi MT Condensed Light"
+
+    [<Literal>]
+    let aharoni = "Aharoni"
+
+    [<Literal>]
+    let aharoniBold = "Aharoni Bold"
+
+    [<Literal>]
+    let aldhabi = "Aldhabi"
+
+    [<Literal>]
+    let alternateGothic2BT = "AlternateGothic2 BT"
+
+    [<Literal>]
+    let andaleMono = "Andale Mono"
+
+    [<Literal>]
+    let andalus = "Andalus"
+
+    [<Literal>]
+    let angsanaNew = "Angsana New"
+
+    [<Literal>]
+    let angsanaUPC = "AngsanaUPC"
+
+    [<Literal>]
+    let aparajita = "Aparajita"
+
+    [<Literal>]
+    let appleChancery = "Apple Chancery"
+
+    [<Literal>]
+    let arabicTypesetting = "Arabic Typesetting"
+
+    [<Literal>]
+    let arial = "Arial"
+
+    [<Literal>]
+    let arialBlack = "Arial Black"
+
+    [<Literal>]
+    let arialNarrow = "Arial narrow"
+
+    [<Literal>]
+    let arialNova = "Arial Nova"
+
+    [<Literal>]
+    let arialRoundedMTBold = "Arial Rounded MT Bold"
+
+    [<Literal>]
+    let arnoldboecklin = "Arnoldboecklin"
+
+    [<Literal>]
+    let avantaGarde = "Avanta Garde"
+
+    [<Literal>]
+    let bahnschrift = "Bahnschrift"
+
+    [<Literal>]
+    let bahnschriftLight = "Bahnschrift Light"
+
+    [<Literal>]
+    let bahnschriftSemiBold = "Bahnschrift SemiBold"
+
+    [<Literal>]
+    let bahnschriftSemiLight = "Bahnschrift SemiLight"
+
+    [<Literal>]
+    let baskerville = "Baskerville"
+
+    [<Literal>]
+    let batang = "Batang"
+
+    [<Literal>]
+    let batangChe = "BatangChe"
+
+    [<Literal>]
+    let bigCaslon = "Big Caslon"
+
+    [<Literal>]
+    let bizUDGothic = "BIZ UDGothic"
+
+    [<Literal>]
+    let bizUDMinchoMedium = "BIZ UDMincho Medium"
+
+    [<Literal>]
+    let blippo = "Blippo"
+
+    [<Literal>]
+    let bodoniMT = "Bodoni MT"
+
+    [<Literal>]
+    let bookAntiqua = "Book Antiqua"
+
+    [<Literal>]
+    let Bookman = "Bookman"
+
+    [<Literal>]
+    let bradlyHand = "Bradley Hand"
+
+    [<Literal>]
+    let browalliaNew = "Browallia New"
+
+    [<Literal>]
+    let browalliaUPC = "BrowalliaUPC"
+
+    [<Literal>]
+    let brushScriptMT = "Brush Script MT"
+
+    [<Literal>]
+    let brushScriptStd = "Brush Script Std"
+
+    [<Literal>]
+    let brushStroke = "Brushstroke"
+
+    [<Literal>]
+    let calibri = "Calibri"
+
+    [<Literal>]
+    let calibriLight = "Calibri Light"
+
+    [<Literal>]
+    let calistoMT = "Calisto MT"
+
+    [<Literal>]
+    let cambodian = "Cambodian"
+
+    [<Literal>]
+    let cambria = "Cambria"
+
+    [<Literal>]
+    let cambriaMath = "Cambria Math"
+
+    [<Literal>]
+    let candara = "Candara"
+
+    [<Literal>]
+    let centuryGothic = "Century Gothic"
+
+    [<Literal>]
+    let chalkDuster = "Chalkduster"
+
+    [<Literal>]
+    let cherokee = "Cherokee"
+
+    [<Literal>]
+    let comicSans = "Comic Sans"
+
+    [<Literal>]
+    let comicSansMS = "Comic Sans MS"
+
+    [<Literal>]
+    let consolas = "Consolas"
+
+    [<Literal>]
+    let constantia = "Constantia"
+
+    [<Literal>]
+    let copperPlate = "Copperplate"
+
+    [<Literal>]
+    let copperPlateGothicLight = "Copperplate Gothic Light"
+
+    [<Literal>]
+    let copperPlateGothicBold = "Copperplate Gothic Bold"
+
+    [<Literal>]
+    let corbel = "Corbel"
+
+    [<Literal>]
+    let cordiaNew = "Cordia New"
+
+    [<Literal>]
+    let cordiaUPC = "CordiaUPC"
+
+    [<Literal>]
+    let coronetScript = "Coronet script"
+
+    [<Literal>]
+    let courier = "Courier"
+
+    [<Literal>]
+    let courierNew = "Courier New"
+
+    [<Literal>]
+    let daunPenh = "DaunPenh"
+
+    [<Literal>]
+    let david = "David"
+
+    [<Literal>]
+    let dengXian = "DengXian"
+
+    [<Literal>]
+    let dfKaiSB = "DFKai-SB"
+
+    [<Literal>]
+    let didot = "Didot"
+
+    [<Literal>]
+    let dilleniaUPC = "DilleniaUPC"
+
+    [<Literal>]
+    let dokChampa = "DokChampa"
+
+    [<Literal>]
+    let dotum = "Dotum"
+
+    [<Literal>]
+    let dotumChe = "DotumChe"
+
+    [<Literal>]
+    let ebrima = "Ebrima"
+
+    [<Literal>]
+    let estrangeloEdessa = "Estrangelo Edessa"
+
+    [<Literal>]
+    let eucrosiaUPC = "EucrosiaUPC"
+
+    [<Literal>]
+    let euphemia = "Euphemia"
+
+    [<Literal>]
+    let fangSong = "FangSong"
+
+    [<Literal>]
+    let florence = "Florence"
+
+    [<Literal>]
+    let franklinGothicMedium = "Franklin Gothic Medium"
+
+    [<Literal>]
+    let frankRuehl = "FrankRuehl"
+
+    [<Literal>]
+    let fressiaUPC = "FressiaUPC"
+
+    [<Literal>]
+    let futara = "Futara"
+
+    [<Literal>]
+    let gabriola = "Gabriola"
+
+    [<Literal>]
+    let garamond = "Garamond"
+
+    [<Literal>]
+    let gautami = "Gautami"
+
+    [<Literal>]
+    let geneva = "Geneva"
+
+    [<Literal>]
+    let georgia = "Georgia"
+
+    [<Literal>]
+    let georgiaPro = "Georgia Pro"
+
+    [<Literal>]
+    let gillSans = "Gill Sans"
+
+    [<Literal>]
+    let gillSansNova = "Gill Sans Nova"
+
+    [<Literal>]
+    let gisha = "Gisha"
+
+    [<Literal>]
+    let goudyOldStyle = "Goudy Old Style"
+
+    [<Literal>]
+    let gulim = "Gulim"
+
+    [<Literal>]
+    let gulimChe = "GulimChe"
+
+    [<Literal>]
+    let gungsuh = "Gungsuh"
+
+    [<Literal>]
+    let gungsuhChe = "GungsuhChe"
+
+    [<Literal>]
+    let hebrew = "Hebrew"
+
+    [<Literal>]
+    let helvetica = "Helvetica"
+
+    [<Literal>]
+    let hoeflerText = "Hoefler Text"
+
+    [<Literal>]
+    let holoLensMDL2Assets = "HoloLens MDL2 Assets"
+
+    [<Literal>]
+    let impact = "Impact"
+
+    [<Literal>]
+    let inkFree = "Ink Free"
+
+    [<Literal>]
+    let irisUPC = "IrisUPC"
+
+    [<Literal>]
+    let iskoolaPota = "Iskoola Pota"
+
+    [<Literal>]
+    let japanese = "Japanese"
+
+    [<Literal>]
+    let jasmineUPC = "JasmineUPC"
+
+    [<Literal>]
+    let javaneseText = "Javanese Text"
+
+    [<Literal>]
+    let jazzLET = "Jazz LET"
+
+    [<Literal>]
+    let kaiTi = "KaiTi"
+
+    [<Literal>]
+    let kalinga = "Kalinga"
+
+    [<Literal>]
+    let kartika = "Kartika"
+
+    [<Literal>]
+    let khmerUI = "Khmer UI"
+
+    [<Literal>]
+    let kodchiangUPC = "KodchiangUPC"
+
+    [<Literal>]
+    let kokila = "Kokila"
+
+    [<Literal>]
+    let korean = "Korean"
+
+    [<Literal>]
+    let lao = "Lao"
+
+    [<Literal>]
+    let laoUI = "Lao UI"
+
+    [<Literal>]
+    let latha = "Latha"
+
+    [<Literal>]
+    let leelawadee = "Leelawadee"
+
+    [<Literal>]
+    let leelawadeeUI = "Leelawadee UI"
+
+    [<Literal>]
+    let leelawadeeUISemilight = "Leelawadee UI Semilight"
+
+    [<Literal>]
+    let levenimMT = "Levenim MT"
+
+    [<Literal>]
+    let lilyUPC = "LilyUPC"
+
+    [<Literal>]
+    let lucidaBright = "Lucida Bright"
+
+    [<Literal>]
+    let lucidaConsole = "Lucida Console"
+
+    [<Literal>]
+    let lucidaHandwriting = "Lucida Handwriting"
+
+    [<Literal>]
+    let lucidaSans = "Lucida Sans"
+
+    [<Literal>]
+    let lucidaSansTypewriter = "Lucida Sans Typewriter"
+
+    [<Literal>]
+    let lucidaSansUnicode = "Lucida Sans Unicode"
+
+    [<Literal>]
+    let lucidaTypewriter = "Lucidatypewriter"
+
+    [<Literal>]
+    let luminari = "Luminari"
+
+    [<Literal>]
+    let malgunGothic = "Malgun Gothic"
+
+    [<Literal>]
+    let malgunGothicSemilight = "Malgun Gothic Semilight"
+
+    [<Literal>]
+    let mangal = "Mangal"
+
+    [<Literal>]
+    let markerFelt = "Marker Felt"
+
+    [<Literal>]
+    let marlett = "Marlett"
+
+    [<Literal>]
+    let meiryo = "Meiryo"
+
+    [<Literal>]
+    let meiryoUI = "Meiryo UI"
+
+    [<Literal>]
+    let microsoftHimalaya = "Microsoft Himalaya"
+
+    [<Literal>]
+    let microsoftJhengHei = "Microsoft JhengHei"
+
+    [<Literal>]
+    let microsoftJhengHeiUI = "Microsoft JhengHei UI"
+
+    [<Literal>]
+    let microsoftNewTaiLue = "Microsoft New Tai Lue"
+
+    [<Literal>]
+    let microsoftPhagsPa = "Microsoft PhagsPa"
+
+    [<Literal>]
+    let microsoftSansSerif = "Microsoft Sans Serif"
+
+    [<Literal>]
+    let microsoftTaiLe = "Microsoft Tai Le"
+
+    [<Literal>]
+    let microsoftUighur = "Microsoft Uighur"
+
+    [<Literal>]
+    let microsoftYaHei = "Microsoft YaHei"
+
+    [<Literal>]
+    let microsoftYaHeiUI = "Microsoft YaHei UI"
+
+    [<Literal>]
+    let microsoftYiBaiti = "Microsoft Yi Baiti"
+
+    [<Literal>]
+    let mingLiU = "MingLiU"
+
+    [<Literal>]
+    let mingLiUHKSCS = "MingLiU_HKSCS"
+
+    [<Literal>]
+    let mingLiUHKSCSExtB = "MingLiU_HKSCS-ExtB"
+
+    [<Literal>]
+    let mingLiUExtB = "MingLiU-ExtB"
+
+    [<Literal>]
+    let miriam = "Miriam"
+
+    [<Literal>]
+    let monaco = "Monaco"
+
+    [<Literal>]
+    let mongolianBaiti = "Mongolian Baiti"
+
+    [<Literal>]
+    let moolBoran = "MoolBoran"
+
+    [<Literal>]
+    let msGothic = "MS Gothic"
+
+    [<Literal>]
+    let msMincho = "MS Mincho"
+
+    [<Literal>]
+    let msPGothic = "MS PGothic"
+
+    [<Literal>]
+    let msPMincho = "MS PMincho"
+
+    [<Literal>]
+    let msUIGothic = "MS UI Gothic"
+
+    [<Literal>]
+    let mvBoli = "MV Boli"
+
+    [<Literal>]
+    let myanmarText = "Myanmar Text"
+
+    [<Literal>]
+    let narkisim = "Narkisim"
+
+    [<Literal>]
+    let neueHaasGroteskTextPro = "Neue Haas Grotesk Text Pro"
+
+    [<Literal>]
+    let newCenturySchoolbook = "New Century Schoolbook"
+
+    [<Literal>]
+    let newsGothicMT = "News Gothic MT"
+
+    [<Literal>]
+    let nirmalaUI = "Nirmala UI"
+
+    [<Literal>]
+    let noAutoLanguageAssoc = "No automatic language associations"
+
+    [<Literal>]
+    let noto = "Noto"
+
+    [<Literal>]
+    let nSimSun = "NSimSun"
+
+    [<Literal>]
+    let nyala = "Nyala"
+
+    [<Literal>]
+    let oldTown = "Oldtown"
+
+    [<Literal>]
+    let optima = "Optima"
+
+    [<Literal>]
+    let palatino = "Palatino"
+
+    [<Literal>]
+    let palatinoLinotype = "Palatino Linotype"
+
+    [<Literal>]
+    let papyrus = "papyrus"
+
+    [<Literal>]
+    let parkAvenue = "Parkavenue"
+
+    [<Literal>]
+    let perpetua = "Perpetua"
+
+    [<Literal>]
+    let plantagenetCherokee = "Plantagenet Cherokee"
+
+    [<Literal>]
+    let PMingLiU = "PMingLiU"
+
+    [<Literal>]
+    let raavi = "Raavi"
+
+    [<Literal>]
+    let rockwell = "Rockwell"
+
+    [<Literal>]
+    let rockwellExtraBold = "Rockwell Extra Bold"
+
+    [<Literal>]
+    let rockwellNova = "Rockwell Nova"
+
+    [<Literal>]
+    let rockwellNovaCond = "Rockwell Nova Cond"
+
+    [<Literal>]
+    let rockwellNovaExtraBold = "Rockwell Nova Extra Bold"
+
+    [<Literal>]
+    let rod = "Rod"
+
+    [<Literal>]
+    let sakkalMajalla = "Sakkal Majalla"
+
+    [<Literal>]
+    let sanskritText = "Sanskrit Text"
+
+    [<Literal>]
+    let segoeMDL2Assets = "segoeMDL2Assets"
+
+    [<Literal>]
+    let segoePrint = "Segoe Print"
+
+    [<Literal>]
+    let segoeScript = "Segoe Script"
+
+    [<Literal>]
+    let segoeUI = "Segoe UI"
+
+    [<Literal>]
+    let segoeUIEmoji = "Segoe UI Emoji"
+
+    [<Literal>]
+    let segoeUIHistoric = "Segoe UI Historic"
+
+    [<Literal>]
+    let segoeUISymbol = "Segoe UI Symbol"
+
+    [<Literal>]
+    let shonarBangla = "Shonar Bangla"
+
+    [<Literal>]
+    let shruti = "Shruti"
+
+    [<Literal>]
+    let simHei = "SimHei"
+
+    [<Literal>]
+    let simKai = "SimKai"
+
+    [<Literal>]
+    let simplifiedArabic = "Simplified Arabic"
+
+    [<Literal>]
+    let simplifiedChinese = "Simplified Chinese"
+
+    [<Literal>]
+    let simSun = "SimSun"
+
+    [<Literal>]
+    let simSunExtB = "SimSun-ExtB"
+
+    [<Literal>]
+    let sitka = "Sitka"
+
+    [<Literal>]
+    let snellRoundhan = "Snell Roundhan"
+
+    [<Literal>]
+    let stencilStd = "Stencil Std"
+
+    [<Literal>]
+    let sylfaen = "Sylfaen"
+
+    [<Literal>]
+    let symbol = "Symbol"
+
+    [<Literal>]
+    let tahoma = "Tahoma"
+
+    [<Literal>]
+    let thai = "Thai"
+
+    [<Literal>]
+    let timesNewRoman = "Times New Roman"
+
+    [<Literal>]
+    let traditionalArabic = "Traditional Arabic"
+
+    [<Literal>]
+    let traditionalChinese = "Traditional Chinese"
+
+    [<Literal>]
+    let trattatello = "Trattatello"
+
+    [<Literal>]
+    let trebuchetMS = "Trebuchet MS"
+
+    [<Literal>]
+    let udDigiKyokasho = "UD Digi Kyokasho"
+
+    [<Literal>]
+    let udDigiKyokashoNKR = "UD Digi Kyokasho NK-R"
+
+    [<Literal>]
+    let udDigiKyokashoNPR = "UD Digi Kyokasho NP-R"
+
+    [<Literal>]
+    let udDigiKyokashoNR = "UD Digi Kyokasho N-R"
+
+    [<Literal>]
+    let urduTypesetting = "Urdu Typesetting"
+
+    [<Literal>]
+    let urwChancery = "URW Chancery"
+
+    [<Literal>]
+    let utsaah = "Utsaah"
+
+    [<Literal>]
+    let vani = "Vani"
+
+    [<Literal>]
+    let verdana = "Verdana"
+
+    [<Literal>]
+    let verdanaPro = "Verdana Pro"
+
+    [<Literal>]
+    let vijaya = "Vijaya"
+
+    [<Literal>]
+    let vrinda = "Vrinda"
+
+    [<Literal>]
+    let Webdings = "Webdings"
+
+    [<Literal>]
+    let westminster = "Westminster"
+
+    [<Literal>]
+    let wingdings = "Wingdings"
+
+    [<Literal>]
+    let yuGothic = "Yu Gothic"
+
+    [<Literal>]
+    let yuGothicUI = "Yu Gothic UI"
+
+    [<Literal>]
+    let yuMincho = "Yu Mincho"
+
+    [<Literal>]
+    let zapfChancery = "Zapf Chancery"

@@ -8,8 +8,11 @@ open Fable.Core.JsInterop
 [<EditorBrowsable(EditorBrowsableState.Never); Erase>]
 [<RequireQualifiedAccess>]
 module Helpers =
-    let optDispose (disposeOption: #IDisposable option) =
-        { new IDisposable with member _.Dispose () = disposeOption |> Option.iter (fun d -> d.Dispose()) }
+    let optDispose (disposeOption: #IDisposable option) = {
+        new IDisposable with
+            member _.Dispose() =
+                disposeOption |> Option.iter (fun d -> d.Dispose())
+    }
 
 [<RequireQualifiedAccess>]
 module Interop =
@@ -26,4 +29,3 @@ module Interop =
             props?key <- f props
             props
         | None -> props
-

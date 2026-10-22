@@ -1,4 +1,5 @@
 module Feliz.CompilerPlugins
+
 open Expecto
 
 [<EntryPoint>]

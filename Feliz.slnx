@@ -1,0 +1,49 @@
+<Solution>
+  <Folder Name="/docs/" />
+  <Folder Name="/docs/docs/">
+    <Project Path="docs/docs/feliz-docs/Feliz.Docs.fsproj" />
+  </Folder>
+  <Folder Name="/playground/">
+    <Project Path="playground/src/App.fsproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="package-lock.json" />
+    <File Path="package.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Feliz.CompilerPlugins/Feliz.CompilerPlugins.fsproj" />
+    <Project Path="src/Feliz.Delay/Feliz.Delay.fsproj" />
+    <Project Path="src/Feliz.Kawaii/Feliz.Kawaii.fsproj" />
+    <Project Path="src/Feliz.Listeners/Feliz.Listeners.fsproj" />
+    <Project Path="src/Feliz.Markdown/Feliz.Markdown.fsproj" />
+    <Project Path="src/Feliz.PigeonMaps/Feliz.PigeonMaps.fsproj" />
+    <Project Path="src/Feliz.Popover/Feliz.Popover.fsproj" />
+    <Project Path="src/Feliz.Recharts/Feliz.Recharts.fsproj" />
+    <Project Path="src/Feliz.RoughViz/Feliz.RoughViz.fsproj" />
+    <Project Path="src/Feliz.SelectSearch/Feliz.SelectSearch.fsproj" />
+    <Project Path="src/Feliz.UseDeferred/Feliz.UseDeferred.fsproj" />
+    <Project Path="src/Feliz.UseElmish/Feliz.UseElmish.fsproj" />
+    <Project Path="src/Feliz.UseMediaQuery/Feliz.UseMediaQuery.fsproj" />
+    <Project Path="src/Feliz/Feliz.fsproj" />
+    <Project Path="src/Vitest.JestDom/Vitest.JestDom.fsproj" />
+    <Project Path="src/Vitest.ReactTestingLibrary/Vitest.ReactTestingLibrary.fsproj" />
+    <Project Path="src/Vitest.UserEvent/Vitest.UserEvent.fsproj" />
+    <Project Path="src/Vitest/Vitest.fsproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Feliz.CompilerPlugin/Feliz.CompilerPlugins.Tests.fsproj" />
+    <Project Path="tests/Feliz.Delay/Feliz.Delay.Tests.fsproj" />
+    <Project Path="tests/Feliz.UseElmish/Feliz.UseElmish.Tests.fsproj" />
+    <Project Path="tests/Feliz/Feliz.Tests.fsproj" />
+    <Project Path="tests/Globals/Test.Globals.fsproj" />
+    <Project Path="tests/Vitest.ReactTestingLibrary/Vitest.ReactTestingLibrary.Test.fsproj" />
+    <Project Path="tests/Vitest/Vitest.Test.fsproj" />
+  </Folder>
+  <Project Path="build/Build.fsproj" />
+</Solution>

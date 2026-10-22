@@ -4,7 +4,7 @@ open Feliz
 open Fable.Core.JsInterop
 
 [<ReactComponent>]
-let Modal(close: _ -> unit) =
+let Modal (close: _ -> unit) =
     Html.div [
         prop.style [
             style.position.fixedRelativeToWindow
@@ -27,7 +27,7 @@ let Modal(close: _ -> unit) =
                     style.padding 20
                     style.borderRadius 8
                 ]
-                prop.onClick (fun e -> e.stopPropagation()) // Prevent closing when clicking inside the modal
+                prop.onClick (fun e -> e.stopPropagation ()) // Prevent closing when clicking inside the modal
                 prop.children [
                     Html.div "This is a modal rendered using a portal!"
                     Html.div [
@@ -35,10 +35,7 @@ let Modal(close: _ -> unit) =
                         Html.code "document.body"
                         Html.text "."
                     ]
-                    Html.button [
-                        prop.text "Close"
-                        prop.onClick close
-                    ]
+                    Html.button [ prop.text "Close"; prop.onClick close ]
                 ]
             ]
         ]
@@ -46,17 +43,16 @@ let Modal(close: _ -> unit) =
 
 
 [<ReactComponent(true)>]
-let PortalDemo() =
-    let show, setShow = React.useState(false)
+let PortalDemo () =
+    let show, setShow = React.useState (false)
+
     Html.div [
-        Html.p "This example demonstrates React portals. Click the button to open a modal rendered outside this components DOM hierarchy."
+        Html.p
+            "This example demonstrates React portals. Click the button to open a modal rendered outside this components DOM hierarchy."
         Html.button [
             prop.text (if show then "Hide Portal" else "Show Portal")
-            prop.onClick (fun _ -> setShow(not show))
+            prop.onClick (fun _ -> setShow (not show))
         ]
         if show then
-            ReactDOM.createPortal(
-                Modal(fun _ -> setShow(false)),
-                Browser.Dom.document.body
-            )
+            ReactDOM.createPortal (Modal(fun _ -> setShow (false)), Browser.Dom.document.body)
     ]

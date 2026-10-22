@@ -88,7 +88,7 @@ describe "UseElmish"
 
         expect(render.getByTestId ("count")).toHaveTextContent "0" // "Should be initial state"
 
-        render.getByTestId("increment-again").click ()
+        render.getByTestId("increment-again").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "2" //"Should have been incremented twice"
@@ -101,19 +101,19 @@ describe "UseElmish"
 
         expect(render.getByTestId ("count")).toHaveTextContent "0" //"Should be initial state"
 
-        render.getByTestId("increment").click ()
+        render.getByTestId("increment").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "1" //"Should have been incremented"
             )
 
-        render.getByTestId("increment-wrapper").click ()
+        render.getByTestId("increment-wrapper").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "1" //"State should be same because dependency hasn't changed"
             )
 
-        render.getByTestId("increment-wrapper").click ()
+        render.getByTestId("increment-wrapper").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "0" //"State should have been reset because dependency has changed"
@@ -126,19 +126,19 @@ describe "UseElmish"
 
         expect(render.getByTestId ("count")).toHaveTextContent "0" //"Should be initial state"
 
-        render.getByTestId("increment").click ()
+        render.getByTestId("increment").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "1" //"Should have been incremented"
             )
 
-        render.getByTestId("increment-wrapper").click ()
+        render.getByTestId("increment-wrapper").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "1" //"State should be same because dependency hasn't changed"
             )
 
-        render.getByTestId("increment-wrapper").click ()
+        render.getByTestId("increment-wrapper").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "0" //"State should have been reset because dependency has changed"

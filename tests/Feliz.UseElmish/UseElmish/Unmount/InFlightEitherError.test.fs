@@ -73,7 +73,7 @@ module private PendingEitherErrorUnmountHarness =
         static member Render() =
             let showChild, setShowChild = React.useState true
             let errorCount, setErrorCount = React.useStateWithUpdater 0
-            let deferredRef = React.useRef (PromiseTest.deferred<int> ())
+            let deferredRef = React.useRef (PromiseTest.deferred<int>())
 
             Html.div [
                 Html.button [
@@ -103,11 +103,10 @@ describe "UseElmish unmount in-flight either error"
         do! userEvent.click (render.getByTestId TestIds.Trigger)
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.Trigger |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.Trigger |> Option.isNone).toBeTruthy())
 
         do! userEvent.click (render.getByTestId TestIds.RejectDeferred)
         do! RTL.act (fun () -> PromiseTest.delay 40)
 
         expect(render.getByTestId TestIds.ErrorCount).toHaveTextContent "0"
     }
-

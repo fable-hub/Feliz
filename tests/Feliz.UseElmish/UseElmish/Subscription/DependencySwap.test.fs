@@ -55,9 +55,10 @@ module SubscriptionDependencySwapHarness =
             let handler = fun (_: obj) -> dispatch (ExternalEvent dependencyValue)
             addEventListener "dependency-swap-event" handler
 
-            { new System.IDisposable with
-                member _.Dispose() =
-                    removeEventListener "dependency-swap-event" handler
+            {
+                new System.IDisposable with
+                    member _.Dispose() =
+                        removeEventListener "dependency-swap-event" handler
             }
         )
     ]
@@ -146,4 +147,3 @@ describe "UseElmish subscription dependency swap"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
-

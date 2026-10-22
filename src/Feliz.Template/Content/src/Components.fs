@@ -24,7 +24,10 @@ type Components =
                 Html.div [
                     prop.className "container flex flex-col gap-2 [&_h1]:text-4xl items-center mx-auto pt-12"
                     prop.children [
-                        Html.img [ prop.src ComponentsHelper.Logo; prop.className "w-48 h-48" ]
+                        Html.img [
+                            prop.src ComponentsHelper.Logo
+                            prop.className "w-48 h-48"
+                        ]
                         Html.h1 [ prop.testId "counter-display"; prop.text count ]
                         Html.button [
                             prop.testId "inc-btn"

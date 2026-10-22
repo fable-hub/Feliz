@@ -87,8 +87,8 @@ module private DependencySwapPromiseIsolationHarness =
             let instance, setInstance = React.useState 0
             let reportCount, setReportCount = React.useStateWithUpdater 0
             let lastSource, setLastSource = React.useState "none"
-            let deferredA = React.useRef (PromiseTest.deferred<int> ())
-            let deferredB = React.useRef (PromiseTest.deferred<int> ())
+            let deferredA = React.useRef (PromiseTest.deferred<int>())
+            let deferredB = React.useRef (PromiseTest.deferred<int>())
 
             let getDeferred i =
                 if i = 0 then deferredA.current else deferredB.current
@@ -154,4 +154,3 @@ describe "UseElmish dependency reset promise isolation"
                 expect(render.getByTestId TestIds.LastSource).toHaveTextContent "1"
             )
     }
-

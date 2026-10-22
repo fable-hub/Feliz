@@ -5,8 +5,8 @@ open Feliz
 type JSX = Feliz.JSX.Html
 
 [<ReactComponent(true)>]
-let TestComponent() =
-    let counter, setCounter = React.useState(0)
+let TestComponent () =
+    let counter, setCounter = React.useState (0)
 
     JSX.div [
         prop.id "my-div"
@@ -18,17 +18,14 @@ let TestComponent() =
                 JSX.h1 "Counter - Reactivity Test"
                 JSX.button [
                     prop.text "Increment"
-                    prop.onClick (fun _ -> setCounter(counter + 1))
+                    prop.onClick (fun _ -> setCounter (counter + 1))
                 ]
                 Html.ul [
                     if counter = 0 then
                         Html.li "No items"
                     else
                         for i in 1..counter do
-                            Html.li [
-                                prop.key i 
-                                prop.text (sprintf "Item %d" i) 
-                            ]
+                            Html.li [ prop.key i; prop.text (sprintf "Item %d" i) ]
                 ]
             ]
         ]

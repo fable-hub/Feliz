@@ -62,9 +62,10 @@ module CleanupHarness =
 
             addEventListener "my-custom-event" handler
 
-            { new System.IDisposable with
-                member _.Dispose() =
-                    removeEventListener "my-custom-event" handler
+            {
+                new System.IDisposable with
+                    member _.Dispose() =
+                        removeEventListener "my-custom-event" handler
             }
         )
     ]
@@ -137,7 +138,7 @@ describe "UseElmish subscription cleanup"
         do!
             RTL.waitFor (fun () ->
                 expectMsg(render.queryByTestId TestIds.ChildCounter |> Option.isNone, "Child counter after toggle")
-                    .toBeTruthy ()
+                    .toBeTruthy()
             )
 
         do! userEvent.click (render.getByTestId TestIds.FireWindowEventButton)
@@ -152,32 +153,32 @@ describe "UseElmish subscription cleanup"
 
         expect(render.getByTestId ("parent-counter")).toHaveTextContent "0"
 
-        render.getByTestId("fire-window-event").click ()
+        render.getByTestId("fire-window-event").click()
 
         do! RTL.waitFor (fun () -> expect(render.getByTestId ("parent-counter")).toHaveTextContent "1")
 
-        render.getByTestId("toggle-child").click ()
+        render.getByTestId("toggle-child").click()
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isNone).toBeTruthy())
 
-        render.getByTestId("fire-window-event").click ()
+        render.getByTestId("fire-window-event").click()
         do! RTL.act (fun () -> delay 50)
 
         expect(render.getByTestId ("parent-counter")).toHaveTextContent "1"
 
-        render.getByTestId("toggle-child").click ()
+        render.getByTestId("toggle-child").click()
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isSome).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isSome).toBeTruthy())
 
-        render.getByTestId("fire-window-event").click ()
+        render.getByTestId("fire-window-event").click()
 
         do! RTL.waitFor (fun () -> expect(render.getByTestId ("parent-counter")).toHaveTextContent "2")
 
-        render.getByTestId("toggle-child").click ()
+        render.getByTestId("toggle-child").click()
 
-        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isNone).toBeTruthy ())
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId "child-counter" |> Option.isNone).toBeTruthy())
 
-        render.getByTestId("fire-window-event").click ()
+        render.getByTestId("fire-window-event").click()
         do! RTL.act (fun () -> delay 50)
 
         expect(render.getByTestId ("parent-counter")).toHaveTextContent "2"

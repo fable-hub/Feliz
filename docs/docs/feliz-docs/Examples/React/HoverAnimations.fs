@@ -9,7 +9,8 @@ type Main =
 
     [<ReactComponent>]
     static member AnimationsOnHover(content: ReactElement list) =
-        let (hovered, setHovered) = React.useState(false)
+        let (hovered, setHovered) = React.useState (false)
+
         Html.div [
             prop.style [
                 style.padding 10
@@ -26,8 +27,8 @@ type Main =
                     style.backgroundColor.limeGreen
                     style.color.white
             ]
-            prop.onMouseEnter (fun _ -> setHovered(true))
-            prop.onMouseLeave (fun _ -> setHovered(false))
+            prop.onMouseEnter (fun _ -> setHovered (true))
+            prop.onMouseLeave (fun _ -> setHovered (false))
             prop.children content
         ]
 

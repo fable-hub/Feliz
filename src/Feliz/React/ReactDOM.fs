@@ -23,13 +23,22 @@ type ReactDOM =
     /// This is the primary entry point into the DOM and is the most common way to render a React application.
     /// </summary>
     /// <param name="element">The React element to render.</param>
-    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist. 
+    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist.
     /// Passing a different DOM node during an update will cause the portal content to be recreated.</param>
     /// <param name="key">An optional key to identify the portal.</param>
     [<ImportMember("react-dom")>]
-    static member createPortal
-        (element: ReactElement, domNode: Browser.Types.HTMLElement)
-        : ReactElement =
+    static member createPortal(element: ReactElement, domNode: Browser.Types.HTMLElement) : ReactElement = jsNative
+
+    /// <summary>
+    /// Renders a React element into the DOM in the supplied container and returns a reference to the component (or null for stateless components).
+    /// This is the primary entry point into the DOM and is the most common way to render a React application.
+    /// </summary>
+    /// <param name="element">The React element to render.</param>
+    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist.
+    /// Passing a different DOM node during an update will cause the portal content to be recreated.</param>
+    /// <param name="key">An optional key to identify the portal.</param>
+    [<ImportMember("react-dom")>]
+    static member createPortal(element: ReactElement, domNode: Browser.Types.HTMLElement, key: string) : ReactElement =
         jsNative
 
     /// <summary>
@@ -37,13 +46,11 @@ type ReactDOM =
     /// This is the primary entry point into the DOM and is the most common way to render a React application.
     /// </summary>
     /// <param name="element">The React element to render.</param>
-    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist. 
+    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist.
     /// Passing a different DOM node during an update will cause the portal content to be recreated.</param>
     /// <param name="key">An optional key to identify the portal.</param>
     [<ImportMember("react-dom")>]
-    static member createPortal
-        (element: ReactElement, domNode: Browser.Types.HTMLElement, key: string)
-        : ReactElement =
+    static member createPortal(element: ReactElement, domNode: Browser.Types.HTMLElement, key: int) : ReactElement =
         jsNative
 
     /// <summary>
@@ -51,27 +58,11 @@ type ReactDOM =
     /// This is the primary entry point into the DOM and is the most common way to render a React application.
     /// </summary>
     /// <param name="element">The React element to render.</param>
-    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist. 
+    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist.
     /// Passing a different DOM node during an update will cause the portal content to be recreated.</param>
     /// <param name="key">An optional key to identify the portal.</param>
     [<ImportMember("react-dom")>]
-    static member createPortal
-        (element: ReactElement, domNode: Browser.Types.HTMLElement, key: int)
-        : ReactElement =
-        jsNative
-
-    /// <summary>
-    /// Renders a React element into the DOM in the supplied container and returns a reference to the component (or null for stateless components).
-    /// This is the primary entry point into the DOM and is the most common way to render a React application.
-    /// </summary>
-    /// <param name="element">The React element to render.</param>
-    /// <param name="domNode">Some DOM node, such as those returned by document.getElementById(). The node must already exist. 
-    /// Passing a different DOM node during an update will cause the portal content to be recreated.</param>
-    /// <param name="key">An optional key to identify the portal.</param>
-    [<ImportMember("react-dom")>]
-    static member createPortal
-        (element: ReactElement, domNode: Browser.Types.HTMLElement, key: float)
-        : ReactElement =
+    static member createPortal(element: ReactElement, domNode: Browser.Types.HTMLElement, key: float) : ReactElement =
         jsNative
 
 /// The ReactDOMServer object enables you to render components to static markup.
@@ -97,5 +88,3 @@ type ReactDOMServer =
     /// </summary>
     [<ImportMember("react-dom/server")>]
     static member renderToPipeableStream(element: ReactElement, ?options: obj) : JS.Promise<obj> = jsNative
-
-

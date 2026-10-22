@@ -22,7 +22,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         /// #714
         [<ReactComponent>]
@@ -31,7 +31,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         [<ReactComponent>]
         static member EffectfulTimer() =
@@ -50,9 +50,10 @@ module Components =
                         )
                         1000
                 // return IDisposable with cleanup code that stops the timer
-                { new System.IDisposable with
-                    member this.Dispose() =
-                        Fable.Core.JS.clearInterval (subscriptionId)
+                {
+                    new System.IDisposable with
+                        member this.Dispose() =
+                            Fable.Core.JS.clearInterval (subscriptionId)
                 }
 
             React.useEffect (subscribeToTimer, [| box paused |])
@@ -88,7 +89,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
 
         /// #714
@@ -98,7 +99,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
 
 describe "useEffect"

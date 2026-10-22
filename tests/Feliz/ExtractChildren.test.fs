@@ -5,83 +5,107 @@ open Fable.Core.JsInterop
 open System
 open Vitest
 
-describe "HtmlHelper.createElement" <| fun _ ->
+describe "HtmlHelper.createElement"
+<| fun _ ->
 
-    test "extract from seq" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
-            seq {
-                "id", box "my-div"
-                "children", box child
-                "className", box "container"
-                "data-test", box true
-                "style", box {| color = "red" |}
-                "onClick", box (fun _ -> ())
-                "tabIndex", box 0
-            }
+    test "extract from seq"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+
+        let props = seq {
+            "id", box "my-div"
+            "children", box child
+            "className", box "container"
+            "data-test", box true
+            "style", box {| color = "red" |}
+            "onClick", box (fun _ -> ())
+            "tabIndex", box 0
+        }
+
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "extract from list" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
-            [
-                "id", box "my-div"
-                "children", box child
-                "className", box "container"
-                "data-test", box true
-                "style", box {| color = "red" |}
-                "onClick", box (fun _ -> ())
-                "tabIndex", box 0
-            ]
+    test "extract from list"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+
+        let props = [
+            "id", box "my-div"
+            "children", box child
+            "className", box "container"
+            "data-test", box true
+            "style", box {| color = "red" |}
+            "onClick", box (fun _ -> ())
+            "tabIndex", box 0
+        ]
+
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "extract from array" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
-            [|
-                "id", box "my-div"
-                "children", box child
-                "className", box "container"
-                "data-test", box true
-                "style", box {| color = "red" |}
-                "onClick", box (fun _ -> ())
-                "tabIndex", box 0
-            |]
+    test "extract from array"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+
+        let props = [|
+            "id", box "my-div"
+            "children", box child
+            "className", box "container"
+            "data-test", box true
+            "style", box {| color = "red" |}
+            "onClick", box (fun _ -> ())
+            "tabIndex", box 0
+        |]
+
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "extract from ResizeArray" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
+    test "extract from ResizeArray"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+
+        let props =
             ResizeArray [
                 "id", box "my-div"
                 "children", box child
@@ -91,61 +115,78 @@ describe "HtmlHelper.createElement" <| fun _ ->
                 "onClick", box (fun _ -> ())
                 "tabIndex", box 0
             ]
+
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "extract as last" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
-            [
-                "id", box "my-div"
-                "data-test", box true
-                "style", box {| color = "red" |}
-                "onClick", box (fun _ -> ())
-                "tabIndex", box 0
-                "className", box "container"
-                "children", box child
-            ]
+    test "extract as last"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+
+        let props = [
+            "id", box "my-div"
+            "data-test", box true
+            "style", box {| color = "red" |}
+            "onClick", box (fun _ -> ())
+            "tabIndex", box 0
+            "className", box "container"
+            "children", box child
+        ]
+
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "extract as exactlyOne" <| fun _ ->
-        let child = [ Html.span []; Html.div [] ] 
-        let props = 
-            [
-                "children", box child
-            ]
+    test "extract as exactlyOne"
+    <| fun _ ->
+        let child = [ Html.span []; Html.div [] ]
+        let props = [ "children", box child ]
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" props
         expect(child).toBeTruthy()
+
         let key, child =
             match childOption with
             | Some kvp -> kvp
             | None -> failwith "Expected to find 'children' key"
+
         expect(key).toBe("children")
         expect(child).toEqual(child)
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
         expect(propsContainChildren).toBeFalsy()
         expect(extractedProps.Length).toBe((props |> Seq.length) - 1)
 
-    test "prop.spread converts object entries" <| fun _ ->
+    test "prop.spread converts object entries"
+    <| fun _ ->
         let dynamicProps =
             createObj [
                 "id" ==> "spread-div"
@@ -163,8 +204,10 @@ describe "HtmlHelper.createElement" <| fun _ ->
         expect(tupleProps |> Array.exists (fun (k, _) -> k = "data-test")).toBeTruthy()
         expect(tupleProps |> Array.exists (fun (k, _) -> k = "onClick")).toBeTruthy()
 
-    test "prop.spread output supports children extraction" <| fun _ ->
+    test "prop.spread output supports children extraction"
+    <| fun _ ->
         let child = [ Html.span []; Html.div [] ]
+
         let dynamicProps =
             createObj [
                 "id" ==> "spread-div"
@@ -172,10 +215,7 @@ describe "HtmlHelper.createElement" <| fun _ ->
                 "title" ==> "Spread Title"
             ]
 
-        let tupleProps =
-            dynamicProps
-            |> prop.spread
-            |> Array.map unbox<string * obj>
+        let tupleProps = dynamicProps |> prop.spread |> Array.map unbox<string * obj>
 
         let extractedProps, childOption = HtmlHelper.extractByKeyFast "children" tupleProps
 
@@ -185,7 +225,9 @@ describe "HtmlHelper.createElement" <| fun _ ->
             | None -> failwith "Expected to find 'children' key"
 
         let extractedChildren = unbox<ReactElement list> extractedChildrenObj
-        let propsContainChildren: bool = extractedProps |> Array.exists (fun (k, _) -> k = "children")
+
+        let propsContainChildren: bool =
+            extractedProps |> Array.exists (fun (k, _) -> k = "children")
 
         expect(key).toBe("children")
         expect(extractedChildren).toEqual(child)

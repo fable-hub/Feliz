@@ -8,7 +8,7 @@ open Feliz
 type CodeSplitting =
 
     [<ReactComponent(true)>]
-    static member MyCodeSplitComponent (?text: string) =
+    static member MyCodeSplitComponent(?text: string) =
         Html.div [
             prop.testId "async-load"
             prop.text (Option.defaultValue "Loaded" text)

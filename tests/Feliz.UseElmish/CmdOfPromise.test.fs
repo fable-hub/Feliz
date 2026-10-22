@@ -58,11 +58,11 @@ module PromiseHarness =
 
     let private resolveTask (arg: int) = promiseResolve (arg + 1)
 
-    let private rejectTask (_: int) = promiseReject<int> ()
+    let private rejectTask (_: int) = promiseReject<int>()
 
     let private resolveAttemptTask () = promiseResolve ()
 
-    let private rejectAttemptTask () = promiseReject<unit> ()
+    let private rejectAttemptTask () = promiseReject<unit>()
 
     let update msg state =
         match msg with
@@ -188,4 +188,3 @@ describeTags "UseElmish Cmd.OfPromise" [ "activeDev" ]
         expect(render.getByTestId TestIds.Count).toHaveTextContent "0"
         expect(render.getByTestId TestIds.Status).toHaveTextContent "idle"
     }
-

@@ -2,14 +2,13 @@ namespace Feliz.Recharts
 
 open Fable.Core
 
-[<Erase;RequireQualifiedAccess>]
+[<Erase; RequireQualifiedAccess>]
 module Interop =
     [<Emit("Object.keys($0)")>]
     let internal objectKeys (x: obj) = jsNative
+
     let objectHas (keys: string list) (x: obj) =
-        objectKeys(x)
-        |> Seq.toList
-        |> (=) keys
+        objectKeys (x) |> Seq.toList |> (=) keys
 
     let inline mkLineChartAttr (key: string) (value: obj) : ILineChartProperty = unbox (key, value)
     let inline mkLineAttr (key: string) (value: obj) : ILineProperty = unbox (key, value)
@@ -18,7 +17,7 @@ module Interop =
     let inline mkBarAttr (key: string) (value: obj) : IBarProperty = unbox (key, value)
     let inline mkRadarAttr (key: string) (value: obj) : IRadarProperty = unbox (key, value)
     let inline mkScatterAttr (key: string) (value: obj) : IScatterProperty = unbox (key, value)
-    let inline mkScatterChartAttr (key: string) (value: obj): IScatterChartProperty = unbox (key, value)
+    let inline mkScatterChartAttr (key: string) (value: obj) : IScatterChartProperty = unbox (key, value)
     let inline mkBarChartAttr (key: string) (value: obj) : IBarChartProperty = unbox (key, value)
     let inline mkAreaAttr (key: string) (value: obj) : IAreaProperty = unbox (key, value)
     let inline mkAreaChartAttr (key: string) (value: obj) : IAreaChartProperty = unbox (key, value)
@@ -41,7 +40,7 @@ module Interop =
     let inline mkYAxisAttr (key: string) (value: obj) : IYAxisProperty = unbox (key, value)
     let inline mkPolarAngleAxisAttr (key: string) (value: obj) : IPolarAngleAxisProperty = unbox (key, value)
     let inline mkPolarRadiusAxisAttr (key: string) (value: obj) : IPolarRadiusAxisProperty = unbox (key, value)
-    let inline mkPolarGridAttr (key:string) (value:obj) : IPolarGridProperty = unbox(key, value)
-    let inline mkTooltipAttr (key:string) (value:obj) : ITooltipProperty = unbox(key, value)
-    let inline mkErrorBarAttr (key:string) (value:obj) : IErrorBarProperty = unbox(key, value)
-    let inline mkFunnelAttr (key:string) (value:obj) : IFunnelProperty = unbox(key, value)
+    let inline mkPolarGridAttr (key: string) (value: obj) : IPolarGridProperty = unbox (key, value)
+    let inline mkTooltipAttr (key: string) (value: obj) : ITooltipProperty = unbox (key, value)
+    let inline mkErrorBarAttr (key: string) (value: obj) : IErrorBarProperty = unbox (key, value)
+    let inline mkFunnelAttr (key: string) (value: obj) : IFunnelProperty = unbox (key, value)

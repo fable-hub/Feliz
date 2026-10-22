@@ -7,7 +7,7 @@ open Fable.Core.JsInterop
 
 [<Obsolete "Label.Position is deprecated. Please use label.position instead. Ie- label.position.top instead of Label.Position.Top">]
 module Label =
-    [<StringEnum;RequireQualifiedAccess>]
+    [<StringEnum; RequireQualifiedAccess>]
     type Position =
         | Top
         | Left
@@ -31,12 +31,12 @@ module Label =
 [<Erase>]
 type label =
 
-    static member inline viewBox (value: string) = Interop.mkLabelAttr "viewBox" value
-    static member inline viewBox (value: int) = Interop.mkLabelAttr "viewBox" value
-    static member inline value (value: string) = Interop.mkLabelAttr "value" value
-    static member inline value (value: int) = Interop.mkLabelAttr "value" value
-    static member inline offset (value: int) = Interop.mkLabelAttr "offset" value
-    static member inline id (value: string) = Interop.mkLabelAttr "id" value
+    static member inline viewBox(value: string) = Interop.mkLabelAttr "viewBox" value
+    static member inline viewBox(value: int) = Interop.mkLabelAttr "viewBox" value
+    static member inline value(value: string) = Interop.mkLabelAttr "value" value
+    static member inline value(value: int) = Interop.mkLabelAttr "value" value
+    static member inline offset(value: int) = Interop.mkLabelAttr "offset" value
+    static member inline id(value: string) = Interop.mkLabelAttr "id" value
 
 module label =
     [<Erase>]

@@ -17,11 +17,11 @@ let Pojo_RecordType: POJORecord = {
 
 // Anonymous records are transpiled to plain JS objects!
 
-let Pojo_AnonymousRecordType = {| 
-    name = "Fable"; 
-    version = 4; 
-    isAwesome = true; 
-    noTypeReference = true 
+let Pojo_AnonymousRecordType = {|
+    name = "Fable"
+    version = 4
+    isAwesome = true
+    noTypeReference = true
 |}
 
 // You can also write type references for anonymous records.
@@ -31,7 +31,7 @@ type POJOAnonymousRecord = {|
     isAwesome: bool
 |}
 
-let Pojo_AnonymousRecordTypeWithType : POJOAnonymousRecord = {|
+let Pojo_AnonymousRecordTypeWithType: POJOAnonymousRecord = {|
     name = "Fable"
     version = 4
     isAwesome = true
@@ -54,12 +54,6 @@ open Fable.Core
 
 [<AllowNullLiteral>]
 [<Global>] // do not generate code for this with Fable
-type Options
-    [<ParamObject>] // pass all parameters as a single JS object
-    [<Emit("$0")>] // ... and return only the parameters after transpilation to JS.
-    (
-        searchTerm: string, 
-        ?isCaseSensitive: bool
-    ) =
+type Options [<ParamObject; Emit("$0")>] (searchTerm: string, ?isCaseSensitive: bool) =
     member val searchTerm: string = jsNative with get, set
     member val isCaseSensitive: bool option = jsNative with get, set

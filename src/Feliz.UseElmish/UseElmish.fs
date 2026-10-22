@@ -110,8 +110,8 @@ module private Util =
             let mutable disposed = false
             let mutable trackedDisposableRef: IDisposable option = None
 
-            let trackedDisposable =
-                { new IDisposable with
+            let trackedDisposable = {
+                new IDisposable with
                     member _.Dispose() =
                         if not disposed then
                             disposed <- true
@@ -124,7 +124,7 @@ module private Util =
                                 subscriptionDisposable.Dispose()
                             with ex ->
                                 reportDisposeError "Unable to dispose subscription." ex
-                }
+            }
 
             trackedDisposableRef <- Some trackedDisposable
             trackedSubscriptionDisposables.Add trackedDisposable

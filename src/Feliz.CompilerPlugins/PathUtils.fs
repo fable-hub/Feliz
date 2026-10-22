@@ -4,23 +4,26 @@ module Feliz.PathUtils
 open System
 open System.IO
 
-let isRelativeImport (path: string) =
-    path.StartsWith(".")
+let isRelativeImport (path: string) = path.StartsWith(".")
 
 /// Resolve relative import path based on F# source file path.
-/// 
+///
 /// This function is used on [<ReactComponent(importMember, importPath)>] to resolve the relative importPath
 /// based on the F# source file location.
 let resolveReactComponentPaths (fsharpPath: string) (reactImport: string) =
 
-    if isRelativeImport(reactImport) |> not then
+    if isRelativeImport (reactImport) |> not then
         reactImport
     else
-        let norm (s:string) = if String.IsNullOrEmpty(s) then s else s.Replace("\\", "/")
+        let norm (s: string) =
+            if String.IsNullOrEmpty(s) then s else s.Replace("\\", "/")
+
         let original = norm fsharpPath
+
         let dir =
             match Path.GetDirectoryName(original) with
-            | null | "" -> "."
+            | null
+            | "" -> "."
             | d -> norm d
 
         /// Append import path to f# source file directory, some examples:
@@ -28,12 +31,15 @@ let resolveReactComponentPaths (fsharpPath: string) (reactImport: string) =
         /// Exmp2: "./NestedFolder/./JsNative/Counter"
         /// Exmp3: "./NestedFolder/../Counter"
         /// Exmp4: "./NestedFolder1/NestedFolder2/NestedFolder3/../../Counter"
-        let combined = sprintf "%s/%s" (dir.TrimEnd('/')) ((norm reactImport).TrimStart('/'))
-        let parts = combined.Split([| '/' |], StringSplitOptions.RemoveEmptyEntries) |> Array.toList
+        let combined =
+            sprintf "%s/%s" (dir.TrimEnd('/')) ((norm reactImport).TrimStart('/'))
+
+        let parts =
+            combined.Split([| '/' |], StringSplitOptions.RemoveEmptyEntries) |> Array.toList
 
         /// Core logic:
         /// 1. Remove all "." segments
-        /// 2. For ".." segments, pop the last valid segment from the stack if possible; otherwise, keep the ".." 
+        /// 2. For ".." segments, pop the last valid segment from the stack if possible; otherwise, keep the ".."
         /// Example:
         /// combined path: "./NestedFolder1/NestedFolder2/NestedFolder3/../../Counter"
         /// stack: [], segments: ["."; "NestedFolder1"; "NestedFolder2"; "NestedFolder3"; ".."; ".."; "Counter"] # rmv "."
@@ -47,15 +53,15 @@ let resolveReactComponentPaths (fsharpPath: string) (reactImport: string) =
         let rec normalize stack segments =
             match segments with
             | [] -> stack
-            | "."::xs -> normalize stack xs
-            | ".."::xs ->
+            | "." :: xs -> normalize stack xs
+            | ".." :: xs ->
                 match List.rev stack with
-                | [] -> normalize (".."::stack) xs
-                | h::_ when h = ".." -> normalize (".."::stack) xs // last stack is also "..", cannot pop
+                | [] -> normalize (".." :: stack) xs
+                | h :: _ when h = ".." -> normalize (".." :: stack) xs // last stack is also "..", cannot pop
                 | _ -> // last stack is path segment, can pop
-                    let popped = List.rev stack |> List.tail |> List.rev 
+                    let popped = List.rev stack |> List.tail |> List.rev
                     normalize popped xs
-            | x::xs -> normalize (stack @ [x]) xs
+            | x :: xs -> normalize (stack @ [ x ]) xs
 
         let normalized = normalize [] parts
         let result = String.Join("/", normalized)
@@ -65,7 +71,11 @@ let resolveReactComponentPaths (fsharpPath: string) (reactImport: string) =
         // doesn't start with ".."; otherwise return as-is.
         let startedWithDot = original.StartsWith("./")
 
-        if result = "" then if startedWithDot then "./" else "."
-        elif result.StartsWith("..") then result
-        elif startedWithDot then "./" + result
-        else result
+        if result = "" then
+            if startedWithDot then "./" else "."
+        elif result.StartsWith("..") then
+            result
+        elif startedWithDot then
+            "./" + result
+        else
+            result

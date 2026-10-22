@@ -2,12 +2,12 @@ name: Release to NuGet
 
 on:
   push:
-    branches: [ main, 'major/**' ]
+    branches: [main, "major/**"]
 
 jobs:
-
   release-to-nuget:
-
+    permissions:
+      id-token: write # enable GitHub OIDC token issuance for this job
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +17,30 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.0.x' 
+          dotnet-version: "8.0.x"
 
       - name: Setup Node.js and NPM
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
+
+      - name: Setup
+        run: dotnet run --project ./build/Build.fsproj setup
+
+      - name: Test .NET and NPM projects
+        run: dotnet run --project ./build/Build.fsproj test
+
+      - name: Build .NET and NPM projects
+        run: dotnet run --project ./build/Build.fsproj pack
+
+      # Get a short-lived NuGet API key
+      # https://learn.microsoft.com/en-gb/nuget/nuget-org/trusted-publishing#github-actions-setup
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }} # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
 
       - name: Release to NuGet
-        run: dotnet run --project ./build/Build.fsproj release-pipeline ${{ secrets.NUGET_API_KEY }}
+        run: dotnet run --project ./build/Build.fsproj release ${{steps.login.outputs.NUGET_API_KEY}}

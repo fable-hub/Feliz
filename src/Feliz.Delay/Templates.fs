@@ -4,7 +4,7 @@ open Fable.Core
 open Feliz
 open Feliz.Delay
 
-[<Erase;RequireQualifiedAccess>]
+[<Erase; RequireQualifiedAccess>]
 module React =
     type Templates =
         /// <summary>
@@ -13,7 +13,7 @@ module React =
         /// <param name='properties'>The properties for the React.delay component.</param>
         /// <param name='children'>
         /// The components to render inside the React.delay component.
-        /// 
+        ///
         /// This will override a declaration of delay.children in the template.
         /// </param>
         static member inline delay (properties: IDelayProperty list) (children: ReactElement list) =
@@ -28,7 +28,7 @@ module React =
         /// </summary>
         /// <param name='properties'>The properties for the React.delay component.</param>
         /// <param name='children'>The components to render inside the React.suspense component.</param>
-        static member inline delaySuspense (delayProperties: IDelayProperty list) (children: ReactElement list) = 
+        static member inline delaySuspense (delayProperties: IDelayProperty list) (children: ReactElement list) =
             React.delaySuspense [
                 delaySuspense.children children
 

@@ -3,15 +3,16 @@ module Example.UseStateWithUpdater
 open Feliz
 
 [<ReactComponent(true)>]
-let UseStateWithUpdater() =
-    let results, setResults = React.useStateWithUpdater([]: string list) 
+let UseStateWithUpdater () =
+    let results, setResults = React.useStateWithUpdater ([]: string list)
 
     let asyncAddResult (text: string) (sleep: int) =
         async {
             do! Async.Sleep sleep
             // Use the updater function to append to the list
             setResults (fun current -> current @ [ text ])
-        } |> Async.StartImmediate
+        }
+        |> Async.StartImmediate
 
     Html.div [
         if results.IsEmpty then
@@ -27,8 +28,5 @@ let UseStateWithUpdater() =
             ]
         else
             for i in 0 .. results.Length - 1 do
-                Html.div [
-                    prop.key i
-                    prop.text results.[i]
-                ]
+                Html.div [ prop.key i; prop.text results.[i] ]
     ]

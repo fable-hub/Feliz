@@ -9,32 +9,32 @@ type ConditionalRendering =
     [<ReactComponent>]
     static member Item(text: string, count: int) =
         let isMany = count > 5
+
         Html.li [
             prop.style [
-                style.display.flex; 
-                style.justifyContent.spaceBetween; 
+                style.display.flex
+                style.justifyContent.spaceBetween
                 style.alignItems.center
             ]
             prop.children [
                 Html.div [
                     Html.text text
-                    if not isMany then Html.text " ⚠️"
-                ] 
+                    if not isMany then
+                        Html.text " ⚠️"
+                ]
                 Html.small [
-                    prop.className [
-                        if isMany then "text-green-500" else "text-red-500"
-                    ]
+                    prop.className [ if isMany then "text-green-500" else "text-red-500" ]
                     prop.textf "%d left in store" count
                 ]
-            ] 
+            ]
         ]
 
     [<ReactComponent>]
     static member OutOfStock(text: string) =
         Html.li [
             prop.style [
-                style.display.flex; 
-                style.justifyContent.spaceBetween; 
+                style.display.flex
+                style.justifyContent.spaceBetween
                 style.alignItems.center
             ]
             prop.children [
@@ -60,7 +60,7 @@ type ConditionalRendering =
             "Raspberry", Some 20
         ]
 
-        Html.ul [   
+        Html.ul [
             for text, count in data do
                 match count with
                 | Some count -> ConditionalRendering.Item(text, count)

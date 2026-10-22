@@ -9,9 +9,9 @@ type Msg =
     | Increment
     | Decrement
 
-type State = { Count : int }
+type State = { Count: int }
 
-let init() = { Count = 0 }, Cmd.none
+let init () = { Count = 0 }, Cmd.none
 
 let update msg state =
     match msg with
@@ -23,8 +23,9 @@ type Main =
 
     [<ReactComponent(true)>]
     static member Main() =
-    
-        let state, dispatch = React.useElmish(init, update, [| |])
+
+        let state, dispatch = React.useElmish (init, update, [||])
+
         Html.div [
             Html.h1 state.Count
             Html.button [

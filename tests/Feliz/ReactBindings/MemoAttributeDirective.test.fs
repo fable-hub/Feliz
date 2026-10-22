@@ -26,24 +26,40 @@ module Components =
     let MemoDirectiveUnit () =
         let renderCount = React.useRef 0
         renderCount.current <- renderCount.current + 1
-        Html.div [ prop.testId "memo-dir-unit"; prop.text (string renderCount.current) ]
+
+        Html.div [
+            prop.testId "memo-dir-unit"
+            prop.text (string renderCount.current)
+        ]
 
     [<ReactMemoComponent(false)>]
     let MemoNoDirectiveUnit () =
         let renderCount = React.useRef 0
         renderCount.current <- renderCount.current + 1
-        Html.div [ prop.testId "memo-nodir-unit"; prop.text (string renderCount.current) ]
+
+        Html.div [
+            prop.testId "memo-nodir-unit"
+            prop.text (string renderCount.current)
+        ]
 
     // Anonymous record input
     [<ReactMemoComponent(true)>]
     let MemoDirectiveAnon (props: {| Text: string; Count: int |}) =
         React.useEffect (fun _ -> ())
-        Html.div [ prop.testId "memo-dir-anon"; prop.text (sprintf "%s-%d" props.Text props.Count) ]
+
+        Html.div [
+            prop.testId "memo-dir-anon"
+            prop.text (sprintf "%s-%d" props.Text props.Count)
+        ]
 
     [<ReactMemoComponent(false)>]
     let MemoNoDirectiveAnon (props: {| Text: string; Count: int |}) =
         React.useEffect (fun _ -> ())
-        Html.div [ prop.testId "memo-nodir-anon"; prop.text (sprintf "%s-%d" props.Text props.Count) ]
+
+        Html.div [
+            prop.testId "memo-nodir-anon"
+            prop.text (sprintf "%s-%d" props.Text props.Count)
+        ]
 
     // Record type input
     type RecProps = { Text: string; Count: int }
@@ -51,17 +67,27 @@ module Components =
     [<ReactMemoComponent(true)>]
     let MemoDirectiveRecord (props: RecProps) =
         React.useEffect (fun _ -> ())
-        Html.div [ prop.testId "memo-dir-rec"; prop.text (sprintf "%s-%d" props.Text props.Count) ]
+
+        Html.div [
+            prop.testId "memo-dir-rec"
+            prop.text (sprintf "%s-%d" props.Text props.Count)
+        ]
 
     [<ReactMemoComponent(false)>]
     let MemoNoDirectiveRecord (props: RecProps) =
         React.useEffect (fun _ -> ())
-        Html.div [ prop.testId "memo-nodir-rec"; prop.text (sprintf "%s-%d" props.Text props.Count) ]
 
-describe "memo attribute 'use memo' directive" <| fun _ ->
+        Html.div [
+            prop.testId "memo-nodir-rec"
+            prop.text (sprintf "%s-%d" props.Text props.Count)
+        ]
 
-    testPromise "directive=true/false annotates; props passed correctly (tuple)" <| fun _ -> promise {
-        let onRender = vi.fn(fun () -> ())
+describe "memo attribute 'use memo' directive"
+<| fun _ ->
+
+    testPromise "directive=true/false annotates; props passed correctly (tuple)"
+    <| fun _ -> promise {
+        let onRender = vi.fn (fun () -> ())
         let rMemo = RTL.render (Components.MemoDirectiveTuple("Hello", onRender))
         let elMemo = RTL.screen.getByTestId "memo-dir-tuple"
         expect(onRender).toHaveBeenCalledTimes 1
@@ -70,7 +96,7 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(onRender).toHaveBeenCalledTimes 2
         expect(elMemo).toHaveTextContent "Hello"
 
-        let onRender2 = vi.fn(fun () -> ())
+        let onRender2 = vi.fn (fun () -> ())
         let rNoMemo = RTL.render (Components.MemoNoDirectiveTuple("Hello", onRender2))
         let elNoMemo = RTL.screen.getByTestId "memo-nodir-tuple"
         expect(onRender2).toHaveBeenCalledTimes 1
@@ -80,7 +106,8 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(elNoMemo).toHaveTextContent "Hello"
     }
 
-    testPromise "directive=true/false only annotates; both re-render normally (unit)" <| fun _ -> promise {
+    testPromise "directive=true/false only annotates; both re-render normally (unit)"
+    <| fun _ -> promise {
         let rMemo = RTL.render (Components.MemoDirectiveUnit())
         let countMemo = RTL.screen.getByTestId "memo-dir-unit"
         expect(countMemo).toHaveTextContent "1"
@@ -94,7 +121,8 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(countNoMemo).toHaveTextContent "2"
     }
 
-    testPromise "directive=true with anonymous record passes props correctly and prevents re-render for equal props" <| fun _ -> promise {
+    testPromise "directive=true with anonymous record passes props correctly and prevents re-render for equal props"
+    <| fun _ -> promise {
         let props = {| Text = "X"; Count = 1 |}
         let r = RTL.render (Components.MemoDirectiveAnon props)
         let el = RTL.screen.getByTestId "memo-dir-anon"
@@ -104,7 +132,8 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(el).toHaveTextContent "X-1"
     }
 
-    testPromise "directive=false with anonymous record passes props correctly and re-renders for equal new instance" <| fun _ -> promise {
+    testPromise "directive=false with anonymous record passes props correctly and re-renders for equal new instance"
+    <| fun _ -> promise {
         let props = {| Text = "X"; Count = 1 |}
         let r = RTL.render (Components.MemoNoDirectiveAnon props)
         let el = RTL.screen.getByTestId "memo-nodir-anon"
@@ -114,7 +143,8 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(el).toHaveTextContent "X-1" // content same, but render happened; covered implicitly
     }
 
-    testPromise "directive=true with record passes props correctly and prevents re-render for structurally equal record" <| fun _ -> promise {
+    testPromise "directive=true with record passes props correctly and prevents re-render for structurally equal record"
+    <| fun _ -> promise {
         let props: Components.RecProps = { Text = "R"; Count = 2 }
         let r = RTL.render (Components.MemoDirectiveRecord props)
         let el = RTL.screen.getByTestId "memo-dir-rec"
@@ -124,7 +154,8 @@ describe "memo attribute 'use memo' directive" <| fun _ ->
         expect(el).toHaveTextContent "R-2"
     }
 
-    testPromise "directive=false with record passes props correctly and re-renders for equal new instance" <| fun _ -> promise {
+    testPromise "directive=false with record passes props correctly and re-renders for equal new instance"
+    <| fun _ -> promise {
         let props: Components.RecProps = { Text = "R"; Count = 2 }
         let r = RTL.render (Components.MemoNoDirectiveRecord props)
         let el = RTL.screen.getByTestId "memo-nodir-rec"

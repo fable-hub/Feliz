@@ -3,14 +3,14 @@ module Example.Html
 open Feliz
 
 [<ReactComponent(true)>]
-let Example() = 
-    Html.div [ 
+let Example () =
+    Html.div [
         prop.id "main-container"
         prop.children [
             Html.h1 "Hello, Feliz!"
             Html.p "This is a simple example of using Feliz to create HTML elements in F#."
             Html.button [
-                prop.onClick (fun _ -> Browser.Dom.window.alert("Button clicked!"))
+                prop.onClick (fun _ -> Browser.Dom.window.alert ("Button clicked!"))
                 prop.text "Submit"
                 prop.style [
                     style.color.whiteSmoke

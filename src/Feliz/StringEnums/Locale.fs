@@ -3,874 +3,1745 @@
 /// Language codes
 module locale =
     /// Afrikaans (Namibia)
-    let [<Literal>] afNA = "af-NA"
+    [<Literal>]
+    let afNA = "af-NA"
+
     /// Afrikaans (South Africa)
-    let [<Literal>] afZA = "af-ZA"
+    [<Literal>]
+    let afZA = "af-ZA"
+
     /// Afrikaans
-    let [<Literal>] af = "af"
+    [<Literal>]
+    let af = "af"
+
     /// Akan (Ghana)
-    let [<Literal>] akGH = "ak-GH"
+    [<Literal>]
+    let akGH = "ak-GH"
+
     /// Akan
-    let [<Literal>] ak = "ak"
+    [<Literal>]
+    let ak = "ak"
+
     /// Albanian (Albania)
-    let [<Literal>] sqAL = "sq-AL"
+    [<Literal>]
+    let sqAL = "sq-AL"
+
     /// Albanian
-    let [<Literal>] sq = "sq"
+    [<Literal>]
+    let sq = "sq"
+
     /// Amharic (Ethiopia)
-    let [<Literal>] amET = "am-ET"
+    [<Literal>]
+    let amET = "am-ET"
+
     /// Amharic
-    let [<Literal>] am = "am"
+    [<Literal>]
+    let am = "am"
+
     /// Arabic (Algeria)
-    let [<Literal>] arDZ = "ar-DZ"
+    [<Literal>]
+    let arDZ = "ar-DZ"
+
     /// Arabic (Bahrain)
-    let [<Literal>] arBH = "ar-BH"
+    [<Literal>]
+    let arBH = "ar-BH"
+
     /// Arabic (Egypt)
-    let [<Literal>] arEG = "ar-EG"
+    [<Literal>]
+    let arEG = "ar-EG"
+
     /// Arabic (Iraq)
-    let [<Literal>] arIQ = "ar-IQ"
+    [<Literal>]
+    let arIQ = "ar-IQ"
+
     /// Arabic (Jordan)
-    let [<Literal>] arJO = "ar-JO"
+    [<Literal>]
+    let arJO = "ar-JO"
+
     /// Arabic (Kuwait)
-    let [<Literal>] arKW = "ar-KW"
+    [<Literal>]
+    let arKW = "ar-KW"
+
     /// Arabic (Lebanon)
-    let [<Literal>] arLB = "ar-LB"
+    [<Literal>]
+    let arLB = "ar-LB"
+
     /// Arabic (Libya)
-    let [<Literal>] arLY = "ar-LY"
+    [<Literal>]
+    let arLY = "ar-LY"
+
     /// Arabic (Morocco)
-    let [<Literal>] arMA = "ar-MA"
+    [<Literal>]
+    let arMA = "ar-MA"
+
     /// Arabic (Oman)
-    let [<Literal>] arOM = "ar-OM"
+    [<Literal>]
+    let arOM = "ar-OM"
+
     /// Arabic (Qatar)
-    let [<Literal>] arQA = "ar-QA"
+    [<Literal>]
+    let arQA = "ar-QA"
+
     /// Arabic (Saudi Arabia)
-    let [<Literal>] arSA = "ar-SA"
+    [<Literal>]
+    let arSA = "ar-SA"
+
     /// Arabic (Sudan)
-    let [<Literal>] arSD = "ar-SD"
+    [<Literal>]
+    let arSD = "ar-SD"
+
     /// Arabic (Syria)
-    let [<Literal>] arSY = "ar-SY"
+    [<Literal>]
+    let arSY = "ar-SY"
+
     /// Arabic (Tunisia)
-    let [<Literal>] arTN = "ar-TN"
+    [<Literal>]
+    let arTN = "ar-TN"
+
     /// Arabic (United Arab Emirates)
-    let [<Literal>] arAE = "ar-AE"
+    [<Literal>]
+    let arAE = "ar-AE"
+
     /// Arabic (Yemen)
-    let [<Literal>] arYE = "ar-YE"
+    [<Literal>]
+    let arYE = "ar-YE"
+
     /// Arabic
-    let [<Literal>] ar = "ar"
+    [<Literal>]
+    let ar = "ar"
+
     /// Armenian (Armenia)
-    let [<Literal>] hyAM = "hy-AM"
+    [<Literal>]
+    let hyAM = "hy-AM"
+
     /// Armenian
-    let [<Literal>] hy = "hy"
+    [<Literal>]
+    let hy = "hy"
+
     /// Assamese (India)
-    let [<Literal>] asIN = "as-IN"
+    [<Literal>]
+    let asIN = "as-IN"
+
     /// Assamese
-    let [<Literal>] as' = "as"
+    [<Literal>]
+    let as' = "as"
+
     /// Asu (Tanzania)
-    let [<Literal>] asaTZ = "asa-TZ"
+    [<Literal>]
+    let asaTZ = "asa-TZ"
+
     /// Asu
-    let [<Literal>] asa = "asa"
+    [<Literal>]
+    let asa = "asa"
+
     /// Azerbaijani (Cyrillic)
-    let [<Literal>] azCyrl = "az-Cyrl"
+    [<Literal>]
+    let azCyrl = "az-Cyrl"
+
     /// Azerbaijani (Cyrillic, Azerbaijan)
-    let [<Literal>] azCyrlAZ = "az-Cyrl-AZ"
+    [<Literal>]
+    let azCyrlAZ = "az-Cyrl-AZ"
+
     /// Azerbaijani (Latin)
-    let [<Literal>] azLatn = "az-Latn"
+    [<Literal>]
+    let azLatn = "az-Latn"
+
     /// Azerbaijani (Latin, Azerbaijan)
-    let [<Literal>] azLatnAZ = "az-Latn-AZ"
+    [<Literal>]
+    let azLatnAZ = "az-Latn-AZ"
+
     /// Azerbaijani
-    let [<Literal>] az = "az"
+    [<Literal>]
+    let az = "az"
+
     /// Bambara (Mali)
-    let [<Literal>] bmML = "bm-ML"
+    [<Literal>]
+    let bmML = "bm-ML"
+
     /// Bambara
-    let [<Literal>] bm = "bm"
+    [<Literal>]
+    let bm = "bm"
+
     /// Basque (Spain)
-    let [<Literal>] euES = "eu-ES"
+    [<Literal>]
+    let euES = "eu-ES"
+
     /// Basque
-    let [<Literal>] eu = "eu"
+    [<Literal>]
+    let eu = "eu"
+
     /// Belarusian (Belarus)
-    let [<Literal>] beBY = "be-BY"
+    [<Literal>]
+    let beBY = "be-BY"
+
     /// Belarusian
-    let [<Literal>] be = "be"
+    [<Literal>]
+    let be = "be"
+
     /// Bemba (Zambia)
-    let [<Literal>] bemZM = "bem-ZM"
+    [<Literal>]
+    let bemZM = "bem-ZM"
+
     /// Bemba
-    let [<Literal>] bem = "bem"
+    [<Literal>]
+    let bem = "bem"
+
     /// Bena (Tanzania)
-    let [<Literal>] bezTZ = "bez-TZ"
+    [<Literal>]
+    let bezTZ = "bez-TZ"
+
     /// Bena
-    let [<Literal>] bez = "bez"
+    [<Literal>]
+    let bez = "bez"
+
     /// Bengali (Bangladesh)
-    let [<Literal>] bnBD = "bn-BD"
+    [<Literal>]
+    let bnBD = "bn-BD"
+
     /// Bengali (India)
-    let [<Literal>] bnIN = "bn-IN"
+    [<Literal>]
+    let bnIN = "bn-IN"
+
     /// Bengali
-    let [<Literal>] bn = "bn"
+    [<Literal>]
+    let bn = "bn"
+
     /// Bosnian (Bosnia and Herzegovina)
-    let [<Literal>] bsBA = "bs-BA"
+    [<Literal>]
+    let bsBA = "bs-BA"
+
     /// Bosnian
-    let [<Literal>] bs = "bs"
+    [<Literal>]
+    let bs = "bs"
+
     /// Bulgarian (Bulgaria)
-    let [<Literal>] bgBG = "bg-BG"
+    [<Literal>]
+    let bgBG = "bg-BG"
+
     /// Bulgarian
-    let [<Literal>] bg = "bg"
+    [<Literal>]
+    let bg = "bg"
+
     /// Burmese (Myanmar [Burma])
-    let [<Literal>] myMM = "my-MM"
+    [<Literal>]
+    let myMM = "my-MM"
+
     /// Burmese
-    let [<Literal>] my = "my"
+    [<Literal>]
+    let my = "my"
+
     /// Cantonese (Traditional, Hong Kong SAR China)
-    let [<Literal>] yueHantHK = "yue-Hant-HK"
+    [<Literal>]
+    let yueHantHK = "yue-Hant-HK"
+
     /// Catalan (Spain)
-    let [<Literal>] caES = "ca-ES"
+    [<Literal>]
+    let caES = "ca-ES"
+
     /// Catalan
-    let [<Literal>] ca = "ca"
+    [<Literal>]
+    let ca = "ca"
+
     /// Central Morocco Tamazight (Latin)
-    let [<Literal>] tzmLatn = "tzm-Latn"
+    [<Literal>]
+    let tzmLatn = "tzm-Latn"
+
     /// Central Morocco Tamazight (Latin, Morocco)
-    let [<Literal>] tzmLatnMA = "tzm-Latn-MA"
+    [<Literal>]
+    let tzmLatnMA = "tzm-Latn-MA"
+
     /// Central Morocco Tamazight
-    let [<Literal>] tzm = "tzm"
+    [<Literal>]
+    let tzm = "tzm"
+
     /// Cherokee (United States)
-    let [<Literal>] chrUS = "chr-US"
+    [<Literal>]
+    let chrUS = "chr-US"
+
     /// Cherokee
-    let [<Literal>] chr = "chr"
+    [<Literal>]
+    let chr = "chr"
+
     /// Chiga (Uganda)
-    let [<Literal>] cggUG = "cgg-UG"
+    [<Literal>]
+    let cggUG = "cgg-UG"
+
     /// Chiga
-    let [<Literal>] cgg = "cgg"
+    [<Literal>]
+    let cgg = "cgg"
+
     /// Chinese (Simplified Han)
-    let [<Literal>] zhHans = "zh-Hans"
+    [<Literal>]
+    let zhHans = "zh-Hans"
+
     /// Chinese (Simplified Han, China)
-    let [<Literal>] zhHansCN = "zh-Hans-CN"
+    [<Literal>]
+    let zhHansCN = "zh-Hans-CN"
+
     /// Chinese (Simplified Han, Hong Kong SAR China)
-    let [<Literal>] zhHansHK = "zh-Hans-HK"
+    [<Literal>]
+    let zhHansHK = "zh-Hans-HK"
+
     /// Chinese (Simplified Han, Macau SAR China)
-    let [<Literal>] zhHansMO = "zh-Hans-MO"
+    [<Literal>]
+    let zhHansMO = "zh-Hans-MO"
+
     /// Chinese (Simplified Han, Singapore)
-    let [<Literal>] zhHansSG = "zh-Hans-SG"
+    [<Literal>]
+    let zhHansSG = "zh-Hans-SG"
+
     /// Chinese (Traditional Han)
-    let [<Literal>] zhHant = "zh-Hant"
+    [<Literal>]
+    let zhHant = "zh-Hant"
+
     /// Chinese (Traditional Han, Hong Kong SAR China)
-    let [<Literal>] zhHantHK = "zh-Hant-HK"
+    [<Literal>]
+    let zhHantHK = "zh-Hant-HK"
+
     /// Chinese (Traditional Han, Macau SAR China)
-    let [<Literal>] zhHantMO = "zh-Hant-MO"
+    [<Literal>]
+    let zhHantMO = "zh-Hant-MO"
+
     /// Chinese (Traditional Han, Taiwan)
-    let [<Literal>] zhHantTW = "zh-Hant-TW"
+    [<Literal>]
+    let zhHantTW = "zh-Hant-TW"
+
     /// Chinese
-    let [<Literal>] zh = "zh"
+    [<Literal>]
+    let zh = "zh"
+
     /// Cornish (United Kingdom)
-    let [<Literal>] kwGB = "kw-GB"
+    [<Literal>]
+    let kwGB = "kw-GB"
+
     /// Cornish
-    let [<Literal>] kw = "kw"
+    [<Literal>]
+    let kw = "kw"
+
     /// Croatian (Croatia)
-    let [<Literal>] hrHR = "hr-HR"
+    [<Literal>]
+    let hrHR = "hr-HR"
+
     /// Croatian
-    let [<Literal>] hr = "hr"
+    [<Literal>]
+    let hr = "hr"
+
     /// Czech (Czech Republic)
-    let [<Literal>] csCZ = "cs-CZ"
+    [<Literal>]
+    let csCZ = "cs-CZ"
+
     /// Czech
-    let [<Literal>] cs = "cs"
+    [<Literal>]
+    let cs = "cs"
+
     /// Danish (Denmark)
-    let [<Literal>] daDK = "da-DK"
+    [<Literal>]
+    let daDK = "da-DK"
+
     /// Danish
-    let [<Literal>] da = "da"
+    [<Literal>]
+    let da = "da"
+
     /// Dutch (Belgium)
-    let [<Literal>] nlBE = "nl-BE"
+    [<Literal>]
+    let nlBE = "nl-BE"
+
     /// Dutch (Netherlands)
-    let [<Literal>] nlNL = "nl-NL"
+    [<Literal>]
+    let nlNL = "nl-NL"
+
     /// Dutch
-    let [<Literal>] nl = "nl"
+    [<Literal>]
+    let nl = "nl"
+
     /// Embu (Kenya)
-    let [<Literal>] ebuKE = "ebu-KE"
+    [<Literal>]
+    let ebuKE = "ebu-KE"
+
     /// Embu
-    let [<Literal>] ebu = "ebu"
+    [<Literal>]
+    let ebu = "ebu"
+
     /// English (American Samoa)
-    let [<Literal>] enAS = "en-AS"
+    [<Literal>]
+    let enAS = "en-AS"
+
     /// English (Australia)
-    let [<Literal>] enAU = "en-AU"
+    [<Literal>]
+    let enAU = "en-AU"
+
     /// English (Belgium)
-    let [<Literal>] enBE = "en-BE"
+    [<Literal>]
+    let enBE = "en-BE"
+
     /// English (Belize)
-    let [<Literal>] enBZ = "en-BZ"
+    [<Literal>]
+    let enBZ = "en-BZ"
+
     /// English (Botswana)
-    let [<Literal>] enBW = "en-BW"
+    [<Literal>]
+    let enBW = "en-BW"
+
     /// English (Canada)
-    let [<Literal>] enCA = "en-CA"
+    [<Literal>]
+    let enCA = "en-CA"
+
     /// English (Guam)
-    let [<Literal>] enGU = "en-GU"
+    [<Literal>]
+    let enGU = "en-GU"
+
     /// English (Hong Kong SAR China)
-    let [<Literal>] enHK = "en-HK"
+    [<Literal>]
+    let enHK = "en-HK"
+
     /// English (India)
-    let [<Literal>] enIN = "en-IN"
+    [<Literal>]
+    let enIN = "en-IN"
+
     /// English (Ireland)
-    let [<Literal>] enIE = "en-IE"
+    [<Literal>]
+    let enIE = "en-IE"
+
     /// English (Israel)
-    let [<Literal>] enIL = "en-IL"
+    [<Literal>]
+    let enIL = "en-IL"
+
     /// English (Jamaica)
-    let [<Literal>] enJM = "en-JM"
+    [<Literal>]
+    let enJM = "en-JM"
+
     /// English (Malta)
-    let [<Literal>] enMT = "en-MT"
+    [<Literal>]
+    let enMT = "en-MT"
+
     /// English (Marshall Islands)
-    let [<Literal>] enMH = "en-MH"
+    [<Literal>]
+    let enMH = "en-MH"
+
     /// English (Mauritius)
-    let [<Literal>] enMU = "en-MU"
+    [<Literal>]
+    let enMU = "en-MU"
+
     /// English (Namibia)
-    let [<Literal>] enNA = "en-NA"
+    [<Literal>]
+    let enNA = "en-NA"
+
     /// English (New Zealand)
-    let [<Literal>] enNZ = "en-NZ"
+    [<Literal>]
+    let enNZ = "en-NZ"
+
     /// English (Northern Mariana Islands)
-    let [<Literal>] enMP = "en-MP"
+    [<Literal>]
+    let enMP = "en-MP"
+
     /// English (Pakistan)
-    let [<Literal>] enPK = "en-PK"
+    [<Literal>]
+    let enPK = "en-PK"
+
     /// English (Philippines)
-    let [<Literal>] enPH = "en-PH"
+    [<Literal>]
+    let enPH = "en-PH"
+
     /// English (Singapore)
-    let [<Literal>] enSG = "en-SG"
+    [<Literal>]
+    let enSG = "en-SG"
+
     /// English (South Africa)
-    let [<Literal>] enZA = "en-ZA"
+    [<Literal>]
+    let enZA = "en-ZA"
+
     /// English (Trinidad and Tobago)
-    let [<Literal>] enTT = "en-TT"
+    [<Literal>]
+    let enTT = "en-TT"
+
     /// English (U.S. Minor Outlying Islands)
-    let [<Literal>] enUM = "en-UM"
+    [<Literal>]
+    let enUM = "en-UM"
+
     /// English (U.S. Virgin Islands)
-    let [<Literal>] enVI = "en-VI"
+    [<Literal>]
+    let enVI = "en-VI"
+
     /// English (United Kingdom)
-    let [<Literal>] enGB = "en-GB"
+    [<Literal>]
+    let enGB = "en-GB"
+
     /// English (United States)
-    let [<Literal>] enUS = "en-US"
+    [<Literal>]
+    let enUS = "en-US"
+
     /// English (Zimbabwe)
-    let [<Literal>] enZW = "en-ZW"
+    [<Literal>]
+    let enZW = "en-ZW"
+
     /// English
-    let [<Literal>] en = "en"
+    [<Literal>]
+    let en = "en"
+
     /// Esperanto
-    let [<Literal>] eo = "eo"
+    [<Literal>]
+    let eo = "eo"
+
     /// Estonian (Estonia)
-    let [<Literal>] etEE = "et-EE"
+    [<Literal>]
+    let etEE = "et-EE"
+
     /// Estonian
-    let [<Literal>] et = "et"
+    [<Literal>]
+    let et = "et"
+
     /// Ewe (Ghana)
-    let [<Literal>] eeGH = "ee-GH"
+    [<Literal>]
+    let eeGH = "ee-GH"
+
     /// Ewe (Togo)
-    let [<Literal>] eeTG = "ee-TG"
+    [<Literal>]
+    let eeTG = "ee-TG"
+
     /// Ewe
-    let [<Literal>] ee = "ee"
+    [<Literal>]
+    let ee = "ee"
+
     /// Faroese (Faroe Islands)
-    let [<Literal>] foFO = "fo-FO"
+    [<Literal>]
+    let foFO = "fo-FO"
+
     /// Faroese
-    let [<Literal>] fo = "fo"
+    [<Literal>]
+    let fo = "fo"
+
     /// Filipino (Philippines)
-    let [<Literal>] filPH = "fil-PH"
+    [<Literal>]
+    let filPH = "fil-PH"
+
     /// Filipino
-    let [<Literal>] fil = "fil"
+    [<Literal>]
+    let fil = "fil"
+
     /// Finnish (Finland)
-    let [<Literal>] fiFI = "fi-FI"
+    [<Literal>]
+    let fiFI = "fi-FI"
+
     /// Finnish
-    let [<Literal>] fi = "fi"
+    [<Literal>]
+    let fi = "fi"
+
     /// French (Belgium)
-    let [<Literal>] frBE = "fr-BE"
+    [<Literal>]
+    let frBE = "fr-BE"
+
     /// French (Benin)
-    let [<Literal>] frBJ = "fr-BJ"
+    [<Literal>]
+    let frBJ = "fr-BJ"
+
     /// French (Burkina Faso)
-    let [<Literal>] frBF = "fr-BF"
+    [<Literal>]
+    let frBF = "fr-BF"
+
     /// French (Burundi)
-    let [<Literal>] frBI = "fr-BI"
+    [<Literal>]
+    let frBI = "fr-BI"
+
     /// French (Cameroon)
-    let [<Literal>] frCM = "fr-CM"
+    [<Literal>]
+    let frCM = "fr-CM"
+
     /// French (Canada)
-    let [<Literal>] frCA = "fr-CA"
+    [<Literal>]
+    let frCA = "fr-CA"
+
     /// French (Central African Republic)
-    let [<Literal>] frCF = "fr-CF"
+    [<Literal>]
+    let frCF = "fr-CF"
+
     /// French (Chad)
-    let [<Literal>] frTD = "fr-TD"
+    [<Literal>]
+    let frTD = "fr-TD"
+
     /// French (Comoros)
-    let [<Literal>] frKM = "fr-KM"
+    [<Literal>]
+    let frKM = "fr-KM"
+
     /// French (Congo - Brazzaville)
-    let [<Literal>] frCG = "fr-CG"
+    [<Literal>]
+    let frCG = "fr-CG"
+
     /// French (Congo - Kinshasa)
-    let [<Literal>] frCD = "fr-CD"
+    [<Literal>]
+    let frCD = "fr-CD"
+
     /// French (Côte d’Ivoire)
-    let [<Literal>] frCI = "fr-CI"
+    [<Literal>]
+    let frCI = "fr-CI"
+
     /// French (Djibouti)
-    let [<Literal>] frDJ = "fr-DJ"
+    [<Literal>]
+    let frDJ = "fr-DJ"
+
     /// French (Equatorial Guinea)
-    let [<Literal>] frGQ = "fr-GQ"
+    [<Literal>]
+    let frGQ = "fr-GQ"
+
     /// French (France)
-    let [<Literal>] frFR = "fr-FR"
+    [<Literal>]
+    let frFR = "fr-FR"
+
     /// French (Gabon)
-    let [<Literal>] frGA = "fr-GA"
+    [<Literal>]
+    let frGA = "fr-GA"
+
     /// French (Guadeloupe)
-    let [<Literal>] frGP = "fr-GP"
+    [<Literal>]
+    let frGP = "fr-GP"
+
     /// French (Guinea)
-    let [<Literal>] frGN = "fr-GN"
+    [<Literal>]
+    let frGN = "fr-GN"
+
     /// French (Luxembourg)
-    let [<Literal>] frLU = "fr-LU"
+    [<Literal>]
+    let frLU = "fr-LU"
+
     /// French (Madagascar)
-    let [<Literal>] frMG = "fr-MG"
+    [<Literal>]
+    let frMG = "fr-MG"
+
     /// French (Mali)
-    let [<Literal>] frML = "fr-ML"
+    [<Literal>]
+    let frML = "fr-ML"
+
     /// French (Martinique)
-    let [<Literal>] frMQ = "fr-MQ"
+    [<Literal>]
+    let frMQ = "fr-MQ"
+
     /// French (Monaco)
-    let [<Literal>] frMC = "fr-MC"
+    [<Literal>]
+    let frMC = "fr-MC"
+
     /// French (Niger)
-    let [<Literal>] frNE = "fr-NE"
+    [<Literal>]
+    let frNE = "fr-NE"
+
     /// French (Rwanda)
-    let [<Literal>] frRW = "fr-RW"
+    [<Literal>]
+    let frRW = "fr-RW"
+
     /// French (Réunion)
-    let [<Literal>] frRE = "fr-RE"
+    [<Literal>]
+    let frRE = "fr-RE"
+
     /// French (Saint Barthélemy)
-    let [<Literal>] frBL = "fr-BL"
+    [<Literal>]
+    let frBL = "fr-BL"
+
     /// French (Saint Martin)
-    let [<Literal>] frMF = "fr-MF"
+    [<Literal>]
+    let frMF = "fr-MF"
+
     /// French (Senegal)
-    let [<Literal>] frSN = "fr-SN"
+    [<Literal>]
+    let frSN = "fr-SN"
+
     /// French (Switzerland)
-    let [<Literal>] frCH = "fr-CH"
+    [<Literal>]
+    let frCH = "fr-CH"
+
     /// French (Togo)
-    let [<Literal>] frTG = "fr-TG"
+    [<Literal>]
+    let frTG = "fr-TG"
+
     /// French
-    let [<Literal>] fr = "fr"
+    [<Literal>]
+    let fr = "fr"
+
     /// Fulah (Senegal)
-    let [<Literal>] ffSN = "ff-SN"
+    [<Literal>]
+    let ffSN = "ff-SN"
+
     /// Fulah
-    let [<Literal>] ff = "ff"
+    [<Literal>]
+    let ff = "ff"
+
     /// Galician (Spain)
-    let [<Literal>] glES = "gl-ES"
+    [<Literal>]
+    let glES = "gl-ES"
+
     /// Galician
-    let [<Literal>] gl = "gl"
+    [<Literal>]
+    let gl = "gl"
+
     /// Ganda (Uganda)
-    let [<Literal>] lgUG = "lg-UG"
+    [<Literal>]
+    let lgUG = "lg-UG"
+
     /// Ganda
-    let [<Literal>] lg = "lg"
+    [<Literal>]
+    let lg = "lg"
+
     /// Georgian (Georgia)
-    let [<Literal>] kaGE = "ka-GE"
+    [<Literal>]
+    let kaGE = "ka-GE"
+
     /// Georgian
-    let [<Literal>] ka = "ka"
+    [<Literal>]
+    let ka = "ka"
+
     /// German (Austria)
-    let [<Literal>] deAT = "de-AT"
+    [<Literal>]
+    let deAT = "de-AT"
+
     /// German (Belgium)
-    let [<Literal>] deBE = "de-BE"
+    [<Literal>]
+    let deBE = "de-BE"
+
     /// German (Germany)
-    let [<Literal>] deDE = "de-DE"
+    [<Literal>]
+    let deDE = "de-DE"
+
     /// German (Liechtenstein)
-    let [<Literal>] deLI = "de-LI"
+    [<Literal>]
+    let deLI = "de-LI"
+
     /// German (Luxembourg)
-    let [<Literal>] deLU = "de-LU"
+    [<Literal>]
+    let deLU = "de-LU"
+
     /// German (Switzerland)
-    let [<Literal>] deCH = "de-CH"
+    [<Literal>]
+    let deCH = "de-CH"
+
     /// German
-    let [<Literal>] de = "de"
+    [<Literal>]
+    let de = "de"
+
     /// Greek (Cyprus)
-    let [<Literal>] elCY = "el-CY"
+    [<Literal>]
+    let elCY = "el-CY"
+
     /// Greek (Greece)
-    let [<Literal>] elGR = "el-GR"
+    [<Literal>]
+    let elGR = "el-GR"
+
     /// Greek
-    let [<Literal>] el = "el"
+    [<Literal>]
+    let el = "el"
+
     /// Gujarati (India)
-    let [<Literal>] guIN = "gu-IN"
+    [<Literal>]
+    let guIN = "gu-IN"
+
     /// Gujarati
-    let [<Literal>] gu = "gu"
+    [<Literal>]
+    let gu = "gu"
+
     /// Gusii (Kenya)
-    let [<Literal>] guzKE = "guz-KE"
+    [<Literal>]
+    let guzKE = "guz-KE"
+
     /// Gusii
-    let [<Literal>] guz = "guz"
+    [<Literal>]
+    let guz = "guz"
+
     /// Hausa (Latin)
-    let [<Literal>] haLatn = "ha-Latn"
+    [<Literal>]
+    let haLatn = "ha-Latn"
+
     /// Hausa (Latin, Ghana)
-    let [<Literal>] haLatnGH = "ha-Latn-GH"
+    [<Literal>]
+    let haLatnGH = "ha-Latn-GH"
+
     /// Hausa (Latin, Niger)
-    let [<Literal>] haLatnNE = "ha-Latn-NE"
+    [<Literal>]
+    let haLatnNE = "ha-Latn-NE"
+
     /// Hausa (Latin, Nigeria)
-    let [<Literal>] haLatnNG = "ha-Latn-NG"
+    [<Literal>]
+    let haLatnNG = "ha-Latn-NG"
+
     /// Hausa
-    let [<Literal>] ha = "ha"
+    [<Literal>]
+    let ha = "ha"
+
     /// Hawaiian (United States)
-    let [<Literal>] hawUS = "haw-US"
+    [<Literal>]
+    let hawUS = "haw-US"
+
     /// Hawaiian
-    let [<Literal>] haw = "haw"
+    [<Literal>]
+    let haw = "haw"
+
     /// Hebrew (Israel)
-    let [<Literal>] heIL = "he-IL"
+    [<Literal>]
+    let heIL = "he-IL"
+
     /// Hebrew
-    let [<Literal>] he = "he"
+    [<Literal>]
+    let he = "he"
+
     /// Hindi (India)
-    let [<Literal>] hiIN = "hi-IN"
+    [<Literal>]
+    let hiIN = "hi-IN"
+
     /// Hindi
-    let [<Literal>] hi = "hi"
+    [<Literal>]
+    let hi = "hi"
+
     /// Hungarian (Hungary)
-    let [<Literal>] huHU = "hu-HU"
+    [<Literal>]
+    let huHU = "hu-HU"
+
     /// Hungarian
-    let [<Literal>] hu = "hu"
+    [<Literal>]
+    let hu = "hu"
+
     /// Icelandic (Iceland)
-    let [<Literal>] isIS = "is-IS"
+    [<Literal>]
+    let isIS = "is-IS"
+
     /// Icelandic
-    let [<Literal>] is = "is"
+    [<Literal>]
+    let is = "is"
+
     /// Igbo (Nigeria)
-    let [<Literal>] igNG = "ig-NG"
+    [<Literal>]
+    let igNG = "ig-NG"
+
     /// Igbo
-    let [<Literal>] ig = "ig"
+    [<Literal>]
+    let ig = "ig"
+
     /// Indonesian (Indonesia)
-    let [<Literal>] idID = "id-ID"
+    [<Literal>]
+    let idID = "id-ID"
+
     /// Indonesian
-    let [<Literal>] id = "id"
+    [<Literal>]
+    let id = "id"
+
     /// Irish (Ireland)
-    let [<Literal>] gaIE = "ga-IE"
+    [<Literal>]
+    let gaIE = "ga-IE"
+
     /// Irish
-    let [<Literal>] ga = "ga"
+    [<Literal>]
+    let ga = "ga"
+
     /// Italian (Italy)
-    let [<Literal>] itIT = "it-IT"
+    [<Literal>]
+    let itIT = "it-IT"
+
     /// Italian (Switzerland)
-    let [<Literal>] itCH = "it-CH"
+    [<Literal>]
+    let itCH = "it-CH"
+
     /// Italian
-    let [<Literal>] it = "it"
+    [<Literal>]
+    let it = "it"
+
     /// Japanese (Japan)
-    let [<Literal>] jaJP = "ja-JP"
+    [<Literal>]
+    let jaJP = "ja-JP"
+
     /// Japanese
-    let [<Literal>] ja = "ja"
+    [<Literal>]
+    let ja = "ja"
+
     /// Kabuverdianu (Cape Verde)
-    let [<Literal>] keaCV = "kea-CV"
+    [<Literal>]
+    let keaCV = "kea-CV"
+
     /// Kabuverdianu
-    let [<Literal>] kea = "kea"
+    [<Literal>]
+    let kea = "kea"
+
     /// Kabyle (Algeria)
-    let [<Literal>] kabDZ = "kab-DZ"
+    [<Literal>]
+    let kabDZ = "kab-DZ"
+
     /// Kabyle
-    let [<Literal>] kab = "kab"
+    [<Literal>]
+    let kab = "kab"
+
     /// Kalaallisut (Greenland)
-    let [<Literal>] klGL = "kl-GL"
+    [<Literal>]
+    let klGL = "kl-GL"
+
     /// Kalaallisut
-    let [<Literal>] kl = "kl"
+    [<Literal>]
+    let kl = "kl"
+
     /// Kalenjin (Kenya)
-    let [<Literal>] klnKE = "kln-KE"
+    [<Literal>]
+    let klnKE = "kln-KE"
+
     /// Kalenjin
-    let [<Literal>] kln = "kln"
+    [<Literal>]
+    let kln = "kln"
+
     /// Kamba (Kenya)
-    let [<Literal>] kamKE = "kam-KE"
+    [<Literal>]
+    let kamKE = "kam-KE"
+
     /// Kamba
-    let [<Literal>] kam = "kam"
+    [<Literal>]
+    let kam = "kam"
+
     /// Kannada (India)
-    let [<Literal>] knIN = "kn-IN"
+    [<Literal>]
+    let knIN = "kn-IN"
+
     /// Kannada
-    let [<Literal>] kn = "kn"
+    [<Literal>]
+    let kn = "kn"
+
     /// Kazakh (Cyrillic)
-    let [<Literal>] kkCyrl = "kk-Cyrl"
+    [<Literal>]
+    let kkCyrl = "kk-Cyrl"
+
     /// Kazakh (Cyrillic, Kazakhstan)
-    let [<Literal>] kkCyrlKZ = "kk-Cyrl-KZ"
+    [<Literal>]
+    let kkCyrlKZ = "kk-Cyrl-KZ"
+
     /// Kazakh
-    let [<Literal>] kk = "kk"
+    [<Literal>]
+    let kk = "kk"
+
     /// Khmer (Cambodia)
-    let [<Literal>] kmKH = "km-KH"
+    [<Literal>]
+    let kmKH = "km-KH"
+
     /// Khmer
-    let [<Literal>] km = "km"
+    [<Literal>]
+    let km = "km"
+
     /// Kikuyu (Kenya)
-    let [<Literal>] kiKE = "ki-KE"
+    [<Literal>]
+    let kiKE = "ki-KE"
+
     /// Kikuyu
-    let [<Literal>] ki = "ki"
+    [<Literal>]
+    let ki = "ki"
+
     /// Kinyarwanda (Rwanda)
-    let [<Literal>] rwRW = "rw-RW"
+    [<Literal>]
+    let rwRW = "rw-RW"
+
     /// Kinyarwanda
-    let [<Literal>] rw = "rw"
+    [<Literal>]
+    let rw = "rw"
+
     /// Konkani (India)
-    let [<Literal>] kokIN = "kok-IN"
+    [<Literal>]
+    let kokIN = "kok-IN"
+
     /// Konkani
-    let [<Literal>] kok = "kok"
+    [<Literal>]
+    let kok = "kok"
+
     /// Korean (South Korea)
-    let [<Literal>] koKR = "ko-KR"
+    [<Literal>]
+    let koKR = "ko-KR"
+
     /// Korean
-    let [<Literal>] ko = "ko"
+    [<Literal>]
+    let ko = "ko"
+
     /// Koyra Chiini (Mali)
-    let [<Literal>] khqML = "khq-ML"
+    [<Literal>]
+    let khqML = "khq-ML"
+
     /// Koyra Chiini
-    let [<Literal>] khq = "khq"
+    [<Literal>]
+    let khq = "khq"
+
     /// Koyraboro Senni (Mali)
-    let [<Literal>] sesML = "ses-ML"
+    [<Literal>]
+    let sesML = "ses-ML"
+
     /// Koyraboro Senni
-    let [<Literal>] ses = "ses"
+    [<Literal>]
+    let ses = "ses"
+
     /// Langi (Tanzania)
-    let [<Literal>] lagTZ = "lag-TZ"
+    [<Literal>]
+    let lagTZ = "lag-TZ"
+
     /// Langi
-    let [<Literal>] lag = "lag"
+    [<Literal>]
+    let lag = "lag"
+
     /// Latvian (Latvia)
-    let [<Literal>] lvLV = "lv-LV"
+    [<Literal>]
+    let lvLV = "lv-LV"
+
     /// Latvian
-    let [<Literal>] lv = "lv"
+    [<Literal>]
+    let lv = "lv"
+
     /// Lithuanian (Lithuania)
-    let [<Literal>] ltLT = "lt-LT"
+    [<Literal>]
+    let ltLT = "lt-LT"
+
     /// Lithuanian
-    let [<Literal>] lt = "lt"
+    [<Literal>]
+    let lt = "lt"
+
     /// Luo (Kenya)
-    let [<Literal>] luoKE = "luo-KE"
+    [<Literal>]
+    let luoKE = "luo-KE"
+
     /// Luo
-    let [<Literal>] luo = "luo"
+    [<Literal>]
+    let luo = "luo"
+
     /// Luyia (Kenya)
-    let [<Literal>] luyKE = "luy-KE"
+    [<Literal>]
+    let luyKE = "luy-KE"
+
     /// Luyia
-    let [<Literal>] luy = "luy"
+    [<Literal>]
+    let luy = "luy"
+
     /// Macedonian (Macedonia)
-    let [<Literal>] mkMK = "mk-MK"
+    [<Literal>]
+    let mkMK = "mk-MK"
+
     /// Macedonian
-    let [<Literal>] mk = "mk"
+    [<Literal>]
+    let mk = "mk"
+
     /// Machame (Tanzania)
-    let [<Literal>] jmcTZ = "jmc-TZ"
+    [<Literal>]
+    let jmcTZ = "jmc-TZ"
+
     /// Machame
-    let [<Literal>] jmc = "jmc"
+    [<Literal>]
+    let jmc = "jmc"
+
     /// Makonde (Tanzania)
-    let [<Literal>] kdeTZ = "kde-TZ"
+    [<Literal>]
+    let kdeTZ = "kde-TZ"
+
     /// Makonde
-    let [<Literal>] kde = "kde"
+    [<Literal>]
+    let kde = "kde"
+
     /// Malagasy (Madagascar)
-    let [<Literal>] mgMG = "mg-MG"
+    [<Literal>]
+    let mgMG = "mg-MG"
+
     /// Malagasy
-    let [<Literal>] mg = "mg"
+    [<Literal>]
+    let mg = "mg"
+
     /// Malay (Brunei)
-    let [<Literal>] msBN = "ms-BN"
+    [<Literal>]
+    let msBN = "ms-BN"
+
     /// Malay (Malaysia)
-    let [<Literal>] msMY = "ms-MY"
+    [<Literal>]
+    let msMY = "ms-MY"
+
     /// Malay
-    let [<Literal>] ms = "ms"
+    [<Literal>]
+    let ms = "ms"
+
     /// Malayalam (India)
-    let [<Literal>] mlIN = "ml-IN"
+    [<Literal>]
+    let mlIN = "ml-IN"
+
     /// Malayalam
-    let [<Literal>] ml = "ml"
+    [<Literal>]
+    let ml = "ml"
+
     /// Maltese (Malta)
-    let [<Literal>] mtMT = "mt-MT"
+    [<Literal>]
+    let mtMT = "mt-MT"
+
     /// Maltese
-    let [<Literal>] mt = "mt"
+    [<Literal>]
+    let mt = "mt"
+
     /// Manx (United Kingdom)
-    let [<Literal>] gvGB = "gv-GB"
+    [<Literal>]
+    let gvGB = "gv-GB"
+
     /// Manx
-    let [<Literal>] gv = "gv"
+    [<Literal>]
+    let gv = "gv"
+
     /// Marathi (India)
-    let [<Literal>] mrIN = "mr-IN"
+    [<Literal>]
+    let mrIN = "mr-IN"
+
     /// Marathi
-    let [<Literal>] mr = "mr"
+    [<Literal>]
+    let mr = "mr"
+
     /// Masai (Kenya)
-    let [<Literal>] masKE = "mas-KE"
+    [<Literal>]
+    let masKE = "mas-KE"
+
     /// Masai (Tanzania)
-    let [<Literal>] masTZ = "mas-TZ"
+    [<Literal>]
+    let masTZ = "mas-TZ"
+
     /// Masai
-    let [<Literal>] mas = "mas"
+    [<Literal>]
+    let mas = "mas"
+
     /// Meru (Kenya)
-    let [<Literal>] merKE = "mer-KE"
+    [<Literal>]
+    let merKE = "mer-KE"
+
     /// Meru
-    let [<Literal>] mer = "mer"
+    [<Literal>]
+    let mer = "mer"
+
     /// Morisyen (Mauritius)
-    let [<Literal>] mfeMU = "mfe-MU"
+    [<Literal>]
+    let mfeMU = "mfe-MU"
+
     /// Morisyen
-    let [<Literal>] mfe = "mfe"
+    [<Literal>]
+    let mfe = "mfe"
+
     /// Nama (Namibia)
-    let [<Literal>] naqNA = "naq-NA"
+    [<Literal>]
+    let naqNA = "naq-NA"
+
     /// Nama
-    let [<Literal>] naq = "naq"
+    [<Literal>]
+    let naq = "naq"
+
     /// Nepali (India)
-    let [<Literal>] neIN = "ne-IN"
+    [<Literal>]
+    let neIN = "ne-IN"
+
     /// Nepali (Nepal)
-    let [<Literal>] neNP = "ne-NP"
+    [<Literal>]
+    let neNP = "ne-NP"
+
     /// Nepali
-    let [<Literal>] ne = "ne"
+    [<Literal>]
+    let ne = "ne"
+
     /// North Ndebele (Zimbabwe)
-    let [<Literal>] ndZW = "nd-ZW"
+    [<Literal>]
+    let ndZW = "nd-ZW"
+
     /// North Ndebele
-    let [<Literal>] nd = "nd"
+    [<Literal>]
+    let nd = "nd"
+
     /// Norwegian Bokmål (Norway)
-    let [<Literal>] nbNO = "nb-NO"
+    [<Literal>]
+    let nbNO = "nb-NO"
+
     /// Norwegian Bokmål
-    let [<Literal>] nb = "nb"
+    [<Literal>]
+    let nb = "nb"
+
     /// Norwegian Nynorsk (Norway)
-    let [<Literal>] nnNO = "nn-NO"
+    [<Literal>]
+    let nnNO = "nn-NO"
+
     /// Norwegian Nynorsk
-    let [<Literal>] nn = "nn"
+    [<Literal>]
+    let nn = "nn"
+
     /// Nyankole (Uganda)
-    let [<Literal>] nynUG = "nyn-UG"
+    [<Literal>]
+    let nynUG = "nyn-UG"
+
     /// Nyankole
-    let [<Literal>] nyn = "nyn"
+    [<Literal>]
+    let nyn = "nyn"
+
     /// Oriya (India)
-    let [<Literal>] orIN = "or-IN"
+    [<Literal>]
+    let orIN = "or-IN"
+
     /// Oriya
-    let [<Literal>] or' = "or"
+    [<Literal>]
+    let or' = "or"
+
     /// Oromo (Ethiopia)
-    let [<Literal>] omET = "om-ET"
+    [<Literal>]
+    let omET = "om-ET"
+
     /// Oromo (Kenya)
-    let [<Literal>] omKE = "om-KE"
+    [<Literal>]
+    let omKE = "om-KE"
+
     /// Oromo
-    let [<Literal>] om = "om"
+    [<Literal>]
+    let om = "om"
+
     /// Pashto (Afghanistan)
-    let [<Literal>] psAF = "ps-AF"
+    [<Literal>]
+    let psAF = "ps-AF"
+
     /// Pashto
-    let [<Literal>] ps = "ps"
+    [<Literal>]
+    let ps = "ps"
+
     /// Persian (Afghanistan)
-    let [<Literal>] faAF = "fa-AF"
+    [<Literal>]
+    let faAF = "fa-AF"
+
     /// Persian (Iran)
-    let [<Literal>] faIR = "fa-IR"
+    [<Literal>]
+    let faIR = "fa-IR"
+
     /// Persian
-    let [<Literal>] fa = "fa"
+    [<Literal>]
+    let fa = "fa"
+
     /// Polish (Poland)
-    let [<Literal>] plPL = "pl-PL"
+    [<Literal>]
+    let plPL = "pl-PL"
+
     /// Polish
-    let [<Literal>] pl = "pl"
+    [<Literal>]
+    let pl = "pl"
+
     /// Portuguese (Brazil)
-    let [<Literal>] ptBR = "pt-BR"
+    [<Literal>]
+    let ptBR = "pt-BR"
+
     /// Portuguese (Guinea-Bissau)
-    let [<Literal>] ptGW = "pt-GW"
+    [<Literal>]
+    let ptGW = "pt-GW"
+
     /// Portuguese (Mozambique)
-    let [<Literal>] ptMZ = "pt-MZ"
+    [<Literal>]
+    let ptMZ = "pt-MZ"
+
     /// Portuguese (Portugal)
-    let [<Literal>] ptPT = "pt-PT"
+    [<Literal>]
+    let ptPT = "pt-PT"
+
     /// Portuguese
-    let [<Literal>] pt = "pt"
+    [<Literal>]
+    let pt = "pt"
+
     /// Punjabi (Arabic)
-    let [<Literal>] paArab = "pa-Arab"
+    [<Literal>]
+    let paArab = "pa-Arab"
+
     /// Punjabi (Arabic, Pakistan)
-    let [<Literal>] paArabPK = "pa-Arab-PK"
+    [<Literal>]
+    let paArabPK = "pa-Arab-PK"
+
     /// Punjabi (Gurmukhi)
-    let [<Literal>] paGuru = "pa-Guru"
+    [<Literal>]
+    let paGuru = "pa-Guru"
+
     /// Punjabi (Gurmukhi, India)
-    let [<Literal>] paGuruIN = "pa-Guru-IN"
+    [<Literal>]
+    let paGuruIN = "pa-Guru-IN"
+
     /// Punjabi
-    let [<Literal>] pa = "pa"
+    [<Literal>]
+    let pa = "pa"
+
     /// Romanian (Moldova)
-    let [<Literal>] roMD = "ro-MD"
+    [<Literal>]
+    let roMD = "ro-MD"
+
     /// Romanian (Romania)
-    let [<Literal>] roRO = "ro-RO"
+    [<Literal>]
+    let roRO = "ro-RO"
+
     /// Romanian
-    let [<Literal>] ro = "ro"
+    [<Literal>]
+    let ro = "ro"
+
     /// Romansh (Switzerland)
-    let [<Literal>] rmCH = "rm-CH"
+    [<Literal>]
+    let rmCH = "rm-CH"
+
     /// Romansh
-    let [<Literal>] rm = "rm"
+    [<Literal>]
+    let rm = "rm"
+
     /// Rombo (Tanzania)
-    let [<Literal>] rofTZ = "rof-TZ"
+    [<Literal>]
+    let rofTZ = "rof-TZ"
+
     /// Rombo
-    let [<Literal>] rof = "rof"
+    [<Literal>]
+    let rof = "rof"
+
     /// Russian (Moldova)
-    let [<Literal>] ruMD = "ru-MD"
+    [<Literal>]
+    let ruMD = "ru-MD"
+
     /// Russian (Russia)
-    let [<Literal>] ruRU = "ru-RU"
+    [<Literal>]
+    let ruRU = "ru-RU"
+
     /// Russian (Ukraine)
-    let [<Literal>] ruUA = "ru-UA"
+    [<Literal>]
+    let ruUA = "ru-UA"
+
     /// Russian
-    let [<Literal>] ru = "ru"
+    [<Literal>]
+    let ru = "ru"
+
     /// Rwa (Tanzania)
-    let [<Literal>] rwkTZ = "rwk-TZ"
+    [<Literal>]
+    let rwkTZ = "rwk-TZ"
+
     /// Rwa
-    let [<Literal>] rwk = "rwk"
+    [<Literal>]
+    let rwk = "rwk"
+
     /// Samburu (Kenya)
-    let [<Literal>] saqKE = "saq-KE"
+    [<Literal>]
+    let saqKE = "saq-KE"
+
     /// Samburu
-    let [<Literal>] saq = "saq"
+    [<Literal>]
+    let saq = "saq"
+
     /// Sango (Central African Republic)
-    let [<Literal>] sgCF = "sg-CF"
+    [<Literal>]
+    let sgCF = "sg-CF"
+
     /// Sango
-    let [<Literal>] sg = "sg"
+    [<Literal>]
+    let sg = "sg"
+
     /// Sena (Mozambique)
-    let [<Literal>] sehMZ = "seh-MZ"
+    [<Literal>]
+    let sehMZ = "seh-MZ"
+
     /// Sena
-    let [<Literal>] seh = "seh"
+    [<Literal>]
+    let seh = "seh"
+
     /// Serbian (Cyrillic)
-    let [<Literal>] srCyrl = "sr-Cyrl"
+    [<Literal>]
+    let srCyrl = "sr-Cyrl"
+
     /// Serbian (Cyrillic, Bosnia and Herzegovina)
-    let [<Literal>] srCyrlBA = "sr-Cyrl-BA"
+    [<Literal>]
+    let srCyrlBA = "sr-Cyrl-BA"
+
     /// Serbian (Cyrillic, Montenegro)
-    let [<Literal>] srCyrlME = "sr-Cyrl-ME"
+    [<Literal>]
+    let srCyrlME = "sr-Cyrl-ME"
+
     /// Serbian (Cyrillic, Serbia)
-    let [<Literal>] srCyrlRS = "sr-Cyrl-RS"
+    [<Literal>]
+    let srCyrlRS = "sr-Cyrl-RS"
+
     /// Serbian (Latin)
-    let [<Literal>] srLatn = "sr-Latn"
+    [<Literal>]
+    let srLatn = "sr-Latn"
+
     /// Serbian (Latin, Bosnia and Herzegovina)
-    let [<Literal>] srLatnBA = "sr-Latn-BA"
+    [<Literal>]
+    let srLatnBA = "sr-Latn-BA"
+
     /// Serbian (Latin, Montenegro)
-    let [<Literal>] srLatnME = "sr-Latn-ME"
+    [<Literal>]
+    let srLatnME = "sr-Latn-ME"
+
     /// Serbian (Latin, Serbia)
-    let [<Literal>] srLatnRS = "sr-Latn-RS"
+    [<Literal>]
+    let srLatnRS = "sr-Latn-RS"
+
     /// Serbian
-    let [<Literal>] sr = "sr"
+    [<Literal>]
+    let sr = "sr"
+
     /// Shona (Zimbabwe)
-    let [<Literal>] snZW = "sn-ZW"
+    [<Literal>]
+    let snZW = "sn-ZW"
+
     /// Shona
-    let [<Literal>] sn = "sn"
+    [<Literal>]
+    let sn = "sn"
+
     /// Sichuan Yi (China)
-    let [<Literal>] iiCN = "ii-CN"
+    [<Literal>]
+    let iiCN = "ii-CN"
+
     /// Sichuan Yi
-    let [<Literal>] ii = "ii"
+    [<Literal>]
+    let ii = "ii"
+
     /// Sinhala (Sri Lanka)
-    let [<Literal>] siLK = "si-LK"
+    [<Literal>]
+    let siLK = "si-LK"
+
     /// Sinhala
-    let [<Literal>] si = "si"
+    [<Literal>]
+    let si = "si"
+
     /// Slovak (Slovakia)
-    let [<Literal>] skSK = "sk-SK"
+    [<Literal>]
+    let skSK = "sk-SK"
+
     /// Slovak
-    let [<Literal>] sk = "sk"
+    [<Literal>]
+    let sk = "sk"
+
     /// Slovenian (Slovenia)
-    let [<Literal>] slSI = "sl-SI"
+    [<Literal>]
+    let slSI = "sl-SI"
+
     /// Slovenian
-    let [<Literal>] sl = "sl"
+    [<Literal>]
+    let sl = "sl"
+
     /// Soga (Uganda)
-    let [<Literal>] xogUG = "xog-UG"
+    [<Literal>]
+    let xogUG = "xog-UG"
+
     /// Soga
-    let [<Literal>] xog = "xog"
+    [<Literal>]
+    let xog = "xog"
+
     /// Somali (Djibouti)
-    let [<Literal>] soDJ = "so-DJ"
+    [<Literal>]
+    let soDJ = "so-DJ"
+
     /// Somali (Ethiopia)
-    let [<Literal>] soET = "so-ET"
+    [<Literal>]
+    let soET = "so-ET"
+
     /// Somali (Kenya)
-    let [<Literal>] soKE = "so-KE"
+    [<Literal>]
+    let soKE = "so-KE"
+
     /// Somali (Somalia)
-    let [<Literal>] soSO = "so-SO"
+    [<Literal>]
+    let soSO = "so-SO"
+
     /// Somali
-    let [<Literal>] so = "so"
+    [<Literal>]
+    let so = "so"
+
     /// Spanish (Argentina)
-    let [<Literal>] esAR = "es-AR"
+    [<Literal>]
+    let esAR = "es-AR"
+
     /// Spanish (Bolivia)
-    let [<Literal>] esBO = "es-BO"
+    [<Literal>]
+    let esBO = "es-BO"
+
     /// Spanish (Chile)
-    let [<Literal>] esCL = "es-CL"
+    [<Literal>]
+    let esCL = "es-CL"
+
     /// Spanish (Colombia)
-    let [<Literal>] esCO = "es-CO"
+    [<Literal>]
+    let esCO = "es-CO"
+
     /// Spanish (Costa Rica)
-    let [<Literal>] esCR = "es-CR"
+    [<Literal>]
+    let esCR = "es-CR"
+
     /// Spanish (Dominican Republic)
-    let [<Literal>] esDO = "es-DO"
+    [<Literal>]
+    let esDO = "es-DO"
+
     /// Spanish (Ecuador)
-    let [<Literal>] esEC = "es-EC"
+    [<Literal>]
+    let esEC = "es-EC"
+
     /// Spanish (El Salvador)
-    let [<Literal>] esSV = "es-SV"
+    [<Literal>]
+    let esSV = "es-SV"
+
     /// Spanish (Equatorial Guinea)
-    let [<Literal>] esGQ = "es-GQ"
+    [<Literal>]
+    let esGQ = "es-GQ"
+
     /// Spanish (Guatemala)
-    let [<Literal>] esGT = "es-GT"
+    [<Literal>]
+    let esGT = "es-GT"
+
     /// Spanish (Honduras)
-    let [<Literal>] esHN = "es-HN"
+    [<Literal>]
+    let esHN = "es-HN"
+
     /// Spanish (Latin America)
-    let [<Literal>] es419 = "es-419"
+    [<Literal>]
+    let es419 = "es-419"
+
     /// Spanish (Mexico)
-    let [<Literal>] esMX = "es-MX"
+    [<Literal>]
+    let esMX = "es-MX"
+
     /// Spanish (Nicaragua)
-    let [<Literal>] esNI = "es-NI"
+    [<Literal>]
+    let esNI = "es-NI"
+
     /// Spanish (Panama)
-    let [<Literal>] esPA = "es-PA"
+    [<Literal>]
+    let esPA = "es-PA"
+
     /// Spanish (Paraguay)
-    let [<Literal>] esPY = "es-PY"
+    [<Literal>]
+    let esPY = "es-PY"
+
     /// Spanish (Peru)
-    let [<Literal>] esPE = "es-PE"
+    [<Literal>]
+    let esPE = "es-PE"
+
     /// Spanish (Puerto Rico)
-    let [<Literal>] esPR = "es-PR"
+    [<Literal>]
+    let esPR = "es-PR"
+
     /// Spanish (Spain)
-    let [<Literal>] esES = "es-ES"
+    [<Literal>]
+    let esES = "es-ES"
+
     /// Spanish (United States)
-    let [<Literal>] esUS = "es-US"
+    [<Literal>]
+    let esUS = "es-US"
+
     /// Spanish (Uruguay)
-    let [<Literal>] esUY = "es-UY"
+    [<Literal>]
+    let esUY = "es-UY"
+
     /// Spanish (Venezuela)
-    let [<Literal>] esVE = "es-VE"
+    [<Literal>]
+    let esVE = "es-VE"
+
     /// Spanish
-    let [<Literal>] es = "es"
+    [<Literal>]
+    let es = "es"
+
     /// Swahili (Kenya)
-    let [<Literal>] swKE = "sw-KE"
+    [<Literal>]
+    let swKE = "sw-KE"
+
     /// Swahili (Tanzania)
-    let [<Literal>] swTZ = "sw-TZ"
+    [<Literal>]
+    let swTZ = "sw-TZ"
+
     /// Swahili
-    let [<Literal>] sw = "sw"
+    [<Literal>]
+    let sw = "sw"
+
     /// Swedish (Finland)
-    let [<Literal>] svFI = "sv-FI"
+    [<Literal>]
+    let svFI = "sv-FI"
+
     /// Swedish (Sweden)
-    let [<Literal>] svSE = "sv-SE"
+    [<Literal>]
+    let svSE = "sv-SE"
+
     /// Swedish
-    let [<Literal>] sv = "sv"
+    [<Literal>]
+    let sv = "sv"
+
     /// Swiss German (Switzerland)
-    let [<Literal>] gswCH = "gsw-CH"
+    [<Literal>]
+    let gswCH = "gsw-CH"
+
     /// Swiss German
-    let [<Literal>] gsw = "gsw"
+    [<Literal>]
+    let gsw = "gsw"
+
     /// Tachelhit (Latin)
-    let [<Literal>] shiLatn = "shi-Latn"
+    [<Literal>]
+    let shiLatn = "shi-Latn"
+
     /// Tachelhit (Latin, Morocco)
-    let [<Literal>] shiLatnMA = "shi-Latn-MA"
+    [<Literal>]
+    let shiLatnMA = "shi-Latn-MA"
+
     /// Tachelhit (Tifinagh)
-    let [<Literal>] shiTfng = "shi-Tfng"
+    [<Literal>]
+    let shiTfng = "shi-Tfng"
+
     /// Tachelhit (Tifinagh, Morocco)
-    let [<Literal>] shiTfngMA = "shi-Tfng-MA"
+    [<Literal>]
+    let shiTfngMA = "shi-Tfng-MA"
+
     /// Tachelhit
-    let [<Literal>] shi = "shi"
+    [<Literal>]
+    let shi = "shi"
+
     /// Taita (Kenya)
-    let [<Literal>] davKE = "dav-KE"
+    [<Literal>]
+    let davKE = "dav-KE"
+
     /// Taita
-    let [<Literal>] dav = "dav"
+    [<Literal>]
+    let dav = "dav"
+
     /// Tamil (India)
-    let [<Literal>] taIN = "ta-IN"
+    [<Literal>]
+    let taIN = "ta-IN"
+
     /// Tamil (Sri Lanka)
-    let [<Literal>] taLK = "ta-LK"
+    [<Literal>]
+    let taLK = "ta-LK"
+
     /// Tamil
-    let [<Literal>] ta = "ta"
+    [<Literal>]
+    let ta = "ta"
+
     /// Telugu (India)
-    let [<Literal>] teIN = "te-IN"
+    [<Literal>]
+    let teIN = "te-IN"
+
     /// Telugu
-    let [<Literal>] te = "te"
+    [<Literal>]
+    let te = "te"
+
     /// Teso (Kenya)
-    let [<Literal>] teoKE = "teo-KE"
+    [<Literal>]
+    let teoKE = "teo-KE"
+
     /// Teso (Uganda)
-    let [<Literal>] teoUG = "teo-UG"
+    [<Literal>]
+    let teoUG = "teo-UG"
+
     /// Teso
-    let [<Literal>] teo = "teo"
+    [<Literal>]
+    let teo = "teo"
+
     /// Thai (Thailand)
-    let [<Literal>] thTH = "th-TH"
+    [<Literal>]
+    let thTH = "th-TH"
+
     /// Thai
-    let [<Literal>] th = "th"
+    [<Literal>]
+    let th = "th"
+
     /// Tibetan (China)
-    let [<Literal>] boCN = "bo-CN"
+    [<Literal>]
+    let boCN = "bo-CN"
+
     /// Tibetan (India)
-    let [<Literal>] boIN = "bo-IN"
+    [<Literal>]
+    let boIN = "bo-IN"
+
     /// Tibetan
-    let [<Literal>] bo = "bo"
+    [<Literal>]
+    let bo = "bo"
+
     /// Tigrinya (Eritrea)
-    let [<Literal>] tiER = "ti-ER"
+    [<Literal>]
+    let tiER = "ti-ER"
+
     /// Tigrinya (Ethiopia)
-    let [<Literal>] tiET = "ti-ET"
+    [<Literal>]
+    let tiET = "ti-ET"
+
     /// Tigrinya
-    let [<Literal>] ti = "ti"
+    [<Literal>]
+    let ti = "ti"
+
     /// Tonga (Tonga)
-    let [<Literal>] toTO = "to-TO"
+    [<Literal>]
+    let toTO = "to-TO"
+
     /// Tonga
-    let [<Literal>] to' = "to"
+    [<Literal>]
+    let to' = "to"
+
     /// Turkish (Turkey)
-    let [<Literal>] trTR = "tr-TR"
+    [<Literal>]
+    let trTR = "tr-TR"
+
     /// Turkish
-    let [<Literal>] tr = "tr"
+    [<Literal>]
+    let tr = "tr"
+
     /// Ukrainian (Ukraine)
-    let [<Literal>] ukUA = "uk-UA"
+    [<Literal>]
+    let ukUA = "uk-UA"
+
     /// Ukrainian
-    let [<Literal>] uk = "uk"
+    [<Literal>]
+    let uk = "uk"
+
     /// Urdu (India)
-    let [<Literal>] urIN = "ur-IN"
+    [<Literal>]
+    let urIN = "ur-IN"
+
     /// Urdu (Pakistan)
-    let [<Literal>] urPK = "ur-PK"
+    [<Literal>]
+    let urPK = "ur-PK"
+
     /// Urdu
-    let [<Literal>] ur = "ur"
+    [<Literal>]
+    let ur = "ur"
+
     /// Uzbek (Arabic)
-    let [<Literal>] uzArab = "uz-Arab"
+    [<Literal>]
+    let uzArab = "uz-Arab"
+
     /// Uzbek (Arabic, Afghanistan)
-    let [<Literal>] uzArabAF = "uz-Arab-AF"
+    [<Literal>]
+    let uzArabAF = "uz-Arab-AF"
+
     /// Uzbek (Cyrillic)
-    let [<Literal>] uzCyrl = "uz-Cyrl"
+    [<Literal>]
+    let uzCyrl = "uz-Cyrl"
+
     /// Uzbek (Cyrillic, Uzbekistan)
-    let [<Literal>] uzCyrlUZ = "uz-Cyrl-UZ"
+    [<Literal>]
+    let uzCyrlUZ = "uz-Cyrl-UZ"
+
     /// Uzbek (Latin)
-    let [<Literal>] uzLatn = "uz-Latn"
+    [<Literal>]
+    let uzLatn = "uz-Latn"
+
     /// Uzbek (Latin, Uzbekistan)
-    let [<Literal>] uzLatnUZ = "uz-Latn-UZ"
+    [<Literal>]
+    let uzLatnUZ = "uz-Latn-UZ"
+
     /// Uzbek
-    let [<Literal>] uz = "uz"
+    [<Literal>]
+    let uz = "uz"
+
     /// Vietnamese (Vietnam)
-    let [<Literal>] viVN = "vi-VN"
+    [<Literal>]
+    let viVN = "vi-VN"
+
     /// Vietnamese
-    let [<Literal>] vi = "vi"
+    [<Literal>]
+    let vi = "vi"
+
     /// Vunjo (Tanzania)
-    let [<Literal>] vunTZ = "vun-TZ"
+    [<Literal>]
+    let vunTZ = "vun-TZ"
+
     /// Vunjo
-    let [<Literal>] vun = "vun"
+    [<Literal>]
+    let vun = "vun"
+
     /// Welsh (United Kingdom)
-    let [<Literal>] cyGB = "cy-GB"
+    [<Literal>]
+    let cyGB = "cy-GB"
+
     /// Welsh
-    let [<Literal>] cy = "cy"
+    [<Literal>]
+    let cy = "cy"
+
     /// Yoruba (Nigeria)
-    let [<Literal>] yoNG = "yo-NG"
+    [<Literal>]
+    let yoNG = "yo-NG"
+
     /// Yoruba
-    let [<Literal>] yo = "yo"
+    [<Literal>]
+    let yo = "yo"
+
     /// Zulu (South Africa)
-    let [<Literal>] zuZA = "zu-ZA"
+    [<Literal>]
+    let zuZA = "zu-ZA"
+
     /// Zulu
-    let [<Literal>] zu = "zu"
+    [<Literal>]
+    let zu = "zu"

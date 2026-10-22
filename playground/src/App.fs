@@ -7,7 +7,4 @@ open Fable.Core.JsInterop
 open Shared
 
 [<ReactComponent>]
-let App() =
-    Html.div [
-        Components.Main()
-    ]
+let App () = Html.div [ Components.Main() ]

@@ -4,12 +4,12 @@ open Fable.Core
 open Fable.Core.JS
 
 type PointerEventsCheckLevel =
-    | Never         = 0
-    | EachTarget    = 1
-    | EachApiCall   = 2
-    | EachTrigger   = 4
+    | Never = 0
+    | EachTarget = 1
+    | EachApiCall = 2
+    | EachTrigger = 4
 
-/// 
+///
 /// ```ts
 /// export const defaultKeyMap: pointerKey[] = [
 ///   {name: 'MouseLeft', pointerType: 'mouse', button: 'primary'},
@@ -25,7 +25,8 @@ type PointerKey = obj
 [<AllowNullLiteral>]
 [<Global>]
 type IUserEventOptions
-    [<ParamObject; Emit("$0")>] (
+    [<ParamObject; Emit("$0")>]
+    (
         ?advanceTimers: unit -> Promise<unit>,
         ?applyAccept: bool,
         ?autoModify: bool,
@@ -39,31 +40,35 @@ type IUserEventOptions
         ?skipHover: bool,
         ?writeToClipboard: bool
     ) =
-    member val advanceTimers: unit -> Promise<unit> = advanceTimers |> Option.defaultValue (fun () -> JS.Constructors.Promise.resolve()) with get, set
+    member val advanceTimers: unit -> Promise<unit> =
+        advanceTimers
+        |> Option.defaultValue (fun () -> JS.Constructors.Promise.resolve ()) with get, set
+
     member val applyAccept: bool = applyAccept |> Option.defaultValue true with get, set
     member val autoModify: bool = autoModify |> Option.defaultValue false with get, set
     member val delay: int = delay |> Option.defaultValue 0 with get, set
     member val document: Browser.Types.Document = document |> Option.defaultValue Browser.Dom.document with get, set
     member val keyboardMap: obj = keyboardMap |> Option.defaultValue null with get, set
-    member val pointerEventsCheck: PointerEventsCheckLevel = pointerEventsCheck |> Option.defaultValue PointerEventsCheckLevel.EachApiCall with get, set
-    member val pointerMap: ResizeArray<PointerKey> = pointerMap |> Option.defaultValue (ResizeArray<PointerKey>()) with get, set
+
+    member val pointerEventsCheck: PointerEventsCheckLevel =
+        pointerEventsCheck |> Option.defaultValue PointerEventsCheckLevel.EachApiCall with get, set
+
+    member val pointerMap: ResizeArray<PointerKey> =
+        pointerMap |> Option.defaultValue (ResizeArray<PointerKey>()) with get, set
+
     member val skipAutoClose: bool = skipAutoClose |> Option.defaultValue false with get
     member val skipClick: bool = skipClick |> Option.defaultValue false with get, set
     member val skipHover: bool = skipHover |> Option.defaultValue false with get, set
     /// `default` when calling the APIs directly: `false`
-    /// 
+    ///
     /// `default` when calling the APIs on an instance from setup(): `true`
     member val writeToClipboard: bool = writeToClipboard |> Option.defaultValue false with get
 
 [<AllowNullLiteral>]
 [<Global>]
 type ITypeOptions
-    [<ParamObject; Emit("$0")>] (
-        ?skipClick: bool,
-        ?skipAutoClose: bool,
-        ?initialSelectionStart: int,
-        ?initialSelectionEnd: int
-    ) =
+    [<ParamObject; Emit("$0")>]
+    (?skipClick: bool, ?skipAutoClose: bool, ?initialSelectionStart: int, ?initialSelectionEnd: int) =
     member val skipClick: bool = skipClick |> Option.defaultValue false with get, set
     member val skipAutoClose: bool = skipAutoClose |> Option.defaultValue false with get
     member val initialSelectionStart: int = initialSelectionStart |> Option.defaultValue 0 with get, set
@@ -103,26 +108,37 @@ type IUserEvent =
     abstract member paste: string * ?options: DirectOptions -> Promise<unit>
 
     abstract member clear: element: Browser.Types.HTMLElement -> Promise<unit>
-    abstract member selectOptions: element: Browser.Types.HTMLElement * values: Browser.Types.HTMLElement -> Promise<unit>
-    abstract member selectOptions: element: Browser.Types.HTMLElement * values: ResizeArray<Browser.Types.HTMLElement> -> Promise<unit>
+
+    abstract member selectOptions:
+        element: Browser.Types.HTMLElement * values: Browser.Types.HTMLElement -> Promise<unit>
+
+    abstract member selectOptions:
+        element: Browser.Types.HTMLElement * values: ResizeArray<Browser.Types.HTMLElement> -> Promise<unit>
+
     abstract member selectOptions: element: Browser.Types.HTMLElement * values: string -> Promise<unit>
     abstract member selectOptions: element: Browser.Types.HTMLElement * values: ResizeArray<string> -> Promise<unit>
-    abstract member deselectOptions: element: Browser.Types.HTMLElement * values: Browser.Types.HTMLElement -> Promise<unit>
-    abstract member deselectOptions: element: Browser.Types.HTMLElement * values: ResizeArray<Browser.Types.HTMLElement> -> Promise<unit>
+
+    abstract member deselectOptions:
+        element: Browser.Types.HTMLElement * values: Browser.Types.HTMLElement -> Promise<unit>
+
+    abstract member deselectOptions:
+        element: Browser.Types.HTMLElement * values: ResizeArray<Browser.Types.HTMLElement> -> Promise<unit>
+
     abstract member deselectOptions: element: Browser.Types.HTMLElement * values: string -> Promise<unit>
     abstract member deselectOptions: element: Browser.Types.HTMLElement * values: ResizeArray<string> -> Promise<unit>
 
-    abstract member ``type``: element: Browser.Types.HTMLElement * text: string * ?options: ITypeOptions -> Promise<unit>
+    abstract member ``type``:
+        element: Browser.Types.HTMLElement * text: string * ?options: ITypeOptions -> Promise<unit>
 
     abstract member upload: element: Browser.Types.HTMLElement * file: Browser.Types.File -> Promise<unit>
     abstract member upload: element: Browser.Types.HTMLElement * file: ResizeArray<Browser.Types.File> -> Promise<unit>
 
     abstract member click: element: Browser.Types.HTMLElement * ?options: DirectOptions -> Promise<unit>
     abstract member dblClick: element: Browser.Types.HTMLElement * ?options: DirectOptions -> Promise<unit>
-    abstract member tripleClick: element: Browser.Types.HTMLElement * ?options: DirectOptions-> Promise<unit>
+    abstract member tripleClick: element: Browser.Types.HTMLElement * ?options: DirectOptions -> Promise<unit>
     abstract member hover: element: Browser.Types.HTMLElement * ?options: DirectOptions -> Promise<unit>
     abstract member unhover: element: Browser.Types.HTMLElement * ?options: DirectOptions -> Promise<unit>
-    abstract member tab: ?options: {|shift: bool|} -> Promise<unit>
+    abstract member tab: ?options: {| shift: bool |} -> Promise<unit>
 
 [<Erase; Mangle(false)>]
 module UserEvent =

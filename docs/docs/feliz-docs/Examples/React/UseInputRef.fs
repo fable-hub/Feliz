@@ -3,9 +3,10 @@ module Example.UseInputRef
 open Feliz
 
 [<ReactComponent(true)>]
-let UseRef() =
-    let inputRef = React.useInputRef()
-    let value, setValue = React.useState("")
+let UseRef () =
+    let inputRef = React.useInputRef ()
+    let value, setValue = React.useState ("")
+
     Html.div [
         Html.input [
             prop.ref inputRef
@@ -18,7 +19,7 @@ let UseRef() =
             prop.text "Focus input"
             prop.onClick (fun _ ->
                 match inputRef.current with
-                | Some el -> el.focus()
+                | Some el -> el.focus ()
                 | None -> ()
             )
         ]

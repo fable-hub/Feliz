@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Feliz.CompilerPlugin/Feliz.CompilerPlugins.Tests.fsproj" />
+  </Folder>
+  <Project Path="src/Feliz.CompilerPlugins/Feliz.CompilerPlugins.fsproj" />
+  <Project Path="src/Feliz.Delay/Feliz.Delay.fsproj" />
+  <Project Path="src/Feliz.Kawaii/Feliz.Kawaii.fsproj" />
+  <Project Path="src/Feliz.Listeners/Feliz.Listeners.fsproj" />
+  <Project Path="src/Feliz.Markdown/Feliz.Markdown.fsproj" />
+  <Project Path="src/Feliz.PigeonMaps/Feliz.PigeonMaps.fsproj" />
+  <Project Path="src/Feliz.Popover/Feliz.Popover.fsproj" />
+  <Project Path="src/Feliz.Recharts/Feliz.Recharts.fsproj" />
+  <Project Path="src/Feliz.RoughViz/Feliz.RoughViz.fsproj" />
+  <Project Path="src/Feliz.SelectSearch/Feliz.SelectSearch.fsproj" />
+  <Project Path="src/Feliz.Template/Feliz.Template.fsproj" />
+  <Project Path="src/Feliz.UseDeferred/Feliz.UseDeferred.fsproj" />
+  <Project Path="src/Feliz.UseElmish/Feliz.UseElmish.fsproj" />
+  <Project Path="src/Feliz.UseMediaQuery/Feliz.UseMediaQuery.fsproj" />
+  <Project Path="src/Feliz/Feliz.fsproj" />
+  <Project Path="src/Vitest.JestDom/Vitest.JestDom.fsproj" />
+  <Project Path="src/Vitest.ReactTestingLibrary/Vitest.ReactTestingLibrary.fsproj" />
+  <Project Path="src/Vitest.UserEvent/Vitest.UserEvent.fsproj" />
+  <Project Path="src/Vitest/Vitest.fsproj" />
+</Solution>

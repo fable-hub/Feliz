@@ -21,7 +21,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         [<ReactComponent>]
         static member EffectWithIDisposable(effect: unit -> unit, disposeEffect: unit -> unit) =
@@ -34,7 +34,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         /// #714
         [<ReactComponent>]
@@ -43,7 +43,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
     type UseLayoutEffectOnce =
 
@@ -58,7 +58,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         [<ReactComponent>]
         static member EffectWithIDisposable(effect: unit -> unit, disposeEffect: unit -> unit) =
@@ -71,7 +71,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
         /// #714
         [<ReactComponent>]
@@ -80,7 +80,7 @@ module Components =
 
             Html.div [
 
-            ]
+                ]
 
 describe "useLayoutEffect"
 <| fun _ ->

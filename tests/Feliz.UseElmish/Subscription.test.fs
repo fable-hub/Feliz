@@ -35,8 +35,9 @@ module Subscriber =
     let subscribeToTimer dispatch =
         let subscriptionId = setInterval (fun _ -> dispatch SubscriberTick) 100
 
-        { new System.IDisposable with
-            member _.Dispose() = clearInterval subscriptionId
+        {
+            new System.IDisposable with
+                member _.Dispose() = clearInterval subscriptionId
         }
 
     let subscribe _model = [ [ "timer" ], subscribeToTimer ]
@@ -77,11 +78,11 @@ describe "UseElmish with subscriptions"
         do!
             RTL.waitFor (fun () ->
                 let ticks = render.getByTestId("subscriber-ticks").textContent |> int
-                expect(ticks >= 3).toBeTruthy () //"Subscriber should have ticked at least 3 times"
+                expect(ticks >= 3).toBeTruthy() //"Subscriber should have ticked at least 3 times"
             )
 
         // Click increment button
-        render.getByTestId("increment").click ()
+        render.getByTestId("increment").click()
 
         do!
             RTL.waitFor (fun () -> expect(render.getByTestId ("count")).toHaveTextContent "1" //"Count should have been incremented"

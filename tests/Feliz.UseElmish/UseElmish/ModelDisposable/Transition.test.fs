@@ -105,11 +105,7 @@ describe "UseElmish disposable transition"
 
         do! userEvent.click (render.getByTestId TestIds.ToggleChild)
 
-        do!
-            RTL.waitFor (fun () ->
-                expect(render.queryByTestId TestIds.PromoteDisposable |> Option.isNone).toBeTruthy ()
-            )
+        do! RTL.waitFor (fun () -> expect(render.queryByTestId TestIds.PromoteDisposable |> Option.isNone).toBeTruthy())
 
         expect(render.getByTestId TestIds.DisposeCount).toHaveTextContent "1"
     }
-

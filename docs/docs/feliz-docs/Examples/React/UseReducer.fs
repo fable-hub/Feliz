@@ -2,9 +2,11 @@ module Example.UseReducer
 
 open Feliz
 
-type State = { Count : int }
+type State = { Count: int }
 
-type Msg = Increment | Decrement
+type Msg =
+    | Increment
+    | Decrement
 
 let initialState = { Count = 0 }
 
@@ -15,8 +17,9 @@ let update (state: State) (msg: Msg) =
 
 
 [<ReactComponent(true)>]
-let UseReducer() =
-    let (state, dispatch) = React.useReducer(update, initialState)
+let UseReducer () =
+    let (state, dispatch) = React.useReducer (update, initialState)
+
     Html.div [
         Html.p [ prop.text $"Count: {state.Count}" ]
         Html.button [
@@ -27,5 +30,7 @@ let UseReducer() =
             prop.text "-"
             prop.onClick (fun _ -> dispatch Decrement)
         ]
-        Html.p [ prop.text "useReducer is useful for complex state logic." ]
+        Html.p [
+            prop.text "useReducer is useful for complex state logic."
+        ]
     ]

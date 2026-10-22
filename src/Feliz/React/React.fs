@@ -94,23 +94,23 @@ type React =
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline Fragment(xs: seq<ReactElement>) =
-        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), children = xs)
+        ReactLegacy.createElement (unbox<ReactNode>(import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline Fragment(xs: ReactElement) =
-        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), children = xs)
+        ReactLegacy.createElement (unbox<ReactNode>(import "Fragment" "react"), children = xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: int, xs: seq<ReactElement>) = // Fable.React.Helpers.fragment [ !!("key", key) ] xs
-        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key |}, xs)
+        ReactLegacy.createElement (unbox<ReactNode>(import "Fragment" "react"), {| key = key |}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: string, xs: seq<ReactElement>) =
-        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key |}, xs)
+        ReactLegacy.createElement (unbox<ReactNode>(import "Fragment" "react"), {| key = key |}, xs)
 
     /// The `React.fragment` component lets you return multiple elements in your `render()` method without creating an additional DOM element.
     static member inline KeyedFragment(key: System.Guid, xs: seq<ReactElement>) =
-        ReactLegacy.createElement (unbox<ReactNode> (import "Fragment" "react"), {| key = key.ToString() |}, xs)
+        ReactLegacy.createElement (unbox<ReactNode>(import "Fragment" "react"), {| key = key.ToString() |}, xs)
 
     /// Placeholder empty React element to be used when importing external React components with the `[<ReactComponent>]` attribute.
     static member inline Imported() : ReactElement = Fable.Core.JS.undefined
@@ -538,7 +538,7 @@ useLayoutEffect(() => {
     /// <param name='children'>The elements that will be rendered with additional
     /// checks and warnings.</param>
     static member StrictMode(children: seq<ReactElement>) : ReactElement =
-        ReactLegacy.createElement (unbox<ReactNode> (import "StrictMode" "react"), children)
+        ReactLegacy.createElement (unbox<ReactNode>(import "StrictMode" "react"), children)
 
     /// <summary>
     /// Lets you define a component that is loaded dynamically. Which helps with code splitting.
@@ -626,7 +626,7 @@ useLayoutEffect(() => {
     /// <param name='fallback'>The element that will be rendered while the children are loading.</param>
     static member inline Suspense(children: seq<ReactElement>, ?fallback: ReactElement) =
         ReactLegacy.createElement (
-            unbox<ReactNode> (import "Suspense" "react"),
+            unbox<ReactNode>(import "Suspense" "react"),
             props = {| fallback = fallback |},
             children = children
         )

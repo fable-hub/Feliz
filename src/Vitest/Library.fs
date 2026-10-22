@@ -218,6 +218,15 @@ type SuiteAPI =
     [<Emit("$0.shuffle")>]
     abstract member Shuffle: SuiteAPI
 
+/// A parameterized test created by `test.for`. Array cases remain one argument.
+type TestForAPI<'a> =
+    [<Emit("$0($1,$2)")>]
+    abstract member run: name: string * fn: ('a -> unit) -> unit
+
+    [<Emit("$0($1,$2)")>]
+    abstract member run: name: string * fn: ('a -> Promise<unit>) -> unit
+
+
 type TestAPI =
     abstract member skip: name: string * fn: (unit -> unit) -> unit
 
@@ -253,6 +262,9 @@ type TestAPI =
 
     [<Emit("$0.sequential")>]
     abstract member Sequential: TestAPI
+
+    [<Emit("$0.for($1)")>]
+    abstract member forCases<'a> : cases: 'a[] -> TestForAPI<'a>
 
 type TestContext =
     abstract member task: Task
@@ -337,6 +349,7 @@ type AccessType =
 type Vi =
     abstract member mock: path: string * options: obj -> obj
     abstract member mockObject: value: 'a -> 'a
+    abstract member fn<'a, 'b> : unit -> ('a -> 'b)
     abstract member fn: ('a -> 'b) -> ('a -> 'b)
     abstract member spyOn: target: obj * methodName: string -> obj
     abstract member spyOn: target: obj * methodName: string * accessType: AccessType -> obj
