@@ -80,6 +80,25 @@ module internal ReactComponentHelpers =
                      _) as e -> Some e
             | _ -> None
 
+        let private (|IsComponentCall|_|) =
+            function
+            | Call(IsCreateElement _, info, _, r) -> Some(info, r)
+            | Call(_, info, _, r) when List.contains "jsx" info.Tags -> Some(info, r)
+            | _ -> None
+
+        let private (|IsPropsExpression|_|) =
+            function
+            | ObjectExpr(properties, _, _) -> properties |> List.map (fun p -> p.Name, p.Body) |> Some
+            | Value(NewArray(ArrayValues props, _, _), _) ->
+                props
+                |> List.choose (
+                    function
+                    | Value(NewTuple([ Value(StringConstant name, _); value ], _), _) -> Some(name, value)
+                    | _ -> None
+                )
+                |> Some
+            | _ -> None
+
         let rec private (|InnerDeclaredTypeFullName|_|) (type': Type) =
             match type' with
             | LambdaType(_, InnerDeclaredTypeFullName returnType) -> Some(returnType)
@@ -92,11 +111,6 @@ module internal ReactComponentHelpers =
                 Some(selector, fullName)
             | _ -> None
 
-        let private (|IsObjectExpression|_|) =
-            function
-            | ObjectExpr(properties, _, _) -> Some properties
-            | _ -> None
-
         let rec private tryGetSourceArgName (arg: Expr) =
             match arg with
             | IdentExpr({ Name = name; Range = range }) -> Some(name, range)
@@ -107,10 +121,10 @@ module internal ReactComponentHelpers =
         let verify (body: Expr) (lazyComponentName) (compilerInfo: PluginHelper) : unit =
             let rec loopAst (body: Expr) : unit =
                 match body with
-                | Call(IsCreateElement _, info, _, _) ->
+                | IsComponentCall(info, _) ->
 
                     match info.Args with
-                    | IsReactElementImport(sourceComponentName, returnTypeFullName) :: IsObjectExpression properties :: _ ->
+                    | IsReactElementImport(sourceComponentName, returnTypeFullName) :: IsPropsExpression properties :: _ ->
                         if returnTypeFullName.EndsWith "ReactElement" |> not then
                             let errorMsg =
                                 String.concat "" [
@@ -130,12 +144,12 @@ module internal ReactComponentHelpers =
 
                         let lazyArgList =
                             properties
-                            |> List.choose (fun property ->
+                            |> List.choose (fun (propertyName, propertyValue) ->
 
-                                match tryGetSourceArgName property.Body with
+                                match tryGetSourceArgName propertyValue with
                                 | Some(argName, range) ->
                                     // returns sourceName, lazyName and range of the argument.
-                                    Some(property.Name, argName, range)
+                                    Some(propertyName, argName, range)
                                 | None -> None
                             )
 
@@ -183,7 +197,7 @@ module internal ReactComponentHelpers =
 
             let rec loopAst (body: Expr) =
                 match body with
-                | Call(IsCreateElement _, info, _, r) ->
+                | IsComponentCall(info, r) ->
 
                     let relativeImport =
                         IdentExpr {
@@ -197,7 +211,7 @@ module internal ReactComponentHelpers =
                         }
 
                     let pathInfo = getPathInfo info.Args compilerInfo
-                    let info = { info with Args = pathInfo }
+                    let info = { info with Args = pathInfo; Tags = [] }
 
                     let t =
                         DeclaredType(
@@ -388,25 +402,31 @@ type ReactComponentAttribute
                 // F# Component { Value = 1 }
                 // JSX <Component Value={1} />
                 // JS createElement(Component, { Value: 1 })
-                if AstUtils.recordHasField "Key" compiler info.Args[0].Type then
-                    // When the key property is upper-case (which is common in record fields)
-                    // then we should rewrite it
-                    let modifiedRecord =
+                let props =
+                    if AstUtils.recordHasField "Key" compiler info.Args[0].Type then
+                        // When the key property is upper-case (which is common in record fields)
+                        // then we should rewrite it
                         AstUtils.emitJs "(($value) => { $value.key = $value.Key; return $value; })($0)" [ info.Args[0] ]
+                    else
+                        info.Args[0]
 
-                    AstUtils.createElement reactElType [ reactComponent; modifiedRecord ]
+                if AstUtils.isJsxOutput compiler then
+                    AstUtils.jsxElement compiler reactElType reactComponent [ AstUtils.jsxSpread props ]
                 else
-                    AstUtils.createElement reactElType [ reactComponent; info.Args[0] ]
+                    AstUtils.createElement reactElType [ reactComponent; props ]
             elif info.Args.Length = 1 && info.Args[0].Type = Type.Unit then
                 // F# Component()
                 // JSX <Component />
                 // JS createElement(Component, null)
-                AstUtils.createElement reactElType [ reactComponent; AstUtils.nullValue ]
+                if AstUtils.isJsxOutput compiler then
+                    AstUtils.jsxElement compiler reactElType reactComponent []
+                else
+                    AstUtils.createElement reactElType [ reactComponent; AstUtils.nullValue ]
             else
                 let mutable keyBinding = None
                 let mutable tupleArgBinding = 0
 
-                let propsObj =
+                let props =
                     List.zip (List.take info.Args.Length membArgs) info.Args
                     |> List.collect (fun (arg, expr) ->
                         match arg.Name, expr with
@@ -422,9 +442,14 @@ type ReactComponentAttribute
                             name, expr
                           ]
                     ) // if input is a single tupled argument, we don't have names
-                    |> AstUtils.objExpr
 
-                let reactEl = AstUtils.createElement reactElType [ reactComponent; propsObj ]
+                let reactEl =
+                    if AstUtils.isJsxOutput compiler then
+                        props
+                        |> List.map (fun (name, value) -> AstUtils.jsxProp name value)
+                        |> AstUtils.jsxElement compiler reactElType reactComponent
+                    else
+                        AstUtils.createElement reactElType [ reactComponent; AstUtils.objExpr props ]
 
                 let expr =
                     match keyBinding with
@@ -620,6 +645,13 @@ type ReactComponentAttribute
                         let getterKey = if arg.DisplayName = "key" then "$key" else arg.DisplayName
                         let getterKind = ExprGet(AstUtils.makeStrConst getterKey)
                         let getter = Get(IdentExpr propsArg, getterKind, Any, None)
+
+                        let getter =
+                            if arg.DisplayName = "children" && AstUtils.isJsxOutput compiler then
+                                AstUtils.jsxChildrenAs compiler arg.Type getter
+                            else
+                                getter
+
                         (arg, getter) :: bindings
                     )
                     |> List.rev

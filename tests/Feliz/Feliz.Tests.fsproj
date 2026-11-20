@@ -20,6 +20,7 @@
     <Compile Include="EnsureJSX.test.fs" />
     <Compile Include="Basic.fs" />
     <Compile Include="Basic.test.fs" />
+    <Compile Include="ReactComponentChildren.test.fs" />
     <Compile Include="ReactBindings/Context.test.fs" />
     <Compile Include="ReactBindings/Fragment.test.fs" />
     <Compile Include="ReactBindings/ReactLazyComponent/Fixtures/Models.fs" />

@@ -214,3 +214,64 @@ let withTag tag =
     | e -> e
 
 let withJSXTag = withTag "jsx"
+
+let isJsxOutput (compiler: PluginHelper) =
+    match compiler.Options.FileExtension with
+    | ".jsx"
+    | ".tsx" -> true
+    | _ -> false
+
+let jsxProp (key: string) (value: Fable.Expr) =
+    Fable.Value(Fable.NewTuple([ makeStrConst key; value ], false), None)
+
+let jsxSpread (props: Fable.Expr) =
+    Fable.Call(
+        nullValue,
+        {
+            makeCallInfo [ props ] with
+                Tags = [ "jsx-spread" ]
+        },
+        Fable.Any,
+        None
+    )
+
+let isSeqType (fableType: Fable.Type) =
+    match fableType with
+    | Fable.Type.DeclaredType(entity, _) -> entity.FullName = "System.Collections.Generic.IEnumerable`1"
+    | _ -> false
+
+/// Coerces the `children` prop to the declared F# collection type: the JSX transform sets it to `undefined`,
+/// a single element or a JS array depending on how many children the call site nests.
+let jsxChildrenAs (compiler: PluginHelper) (fableType: Fable.Type) (children: Fable.Expr) =
+    let fsharpList =
+        ImportFromFableLib.makeImportLib compiler Fable.Any "FSharpList" "List"
+
+    let ofArray = ImportFromFableLib.makeImportLib compiler Fable.Any "ofArray" "List"
+
+    match fableType with
+    | Fable.Type.List _ ->
+        emitJs "$1 instanceof $0 ? $1 : $2(Array.isArray($1) ? $1 : $1 == null ? [] : [$1])" [
+            fsharpList
+            children
+            ofArray
+        ]
+    | Fable.Type.Array _ -> emitJs "Array.isArray($0) ? $0 : $0 == null ? [] : [$0]" [ children ]
+    | t when isSeqType t ->
+        emitJs "$1 instanceof $0 || Array.isArray($1) ? $1 : $1 == null ? [] : [$1]" [ fsharpList; children ]
+    | _ -> children
+
+let jsxElement (compiler: PluginHelper) reactElementType (reactComponent: Fable.Expr) (props: Fable.Expr list) =
+    let callee = ImportFromFableLib.makeImportLib compiler Fable.Any "create" "JSX"
+
+    let props =
+        Fable.Value(Fable.NewArray(Fable.ArrayValues props, Fable.Any, Fable.ImmutableArray), None)
+
+    Fable.Call(
+        callee,
+        {
+            makeCallInfo [ reactComponent; props ] with
+                Tags = [ "jsx" ]
+        },
+        reactElementType,
+        None
+    )
