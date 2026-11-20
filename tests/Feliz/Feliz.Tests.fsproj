@@ -45,6 +45,15 @@
     <Compile Include="ReactBindings/UseRef.test.fs" />
     <Compile Include="ReactBindings/UseState.test.fs" />
     <Compile Include="ReactBindings/UseSyncExternalStore.test.fs" />
+    <Compile Include="ReactBindings/EffectSetupShadowing.test.fs" />
+    <Compile Include="ReactBindings/UseInsertionEffect.test.fs" />
+    <Compile Include="ReactBindings/UseEffectEvent.test.fs" />
+    <Compile Include="ReactBindings/Transition.test.fs" />
+    <Compile Include="ReactBindings/Use.test.fs" />
+    <Compile Include="ReactBindings/ErrorBoundary.test.fs" />
+    <Compile Include="ReactBindings/Actions.test.fs" />
+    <Compile Include="ReactBindings/Components.test.fs" />
+    <Compile Include="ReactBindings/ReactDomApis.test.fs" />
     <Compile Include="FsReact.test.fs" />
   </ItemGroup>
   <ItemGroup />

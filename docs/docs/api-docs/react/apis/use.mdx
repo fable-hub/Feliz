@@ -1,9 +1,56 @@
 ---
-title: ⚠️ use
-draft: true
+title: use
 ---
 
-import NotImplemented from '@site/src/components/NotImplemented';
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
-<NotImplemented href="https://react.dev/reference/react/use" name="use"/>
+<ReactRefAdmonition href="https://react.dev/reference/react/use" name="use"/>
 
+---
+
+`use` reads the value of a promise or a context. In Feliz it is called `React.use'`, because `use` is a keyword in F#.
+
+Unlike other hooks, `React.use'` can be called inside `if` expressions and loops.
+
+## Reading a promise
+
+`React.use'` suspends the component until the promise resolves. The nearest [`Suspense`](../components/Suspense.mdx) boundary shows its fallback in the meantime, and the nearest [`ErrorBoundary`](../components/ErrorBoundary.mdx) catches a rejected promise.
+
+```fsharp
+[<ReactComponent>]
+let Quote (quotePromise: JS.Promise<string>) =
+    let quote = React.use' quotePromise
+    Html.p quote
+
+React.Suspense([ Quote quotePromise ], Html.p "Loading quote...")
+```
+
+:::warning[Create the promise outside of the component that reads it]
+
+A promise created during render is a new promise on every render, so the component suspends forever. Create it in an event handler, in a parent component, in a router loader or a cache, and pass it down.
+
+For the same reason there is no `Async<'T>` overload: converting an `async` to a promise during render would start a new request on every render.
+
+:::
+
+import Use from '../../../feliz-docs/fableoutput/Examples/React/Use'
+import RawUse from '!!raw-loader!../../../feliz-docs/Examples/React/Use.fs'
+
+<ComponentRender code={RawUse}>
+  <Use />
+</ComponentRender>
+
+## Reading a context
+
+`React.use'` also reads a context, like [`useContext`](../hooks/useContext.mdx), but it may be called conditionally:
+
+```fsharp
+[<ReactComponent>]
+let Heading (showTheme: bool) =
+    if showTheme then
+        let theme = React.use' ThemeContext
+        Html.h2 $"Theme: {theme}"
+    else
+        Html.h2 "Hello"
+```

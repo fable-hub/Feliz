@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useTransition
-draft: true
+title: useTransition
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,62 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useTransition" name="useTransition"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useTransition` lets you update state without blocking the UI. State updates inside `startTransition` are marked as non-urgent: React keeps showing the current UI, renders the new UI in the background and can interrupt that render for more urgent updates such as clicks or typing.
+
+It returns `isPending`, which is `true` while the transition is rendering, and the `startTransition` function.
+
+```fsharp
+let isPending, startTransition = React.useTransition ()
+
+Html.button [
+    prop.onClick (fun _ -> startTransition (fun () -> setTab "posts"))
+    prop.text (if isPending then "Loading..." else "Posts")
+]
+```
+
+In the example below, rendering the posts tab takes about 300 ms. Click "posts" and then quickly "contact": the buttons stay responsive and the slow render is abandoned.
+
+import UseTransition from '../../../feliz-docs/fableoutput/Examples/React/UseTransition'
+import RawUseTransition from '!!raw-loader!../../../feliz-docs/Examples/React/UseTransition.fs'
+
+<ComponentRender code={RawUseTransition}>
+  <UseTransition />
+</ComponentRender>
+
+## Async transitions with `useAsyncTransition`
+
+Since React 19, a transition can be async: `isPending` stays `true` until the returned promise settles. React calls such async transitions "Actions".
+
+The returned `startTransition` function can only have one F# type, so Feliz offers a second hook for async work: `React.useAsyncTransition` is the same React hook, but its `startTransition` takes a `unit -> JS.Promise<unit>`.
+
+```fsharp
+let isPending, startTransition = React.useAsyncTransition ()
+
+startTransition (fun () -> promise {
+    let! saved = saveName name
+    React.startTransition (fun () -> setSavedName saved)
+})
+```
+
+:::warning
+
+State updates after a `let!` or `do!` are no longer part of the transition. Wrap them in `React.startTransition` again, as shown above. This is a current limitation of React, not of Feliz.
 
 :::
+
+There is no `Async<'T>` overload: React only waits for promises. Convert an F# `async` with `Async.StartAsPromise`.
+
+import UseAsyncTransition from '../../../feliz-docs/fableoutput/Examples/React/UseAsyncTransition'
+import RawUseAsyncTransition from '!!raw-loader!../../../feliz-docs/Examples/React/UseAsyncTransition.fs'
+
+<ComponentRender code={RawUseAsyncTransition}>
+  <UseAsyncTransition />
+</ComponentRender>
+
+## See also
+
+- [`startTransition`](../apis/startTransition.mdx) to start a transition outside of a component, without `isPending`.
+- [`useDeferredValue`](./useDeferredValue.mdx) to defer a value instead of a state update.
+- [`useActionState`](./useActionState.mdx) for async actions triggered by forms.

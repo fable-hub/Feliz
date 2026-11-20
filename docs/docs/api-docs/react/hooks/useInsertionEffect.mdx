@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useInsertionEffect
-draft: true
+title: useInsertionEffect
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,28 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useInsertionEffect" name="useInsertionEffect"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useInsertionEffect` is a version of [`useEffect`](./useEffect) that fires before React changes the DOM. It is meant for CSS-in-JS libraries that inject `<style>` tags, so the styles are in place before layout effects read the layout.
 
-:::
+If you are not writing such a library, use `useEffect` or `useLayoutEffect` instead. You can't update state from an insertion effect, and refs aren't attached yet when it runs.
+
+It has the same overloads as `useLayoutEffect`: the setup can return nothing, a cleanup function or an `IDisposable`.
+
+```fsharp
+React.useInsertionEffect (
+    (fun () ->
+        let styleElement = document.createElement "style"
+        styleElement.textContent <- css
+        document.head.appendChild styleElement |> ignore
+        fun () -> styleElement.remove ()),
+    [| box css |]
+)
+```
+
+import UseInsertionEffect from '../../../feliz-docs/fableoutput/Examples/React/UseInsertionEffect'
+import RawUseInsertionEffect from '!!raw-loader!../../../feliz-docs/Examples/React/UseInsertionEffect.fs'
+
+<ComponentRender code={RawUseInsertionEffect}>
+  <UseInsertionEffect />
+</ComponentRender>

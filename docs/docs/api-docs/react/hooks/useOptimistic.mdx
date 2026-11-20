@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useOptimistic
-draft: true
+title: useOptimistic
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,36 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useOptimistic" name="useOptimistic"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useOptimistic` shows a different state while an action runs, for example a message marked as sent before the server has confirmed it. Outside of an action, the optimistic state equals the value you pass in. When the action finishes, React switches back to that value, which by then usually contains the real result.
 
-:::
+Call the returned function inside an action or `startTransition`.
+
+The simplest form takes a value and returns a setter for the optimistic value:
+
+```fsharp
+let liked, setLiked = React.useState false
+let optimisticLiked, setOptimisticLiked = React.useOptimistic liked
+```
+
+With an update function, the optimistic state is computed from the current state and the value you pass to the returned function:
+
+```fsharp
+let optimisticMessages, addOptimisticMessage =
+    React.useOptimistic (messages, fun current text -> current @ [ { Text = text; Sending = true } ])
+
+let sendMessage (formData: FormData) = promise {
+    let text = unbox<string> (formData.get "message")
+    addOptimisticMessage text
+    let! delivered = deliverMessage text
+    React.startTransition (fun () -> setMessages (fun current -> current @ [ { Text = delivered; Sending = false } ]))
+}
+```
+
+import UseOptimistic from '../../../feliz-docs/fableoutput/Examples/React/UseOptimistic'
+import RawUseOptimistic from '!!raw-loader!../../../feliz-docs/Examples/React/UseOptimistic.fs'
+
+<ComponentRender code={RawUseOptimistic}>
+  <UseOptimistic />
+</ComponentRender>

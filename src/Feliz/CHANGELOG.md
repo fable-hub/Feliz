@@ -16,9 +16,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 3.4.0 - 2026-11-20
+
 ### ✨ Added
 
 - Add clip to `style.overflow`, `style.overflowX` and `style.overflowY` (by @rstadler6)
+- Transitions: `React.useTransition`, `React.useAsyncTransition` (async actions), `React.startTransition` (sync and async), `React.useDeferredValue` and `React.addTransitionType` (React 19.3) (by @Freymaurer)
+- `React.use'` for reading promises (with `Suspense`) and contexts, `React.useEffectEvent` (React 19.2) and `React.useInsertionEffect` (by @Freymaurer)
+- Actions: `React.useActionState` (sync and async), `React.useOptimistic`, `ReactDOM.useFormStatus`, `ReactDOM.requestFormReset`, function overloads for `prop.action` and the new `prop.formAction` (by @Freymaurer)
+- Components: `React.ErrorBoundary` (Feliz-provided error boundary with element or render-function fallback, `onError`, `onReset` and `resetKeys`), `React.Activity` (React 19.2), `React.Profiler`, `React.ViewTransition` with `viewTransition.*` properties (React 19.3) (by @Freymaurer)
+- Fragment refs: `React.Fragment(ref, children)` with object refs and callback refs (with or without cleanup) receiving a `FragmentInstance` (React 19.3) (by @Freymaurer)
+- `RootOptions` for `ReactDOM.createRoot` and `ReactDOM.hydrateRoot` (`identifierPrefix`, `onCaughtError`, `onUncaughtError`, `onRecoverableError`) and `ReactDOM.flushSync` (by @Freymaurer)
+- `prop.ref` overload for callback refs returning a cleanup function (React 19) (by @Freymaurer)
+- Props: `prop.inert`, `prop.fetchPriority`, `prop.enterKeyHint`, `prop.precedence`, `prop.suppressHydrationWarning`, `prop.onBeforeInput`, `prop.onBeforeToggle`, `prop.onToggle`, `prop.onClose`, `prop.onScrollEnd`, `prop.onFullscreenChange` and `prop.onFullscreenError` (by @Freymaurer)
+- Elements: `Html.hgroup`, `Html.search` and `Html.slot` (also in `Feliz.JSX`) (by @Freymaurer)
+
+### 🔄 Changed
+
+- `ReactDOM.hydrateRoot` is now typed (`Node`, `ReactElement`, `RootOptions`) and returns `IReactRoot`; an overload taking `options: obj` keeps existing calls compiling. Calls that used it as a statement now get an FS0020 warning; bind or `ignore` the returned root (by @Freymaurer)
+
+### 🐛 Fixed
+
+- `React.useEffect`, `React.useEffectOnce`, `React.useLayoutEffect` and `React.useLayoutEffectOnce` with a cleanup function threw "Cannot access 'setup' before initialization" when the effect used a value named `setup` (by @Freymaurer)
+- `prop.popoverTarget` now emits `popoverTarget`, fixing React's "Invalid DOM property `popovertarget`" warning (by @Freymaurer)
+- `ReactDOMServer.renderToPipeableStream` returns `PipeableStream` (`pipe`/`abort`) instead of a promise (by @Freymaurer)
+- `React.useCallback` docs: omitting dependencies does not default to an empty array (by @Freymaurer)
 
 ## 3.3.3 - 2026-05-18
 

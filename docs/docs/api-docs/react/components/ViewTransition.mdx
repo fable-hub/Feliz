@@ -1,0 +1,85 @@
+---
+title: ViewTransition
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react/ViewTransition" name="ViewTransition"/>
+
+---
+
+:::note
+
+Requires React 19.3 or later. Browsers without the View Transition API update the UI without animating.
+
+:::
+
+`React.ViewTransition` animates its children with the browser's [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) when they enter, exit or change. It only animates updates that happen in a transition: [`startTransition`](../apis/startTransition.mdx), [`useDeferredValue`](../hooks/useDeferredValue.mdx) or a [`Suspense`](./Suspense.mdx) reveal. Plain `setState` calls don't animate.
+
+Without properties, it uses the browser's default cross-fade:
+
+```fsharp
+React.ViewTransition [ Html.div [ prop.text "Cross-fades when it changes" ] ]
+```
+
+## Properties
+
+Configure it with the `viewTransition` properties:
+
+| Property | When it animates |
+| --- | --- |
+| `viewTransition.enter` | The boundary is inserted. |
+| `viewTransition.exit` | The boundary is removed. |
+| `viewTransition.update` | DOM inside the boundary changes, or its size or position changes. |
+| `viewTransition.share` | A boundary with the same `name` unmounts and another one mounts (shared element transition). |
+| `viewTransition.default'` | Every trigger that isn't set explicitly. |
+| `viewTransition.name` | Names the boundary for shared element transitions. Each name must only be mounted once at a time. |
+
+Each animation value is `"auto"` (the browser's cross-fade), `"none"` (no animation) or a CSS class name. React adds the class to the view transition, and you animate it with the `::view-transition-old(.class)` and `::view-transition-new(.class)` pseudo-elements:
+
+```css
+::view-transition-old(.feliz-slide) { animation: 250ms ease-in both feliz-slide-out; }
+::view-transition-new(.feliz-slide) { animation: 250ms ease-out both feliz-slide-in; }
+```
+
+```fsharp
+React.ViewTransition [
+    viewTransition.update "feliz-slide"
+    viewTransition.children [ Html.h3 fruits[index] ]
+]
+```
+
+import ViewTransition from '../../../feliz-docs/fableoutput/Examples/React/ViewTransition'
+import RawViewTransition from '!!raw-loader!../../../feliz-docs/Examples/React/ViewTransition.fs'
+
+<ComponentRender code={RawViewTransition}>
+  <ViewTransition />
+</ComponentRender>
+
+`enter` and `exit` only trigger when the `ViewTransition` comes before any DOM element in its subtree, i.e. it wraps the DOM elements directly.
+
+## Choosing an animation by transition type
+
+Instead of a single class, every animation property also accepts a list of `transitionType, value` pairs. The types come from [`React.addTransitionType`](../apis/addTransitionType.mdx); a `"default"` entry is used when no type matches.
+
+```fsharp
+viewTransition.update [ "forward", "slide-left"; "backward", "slide-right"; "default", "none" ]
+```
+
+## Event callbacks
+
+`viewTransition.onEnter`, `onExit`, `onUpdate` and `onShare` are called when the corresponding animation starts. They receive a `ViewTransitionInstance` (with the `old`, `new`, `group` and `imagePair` pseudo-elements) and the transition types. Use them to run animations from code, and return a cleanup function that cancels them:
+
+```fsharp
+viewTransition.onEnter (fun instance types ->
+    let animation =
+        instance.``new``.animate (
+            [| createObj [ "opacity" ==> 0 ]; createObj [ "opacity" ==> 1 ] |],
+            createObj [ "duration" ==> 300 ]
+        )
+
+    fun () -> animation?cancel ())
+```
+
+Only one callback fires per `ViewTransition` per transition; `onShare` takes precedence over `onEnter` and `onExit`.

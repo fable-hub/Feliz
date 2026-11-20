@@ -25,3 +25,45 @@ import RawFragmentDemo from '!!raw-loader!../../../feliz-docs/Examples/React/Fra
 <ComponentRender code={RawFragmentDemo}>
 	<FragmentDemo />
 </ComponentRender>
+
+## Fragment refs
+
+:::note
+
+Requires React 19.3 or later.
+
+:::
+
+A ref on a Fragment receives a `FragmentInstance`. It lets you work with the Fragment's first-level DOM children as a group, without adding a wrapper element: add event listeners, observe them with an `IntersectionObserver` or `ResizeObserver`, focus the first or last focusable element, measure them with `getClientRects` or scroll them into view.
+
+```fsharp
+let fieldsRef = React.useRef<FragmentInstance option> None
+
+React.Fragment(fieldsRef, [
+    Html.input [ prop.placeholder "First name" ]
+    Html.input [ prop.placeholder "Last name" ]
+])
+
+// later, e.g. in an event handler
+fieldsRef.current |> Option.iter (fun fields -> fields.focus ())
+```
+
+import FragmentRef from '../../../feliz-docs/fableoutput/Examples/React/FragmentRef'
+import RawFragmentRef from '!!raw-loader!../../../feliz-docs/Examples/React/FragmentRef.fs'
+
+<ComponentRender code={RawFragmentRef}>
+	<FragmentRef />
+</ComponentRender>
+
+A callback ref can return a cleanup function, which React calls when the Fragment unmounts:
+
+```fsharp
+React.Fragment(
+    (fun fragment ->
+        fragment.observeUsing observer
+        fun () -> fragment.unobserveUsing observer),
+    children
+)
+```
+
+Listeners and observers apply to the first-level DOM children only; `focus` and `focusLast` also search nested elements.

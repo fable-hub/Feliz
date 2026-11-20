@@ -1,15 +1,42 @@
 ---
-title: ⚠️ Profiler
-draft: true
+title: Profiler
 ---
 
-import ComponentRender from '@site/src/components/ComponentRender';
 import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/Profiler" name="Profiler"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`React.Profiler` measures how often a part of the tree renders and how long that takes. React calls `onRender` after every commit of the wrapped tree with a `ProfilerRenderInfo`:
+
+| Field | Meaning |
+| --- | --- |
+| `id` | The `id` you passed to the Profiler. |
+| `phase` | `"mount"`, `"update"` or `"nested-update"`. |
+| `actualDuration` | Milliseconds spent rendering the tree for this update. |
+| `baseDuration` | Estimated milliseconds to re-render the whole tree without memoization. |
+| `startTime` / `commitTime` | When React started rendering and committed this update. |
+
+```fsharp
+React.Profiler(
+    "sidebar",
+    (fun info -> console.log (info.id, info.phase, info.actualDuration)),
+    [ Sidebar() ]
+)
+```
+
+:::note
+
+Profiling adds overhead, so `onRender` is only called in development builds (and in React's special profiling build). That's also why there is no live demo on this production site.
+
+Don't update state from `onRender`: it runs after every commit, so that would loop.
 
 :::
+
+import RawProfiler from '!!raw-loader!../../../feliz-docs/Examples/React/Profiler.fs'
+import CodeBlock from '@theme/CodeBlock';
+
+<CodeBlock language="fsharp" >
+{RawProfiler}
+</CodeBlock>

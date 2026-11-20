@@ -1,0 +1,30 @@
+---
+title: requestFormReset
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react-dom/components/form" name="<form>"/>
+
+---
+
+`ReactDOM.requestFormReset` resets a form's uncontrolled fields to their default values once the current transition finishes.
+
+React already does this after a [form action](../../react/hooks/useActionState.mdx#form-actions). Call it yourself when you handle the submission in `prop.onSubmit` but want the same reset behavior. It must be called inside a transition:
+
+```fsharp
+prop.onSubmit (fun ev ->
+    ev.preventDefault ()
+    let form = unbox<HTMLFormElement> ev.currentTarget
+    React.startTransition (fun () ->
+        saveNote form
+        ReactDOM.requestFormReset form))
+```
+
+import RequestFormReset from '../../../feliz-docs/fableoutput/Examples/ReactDOM/RequestFormReset'
+import RawRequestFormReset from '!!raw-loader!../../../feliz-docs/Examples/ReactDOM/RequestFormReset.fs'
+
+<ComponentRender code={RawRequestFormReset}>
+  <RequestFormReset />
+</ComponentRender>

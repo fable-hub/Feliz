@@ -1,0 +1,37 @@
+---
+title: useFormStatus
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react-dom/hooks/useFormStatus" name="useFormStatus"/>
+
+---
+
+`ReactDOM.useFormStatus` returns the status of the last submission of the parent form. It must be called from a component rendered inside an `Html.form`, which makes it handy for reusable submit buttons that don't need any props.
+
+The returned `FormStatus` has:
+
+| Field | Meaning |
+| --- | --- |
+| `pending` | `true` while the parent form is submitting. |
+| `data` | The submitted `FormData`, or `None` when there is no active submission. |
+| `method` | `"get"` or `"post"`. |
+| `action` | The function or URL passed to the parent form's `prop.action`. |
+
+```fsharp
+[<ReactComponent>]
+let SubmitButton () =
+    let status = ReactDOM.useFormStatus ()
+    Html.button [ prop.type'.submit; prop.disabled status.pending; prop.text "Send" ]
+```
+
+`pending` only becomes `true` for [form actions](../../react/hooks/useActionState.mdx#form-actions) (`prop.action` with a function), not for forms handled with `prop.onSubmit`.
+
+import UseFormStatus from '../../../feliz-docs/fableoutput/Examples/ReactDOM/UseFormStatus'
+import RawUseFormStatus from '!!raw-loader!../../../feliz-docs/Examples/ReactDOM/UseFormStatus.fs'
+
+<ComponentRender code={RawUseFormStatus}>
+  <UseFormStatus />
+</ComponentRender>

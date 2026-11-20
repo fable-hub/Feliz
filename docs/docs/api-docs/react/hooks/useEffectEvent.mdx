@@ -1,0 +1,43 @@
+---
+title: useEffectEvent
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react/useEffectEvent" name="useEffectEvent"/>
+
+---
+
+:::note
+
+Requires React 19.2 or later.
+
+:::
+
+`useEffectEvent` wraps a function so that it always sees the latest props and state, while it can be left out of an effect's dependencies. Use it for logic that an effect triggers but that shouldn't restart the effect when it changes.
+
+This is the clean fix for stale closures: an interval or a subscription created once still reads current values, without `useRef` or `useStateWithUpdater` workarounds.
+
+```fsharp
+let onTick = React.useEffectEvent (fun () -> setCount (fun count -> count + step))
+
+React.useEffectOnce (fun () ->
+    let intervalId = JS.setInterval (fun () -> onTick ()) 1000
+    fun () -> JS.clearInterval intervalId)
+```
+
+In the example below, the interval is created once. Changing the step doesn't restart it, but the next tick uses the new step.
+
+import UseEffectEvent from '../../../feliz-docs/fableoutput/Examples/React/UseEffectEvent'
+import RawUseEffectEvent from '!!raw-loader!../../../feliz-docs/Examples/React/UseEffectEvent.fs'
+
+<ComponentRender code={RawUseEffectEvent}>
+  <UseEffectEvent />
+</ComponentRender>
+
+## Rules
+
+- Only call the returned function from inside effects (or from callbacks those effects set up), never during rendering.
+- Don't pass it to other components or hooks.
+- Don't add it to an effect's dependencies.

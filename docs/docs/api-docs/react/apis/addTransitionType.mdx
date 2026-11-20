@@ -1,0 +1,40 @@
+---
+title: addTransitionType
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react/addTransitionType" name="addTransitionType"/>
+
+---
+
+:::note
+
+Requires React 19.3 or later.
+
+:::
+
+`React.addTransitionType` adds a type to the current transition, e.g. `"forward"` or `"backward"`. [`ViewTransition`](../components/ViewTransition.mdx) uses the types to pick an animation, and CSS can target them with `:active-view-transition-type(forward)`.
+
+Call it inside `startTransition`, before the state update. Types are cleared after each commit.
+
+```fsharp
+React.startTransition (fun () ->
+    React.addTransitionType "forward"
+    setPage (page + 1))
+
+React.ViewTransition [
+    viewTransition.update [ "forward", "feliz-forward"; "backward", "feliz-backward"; "default", "none" ]
+    viewTransition.children [ Html.h3 pages[page] ]
+]
+```
+
+In the example below, "Next" slides the page in from the right and "Previous" from the left.
+
+import AddTransitionType from '../../../feliz-docs/fableoutput/Examples/React/AddTransitionType'
+import RawAddTransitionType from '!!raw-loader!../../../feliz-docs/Examples/React/AddTransitionType.fs'
+
+<ComponentRender code={RawAddTransitionType}>
+  <AddTransitionType />
+</ComponentRender>

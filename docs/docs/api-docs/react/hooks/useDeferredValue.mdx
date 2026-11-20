@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useDeferredValue
-draft: true
+title: useDeferredValue
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,35 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useDeferredValue#usage" name="useDeferredValue"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useDeferredValue` returns a copy of a value that lags behind during urgent updates. React first re-renders with the old value, then renders the new value in the background, and drops that background render if the value changes again.
 
-:::
+Use it to keep an input responsive while something expensive renders from its value.
+
+```fsharp
+let query, setQuery = React.useState ""
+let deferredQuery = React.useDeferredValue query
+
+Html.input [ prop.value query; prop.onChange setQuery ]
+SlowList deferredQuery
+```
+
+The slow component must skip re-rendering when its input hasn't changed, otherwise the urgent render is just as slow. In Feliz, use [`[<ReactMemoComponent>]`](../../feliz/react-component.mdx#reactmemocomponent) for that.
+
+In the example below, each keystroke updates the input immediately. The list dims while it still shows the results for an older query.
+
+import UseDeferredValue from '../../../feliz-docs/fableoutput/Examples/React/UseDeferredValue'
+import RawUseDeferredValue from '!!raw-loader!../../../feliz-docs/Examples/React/UseDeferredValue.fs'
+
+<ComponentRender code={RawUseDeferredValue}>
+  <UseDeferredValue />
+</ComponentRender>
+
+## Initial value
+
+Pass a second argument to render a cheap initial value first. React then renders `value` in the background.
+
+```fsharp
+let deferredQuery = React.useDeferredValue (query, "")
+```
