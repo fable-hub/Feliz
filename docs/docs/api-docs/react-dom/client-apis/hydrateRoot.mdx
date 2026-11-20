@@ -17,3 +17,13 @@ import CodeBlock from '@theme/CodeBlock';
 <CodeBlock language="fsharp" >
 {RawHydrateRoot}
 </CodeBlock>
+
+`hydrateRoot` accepts the same `RootOptions` as [`createRoot`](./createRoot.mdx#root-options) as a third argument. If you set `identifierPrefix`, it must match the prefix used on the server. Hydration mismatches that React can recover from are reported to `onRecoverableError`.
+
+```fsharp
+ReactDOM.hydrateRoot (
+    document.getElementById "root",
+    App(),
+    RootOptions(onRecoverableError = fun error _ -> console.warn ("Hydration issue:", error.Message))
+)
+```

@@ -101,6 +101,24 @@ type onChange = File list -> unit
 type onChange = DateTime -> unit
 ```
 
+### Form actions
+
+`prop.action` also takes a function, a React 19 [form action](../react/hooks/useActionState.mdx#form-actions). React calls it with the form's `FormData` on submit and resets the uncontrolled fields afterwards. The function can return `unit` or a `JS.Promise<unit>`:
+
+```fsharp
+Html.form [
+    prop.action (fun (formData: FormData) -> promise {
+        do! subscribe (unbox<string> (formData.get "email"))
+    })
+    prop.children [
+        Html.input [ prop.name "email"; prop.type'.email ]
+        Html.button [ prop.type'.submit; prop.text "Subscribe" ]
+    ]
+]
+```
+
+Use `prop.formAction` on a submit button to give it its own action.
+
 ### The empty element
 
 To render the empty element, i.e. instructing React to render nothing, use `Html.none`

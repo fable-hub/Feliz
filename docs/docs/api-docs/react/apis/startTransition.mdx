@@ -1,9 +1,36 @@
 ---
-title: ⚠️ startTransition
-draft: true
+title: startTransition
 ---
 
-import NotImplemented from '@site/src/components/NotImplemented';
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
-<NotImplemented href="https://react.dev/reference/react/startTransition" name="startTransition"/>
+<ReactRefAdmonition href="https://react.dev/reference/react/startTransition" name="startTransition"/>
 
+---
+
+`React.startTransition` marks the state updates inside it as a non-blocking transition, like the function returned by [`useTransition`](../hooks/useTransition.mdx). It can be called anywhere, including outside of components (e.g. in a store), but it doesn't give you an `isPending` flag.
+
+```fsharp
+React.startTransition (fun () -> setQuery value)
+```
+
+It also accepts an async action. State updates after a `let!` need their own `startTransition`:
+
+```fsharp
+React.startTransition (fun () -> promise {
+    let! data = loadData ()
+    React.startTransition (fun () -> setData data)
+})
+```
+
+In the example below, the input updates on every keystroke, while the slow list is updated in a transition.
+
+import StartTransition from '../../../feliz-docs/fableoutput/Examples/React/StartTransition'
+import RawStartTransition from '!!raw-loader!../../../feliz-docs/Examples/React/StartTransition.fs'
+
+<ComponentRender code={RawStartTransition}>
+  <StartTransition />
+</ComponentRender>
+
+Inside a transition you can also call [`React.addTransitionType`](./addTransitionType.mdx) to choose a [`ViewTransition`](../components/ViewTransition.mdx) animation.

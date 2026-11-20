@@ -819,6 +819,12 @@ type Html =
     static member inline header(children: #seq<ReactElement>) =
         JSXHelper.createElementWithChild "header" children
 
+    /// Groups a heading with related content such as subheadings or taglines.
+    static member inline hgroup xs = JSXHelper.createElement "hgroup" xs
+
+    static member inline hgroup(children: #seq<ReactElement>) =
+        JSXHelper.createElementWithChild "hgroup" children
+
     static member inline hr xs = JSXHelper.createElement "hr" xs
 
     static member inline html xs = JSXHelper.createElement "html" xs
@@ -1339,6 +1345,12 @@ type Html =
     static member inline script(children: #seq<ReactElement>) =
         JSXHelper.createElementWithChild "script" children
 
+    /// Wraps the controls of a search or filtering feature; exposes the `search` landmark role.
+    static member inline search xs = JSXHelper.createElement "search" xs
+
+    static member inline search(children: #seq<ReactElement>) =
+        JSXHelper.createElementWithChild "search" children
+
     static member inline section xs = JSXHelper.createElement "section" xs
 
     static member inline section(children: #seq<ReactElement>) =
@@ -1355,6 +1367,12 @@ type Html =
     [<Obsolete "Html.set is obsolete, use Svg.set instead">]
     static member inline set(children: #seq<ReactElement>) =
         JSXHelper.createElementWithChild "set" children
+
+    /// A placeholder inside a web component's shadow DOM that light-DOM children are rendered into.
+    static member inline slot xs = JSXHelper.createElement "slot" xs
+
+    static member inline slot(children: #seq<ReactElement>) =
+        JSXHelper.createElementWithChild "slot" children
 
     static member inline small xs = JSXHelper.createElement "small" xs
 

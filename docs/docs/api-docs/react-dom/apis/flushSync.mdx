@@ -1,0 +1,27 @@
+---
+title: flushSync
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react-dom/flushSync" name="flushSync"/>
+
+---
+
+`ReactDOM.flushSync` forces React to apply the state updates inside the callback synchronously, so the DOM is already updated when `flushSync` returns. It returns the result of the callback.
+
+Use it sparingly: it can hurt performance. Typical reasons are reading the layout right after an update (e.g. to scroll to a new element), or browser APIs that expect the DOM to change synchronously, like `onbeforeprint`.
+
+```fsharp
+ReactDOM.flushSync (fun () -> setItems (items @ [ newItem ]))
+// The new item is in the DOM now.
+listRef.current |> Option.iter (fun list -> list.scrollTop <- list.scrollHeight)
+```
+
+import FlushSync from '../../../feliz-docs/fableoutput/Examples/ReactDOM/FlushSync'
+import RawFlushSync from '!!raw-loader!../../../feliz-docs/Examples/ReactDOM/FlushSync.fs'
+
+<ComponentRender code={RawFlushSync}>
+  <FlushSync />
+</ComponentRender>

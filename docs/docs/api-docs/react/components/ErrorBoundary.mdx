@@ -1,0 +1,95 @@
+---
+title: ErrorBoundary
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" name="error boundaries"/>
+
+---
+
+:::info[Provided by Feliz]
+
+React itself has no `ErrorBoundary` component and no hook for error boundaries: they must be written as class components. `React.ErrorBoundary` is a small class component that ships with Feliz, so you don't have to write one. Its API is modeled after the popular `react-error-boundary` package.
+
+:::
+
+`React.ErrorBoundary` catches errors thrown while rendering its children and renders a fallback instead. This includes rejected promises read with [`React.use'`](../apis/use.mdx).
+
+It does **not** catch errors in event handlers, timers or other async code that runs outside of rendering.
+
+## Fallback element
+
+```fsharp
+React.ErrorBoundary(
+    [ Profile() ],
+    Html.p "Something went wrong."
+)
+```
+
+## Fallback function and reset
+
+Pass a function to get the error and a `reset` function that renders the children again:
+
+```fsharp
+React.ErrorBoundary(
+    [ Profile() ],
+    fun props ->
+        Html.div [
+            Html.p $"Something went wrong: {props.error.Message}"
+            Html.button [ prop.onClick (fun _ -> props.reset ()); prop.text "Try again" ]
+        ]
+)
+```
+
+The fallback function runs inside the class component, so don't call hooks in it directly. If the fallback needs hooks, render a component from it: `fun props -> ErrorView(props.error, props.reset)`.
+
+In the example below, the counter throws when it reaches 3. "Try again" mounts it again from scratch.
+
+import ErrorBoundary from '../../../feliz-docs/fableoutput/Examples/React/ErrorBoundary'
+import RawErrorBoundary from '!!raw-loader!../../../feliz-docs/Examples/React/ErrorBoundary.fs'
+
+<ComponentRender code={RawErrorBoundary}>
+  <ErrorBoundary />
+</ComponentRender>
+
+## Logging errors
+
+`onError` is called with the error and a `ReactErrorInfo` containing the component stack:
+
+```fsharp
+React.ErrorBoundary(
+    [ App() ],
+    Html.p "Something went wrong.",
+    onError = fun error info -> reportError error.Message info.componentStack
+)
+```
+
+To log errors from every boundary in one place, use the `onCaughtError` option of [`ReactDOM.createRoot`](../../react-dom/client-apis/createRoot.mdx) instead.
+
+## Resetting when data changes
+
+`resetKeys` resets the boundary automatically when any of the values changes. The values are compared like hook dependencies, so prefer primitive values such as IDs:
+
+```fsharp
+React.ErrorBoundary(
+    [ UserProfile userId ],
+    Html.p "Could not load this user.",
+    resetKeys = [| box userId |],
+    onReset = fun () -> console.log "Trying again with another user"
+)
+```
+
+`onReset` is called before the boundary resets, either through `reset` or because `resetKeys` changed.
+
+## With `use'` and Suspense
+
+Wrap a `Suspense` boundary in an `ErrorBoundary` to handle both the loading and the error state of a promise:
+
+```fsharp
+React.ErrorBoundary(
+    [ React.Suspense([ Quote quotePromise ], Html.p "Loading...") ],
+    fun props -> Html.p $"Could not load the quote: {props.error.Message}"
+)
+```

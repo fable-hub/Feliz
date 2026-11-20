@@ -27,6 +27,8 @@
         <Compile Include="PropertyHelper/Key.fs" />
         <Compile Include="Properties.fs" />
         <Compile Include="React/ReactTypes.fs" />
+        <Compile Include="React/ErrorBoundary.fs" />
+        <Compile Include="React/ViewTransition.fs" />
         <Compile Include="React/React.fs" />
         <Compile Include="React/ReactDOM.fs" />
         <Compile Include="React/FsReact.fs" />
@@ -54,7 +56,7 @@
 
     <PropertyGroup>
         <NpmDependencies>
-            <NpmPackage Name="react" Version="gte 19.0.0 lt 20.0.0" ResolutionStrategy="Max" />
+            <NpmPackage Name="react" Version="gte 19.3.0 lt 20.0.0" ResolutionStrategy="Max" />
             <NpmPackage Name="react-dom" Version="gte 19.0.0 lt 20.0.0" ResolutionStrategy="Max" />
         </NpmDependencies>
     </PropertyGroup>

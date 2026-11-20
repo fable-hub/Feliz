@@ -142,6 +142,18 @@ type prop =
     /// The URI of a program that processes the information submitted via the form.
     static member inline action(value: string) = PropHelper.mkAttr "action" value
 
+    /// A React form action. React calls the handler with the form's `FormData` when the form is submitted
+    /// and resets uncontrolled fields afterwards.
+    ///
+    /// Use it on `Html.form`. Pairs with `React.useActionState` and `ReactDOM.useFormStatus`.
+    static member inline action(handler: FormData -> unit) = PropHelper.mkAttr "action" handler
+
+    /// An async React form action. React calls the handler with the form's `FormData` when the form is submitted,
+    /// treats the returned promise as a transition and resets uncontrolled fields once it settles.
+    ///
+    /// Use it on `Html.form`. Pairs with `React.useActionState` and `ReactDOM.useFormStatus`.
+    static member inline action(handler: FormData -> JS.Promise<unit>) = PropHelper.mkAttr "action" handler
+
     /// Alternative text in case an image can't be displayed.
     static member inline alt(value: string) = PropHelper.mkAttr "alt" value
 
@@ -692,10 +704,21 @@ type prop =
     static member inline end'(values: seq<string>) =
         PropHelper.mkAttr "end" (String.concat ";" values)
 
+    /// Hints which label (or icon) to show for the enter key on virtual keyboards.
+    ///
+    /// Accepted values are "enter", "done", "go", "next", "previous", "search" and "send".
+    /// Also available as `prop.enterKeyHint.<value>`.
+    static member inline enterKeyHint(value: string) = PropHelper.mkAttr "enterKeyHint" value
+
     /// Defines the exponent of the gamma function.
     static member inline exponent(value: float) = PropHelper.mkAttr "exponent" value
     /// Defines the exponent of the gamma function.
     static member inline exponent(value: int) = PropHelper.mkAttr "exponent" value
+
+    /// Hints the relative priority to use when fetching a resource (`img`, `link`, `script`, `iframe`).
+    ///
+    /// Accepted values are "high", "low" and "auto". Also available as `prop.fetchPriority.<value>`.
+    static member inline fetchPriority(value: string) = PropHelper.mkAttr "fetchPriority" value
 
     /// Defines the files that will be uploaded when using an input element of the file type.
     static member inline files(value: FileList) = PropHelper.mkAttr "files" value
@@ -727,6 +750,17 @@ type prop =
     /// if the <meter> element is being used as a form-associated element, such as one displaying a
     /// range corresponding to an <input type="number">.
     static member inline form(value: string) = PropHelper.mkAttr "form" value
+
+    /// The URL that processes the information submitted by the button. Overrides the `action` of the button's form.
+    static member inline formAction(value: string) = PropHelper.mkAttr "formAction" value
+
+    /// A React form action for a submit button (`Html.button` or `Html.input`). Overrides the `action` of the
+    /// button's form, so one form can have several submit buttons with different actions.
+    static member inline formAction(handler: FormData -> unit) = PropHelper.mkAttr "formAction" handler
+
+    /// An async React form action for a submit button (`Html.button` or `Html.input`). Overrides the `action` of the
+    /// button's form, so one form can have several submit buttons with different actions.
+    static member inline formAction(handler: FormData -> JS.Promise<unit>) = PropHelper.mkAttr "formAction" handler
 
     /// Indicates the initial value of the attribute that will be modified during the animation.
     ///
@@ -884,6 +918,9 @@ type prop =
 
     /// Often used with CSS to style a specific element. The value of this attribute must be unique.
     static member inline id(value: string) = PropHelper.mkAttr "id" value
+
+    /// Makes the element and its subtree inert: it can't be focused or clicked and is hidden from assistive technology.
+    static member inline inert(value: bool) = PropHelper.mkAttr "inert" value
 
     /// Alias for `dangerouslySetInnerHTML`, sets the inner Html content of the element.
     static member inline innerHtml(content: string) =
@@ -1126,6 +1163,16 @@ type prop =
     static member inline onAnimationStart(handler: AnimationEvent -> unit) =
         PropHelper.mkAttr "onAnimationStart" handler
 
+    /// Fires before an editable element is modified, e.g. right before a character is inserted.
+    /// The inserted text is available as `ev?data`.
+    static member inline onBeforeInput(handler: Event -> unit) =
+        PropHelper.mkAttr "onBeforeInput" handler
+
+    /// Fires right before a popover element is shown or hidden.
+    /// The event is a `ToggleEvent`: `ev?newState` and `ev?oldState` are "open" or "closed".
+    static member inline onBeforeToggle(handler: Event -> unit) =
+        PropHelper.mkAttr "onBeforeToggle" handler
+
     /// Fires the moment that the element loses focus.
     static member inline onBlur(handler: FocusEvent -> unit) = PropHelper.mkAttr "onBlur" handler
 
@@ -1213,6 +1260,9 @@ type prop =
     /// Fires on a mouse click on the element.
     static member inline onClick(handler: MouseEvent -> unit) = PropHelper.mkAttr "onClick" handler
 
+    /// Fires when a `<dialog>` element is closed.
+    static member inline onClose(handler: Event -> unit) = PropHelper.mkAttr "onClose" handler
+
     /// Fires when composition ends.
     static member inline onCompositionEnd(handler: CompositionEvent -> unit) =
         PropHelper.mkAttr "onCompositionEnd" handler
@@ -1290,6 +1340,14 @@ type prop =
 
     /// Fires the moment when the element gets focus.
     static member inline onFocus(handler: FocusEvent -> unit) = PropHelper.mkAttr "onFocus" handler
+
+    /// Fires when the element enters or leaves fullscreen mode. Requires React 19.3 or later.
+    static member inline onFullscreenChange(handler: Event -> unit) =
+        PropHelper.mkAttr "onFullscreenChange" handler
+
+    /// Fires when the element can't switch to or from fullscreen mode. Requires React 19.3 or later.
+    static member inline onFullscreenError(handler: Event -> unit) =
+        PropHelper.mkAttr "onFullscreenError" handler
 
     /// Fires when an element captures a pointer.
     static member inline onGotPointerCapture(handler: PointerEvent -> unit) =
@@ -1425,6 +1483,9 @@ type prop =
     /// Fires when an element's scrollbar is being scrolled.
     static member inline onScroll(handler: Event -> unit) = PropHelper.mkAttr "onScroll" handler
 
+    /// Fires when scrolling has completed, including any smooth scrolling or snapping.
+    static member inline onScrollEnd(handler: Event -> unit) = PropHelper.mkAttr "onScrollEnd" handler
+
     /// Fires when the seeking attribute is set to false indicating that seeking has ended.
     static member inline onSeeked(handler: Event -> unit) = PropHelper.mkAttr "onSeeked" handler
 
@@ -1454,6 +1515,10 @@ type prop =
     /// Fires when the playing position has changed (like when the user fast forwards to a different point in the media).
     static member inline onTimeUpdate(handler: Event -> unit) =
         PropHelper.mkAttr "onTimeUpdate" handler
+
+    /// Fires after a `<details>` or popover element has been opened or closed.
+    /// The event is a `ToggleEvent`: `ev?newState` and `ev?oldState` are "open" or "closed".
+    static member inline onToggle(handler: Event -> unit) = PropHelper.mkAttr "onToggle" handler
 
     static member inline onTouchCancel(handler: TouchEvent -> unit) =
         PropHelper.mkAttr "onTouchCancel" handler
@@ -1641,7 +1706,15 @@ type prop =
 
     /// Turns a <button> or <input> element into a popover control button.
     /// Takes the ID of the popover element to control as its value.
-    static member inline popoverTarget(value: string) = PropHelper.mkAttr "popovertarget" value
+    static member inline popoverTarget(value: string) = PropHelper.mkAttr "popoverTarget" value
+
+    /// Sets the precedence of a `<link rel="stylesheet">` or `<style>` element. React hoists such elements into
+    /// `<head>`, orders them by precedence and suspends rendering until the stylesheet has loaded.
+    ///
+    /// Use it together with `prop.href`: on a `link` that is the stylesheet URL, on a `style` it is a unique key
+    /// React uses to deduplicate the element. Precedence values are arbitrary strings; stylesheets with the same
+    /// precedence are grouped together in the order they were first rendered.
+    static member inline precedence(value: string) = PropHelper.mkAttr "precedence" value
 
     /// Indicates how a <feConvolveMatrix> element handles alpha transparency.
     static member inline preserveAlpha(value: bool) = PropHelper.mkAttr "preserveAlpha" value
@@ -1683,6 +1756,18 @@ type prop =
 
     /// Used to reference a DOM element or class component from within a parent component.
     static member inline ref(handler: Element -> unit) = PropHelper.mkAttr "ref" handler
+
+    /// A callback ref that returns a cleanup function. React calls the callback with the element when it is
+    /// attached and calls the returned cleanup function when it is detached (instead of calling the callback with `null`).
+    ///
+    /// ```fsharp
+    /// prop.ref (fun el ->
+    ///     let observer = createObserver el
+    ///     fun () -> observer.disconnect ())
+    /// ```
+    static member inline ref(handler: Element -> (unit -> unit)) =
+        PropHelper.mkAttr "ref" (System.Func<Element, (unit -> unit)>(fun el -> handler el))
+
     /// Used to reference a DOM element or class component from within a parent component.
     static member inline ref(ref: IRefValue<#HTMLElement option>) = PropHelper.mkAttr "ref" ref
 
@@ -1955,6 +2040,11 @@ type prop =
 
     static member inline style(properties: #IStyleAttribute list) =
         PropHelper.mkAttr "style" (createObj !!properties)
+
+    /// Silences React's warning when the attributes or text content of this element differ between the server
+    /// render and the client during hydration. Only works one level deep; use it as an escape hatch (e.g. for timestamps).
+    static member inline suppressHydrationWarning(value: bool) =
+        PropHelper.mkAttr "suppressHydrationWarning" value
 
     /// Represents the height of the surface for a light filter primitive.
     static member inline surfaceScale(value: float) = PropHelper.mkAttr "surfaceScale" value
@@ -3013,6 +3103,34 @@ module prop =
         /// Indicates that the input image is extended by taking the color values
         /// from the opposite edge of the image.
         static member inline wrap = PropHelper.mkAttr "edgeMode" "wrap"
+
+    /// Hints which label (or icon) to show for the enter key on virtual keyboards.
+    [<Erase>]
+    type enterKeyHint =
+        /// The enter key inserts a new line.
+        static member inline enter = PropHelper.mkAttr "enterKeyHint" "enter"
+        /// There is nothing more to input; the input method editor (IME) will be closed.
+        static member inline done' = PropHelper.mkAttr "enterKeyHint" "done"
+        /// Takes the user to the target of the text they typed.
+        static member inline go = PropHelper.mkAttr "enterKeyHint" "go"
+        /// Moves to the next field that will accept text.
+        static member inline next = PropHelper.mkAttr "enterKeyHint" "next"
+        /// Moves to the previous field that will accept text.
+        static member inline previous = PropHelper.mkAttr "enterKeyHint" "previous"
+        /// Takes the user to the results of searching for the text they typed.
+        static member inline search = PropHelper.mkAttr "enterKeyHint" "search"
+        /// Delivers the text to its target.
+        static member inline send = PropHelper.mkAttr "enterKeyHint" "send"
+
+    /// Hints the relative priority to use when fetching a resource (`img`, `link`, `script`, `iframe`).
+    [<Erase>]
+    type fetchPriority =
+        /// Fetch the resource at a high priority relative to other resources of the same type.
+        static member inline high = PropHelper.mkAttr "fetchPriority" "high"
+        /// Fetch the resource at a low priority relative to other resources of the same type.
+        static member inline low = PropHelper.mkAttr "fetchPriority" "low"
+        /// Let the browser decide (default).
+        static member inline auto = PropHelper.mkAttr "fetchPriority" "auto"
 
     /// Defines the final state of the SVG animation.
     [<Erase>]

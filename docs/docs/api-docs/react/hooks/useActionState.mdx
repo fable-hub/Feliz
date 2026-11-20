@@ -1,6 +1,5 @@
 ---
-title: ⚠️ useActionState
-draft: true
+title: useActionState
 ---
 
 import ComponentRender from '@site/src/components/ComponentRender';
@@ -8,8 +7,71 @@ import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
 
 <ReactRefAdmonition href="https://react.dev/reference/react/useActionState#usage" name="useActionState"/>
 
-:::danger
+---
 
-This is not yet implemented in Feliz. PRs are welcome!
+`useActionState` keeps state that is updated by an action, for example the result of submitting a form. It returns the current state, a `dispatch` function that runs the action, and `isPending`.
 
-:::
+The action receives the previous state and the payload passed to `dispatch`, and returns the next state, either directly or as a promise:
+
+```fsharp
+let message, submitAction, isPending =
+    React.useActionState (
+        (fun (previousMessage: string) (formData: FormData) -> promise {
+            // updateName: string -> JS.Promise<string>, returns a message for the user
+            let! message = updateName (unbox<string> (formData.get "name"))
+            return message
+        }),
+        "" // initial state
+    )
+
+Html.form [
+    prop.action submitAction
+    prop.children [
+        Html.input [ prop.name "name" ]
+        Html.button [ prop.type'.submit; prop.disabled isPending; prop.text "Save" ]
+    ]
+]
+```
+
+When `dispatch` is passed to `prop.action`, the payload is the form's `FormData`. While an async action runs, `isPending` is `true`. If the form is submitted again in the meantime, the actions run one after another.
+
+import UseActionState from '../../../feliz-docs/fableoutput/Examples/React/UseActionState'
+import RawUseActionState from '!!raw-loader!../../../feliz-docs/Examples/React/UseActionState.fs'
+
+<ComponentRender code={RawUseActionState}>
+  <UseActionState />
+</ComponentRender>
+
+## Form actions
+
+React 19 lets a form call a function instead of navigating to a URL. In Feliz, pass a `FormData -> unit` or `FormData -> JS.Promise<unit>` to `prop.action`:
+
+```fsharp
+Html.form [
+    prop.action (fun (formData: FormData) -> promise {
+        do! saveComment (unbox<string> (formData.get "comment"))
+    })
+    prop.children [
+        Html.textarea [ prop.name "comment" ]
+        Html.button [ prop.type'.submit; prop.text "Post" ]
+    ]
+]
+```
+
+- The action runs as a transition, and React resets the form's uncontrolled fields when it finishes.
+- `prop.formAction` on a submit button overrides the form's action, so one form can have several buttons with different actions.
+- Child components can read the submission state with [`ReactDOM.useFormStatus`](../../react-dom/hooks/useFormStatus.mdx).
+- `prop.action "/some/url"` still works for classic forms.
+
+## Dispatching without a form
+
+`dispatch` can be called with any payload. Call it inside [`React.startTransition`](../apis/startTransition.mdx) (or a transition from `useTransition`) so that `isPending` updates:
+
+```fsharp
+let total, add, isPending = React.useActionState ((fun total (amount: int) -> total + amount), 0)
+
+Html.button [
+    prop.onClick (fun _ -> React.startTransition (fun () -> add 5))
+    prop.text $"Total: {total}"
+]
+```

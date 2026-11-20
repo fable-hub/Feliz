@@ -1,0 +1,38 @@
+---
+title: Activity
+---
+
+import ComponentRender from '@site/src/components/ComponentRender';
+import ReactRefAdmonition from '@site/src/components/ReactRefAdmonition';
+
+<ReactRefAdmonition href="https://react.dev/reference/react/Activity" name="Activity"/>
+
+---
+
+:::note
+
+Requires React 19.2 or later.
+
+:::
+
+`React.Activity` hides and shows part of the UI while keeping its state. With `ActivityMode.Hidden`, React hides the children with `display: none`, cleans up their effects and renders updates for them at low priority. Switching back to `ActivityMode.Visible` restores the previous state and re-runs the effects.
+
+That makes it a good fit for tabs, sidebars or content you want to pre-render before the user navigates to it.
+
+```fsharp
+React.Activity(
+    (if isOpen then ActivityMode.Visible else ActivityMode.Hidden),
+    Sidebar()
+)
+```
+
+In the example below, type into both text areas and hide them. The one inside `Activity` keeps its text; the one rendered with `if` is unmounted and loses it.
+
+import Activity from '../../../feliz-docs/fableoutput/Examples/React/Activity'
+import RawActivity from '!!raw-loader!../../../feliz-docs/Examples/React/Activity.fs'
+
+<ComponentRender code={RawActivity}>
+  <Activity />
+</ComponentRender>
+
+`React.Activity` accepts a single child or a list of children.
